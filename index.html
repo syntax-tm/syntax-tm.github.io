@@ -1,0 +1,1837 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trey's Playlists</title>
+  <!-- Latest compiled and minified CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+  <style>
+    body {
+      align-self: center;
+    }
+
+    .display-4 {
+      margin: 0.6em;
+    }
+
+    p,
+    a {
+      top: 0;
+      left: 0;
+    }
+
+    img {
+      z-index: 0;
+      width: 240px;
+      height: 240px;
+    }
+
+    .plist {
+      margin: 5px;
+      width: 300px;
+      height: 300px;
+      border-color: #111111;
+      border-style: solid;
+    }
+
+    #searchDiv {
+      width: 100%;
+    }
+
+    #txtSearch {
+      font-size: 30;
+      margin: 2rem;
+    }
+    body {
+      background-color: #1a1a1a;
+      color: white;
+    }
+
+    .category {
+      color: var(--bs-secondary-color);
+    }
+
+    .category:hover {
+      color: var(--bs-body-color);
+
+      transition: color 0.2s;
+    }
+
+    .card .card-img-overlay{
+      opacity: 0;
+    }
+
+    .card:hover .card-img-overlay{
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+  </style>
+</head>
+
+<body data-bs-theme="dark">
+  <div class="container-fluid" style="">
+    <div class="sticky-top mx-auto mt-2" style="width: 80%;">
+      <div id="searchDiv" class="flex w-100" style="height: 100px">
+        <input id="txtSearch" class="form-control form-control-lg " type="text" placeholder="Search..." />
+      </div>
+    </div>
+    <div>
+      <div id="main" style="padding-top: 0;">
+        <div class="display-4 category">Favorites</div>
+<div id="favorites-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="Chill Music">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2Sl8vL1zJhbo4jpuuHtnjM" title="Chill Music" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbce4fa4e7f7408b2d4c803dc3" title="Chill Music" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Chill Music</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Chill-ish EDM: A Love Story">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5MKLKYL97iiGecKXhHsNKs" title="Chill-ish EDM: A Love Story" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb6db62c313465a073f70e9d71" title="Chill-ish EDM: A Love Story" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Chill-ish EDM: A Love Story</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Main-ish">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0powTLfLR5bSjXPcXMSOh5" title="Main-ish" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb01405ed108e02e2885ee89ba" title="Main-ish" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Main-ish</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Metal-ish">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1tSQq8rySFepSgvZ7m68Oj" title="Metal-ish" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebbb987f723b3195ebc6b40649f" title="Metal-ish" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Metal-ish</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Mountain Dew">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0toPxNxtFV5nrrSJkAyUUh" title="Mountain Dew" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbde23e5182a0bcd4ddf92ac8c" title="Mountain Dew" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Mountain Dew</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Rap">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4bMn6nP21W5ddIKW5oAnqg" title="Rap" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb81ecb39f01931b2e5a3a3a88" title="Rap" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Rap</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Trey's Top 10-20-ish EDM (At The Time)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4Y07P4cIH7j0N0vGyksDsc" title="Trey's Top 10-20-ish EDM (At The Time)" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf5a890e4f54baa708f96af7f" title="Trey's Top 10-20-ish EDM (At The Time)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Trey's Top 10-20-ish EDM (At The Time)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">Timeline</div>
+<div id="timeline-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="Spring 2025">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3iZFzBUK5ZOJ9NXFXOGLVE" title="Spring 2025" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4db504af860a6c3907d3db62" title="Spring 2025" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2025</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2024">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/36hrnJZtG58FOu0KfVjeCc" title="Winter 2024" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4d3191165e8b302e92d6c1e5" title="Winter 2024" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2024</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2024">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2EfBv9ZSvbFsZbAvfloBr6" title="Fall 2024" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb5b3ee578509435671f3057eb" title="Fall 2024" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2024</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2024">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7dbuxAu4GiBNPwylPArdb9" title="Summer 2024" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb873feae9b6f34b2d8e2d7012" title="Summer 2024" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2024</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2024">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2B9j2IkbzUWmXCyoLDh5aL" title="Spring 2024" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb1717a1ed7dda4cb3d1e58567" title="Spring 2024" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2024</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2023">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0AzvGoSsM7XvegvF0BP7Kt" title="Winter 2023" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb6ba750a99c9b88287ff23220" title="Winter 2023" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2023</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2023">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0CFwxr9u7ZphksiUsVMvNP" title="Fall 2023" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2688a493ab233363bf4dab23" title="Fall 2023" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2023</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2023">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/37QdEtVxSEnGgXr6peu4Jr" title="Summer 2023" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb700cca5d1102121b17247cef" title="Summer 2023" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2023</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2023">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0RkNs9PfA9ZXZUyujp6OTd" title="Spring 2023" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb51b2db993cea31a9303a979c" title="Spring 2023" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2023</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2022">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3KYDkGRKAND3iYhFq00tti" title="Winter 2022" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb026453ed078b7e0902e23777" title="Winter 2022" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2022</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2022">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2TdgN2i5mdRvFdQyE4bEAM" title="Fall 2022" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebbfeef9a9d36b769d406835c3d" title="Fall 2022" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2022</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2022">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5nEququLubbNibuVh5brTs" title="Summer 2022" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4ea3c946414d6753998e9235" title="Summer 2022" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2022</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2022">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6K4lMl1QS5UlEVWj0jqCpv" title="Spring 2022" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbad728a838a77a5a9d47d7b06" title="Spring 2022" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2022</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2021">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0VfSCjdmpseTg0AShzlG4q" title="Winter 2021" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2b218b6d7d8cd3e5c6a6202c" title="Winter 2021" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2021</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2021">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7kTFibB3Hmno9a5siFlqCp" title="Fall 2021" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbce1215c4e63f3bfc38b70dfd" title="Fall 2021" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2021</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2021">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4ffgi5SiW3dxPMFP2gKOCt" title="Summer 2021" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb92e55ffc95a930ecb7eee017" title="Summer 2021" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2021</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2021">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6Kvk2Xcqg9NRg1DMJFAql7" title="Spring 2021" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbaff465475719ea49590343b6" title="Spring 2021" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2021</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2020">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1LiVEzBFvRnTq6PGtZbDlG" title="Winter 2020" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebbf6a0ecb360707391dc744b50" title="Winter 2020" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2020</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2020">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/30jZXimmYpQdHvZc6DhTeM" title="Fall 2020" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebbaa267103b7a68b296be32394" title="Fall 2020" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2020</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2020">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0Tovxbk42xUkmkbnPhwWfO" title="Summer 2020" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebba8b9672d303255610debc746" title="Summer 2020" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2020</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2020">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3k5CkDCPKoj4x5ZaLNydga" title="Spring 2020" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb632f2710b32c43b4df5c1a14" title="Spring 2020" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2020</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2019">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1t0kPT9gpYEfnCc714PRca" title="Winter 2019" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf53a0c3964f524c87569c519" title="Winter 2019" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2019</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2019">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0JFhyrXdQvf2cJJai44Ezz" title="Fall 2019" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb87ce117ffc79e7498b3a6883" title="Fall 2019" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2019</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2019">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6OgIfocVETuEcx956ff82N" title="Summer 2019" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf8da1aa2597feb56d4492a1c" title="Summer 2019" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2019</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2019">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2xpqiStSkicfzOQ7Gwas4p" title="Spring 2019" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb437770629ca1b5038acf479b" title="Spring 2019" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2019</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2018">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4UUqvCTHRkuCOObg3c2OGG" title="Winter 2018" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb43c0ba13c45e52203c15011d" title="Winter 2018" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2018</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2018">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4up8oKJq7yhXrQrvdKNm46" title="Fall 2018" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbbb568f38c14ba4c15094ec11" title="Fall 2018" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2018</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2018">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/53cCcsxNfkuuKmVZvdBioU" title="Summer 2018" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb203ad343ad0fff06a2ffc3ff" title="Summer 2018" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2018</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2018">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6jdSMvvytRZxRFWwsYLCe3" title="Spring 2018" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb87f60258f6aba8bbe46df0e4" title="Spring 2018" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2018</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2017">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1THLsqUiU6X0qWK8UHDE5j" title="Winter 2017" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbccc2ef51148b09eb99af003a" title="Winter 2017" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2017</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2016">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6Tsw6y9P6UosWAKtSxjWN5" title="Winter 2016" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb5130a098cf16b8730b448407" title="Winter 2016" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2016</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2016">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6QQgBMoBErBstpTr9Rm5Vj" title="Summer 2016" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb935c9eddc672d3ef486d57f2" title="Summer 2016" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2016</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2016">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0rGgWMggOYZpGkoIKuaGeo" title="Spring 2016" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb61a4b22ccd8662298eca1deb" title="Spring 2016" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2016</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2015">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3uDC7QPlN0OVX7nfY1AEla" title="Summer 2015" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb16bb123dce46df7a0774ec1" title="Summer 2015" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2015</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Summer 2015 (Dallas)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2eJbN6aaV0sP1Q6ZO6ihae" title="Summer 2015 (Dallas)" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbc8f312f28d096e959f80e920" title="Summer 2015 (Dallas)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Summer 2015 (Dallas)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2015">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6u1ZxrfzKYfp01YaFwKL5Q" title="Spring 2015" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb9b5adb4695a509843a1f4117" title="Spring 2015" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2015</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Winter 2014">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/28ezuXD7CDZxTJO4bw8Zs9" title="Winter 2014" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb88d8ff7ad86923e3ec0763d" title="Winter 2014" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Winter 2014</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2014">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/10z01StKFBOQcEV38RZ5Kk" title="Fall 2014" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf6f83be0f231065717c6221f" title="Fall 2014" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2014</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Spring 2014 - Summer 2014">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/60eGmw7cE1KyPKmV8LMeD4" title="Spring 2014 - Summer 2014" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbffa92b411ba12b3be7b819e7" title="Spring 2014 - Summer 2014" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Spring 2014 - Summer 2014</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Fall 2013 - Winter 2013">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1c7pGtAR1JYhzjxNfjtP6e" title="Fall 2013 - Winter 2013" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4d9870e419511a051d75282e" title="Fall 2013 - Winter 2013" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Fall 2013 - Winter 2013</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Songs From High School">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7ejK0vjC7krE9TS8dppNBL" title="Songs From High School" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbfb842a1b58383d61981142c9" title="Songs From High School" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Songs From High School</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Ye Olde Tunes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3cwb1bh2Fmnp0BWqEt2WZy" title="Ye Olde Tunes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb23516941b125196003b8e9b9" title="Ye Olde Tunes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Ye Olde Tunes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Random Old Ass Music">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/26ztym2TsJF0BefMjRe48p" title="Random Old Ass Music" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb630209c64d6e3436116cc03a" title="Random Old Ass Music" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Random Old Ass Music</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Christmas Party 2016">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0u4TEruXj8WKaGJ4N43Spd" title="Christmas Party 2016" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb333758396383ae28f8b39862" title="Christmas Party 2016" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Christmas Party 2016</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="The Younger Years">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/48GngkYpYx2R29Q3Z77spV" title="The Younger Years" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb3aef570d478b9fb6acd8a780" title="The Younger Years" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">The Younger Years</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Trey's Fire Mixtape 2010">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2E9oFM3rWdzU3l329xW3Go" title="Trey's Fire Mixtape 2010" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbfbaafc7280ed9c945af944e6" title="Trey's Fire Mixtape 2010" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Trey's Fire Mixtape 2010</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">EDM</div>
+<div id="edm-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title=""I don't like EDM but I like Adderall®"">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4J7xdBIQ99dIsBOEPbOULa" title=""I don't like EDM but I like Adderall®"" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb9fed91270d5257536af598a3" title=""I don't like EDM but I like Adderall®"" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">"I don't like EDM but I like Adderall®"</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Glitch">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2QebSZ5dGEvmpneswpRfim" title="Glitch" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2f324925714bc2b2420d79bd" title="Glitch" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Glitch</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Rolling Face">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1oViVBWdiIns4nCSf00jx6" title="Rolling Face" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb9950141c52bd723594ffc399" title="Rolling Face" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Rolling Face</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Soundtrack to a K-Hole">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4lO7zlsOgW4tuTJbxJZ8Op" title="Soundtrack to a K-Hole" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbc6e63ce6aebd1741291d4deb" title="Soundtrack to a K-Hole" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Soundtrack to a K-Hole</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Super Chill EDM">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/63pEdpNlRs3lYstCsuV11U" title="Super Chill EDM" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb436770a11ab01c7600241cbb" title="Super Chill EDM" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Super Chill EDM</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Trap Shit">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4Es9LEThjfF8wcsMRKQYKF" title="Trap Shit" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbd21640a2d1b3bba26a7d0add" title="Trap Shit" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Trap Shit</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Trey's All-Time EDM Faves">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/59M474wBmzPDhH4A1HehXW" title="Trey's All-Time EDM Faves" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe315e515938010eadf1d70d1" title="Trey's All-Time EDM Faves" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Trey's All-Time EDM Faves</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">Genre</div>
+<div id="genre-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="Acoustics">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2clVvwZRvhGturoAsLPxPl" title="Acoustics" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2a1d8ff880e17b75d4a71d8d" title="Acoustics" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Acoustics</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Classic Rock">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3CzmiOIUgMlaY1TjZ1h0w9" title="Classic Rock" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb3b5e9c539913a73487b520c" title="Classic Rock" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Classic Rock</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Classical">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4VAr2XwCcC518aqOlOcKhx" title="Classical" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbda863daaff1fcca113659680" title="Classical" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Classical</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Diet Pepsi">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/78ZR5vPmwEXdRo9KDtoVsr" title="Diet Pepsi" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbd42372a1a2d4e0ac0d2b62a0" title="Diet Pepsi" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Diet Pepsi</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Hard Rock">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0DDl0LWLPEbnkpAPiF5bOX" title="Hard Rock" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb090899939ef8cda447ac9d2b" title="Hard Rock" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Hard Rock</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="HxC">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0ryCzBX983P2DtbFkJV79l" title="HxC" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb478100b241655b4c74d0932a" title="HxC" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">HxC</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="More Rock and Such">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2PNlnBIMiszrCXjTbF1K0e" title="More Rock and Such" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb20046d2ad1f82c7f72e38491" title="More Rock and Such" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">More Rock and Such</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Punky Punk">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1tQndjbXkxBnVepbrV6AUw" title="Punky Punk" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb7822cd0ad579b8bee59397ee" title="Punky Punk" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Punky Punk</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="RC Cola (Covers)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6Eqj0neE9r4FQQ90xT1Fcv" title="RC Cola (Covers)" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb1d5b3bd0e826cb42ef6e79eb" title="RC Cola (Covers)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">RC Cola (Covers)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Relaxing Music">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/00MN3KbmOPAqb6wPZNJamN" title="Relaxing Music" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4f33baaa1b914181bd9777ab" title="Relaxing Music" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Relaxing Music</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Rock-ish">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1H8ByjECeuxBvymYZl4RsP" title="Rock-ish" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2fddca10af66646fe3ba39f0" title="Rock-ish" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Rock-ish</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Shit Most People Know">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/32Y46nZkQYhgcCoKuDhAWB" title="Shit Most People Know" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb5c2cfc3187a03a0563e6d729" title="Shit Most People Know" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Shit Most People Know</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Shit Popular Kids Listen To">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/79huPReU0w7HwPiyGW1yBK" title="Shit Popular Kids Listen To" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbfb401d7cde1a8b03adbad015" title="Shit Popular Kids Listen To" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Shit Popular Kids Listen To</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Ska">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3mGV5hhX66k8qbcmdAhdjT" title="Ska" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb58c24023831ee1a859ea46cd" title="Ska" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Ska</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Sprite">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3qjJXrInMowsYKfTcufE3E" title="Sprite" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb31db38e23e3eb35ea4888805" title="Sprite" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Sprite</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Super Catchy Playlist of Awesomeness">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5TlaLmwJ78JuMXZqO8Gwuf" title="Super Catchy Playlist of Awesomeness" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe8ddd8d7c69219093245f995" title="Super Catchy Playlist of Awesomeness" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Super Catchy Playlist of Awesomeness</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="The Ghost of the Fangirl Inside">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/39Qd3RFDQ6EC5X4OGvYgk4" title="The Ghost of the Fangirl Inside" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe53f1f33c884a12bc1d0b0ee" title="The Ghost of the Fangirl Inside" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">The Ghost of the Fangirl Inside</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Video Game Music">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1lOCbdVj6y5ioW3zJCWmXt" title="Video Game Music" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb95a27b82c8d093a9af0a537b" title="Video Game Music" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Video Game Music</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Water">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3KFzzQspfQKTJykg2JPeGq" title="Water" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb09ed172fa477cc6b7bce271e" title="Water" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Water</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="한국 음악">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2J44rmvOfV9UjPWWWHrtUr" title="한국 음악" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebba9cf76156dc9cad5a217abb4" title="한국 음악" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">한국 음악</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">Mood</div>
+<div id="mood-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="/v/">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7al2fqezEeILOYsV9rhsTk" title="/v/" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb42366dae6ffdf4ae35f27501" title="/v/" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">/v/</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Gaming">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2cvU2CKGgcITNEmwD8FlP8" title="Gaming" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4b3979c3ac11af5a837181d0" title="Gaming" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Gaming</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Halo Jam">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/17Y7x3AJbQFgsniWBoOKuR" title="Halo Jam" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb54fbb4ea76e87b7d7512b591" title="Halo Jam" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Halo Jam</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Hype Music">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/53h3qQTsbWGrDxEjRcJEyE" title="Hype Music" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb29c2567b26ac4d3aa1e17a5" title="Hype Music" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Hype Music</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Lay off me I'm drinking">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0U8cVVHDUqD6vNd5GfqDxp" title="Lay off me I'm drinking" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf91f9c9a2e35fbc0aa2957d0" title="Lay off me I'm drinking" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Lay off me I'm drinking</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Lit AF Party Shit">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7Dv7yQnGHBG0QoSh4FSZjw" title="Lit AF Party Shit" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb0431cd404e5523c7798725f3" title="Lit AF Party Shit" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Lit AF Party Shit</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="LSD: the Musical">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/15CbAwpHtsvTEaJ5Ja0CUB" title="LSD: the Musical" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb957d18d62cf582c3e6924378" title="LSD: the Musical" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">LSD: the Musical</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Rainy Day Shit">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/77xXQjgbo6VRTwyuZH1PqB" title="Rainy Day Shit" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb831ba46d6527c3ed1c12882a" title="Rainy Day Shit" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Rainy Day Shit</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Sad">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4bJSx34iZVTp7W3SmePimE" title="Sad" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb48632dbe37e3f0a4809a4f13" title="Sad" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Sad</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Sad-ish Songs From When I Didn't Want to Kill Myself lol">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2f5sZEI1WtH47UxMfTrq6V" title="Sad-ish Songs From When I Didn't Want to Kill Myself lol" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe0d3473a7d9844bfd50fbb32" title="Sad-ish Songs From When I Didn't Want to Kill Myself lol" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Sad-ish Songs From When I Didn't Want to Kill Myself lol</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">Misc</div>
+<div id="misc-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="Ayyyyyyy">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4XCH39K1JKYejHb94PJgKf" title="Ayyyyyyy" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb7ebd94f88bec34243bdd53e7" title="Ayyyyyyy" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Ayyyyyyy</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="CAMPFIRE SONG song(s)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6aJQKhhdwpd6qdHCaWVMZi" title="CAMPFIRE SONG song(s)" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb73ef8b0838a379a4735a0741" title="CAMPFIRE SONG song(s)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">CAMPFIRE SONG song(s)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Liked from Radio">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6FYfNK1P3Bm6GBN1hcEG0D" title="Liked from Radio" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb1b684ecf54d02c89deb2613c" title="Liked from Radio" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Liked from Radio</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Misc">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1q0QJARktPTdOhdMRT2UTR" title="Misc" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe0487daab2741d218f96db6b" title="Misc" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Misc</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Random">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3T8Nf97uaUV1jU1PsLCE5F" title="Random" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe2d556a3e3a84dec2b096312" title="Random" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Random</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Starred">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0wfRkRhenjT32tzdgXzah9" title="Starred" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb499fa256b3f8a74056e9a69e" title="Starred" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Starred</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Stream Music">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4jxA74UGbGD8xEeMbWYzo1" title="Stream Music" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbffbb7f3cd36cdcff9f881803" title="Stream Music" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Stream Music</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Twitch Recently Played">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/43Got1e2juQthp1BeC42Yv" title="Twitch Recently Played" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbdd5a1f82fb033a8ea4a2d1a2" title="Twitch Recently Played" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Twitch Recently Played</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Various Songs">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0lOpMj4cWyaismLvcX2ItX" title="Various Songs" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb5bdf633efa5fc45ca743a082" title="Various Songs" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Various Songs</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Yeet Beets">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5V30pNh578fYRgENnhUDXx" title="Yeet Beets" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebba16d46654e0c85ac5569aec7" title="Yeet Beets" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Yeet Beets</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Yeeter Beats">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/40OxH2oS3rAPC1OdhZw02Y" title="Yeeter Beats" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebbb847b520c0ecb7fcf9c86732" title="Yeeter Beats" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Yeeter Beats</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Yes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/407wS6qF8RHML0dVwNyUvR" title="Yes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb5b54924e983ea1af1765fb2d" title="Yes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Yes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">Others</div>
+<div id="others-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="'Dad Rock' Tiffany Won't Admit She Likes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2svnu7WDXRSOvw7O2G8jCL" title="'Dad Rock' Tiffany Won't Admit She Likes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb1cfca095a63c75006361d8fb" title="'Dad Rock' Tiffany Won't Admit She Likes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">'Dad Rock' Tiffany Won't Admit She Likes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="'Mountain Dew' Music Tiffany Won't Admit She Likes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5HmZf8R1vlnhWF7UcZAYFJ" title="'Mountain Dew' Music Tiffany Won't Admit She Likes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb38016df4a94cf32a883c3909" title="'Mountain Dew' Music Tiffany Won't Admit She Likes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">'Mountain Dew' Music Tiffany Won't Admit She Likes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="(MAX)imum Overdrive">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/47McwFCYFj78HuGtsbyLnj" title="(MAX)imum Overdrive" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2e85e46fbc6f8653097b91ec" title="(MAX)imum Overdrive" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">(MAX)imum Overdrive</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="[UK#1]">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6Qh2BhHEfMb3qa19tSCPA7" title="[UK#1]" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb1167a99e1cb7a33a9db9307a" title="[UK#1]" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">[UK#1]</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Alice">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3OpnhqIRfXYVxk0BDgAdEg" title="Alice" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb95819ce481df9c72f9fe4343" title="Alice" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Alice</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Becca Beats Battlestar Galactica">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2bqIrFrGuLdZ3gyDIdxCkZ" title="Becca Beats Battlestar Galactica" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbbedd22a9311cf0f6a7dadc2f" title="Becca Beats Battlestar Galactica" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Becca Beats Battlestar Galactica</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Brix's Bops">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7AVn7cy7XopHvqB0FTaUDF" title="Brix's Bops" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb0fa9f41d3aabe7c2affb049d" title="Brix's Bops" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Brix's Bops</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Brixy’s Ballads 🎶">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5STP8HelLq2sbO7IXY4pxx" title="Brixy’s Ballads 🎶" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b273262c8e955ad5c60b1d0abf53ab67616d0000b2736fc4cc63e3b8bda08d827412ab67616d0000b2739416ed64daf84936d89e671cab67616d0000b273f907de96b9a4fbc04accc0d5" title="Brixy’s Ballads 🎶" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Brixy’s Ballads 🎶</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Catch Up (EDM)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/05PAFz8EcvVUVgkDEGpk02" title="Catch Up (EDM)" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbb2a3aa0570ecb6c85d07ba90" title="Catch Up (EDM)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Catch Up (EDM)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Catch Up (Non-EDM)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2I2Nao1Ts8YpNEv3iFpovV" title="Catch Up (Non-EDM)" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b27332d17664fdebf9f9aca45660ab67616d0000b2733e689f11c533e960800dfd25ab67616d0000b27349e3b7e85829da2fbc68bc46ab67616d0000b273b3cfb15b97e96a97a96cadfa" title="Catch Up (Non-EDM)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Catch Up (Non-EDM)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Cookie Monster Jams">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5MsL0I7sHHD71MkItxVxff" title="Cookie Monster Jams" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb118ad3eb22533f0e5246b609" title="Cookie Monster Jams" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Cookie Monster Jams</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="DEEP songs">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6ma8PHW83LOxTKTW3cvfVI" title="DEEP songs" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b2731fc8bc00af1c877377d1dcf8ab67616d0000b273b8cbd10a0eaf48726171aeaeab67616d0000b273f896b919de1b580265ebf18eab67616d0000b273fddd71afcc8f44bdbd97d364" title="DEEP songs" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">DEEP songs</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Diamond Dream$">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3gpbCql7J7zWw0UlVdWeKC" title="Diamond Dream$" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b273138236a8d63cff56e55aa1b0ab67616d0000b2734e82da30176b67c413a92dc6ab67616d0000b2736e163b78304c076517500249ab67616d0000b273d597f3989925ca6c22af6b35" title="Diamond Dream$" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Diamond Dream$</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="EDM for Rudy">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4GBtUG8tlzEHNZp12CYTOC" title="EDM for Rudy" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb3b962801ca4daf0f2dfd31f3" title="EDM for Rudy" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">EDM for Rudy</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="EDM Four Jay-San (´・ω・)っ">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6Ajq1Vr8MiETgaSNHJyA6G" title="EDM Four Jay-San (´・ω・)っ" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2a30f765c71af21f1e56cda4" title="EDM Four Jay-San (´・ω・)っ" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">EDM Four Jay-San (´・ω・)っ</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="EDM Music Tiffany Won't Admit She Likes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2CtDC7taBZF1vA5PygRiZg" title="EDM Music Tiffany Won't Admit She Likes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb72a5103989effba9baf0a9a6" title="EDM Music Tiffany Won't Admit She Likes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">EDM Music Tiffany Won't Admit She Likes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="El Mosso Musico">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5jJpirW0gYkEJwYxHT69NJ" title="El Mosso Musico" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b2731d421119351d6801a2c99741ab67616d0000b273298fc5e425bac3d979c7823dab67616d0000b2739550308c4fb2b3a8b2b6e612ab67616d0000b2739f8ac0f160a5141a077b41c1" title="El Mosso Musico" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">El Mosso Musico</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="For Becca">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2Rgms1I9tmcgFpaqrCtrI2" title="For Becca" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b273175c577a61aa13d4fb4b6534ab67616d0000b273798f315e011d4ada702ce9bbab67616d0000b2737dc609dba0865d5ebb5be8ecab67616d0000b273c4fe54f010091dc19dc42df4" title="For Becca" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">For Becca</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="For Jason">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/3aoZadjk4QiyUkzQydMqMs" title="For Jason" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb6f2b46ea888b8885c2fe6fe9" title="For Jason" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">For Jason</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="For Jason (Non-EDM)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2GV4G0QmaEWOdGoQRd4sfl" title="For Jason (Non-EDM)" target="_blank" rel="noopener noreferrer">
+        <img src="https://mosaic.scdn.co/640/ab67616d0000b27315aa37b4980e1b57187e1e56ab67616d0000b2733e689f11c533e960800dfd25ab67616d0000b273505de5ff8d2fe5c65418c50dab67616d0000b273782b2d8e0af9f1f399b4a1cc" title="For Jason (Non-EDM)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">For Jason (Non-EDM)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="For Kelly">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2ZeTMp6m84Sjgb09wDIzkq" title="For Kelly" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf3dddb041c58244e39f5ca92" title="For Kelly" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">For Kelly</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="For You">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7dN4X2QcfkTxU6gviaAqjv" title="For You" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb6c11d44822085584ec5593d6" title="For You" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">For You</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="GSL">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4NexQKZYST57Px5NyAWCSE" title="GSL" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebb9359748052fabc429afc7d33" title="GSL" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">GSL</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Horseplay(list)">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5S8RvQ8TeUPv0qmXkgPz7J" title="Horseplay(list)" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbf953f4413ba3bde750ebb1de" title="Horseplay(list)" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Horseplay(list)</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Max Rap">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2AZ6JStTJhYkfomuqGpsa7" title="Max Rap" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb87422d272d93215ca0b5198d" title="Max Rap" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Max Rap</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Metal-ish Music Tiffany Won't Admit She Likes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0K6TD8IEIExN59XMk6JZbx" title="Metal-ish Music Tiffany Won't Admit She Likes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbc15c80cfa1557e75bd4d28e0" title="Metal-ish Music Tiffany Won't Admit She Likes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Metal-ish Music Tiffany Won't Admit She Likes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Moss Clan Jams">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1al6pR0kxep0uPsFlaVxtj" title="Moss Clan Jams" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb4fd813a427520c27167bcbcf" title="Moss Clan Jams" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Moss Clan Jams</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Play It Forward 2014">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6IylZd2KMRQ36ZRivTtFRd" title="Play It Forward 2014" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb0889e5a5e5844fe06e4e6abc" title="Play It Forward 2014" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Play It Forward 2014</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Rap Music Tiffany Won't Admit She Likes">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/35SU7Va29ZVZ5GPbsCBM8L" title="Rap Music Tiffany Won't Admit She Likes" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb2ae476eac75bccb8f8c4f3d5" title="Rap Music Tiffany Won't Admit She Likes" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Rap Music Tiffany Won't Admit She Likes</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Shit Stan Needs to Listen To">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/6bvXCF51wPKfPb2bdF99iK" title="Shit Stan Needs to Listen To" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb8d5b2866b2efc24c1f2c216e" title="Shit Stan Needs to Listen To" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Shit Stan Needs to Listen To</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Songs To Make Caleb Feel Nostalgic and Shit">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/2jrb5oJHnAp2tyrNtprxhz" title="Songs To Make Caleb Feel Nostalgic and Shit" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbdf03e3130b2fd1399b1b5db9" title="Songs To Make Caleb Feel Nostalgic and Shit" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Songs To Make Caleb Feel Nostalgic and Shit</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Temp 2">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/799P5pOU046X0WuKO8iE1b" title="Temp 2" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbe64138183eeb5f72b7c92cff" title="Temp 2" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Temp 2</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Will">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/4AIkgOC5lHLeZb5K61R1aJ" title="Will" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb9ca84c78918613706f2b7864" title="Will" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Will</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="display-4 category">Archive</div>
+<div id="archive-items" class="row d-flex flex-wrap justify-content-between px-5">
+  <div class="plist p-0 overflow-hidden" title="Chill-ish EDM II: The Breakup">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5TGnqvlcYXsNux2ekDI8Xn" title="Chill-ish EDM II: The Breakup" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb427cff4c5fa22c6ad075bcd2" title="Chill-ish EDM II: The Breakup" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Chill-ish EDM II: The Breakup</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="EDM Archive">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/5d9Qvpc8vr4qF7I5XzKVx8" title="EDM Archive" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb3b0a641e42d98acd47f1265b" title="EDM Archive" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">EDM Archive</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Main Archived">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1AMV6cbgUFs5xGsduAWL71" title="Main Archived" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebbaeebc508a425cd4b90f5f4bf" title="Main Archived" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Main Archived</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Metal Archive">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/7wDvx3MTesh10gYiiQj9x2" title="Metal Archive" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-fa.spotifycdn.com/image/ab67706c0000bebbaf3a3add67ad1b95381beda9" title="Metal Archive" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Metal Archive</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Mountain Dew Archive">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/0Y6LVVmCd5KP40li5t6Be7" title="Mountain Dew Archive" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb3837959a6aec5fa447aab37c" title="Mountain Dew Archive" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Mountain Dew Archive</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="plist p-0 overflow-hidden" title="Rap Archive">
+    <div class="card h-100 text-bg-dark p-0 object-fit-fill">
+      <a class="card-img" href="https://open.spotify.com/playlist/1voV8wijMweDu8d6kswdDj" title="Rap Archive" target="_blank" rel="noopener noreferrer">
+        <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000bebb063027c9e6fe7edf5e1a050b" title="Rap Archive" class="object-fit-cover  h-100 w-100" />
+      </a>
+      <div class="d-flex align-items-end card-img-overlay p-0 pe-none" style="">
+        <div class="p-2 bg-dark">
+          <h5 class="display-6">Rap Archive</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+    </div>
+    <footer>
+      <hr style="opacity: 0.2; width: 90%;" class="mx-auto" />
+      <div style="height: 200px;">
+
+      </div>
+    </footer>
+  </div>
+
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#txtSearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        console.log('search: ' + value);
+        $("#items .plist").filter(function () {
+          $(this).toggle($(this).attr('title').toLowerCase().indexOf(value) > -1)
+        });
+      });
+
+      $('#txtSearch').focus();
+    });
+  </script>
+
+</body>
+
+</html>
+
