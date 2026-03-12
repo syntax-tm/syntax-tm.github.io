@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "lib": ["dom", "dom.iterable", "es2022"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2022"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,7 +15,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "sourceMap": true,
     "noImplicitAny": true,
@@ -22,17 +26,39 @@
       }
     ],
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@models/*": ["./src/models/*"],
-      "@services/*": ["./src/services/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@/*": ["./src/*"],
-      "image/*": ["./public/image/*"],
-      "svg/*": ["./public/svg/*"],
-      "@config/*": ["./public/config/*"],
-      "@audio/*": ["./public/audio/*"],
-      "@app/*": ["./src/app/*"],
-      "public/*": ["./public/*"]
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ],
+      "image/*": [
+        "./public/image/*"
+      ],
+      "svg/*": [
+        "./public/svg/*"
+      ],
+      "@config/*": [
+        "./public/config/*"
+      ],
+      "@audio/*": [
+        "./public/audio/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "public/*": [
+        "./public/*"
+      ]
     }
   },
   "include": [
@@ -40,7 +66,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "./tsconfig.json"]
+  "exclude": [
+    "node_modules",
+    "./tsconfig.json"
+  ]
 }

@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import Background from '@components/background/background';
 import Clock from "@components/clock/Clock";
