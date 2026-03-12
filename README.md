@@ -2,7 +2,7 @@
 
 ## Current Deployment
 
-[gundwn.gg](https://gundwn.gg)
+[View](https://syntax-tm.github.io/)
 
 ## Preview
 
