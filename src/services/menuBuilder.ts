@@ -141,11 +141,11 @@ function buildSocialCategory(): XmbCategory {
 }
 
 function buildSettingsCategory(): XmbCategory {
-    const viewSource = new XmbItem("viewSource", "Source", icons.git, 'https://github.com/syntax-tm/gundwn.gg');
+    const viewSource = new XmbItem("viewSource", "Source", icons.git, 'https://github.com/syntax-tm/syntax-tm.github.io');
     viewSource.description = 'View this project on GitHub';
     viewSource.setActive();
 
-    const fork = new XmbItem("fork", "Fork", icons.codeFork, 'https://github.com/syntax-tm/gundwn.gg/fork');
+    const fork = new XmbItem("fork", "Fork", icons.codeFork, 'https://github.com/syntax-tm/syntax-tm.github.io/fork');
     fork.description = 'Fork this project on GitHub';
 
     const nextJs = new XmbItem("nextjs", "Next.js", icons.nextJs, 'https://nextjs.org/');
