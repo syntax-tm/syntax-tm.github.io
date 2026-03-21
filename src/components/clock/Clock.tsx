@@ -9,9 +9,9 @@ export default function Clock() {
   const getTimeString = (value: Date) => {
     // show the colon for two seconds, then hide for one second
     // there's probably a better way to do this but i wanted to show the clock was "running"
-    const showColon = value.getSeconds() % 3 !== 2;
+    const hideColon = value.getSeconds() % 3 === 2;
     const formatted = value.toLocaleTimeString('en-US', { hour: "numeric", minute: "numeric" });
-    if (showColon) {
+    if (hideColon) {
       return formatted.replace(':', ' ');
     }
     return formatted;
