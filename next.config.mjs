@@ -29,7 +29,7 @@ const nextConfig = {
   },
   experimental: {
     // TODO: add missing Suspense and remove this suppression
-    missingSuspenseWithCSRBailout: false,
+    // missingSuspenseWithCSRBailout: false,
   },
 };
 
