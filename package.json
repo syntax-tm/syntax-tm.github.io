@@ -1,5 +1,5 @@
 {
-  "name": "syntax-tm-github-pages",
+  "name": "syntax-tm-github-io",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -55,6 +55,6 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
   },
-  "description": "Gundwn.gg",
+  "description": "@syntax-tm GitHub Pages Site",
   "packageManager": "yarn@4.3.1"
 }
