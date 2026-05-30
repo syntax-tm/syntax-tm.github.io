@@ -57,7 +57,7 @@ const nextConfig = {
       config.plugins.push(
         new WebpackShellPluginNext({
           onBuildStart: {
-            scripts: ['node ./scripts/preBuild.cjs'],
+            scripts: ['node ./scripts/prebuild.cjs'],
             blocking: true,
             parallel: false,
           },
