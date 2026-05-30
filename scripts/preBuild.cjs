@@ -24,10 +24,10 @@ const t = d.getTime();
 //   console.error(`Failed to get Next.js version: ${error.message}`);
 // }
 
-const output = execSync("npx next --version").toString().trim();
-const versionRegex = new RegExp("v[\\d\\.]+\\b");
+const output = execSync("yarn info next --name-only").toString().trim();
+const versionRegex = new RegExp(":(?<version>(?:\\d+|\\.)+)");
 const result = versionRegex.exec(output.toString());
-const nextJsVersion = result ? result[0] : "Unknown";
+const nextJsVersion = result ? result.groups.version : "Unknown";
 
 const envContent = `
 NEXT_PUBLIC_BUILD_DATETIME="${buildDate} ${buildTime}"
@@ -37,7 +37,7 @@ NEXT_PUBLIC_BUILD_TIME="${buildTime}"
 NEXT_PUBLIC_BUILD_TIME_LOCAL="${d.toLocaleTimeString('en-US', { hour12: true })}"
 NEXT_PUBLIC_TZ_LONG="${tzLongName}"
 NEXT_PUBLIC_TZ_SHORT="${tzName}"
-NEXT_PUBLIC_NODE_VERSION=${process.version}
+NEXT_PUBLIC_NODE_VERSION="${process.version}"
 NEXT_PUBLIC_NEXTJS_VERSION="${nextJsVersion}"
 `;
 
