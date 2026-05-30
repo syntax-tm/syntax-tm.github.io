@@ -1,6 +1,9 @@
 import version from './package.json' with { type: 'json' };
 import { fileURLToPath } from "url";
 import path from 'path';
+//import prebuildTask from './scripts/preBuild.mjs';
+
+//prebuildTask();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -48,7 +51,22 @@ const nextConfig = {
   },
   turbopack: {
     root: path.join(__dirname),
-  }
+  },
+  webpack: (config, { dev, isServer }) => {
+    if (isServer && !dev) {
+      config.plugins.push(
+        new WebpackShellPluginNext({
+          onBuildStart: {
+            scripts: ['node ./scripts/preBuild.cjs'],
+            blocking: true,
+            parallel: false,
+          },
+        })
+      );
+    }
+
+    return config
+  },
 };
 
 export default nextConfig;
