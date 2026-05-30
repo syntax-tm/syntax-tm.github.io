@@ -48,19 +48,21 @@ export const AboutView = () => {
           {
             Object.entries(displayItems).map(([key, value]) => (
               <tr className="" key={key}>
-                <th scope="row" className="px-3 py-2.5 align-text-top text-sm md:text-base text-gray-500 whitespace-nowrap dark:text-gray-400 text-right">
-                  {key}
+                <th scope="row" className="px-3 py-2.5 text-sm md:text-base text-gray-300 whitespace-nowrap dark:text-gray-300 text-right">
+                  <span className="inline-block align-baseline">{key}</span>
                 </th>
-                <td className="px-3 py-2.5 text-wrap whitespace-normal text-left text-sm -indent-4 md:indent-0">
-                  <div>
+                <td className="px-3 py-2.5 text-wrap whitespace-normal text-left text-sm md:text-base -indent-4 md:indent-0">
+                  <div className="grid grid-cols-1">
                     {
                       value !== null && isMultiLine(value) && getLines(value).map((line, index) => (
-                        <p key={index}>{line}</p>
+                        <span key={index} className="inline-block align-baseline text-gray-400 dark:text-gray-400">
+                          {line}
+                        </span>
                       ))
                     }
                     {
                       !isMultiLine(value) && (
-                        <p>{value}</p>
+                        <span className="inline-block align-baseline">{value}</span>
                       )
                     }
                   </div>
