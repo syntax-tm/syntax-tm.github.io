@@ -25,9 +25,15 @@ const t = d.getTime();
 // }
 
 const output = execSync("yarn info next --name-only").toString().trim();
+
+console.log('yarn info next output:');
+console.log(output);
+
 const versionRegex = new RegExp(":(?<version>(?:\\d+|\\.)+)");
 const result = versionRegex.exec(output.toString());
-const nextJsVersion = result ? result.groups.version : "Unknown";
+const nextJsVersion = result ? result[1] : "Unknown";
+
+console.log(`Extracted Next.js version: ${nextJsVersion}`);
 
 const envContent = `
 NEXT_PUBLIC_BUILD_DATETIME="${buildDate} ${buildTime}"
@@ -40,6 +46,9 @@ NEXT_PUBLIC_TZ_SHORT="${tzName}"
 NEXT_PUBLIC_NODE_VERSION="${process.version}"
 NEXT_PUBLIC_NEXTJS_VERSION="${nextJsVersion}"
 `;
+
+console.log('.env file contents:');
+console.log(envContent);
 
 fs.writeFileSync('.env', envContent.trim());
 
