@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { execSync } = require("child_process");
 
 const d = new Date();
 const buildDate = d.toISOString().split('T')[0];
@@ -13,6 +14,21 @@ const tzName = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
 
 const t = d.getTime();
 
+// try {
+//   const versionRegex = new RegExp("v[\d\.]+\b");
+//   const stdout = execSync("npx next --version");
+//   const result = versionRegex.exec(stdout.toString());
+//   console.log(`Result: ${result}`);
+//   nextJsVersion = result ? result[0] : "Unknown";
+// } catch (error) {
+//   console.error(`Failed to get Next.js version: ${error.message}`);
+// }
+
+const output = execSync("npx next --version").toString().trim();
+const versionRegex = new RegExp("v[\\d\\.]+\\b");
+const result = versionRegex.exec(output.toString());
+const nextJsVersion = result ? result[0] : "Unknown";
+
 const envContent = `
 NEXT_PUBLIC_BUILD_DATETIME="${buildDate} ${buildTime}"
 NEXT_PUBLIC_BUILD_DATE="${buildDate}"
@@ -22,6 +38,7 @@ NEXT_PUBLIC_BUILD_TIME_LOCAL="${d.toLocaleTimeString('en-US', { hour12: true })}
 NEXT_PUBLIC_TZ_LONG="${tzLongName}"
 NEXT_PUBLIC_TZ_SHORT="${tzName}"
 NEXT_PUBLIC_NODE_VERSION=${process.version}
+NEXT_PUBLIC_NEXTJS_VERSION="${nextJsVersion}"
 `;
 
 fs.writeFileSync('.env', envContent.trim());

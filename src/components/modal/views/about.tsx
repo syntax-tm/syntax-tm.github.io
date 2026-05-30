@@ -20,6 +20,7 @@ const displayItems: Record<string, string | undefined> = {
   "Name": process.env.name,
   "Version": process.env.version,
   "Description": process.env.description,
+  "Next.js": process.env.NEXT_PUBLIC_NEXTJS_VERSION,
   "Package Manager": process.env.packageManger,
   "Build Date": `${process.env.NEXT_PUBLIC_BUILD_DATE_LOCAL} ${process.env.NEXT_PUBLIC_BUILD_TIME_LOCAL} ${process.env.NEXT_PUBLIC_TZ_SHORT}`,
   "Dependencies": process.env.dependencies,
