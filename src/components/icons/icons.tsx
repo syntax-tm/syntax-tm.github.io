@@ -1,3 +1,7 @@
+// TODO: clean this up and remove unused icons
+// TODO: add findIconDefinition to load fa icons by name once config is moved to json
+// https://docs.fontawesome.com/web/use-with/react/use-with#typescript
+
 /* eslint-disable @next/next/no-img-element */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,7 +26,11 @@ import {
   faChartLine,
   faBoxesPacking,
   faCodeFork,
-  faShare
+  faShare,
+  faInfo,
+  faCircleInfo,
+  faQuestion,
+  faQuestionCircle
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -71,6 +79,18 @@ import nugetIcon from "public/image/xmb/nuget.png";
 import halo3generalBwIcon from "public/image/halo_3_general_bw.png";
 import statsFmIcon from "public/svg/statsfm.svg";
 
+export const info: ReactElement = (
+  <FontAwesomeIcon icon={faInfoCircle} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
+);
+export const infoCircle: ReactElement = (
+  <FontAwesomeIcon icon={faInfoCircle} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
+);
+export const question: ReactElement = (
+  <FontAwesomeIcon icon={faQuestion} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
+);
+export const questionCircle: ReactElement = (
+  <FontAwesomeIcon icon={faQuestionCircle} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
+);
 export const share: ReactElement = (
   <FontAwesomeIcon icon={faShare} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
 );
@@ -201,10 +221,10 @@ export const telegram: ReactElement = (
   <FontAwesomeIcon icon={faTelegram} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
 );
 export const home: ReactElement = (
-  <Image src={homeIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="home icon" />
+  <Image src={homeIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="home icon" loading="eager" priority={true} />
 );
 export const display: ReactElement = (
-  <Image src={displayIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="display icon" />
+  <Image src={displayIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="display icon" loading="eager" priority={true} />
 );
 export const games: ReactElement = (
   <Image src={gamesIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="games icon" />
@@ -212,11 +232,8 @@ export const games: ReactElement = (
 export const gow3: ReactElement = (
   <Image src={gow3Icon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="gow3 icon" />
 );
-export const info: ReactElement = (
-  <FontAwesomeIcon icon={faInfoCircle} className="xmb-icon justify-self-center w-[100%] h-[100%]" />
-);
 export const music: ReactElement = (
-  <Image src={musicIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="music icon" />
+  <Image src={musicIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="music icon" loading="eager" priority={true} />
 );
 export const photo: ReactElement = (
   <Image src={photoIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="photo icon" />
@@ -228,7 +245,7 @@ export const resume: ReactElement = (
   <Image src={resumeIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="resume icon" />
 );
 export const settings: ReactElement = (
-  <Image src={settingsIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="settings icon" />
+  <Image src={settingsIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="settings icon" loading="eager" priority={true} />
 );
 export const uncharted: ReactElement = (
   <Image src={unchartedIcon} className="xmb-icon justify-self-center w-[100%] h-[100%]" alt="uncharted icon" />

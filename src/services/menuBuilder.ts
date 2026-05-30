@@ -2,18 +2,22 @@ import { XmbMenu, XmbCategory, XmbItem } from "@/models/menu";
 import * as icons from '@components/icons/icons';
 
 function buildHomeCategory(): XmbCategory {
-    const welcome = XmbItem.createModal("welcome", "Welcome", icons.star, 'help');
-    welcome.description = "Click to view controls";
-    welcome.setActive();
+    // const welcome = XmbItem.createModal("welcome", "Welcome", icons.star, 'help');
+    // welcome.description = "Click to view controls";
+    // welcome.setActive();
 
-    const help = XmbItem.createModal("help", "Help", icons.info, 'help');
+    const about = XmbItem.createModal("about", "About", icons.info, 'about');
+    about.description = "Display the about screen";
+    about.setActive();
+
+    const help = XmbItem.createModal("help", "Help", icons.questionCircle, 'help');
     help.description = "Display the help screen";
 
     const contact = new XmbItem("contact", "Contact", icons.message, 'mailto:info@test.com');
     contact.description = 'Send a message';
 
     const items: XmbItem[] = [
-        //welcome,
+        about,
         help,
         contact,
     ];

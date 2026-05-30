@@ -53,7 +53,7 @@ export const MenuItem = ({ index, item, y }: MenuItemProps) => {
     <>
       <Link
         id={item.id}
-        className={`xmb-item flex items-center justify-self-center select-none ${active ? "active" : "inactive"} ${index === 0 ? "first" : ""}`}
+        className={`w-100 relative xmb-item flex justify-self-center select-none ${active ? "active" : "inactive"} ${index === 0 ? "first" : ""}`}
         style={styleProps}
         href={item.link || ""}
         onClick={(e) => {
@@ -67,16 +67,22 @@ export const MenuItem = ({ index, item, y }: MenuItemProps) => {
           item.onClick();
         }}
         target={item.link && "_blank" || undefined}>
-        {item.icon}
-        <div className="grid grid-cols-1 content-around select-none">
-          <p className="xmb-item-name text-nowrap select-none">
-            {item.title}
-          </p>
-          {item.description && (
-            <p className="xmb-item-description text-nowrap select-none">
-              {item.description}
-            </p>
-          )}
+        <div className="grid grid-cols-1 overflow-visible relative">
+          <div className="w-[120px]">
+            {item.icon}
+          </div>
+          <div className="absolute pl-[120px] h-[100%] m-[5px] align-middle place-content-evenly">
+            <div className="mt-[-20px] h-[100%] grid grid-cols-1 content-center auto-rows-max select-none w-300 text-left">
+              <div className="row xmb-item-name text-nowrap select-none">
+                {item.title}
+              </div>
+              {item.description && (
+                <div className="row xmb-item-description text-nowrap select-none">
+                  {item.description}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </Link>
     </>

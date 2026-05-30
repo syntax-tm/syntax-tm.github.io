@@ -951,6 +951,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/env@npm:^16.2.6":
+  version: 16.2.6
+  resolution: "@next/env@npm:16.2.6"
+  checksum: 10c0/466722ce30a9561d29c08a7ba78091a47fef3644f422d04751c7124a24457ffe11eb25bb6c59c1e1d57735d9c68c58d185cc19ea58befd7a9c5b81dc05ca550d
+  languageName: node
+  linkType: hard
+
 "@next/eslint-plugin-next@npm:16.2.6":
   version: 16.2.6
   resolution: "@next/eslint-plugin-next@npm:16.2.6"
@@ -1707,6 +1714,13 @@ __metadata:
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
   checksum: 10c0/aef7bb9b015883d6f4119c423dd28c4bdc17b0e8a0ccf112c78b4fe0e91fbc4af7c6204b04bba0e199a57d2f3fbbd5b4a14bf8739bf9d2a39b2a0aad545e0f86
+  languageName: node
+  linkType: hard
+
+"@types/prismjs@npm:^1.26.0":
+  version: 1.26.6
+  resolution: "@types/prismjs@npm:1.26.6"
+  checksum: 10c0/152a27500cb32b114edfb77f9d0dccd03bebc84828d1e92abacaf212b22d3ccdde041ce421dd58b6ec8461bbec7cd76ed5ee773cae4be7ca36a6dd4ddcf0f9e7
   languageName: node
   linkType: hard
 
@@ -3344,6 +3358,13 @@ __metadata:
     process-nextick-args: "npm:^2.0.0"
     readable-stream: "npm:^2.3.5"
   checksum: 10c0/52db2904dcfcd117e4e9605b69607167096c954352eff0fcded0a16132c9cfc187b36b5db020bee2dc1b3a968ca354f8b30aef3d8b4ea74e3ea83a81d43e47bb
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^2.0.0":
+  version: 2.1.1
+  resolution: "clsx@npm:2.1.1"
+  checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
   languageName: node
   linkType: hard
 
@@ -8826,6 +8847,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prism-react-renderer@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "prism-react-renderer@npm:2.4.1"
+  dependencies:
+    "@types/prismjs": "npm:^1.26.0"
+    clsx: "npm:^2.0.0"
+  peerDependencies:
+    react: ">=16.0.0"
+  checksum: 10c0/ebbe8feb975224344bbdd046b3a937d121592dbe4b8f22ba0be31f5af37b9a8219f441138ef6cab1c5b96f2aa6b529015200959f7e5e85b60ca69c81d35edcd4
+  languageName: node
+  linkType: hard
+
 "proc-log@npm:^1.0.0":
   version: 1.0.0
   resolution: "proc-log@npm:1.0.0"
@@ -10568,6 +10601,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^7.2.0"
     "@fortawesome/free-solid-svg-icons": "npm:^7.2.0"
     "@fortawesome/react-fontawesome": "npm:^3.3.1"
+    "@next/env": "npm:^16.2.6"
     "@types/node": "npm:^20.14.11"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
@@ -10595,6 +10629,7 @@ __metadata:
     sass-loader: "npm:^17.0.0"
     sharp: "npm:^0.33.4"
     style-loader: "npm:^4.0.0"
+    tailwind-scrollbar: "npm:^4.0.2"
     tailwindcss: "npm:^3.4.6"
     ts-loader: "npm:^9.5.1"
     typescript: "npm:^5.5.3"
@@ -10604,6 +10639,17 @@ __metadata:
     webpack-dev-server: "npm:^5.0.4"
   languageName: unknown
   linkType: soft
+
+"tailwind-scrollbar@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "tailwind-scrollbar@npm:4.0.2"
+  dependencies:
+    prism-react-renderer: "npm:^2.4.1"
+  peerDependencies:
+    tailwindcss: 4.x
+  checksum: 10c0/942dd9ec381e09f65220fb9370f6ec1de137e88b9c7a043ee1eafd0397da1d0c4a9780e833ed159892106da820611867d358c73e05509746329cd0414102c587
+  languageName: node
+  linkType: hard
 
 "tailwindcss@npm:^3.4.6":
   version: 3.4.6

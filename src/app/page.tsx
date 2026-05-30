@@ -13,11 +13,11 @@ const Modal = dynamic(() => import('@components/modal/Modal'), { ssr: false })
 export default function Home() {
 
   return (
-    <>
+    <div className="">
       <Background />
       <Clock />
       <Menu />
       <Modal />
-    </>
+    </div>
   );
 }

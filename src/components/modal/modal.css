@@ -20,3 +20,11 @@ kbd > svg {
     text-shadow: 0 0 5px #e0e0e0, 0 0 8px #cccccc, 0 0 15px #aaaaaa, 0 0 20px #929292;
   }
 }
+
+.modal-content {
+  min-height: 400px;
+}
+
+dialog {
+  inset: 0;
+}

@@ -1,5 +1,3 @@
-//"use client"
-
 import { useEffect } from "react";
 
 const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {

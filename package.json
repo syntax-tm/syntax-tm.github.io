@@ -2,15 +2,17 @@
   "name": "syntax-tm-github-io",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "webpack --mode=production --node-env=production",
+    "dev": "node ./scripts/prebuild.cjs && next dev",
+    "build": "node ./scripts/prebuild.cjs && webpack --mode=production --node-env=production",
     "start": "next start",
     "lint": "next lint",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
+    "build:dev": "node ./scripts/prebuild.cjs && webpack --mode=development",
+    "build:prod": "node ./scripts/prebuild.cjs && webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "prebuild": "node ./scripts/prebuild.cjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.2.0",
@@ -18,6 +20,7 @@
     "@fortawesome/free-regular-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@fortawesome/react-fontawesome": "^3.3.1",
+    "@next/env": "^16.2.6",
     "@types/webpack": "^5.28.5",
     "@uidotdev/usehooks": "^2.4.1",
     "framer-motion": "^11.3.6",
@@ -49,6 +52,7 @@
     "sass": "^1.77.8",
     "sass-loader": "^17.0.0",
     "style-loader": "^4.0.0",
+    "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^3.4.6",
     "ts-loader": "^9.5.1",
     "typescript": "^5.5.3",

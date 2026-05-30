@@ -31,7 +31,9 @@ export default function Menu() {
   const play = () => {
     if (audioRef.current) {
       audioRef.current.volume = 1;
-      audioRef.current.play();
+      audioRef.current.play().catch((error) => {
+        console.error("Playback failed:", error);
+      });
     } else {
       // Throw error
     }

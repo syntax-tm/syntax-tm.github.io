@@ -1,3 +1,11 @@
+import version from './package.json' with { type: 'json' };
+import { fileURLToPath } from "url";
+import path from 'path';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const dependencies = Object.keys(version.dependencies).join('\n');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /**
@@ -31,6 +39,16 @@ const nextConfig = {
     // TODO: add missing Suspense and remove this suppression
     // missingSuspenseWithCSRBailout: false,
   },
+  env: {
+    name: version.name,
+    description: version.description,
+    version: version.version,
+    packageManger: version.packageManager,
+    dependencies: dependencies
+  },
+  turbopack: {
+    root: path.join(__dirname),
+  }
 };
 
 export default nextConfig;

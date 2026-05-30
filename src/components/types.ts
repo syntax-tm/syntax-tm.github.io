@@ -16,3 +16,8 @@ export type TSnackbarProps = Omit<SnackbarType, 'key'> & {
   open: boolean;
   variant: Variant;
 }
+
+export type KeyPressAction = {
+    repeat: boolean;
+    onKeyPress: () => void;
+}

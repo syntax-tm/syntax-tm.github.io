@@ -10,6 +10,11 @@
   z-index: 30;
 }
 
+@font-face {
+  font-family: 'clock-colon';
+  src: url('')
+}
+
 .clock .clock-container {
   width: auto;
   border: 1px solid #dadada;

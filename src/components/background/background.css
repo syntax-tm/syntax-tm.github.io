@@ -30,7 +30,7 @@ body {
   border-radius: 200% 400% 0 0;
   position: fixed;
   width: 500%;
-  height: 12em;
+  height: 30%;
   animation: wave 10s -3s linear infinite;
   transform: translate3d(0, 0, 0);
   opacity: 0.8;

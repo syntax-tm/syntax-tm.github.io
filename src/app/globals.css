@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin 'tailwind-scrollbar';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -21,6 +23,9 @@ html {
   overscroll-behavior: none;
   overflow-y: hidden;
   color: white;
+  /* Cross-browser standard properties */
+  scrollbar-width: thin; /* Options: auto, thin, none */
+  scrollbar-color: #dddddd73 transparent; /* thumb color | track color */
 }
 
 body {
@@ -35,6 +40,21 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #dddddd73 transparent;
+  scroll-padding: 50px;
+  scroll-margin: 10px;
+  scroll-margin-inline: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(85, 60, 154, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @layer utilities {
