@@ -53,7 +53,7 @@ export const MenuItem = ({ index, item, y }: MenuItemProps) => {
     <>
       <Link
         id={item.id}
-        className={`w-100 relative xmb-item flex justify-self-center select-none ${active ? "active" : "inactive"} ${index === 0 ? "first" : ""}`}
+        className={`w-100 max-w-[120px] relative xmb-item flex justify-self-center select-none ${active ? "active" : "inactive"} ${index === 0 ? "first" : ""}`}
         style={styleProps}
         href={item.link || ""}
         onClick={(e) => {
@@ -68,11 +68,11 @@ export const MenuItem = ({ index, item, y }: MenuItemProps) => {
         }}
         target={item.link && "_blank" || undefined}>
         <div className="grid grid-cols-1 overflow-visible relative">
-          <div className="w-[120px]">
+          <div className="w-30">
             {item.icon}
           </div>
-          <div className="absolute pl-[120px] h-[100%] m-[5px] align-middle place-content-evenly">
-            <div className="mt-[-20px] h-[100%] grid grid-cols-1 content-center auto-rows-max select-none w-300 text-left">
+          <div className="absolute pl-30 h-full m-1.25 align-middle place-content-evenly">
+            <div className="-mt-5 h-full grid grid-cols-1 content-center auto-rows-max select-none w-300 text-left">
               <div className="row xmb-item-name text-nowrap select-none">
                 {item.title}
               </div>

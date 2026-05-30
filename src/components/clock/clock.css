@@ -7,13 +7,10 @@
   color: white;
   text-align: right;
   font-size: 18px;
-  z-index: 30;
+  z-index: 1;
 }
 
-@font-face {
-  font-family: 'clock-colon';
-  src: url('')
-}
+
 
 .clock .clock-container {
   width: auto;
@@ -21,7 +18,7 @@
   border-right: none;
   border-radius: 3px;
   padding: 5px 40px 5px 20px;
-  z-index: 30;
+  z-index: 1;
 }
 
 .clock .clock-container p {

@@ -22,7 +22,7 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
       <div className="my-auto mx-auto grid grid-cols-1 w-full h-full justify-items-center">
         <div className="relative my-auto">
           <div className="flex mb-2 ">
-            <label className="text-lg sm:text-xl my-auto opacity-50 text-white flex-grow align-bottom mb-1">
+            <label className="text-lg sm:text-xl my-auto opacity-50 text-white grow align-bottom mb-1">
               {title}
             </label>
             {description && (
@@ -30,7 +30,7 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
                 title={description} />
             )}
           </div>
-          <div className="grid grid-cols-2 grid-rows-1 relative w-fit max-w-[600px] overflow-ellipsis">
+          <div className="grid grid-cols-2 grid-rows-1 relative w-fit max-w-150 text-ellipsis">
             <input type="text"
               readOnly
               title="Click to copy."

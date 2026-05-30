@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @plugin 'tailwind-scrollbar';
 
@@ -61,4 +59,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+a {
+  color: unset;
 }

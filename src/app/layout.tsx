@@ -31,7 +31,7 @@ export default function RootLayout({
         <meta name="keywords" content={'gundwn, gundwn.gg, steam, xbox, syntax-tm, github, git, xmb, links, social, profile, games'} />
         <meta name="twitter:site" content="@gundwnsrc" />
       </Head>
-      <body className={`${inter.className}`}>{children}</body>
+      <body className={`${inter.className} text-white`}>{children}</body>
     </html>
   );
 }

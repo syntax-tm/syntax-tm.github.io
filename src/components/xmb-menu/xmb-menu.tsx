@@ -176,7 +176,7 @@ export default function Menu() {
 
   return (
     <div className='xmb-menu'>
-      <audio ref={audioRef} src='/audio/nav.mp3' />
+      <audio ref={audioRef} src='/audio/nav.mp3' playsInline />
       <Title />
       <main id="menu" className="">
         <section className="xmb-main" style={mainStyle}>

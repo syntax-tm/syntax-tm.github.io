@@ -28,3 +28,7 @@ kbd > svg {
 dialog {
   inset: 0;
 }
+
+hr {
+  color: white;
+}

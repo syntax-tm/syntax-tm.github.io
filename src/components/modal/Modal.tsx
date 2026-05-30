@@ -79,7 +79,7 @@ export default function Modal() {
           {/* <div className="right-0 top-0 absolute w-[30px] m-5 aspect-square z-[200]">
             <FontAwesomeIcon icon={faClose} className="w-full h-full" />
           </div> */}
-          <dialog className="flex flex-col w-screen h-screen bg-black bg-opacity-75 z-[100] overflow-none backdrop-blur">
+          <dialog className="flex flex-col w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
             <div className="w-full h-[15%] relative">
               <audio ref={audioRef} src='/audio/nav.mp3' />
               <div className="relative contents">
