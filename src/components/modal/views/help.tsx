@@ -1,7 +1,9 @@
+import React from "react";
 import { faA, faAngleDown, faAngleUp, faD, faH, faLeftRight, faS, faUpDown, faW } from "@fortawesome/free-solid-svg-icons";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./help.css";
+import ControllerIcon from "@components/icons/ControllerIcon";
 
 export const HelpView = () => {
   return (
@@ -165,6 +167,135 @@ export const HelpView = () => {
               </th>
               <td className="px-6 py-2.5">
                 Open help
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// TODO: need to fix this for mobile layouts
+// the fixed image sizes need to be changed on mobile
+export const GamepadView = () => {
+  return (
+    <div className="grid h-full">
+      <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
+        <table className="text-sm text-left text-gray-500 dark:text-gray-400 max-w-[600px]">
+          <thead className="text-xs text-gray-400 uppercase items-center relative">
+            <tr className="content-center">
+              <th scope="col" className="px-6 py-3 flex justify-center">
+                Button
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="left_stick_left" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">or</span>
+                  <ControllerIcon icon="d_pad_left" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Move left
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="left_stick_right" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">or</span>
+                  <ControllerIcon icon="d_pad_right" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Move right
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="left_stick_up" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">or</span>
+                  <ControllerIcon icon="d_pad_up" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Move up
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="left_stick_down" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">or</span>
+                  <ControllerIcon icon="d_pad_down" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Move down
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="left_bumper" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">/</span>
+                  <ControllerIcon icon="right_bumper" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Move left / right
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="left_trigger" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">/</span>
+                  <ControllerIcon icon="right_trigger" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Move top / bottom
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="a" className="object-scale-down" width={50} height={50} />
+                  <span className="mx-2 my-auto">or</span>
+                  <ControllerIcon icon="menu" className="object-scale-down" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Open the selected item
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="view" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Open help
+              </td>
+            </tr>
+            <tr className="content-center">
+              <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+                <div className="flex relative">
+                  <ControllerIcon icon="b" width={50} height={50} />
+                </div>
+              </th>
+              <td className="px-6 py-2.5">
+                Close dialog
               </td>
             </tr>
           </tbody>

@@ -55,6 +55,14 @@ export default function Menu() {
     setY(0);
   }
 
+  function onBack() {
+    if (!modal) return;
+
+    play();
+
+    router.push('/');
+  }
+
   function onHelp() {
     play();
 
@@ -81,66 +89,76 @@ export default function Menu() {
       selectedItem.onClick!();
       return;
     }
+
+    console.warn(`No action for ${selectedItem.title} in ${selectedCategory.title}`);
   }
 
   function onUp() {
-    play();
+    if (modal) return;
     const position = config.moveUp();
     if (position === null) return;
+    play();
     setY(position.y);
   }
 
   function onTop() {
-    play();
+    if (modal) return;
     const position = config.moveTop();
     if (position === null) return;
+    play();
     setX(position.x);
     setY(position.y);
   }
 
   function onDown() {
-    play();
+    if (modal) return;
     const position = config.moveDown();
     if (position === null) return;
+    play();
     setY(position.y);
   }
 
   function onBottom() {
-    play();
+    if (modal) return;
     const position = config.moveBottom();
     if (position === null) return;
+    play();
     setX(position.x);
     setY(position.y);
   }
 
   function onLeft() {
-    play();
+    if (modal) return;
     const position = config.moveLeft();
     if (position === null) return;
+    play();
     setX(position.x);
     setY(position.y);
   }
 
   function onFirst() {
-    play();
+    if (modal) return;
     const position = config.moveFirst();
     if (position === null) return;
+    play();
     setX(position.x);
     setY(position.y);
   }
 
   function onRight() {
-    play();
+    if (modal) return;
     const position = config.moveRight();
     if (position === null) return;
+    play();
     setX(position.x);
     setY(position.y);
   }
 
   function onLast() {
-    play();
+    if (modal) return;
     const position = config.moveLast();
     if (position === null) return;
+    play();
     setX(position.x);
     setY(position.y);
   }
@@ -182,8 +200,9 @@ export default function Menu() {
     onDisconnect: (gamepad) => {
       console.log(`gamepad disconnected: ${gamepad.id} (${gamepad.index})`);
     },
+    controllerProfile: 'xbox',
     onA: onEnter,
-    onB: onEsc,
+    onB: onBack,
     onDPadUp: onUp,
     onDPadDown: onDown,
     onDPadLeft: onLeft,
@@ -244,7 +263,7 @@ export default function Menu() {
 
   return (
     <div className='xmb-menu'>
-      <audio ref={audioRef} src='/audio/nav.mp3' playsInline />
+      <audio ref={audioRef} src='/audio/nav.mp3' />
       <Title />
       <main id="menu" className="">
         <section className="xmb-main" style={mainStyle}>

@@ -1,3 +1,4 @@
+import React from "react";
 import { loadEnvConfig } from '@next/env'
 import { faInfo, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import useMobileDetect from "@hooks/useMobileDetect";

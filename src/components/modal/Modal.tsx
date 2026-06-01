@@ -1,27 +1,41 @@
 "use client"
 
+import React from "react";
 import { ReadonlyURLSearchParams, useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
-import { HelpView, MobileHelpView } from "./views/help";
+import { GamepadView, HelpView, MobileHelpView } from "./views/help";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import useMobileDetect from "@hooks/useMobileDetect";
 import useQuery from "@hooks/useQuery";
-import { useWindowSize } from "@uidotdev/usehooks";
 import Link from "next/link";
 import { CopyView } from "./views/copy";
 import accounts from "@/config/accounts.json";
 import "./modal.css";
 import { AboutView } from "./views/about";
+import { useGamepads } from 'awesome-react-gamepads';
+import ControllerIcon from "@components/icons/ControllerIcon";
 
 export default function Modal() {
   const searchParams = useSearchParams();
   const modalParam = searchParams.get("modal");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const router = useRouter();
-  const size = useWindowSize();
   const mobileDetect = useMobileDetect();
+
+
+  const [gamepadConnected, setGamepadConnected] = useState(false);
+  useGamepads({
+    onConnect: (gamepad) => {
+      console.log("Gamepad connected:", gamepad);
+      setGamepadConnected(true);
+    },
+    onDisconnect: (gamepad) => {
+      console.log("Gamepad disconnected:", gamepad);
+      setGamepadConnected(false);
+    }
+  })
 
   const [modal, setModal] = useState<string | null>(modalParam);
 
@@ -59,7 +73,9 @@ export default function Modal() {
 
   if (modal === 'help') {
     title = 'Help';
-    if (mobileDetect.isMobile()) {
+    if (gamepadConnected) {
+      view = <GamepadView />;
+    } else if (mobileDetect.isMobile()) {
       view = <MobileHelpView />;
     } else {
       view = <HelpView />;
@@ -76,9 +92,6 @@ export default function Modal() {
     <>
       {modal && (
         <div className="absolute left-0 top-0 w-full h-screen overflow-clip block z-1">
-          {/* <div className="right-0 top-0 absolute w-[30px] m-5 aspect-square z-[200]">
-            <FontAwesomeIcon icon={faClose} className="w-full h-full" />
-          </div> */}
           <dialog className="flex flex-col w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
             <div className="w-full h-[15%] relative">
               <audio ref={audioRef} src='/audio/nav.mp3' />
@@ -98,20 +111,28 @@ export default function Modal() {
                 <div className="grid justify-center">
                   <span className="text-white mt-[1em] ml-[0.5em] text-center modal-action object-center mx-auto">
                     {/* need to set the href so that the user can close modal by clicking on the buttton */}
-                    <Link href={'/'}>
-                      {mobileDetect.isMobile() && (
+                    <Link href="/">
+                      {gamepadConnected && (
+                        <div className="text-xl items-center justify-items-center align-items-center inline-flex">
+                          <div className="relative max-w-10">
+                            <ControllerIcon icon="b" className="m-2" />
+                          </div>
+                          <span className="mx-2 my-auto">close</span>
+                        </div>
+                      )
+                      }
+                      {!gamepadConnected && mobileDetect.isMobile() && (
                         <div className="text-xl items-center justify-items-center align-items-center inline-flex">
                           <FontAwesomeIcon icon={faClose} className="w-7 h-7 aspect-square inline-flex my-auto modal-action" />
                           <span className="mx-2 my-auto">close</span>
                         </div>
                       )}
-                      {mobileDetect.isDesktop() && (
+                      {!gamepadConnected && mobileDetect.isDesktop() && (
                         <div className="justify-between w-auto mt-4 text-lg hover:animate-pulse">
                           <kbd className="px-2 py-1.5 text-gray-800 bg-gray-100 mx-[3px] border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">Esc</kbd>
                           <span className="mx-2 my-auto">close</span>
                         </div>
                       )}
-
                     </Link>
                   </span>
                 </div>

@@ -76,7 +76,7 @@ function buildGamingCategory(): XmbCategory {
     const steam = new XmbItem("steam", "Steam", icons.steam, 'https://s.team/p/dwq-wrkt');
     steam.description = 'View Steam profile';
 
-    const xbox = new XmbItem("xbox", "Xbox", icons.xbox, 'http://live.xbox.com/Profile?Gamertag=gundwn');
+    const xbox = new XmbItem("xbox", "Xbox", icons.xbox, 'https://www.xbox.com/en-US/play/user/Gundwn');
     xbox.description = 'View Xbox profile';
 
     const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, 'bnet');

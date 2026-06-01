@@ -1,4 +1,4 @@
-tr > :first-child {
+tr:not(.content-center) > :first-child {
   text-align: right;
   display: flex;
   justify-content: end;
