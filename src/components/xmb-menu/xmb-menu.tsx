@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client"
 
+import React from "react";
 import { useRef, useState, CSSProperties } from "react";
 import { useRouter, ReadonlyURLSearchParams } from "next/navigation";
 import { XmbMenu } from "@models/menu";
@@ -14,6 +14,7 @@ import useQuery from "@/hooks/useQuery";
 import build from "@services/menuBuilder";
 import "./xmb.css";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { useGamepads } from 'awesome-react-gamepads';
 
 const config: XmbMenu = build();
 
@@ -63,8 +64,8 @@ export default function Menu() {
   function onEnter() {
     play();
 
-    let selectedCategory = config.getCurrentCategory();
-    let selectedItem = selectedCategory.getCurrentItem();
+    const selectedCategory = config.getCurrentCategory();
+    const selectedItem = selectedCategory.getCurrentItem();
 
     if (selectedItem.modal) {
       router.push(`/?modal=${selectedItem.modal}`);
@@ -84,21 +85,45 @@ export default function Menu() {
 
   function onUp() {
     play();
-    let position = config.moveUp();
+    const position = config.moveUp();
     if (position === null) return;
+    setY(position.y);
+  }
+
+  function onTop() {
+    play();
+    const position = config.moveTop();
+    if (position === null) return;
+    setX(position.x);
     setY(position.y);
   }
 
   function onDown() {
     play();
-    let position = config.moveDown();
+    const position = config.moveDown();
     if (position === null) return;
+    setY(position.y);
+  }
+
+  function onBottom() {
+    play();
+    const position = config.moveBottom();
+    if (position === null) return;
+    setX(position.x);
     setY(position.y);
   }
 
   function onLeft() {
     play();
-    let position = config.moveLeft();
+    const position = config.moveLeft();
+    if (position === null) return;
+    setX(position.x);
+    setY(position.y);
+  }
+
+  function onFirst() {
+    play();
+    const position = config.moveFirst();
     if (position === null) return;
     setX(position.x);
     setY(position.y);
@@ -106,7 +131,15 @@ export default function Menu() {
 
   function onRight() {
     play();
-    let position = config.moveRight();
+    const position = config.moveRight();
+    if (position === null) return;
+    setX(position.x);
+    setY(position.y);
+  }
+
+  function onLast() {
+    play();
+    const position = config.moveLast();
     if (position === null) return;
     setX(position.x);
     setY(position.y);
@@ -117,7 +150,7 @@ export default function Menu() {
   }
 
   useQuery({ onPathChanged: onPathChanged });
-  
+
   const actions = new Map<string, KeyPressAction>();
 
   actions.set('w', { repeat: true, onKeyPress: onUp });
@@ -133,8 +166,43 @@ export default function Menu() {
   actions.set('escape', { repeat: false, onKeyPress: onEsc });
   actions.set('h', { repeat: false, onKeyPress: onHelp });
   actions.set('f1', { repeat: false, onKeyPress: onHelp });
+  actions.set('q', { repeat: false, onKeyPress: onFirst });
+  actions.set('e', { repeat: false, onKeyPress: onLast });
+  actions.set('z', { repeat: false, onKeyPress: onTop });
+  actions.set('x', { repeat: false, onKeyPress: onBottom });
 
   useKeyboard({ actions: actions, enabledOnModal: false });
+
+  useGamepads({
+    onConnect: (gamepad) => {
+      console.log(`gamepad connected: ${gamepad.id} (${gamepad.index})`);
+      console.log('buttons:');
+      console.log(JSON.stringify(gamepad.buttons, null, 2));
+    },
+    onDisconnect: (gamepad) => {
+      console.log(`gamepad disconnected: ${gamepad.id} (${gamepad.index})`);
+    },
+    onA: onEnter,
+    onB: onEsc,
+    onDPadUp: onUp,
+    onDPadDown: onDown,
+    onDPadLeft: onLeft,
+    onDPadRight: onRight,
+    onLeftStickUp: onUp,
+    onLeftStickDown: onDown,
+    onLeftStickLeft: onLeft,
+    onLeftStickRight: onRight,
+    onRightStickUp: onUp,
+    onRightStickDown: onDown,
+    onRightStickLeft: onLeft,
+    onRightStickRight: onRight,
+    onStart: onEnter,
+    onSelect: onHelp,
+    onLT: onTop,
+    onRT: onBottom,
+    onLB: onFirst,
+    onRB: onLast,
+  });
 
   const wheelInput: WheelInput = {
     onWheelUp: onUp,

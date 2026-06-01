@@ -61,21 +61,21 @@ export class XmbItem implements IXmbItem {
 
   static create(id: string = '', title: string = '', icon: ReactElement | null, onClick: null | (() => void)): XmbItem
   {
-      let item = new XmbItem(id, title, icon);
+      const item = new XmbItem(id, title, icon);
       item.onClick = onClick;
       return item;
   }
 
   static createModal(id: string = '', title: string = '', icon: ReactElement | null, modal: string | null): XmbItem
   {
-      let item = new XmbItem(id, title, icon);
+      const item = new XmbItem(id, title, icon);
       item.modal = modal;
       return item;
   }
 
   static createSubmenu(id: string = '', title: string = '', icon: ReactElement | null, items?: XmbItem[] | null): XmbItem
   {
-      let item = new XmbItem(id, title, icon);
+      const item = new XmbItem(id, title, icon);
       item.items = items;
       return item;
   }
@@ -121,16 +121,16 @@ export class XmbCategory implements IXmbCategory {
   setPosition(i: number) {
     if (this.position === i) return;
 
-    let previous = this.items[this.position];
+    const previous = this.items[this.position];
     previous.setInactive();
-    let next = this.items[i];
+    const next = this.items[i];
     next.setActive();
     this.current = next;
     this.position = i;
   }
 
   moveUp(): number | null {
-    let next = this.position - 1;
+    const next = this.position - 1;
 
     if (next < 0) return null;
 
@@ -139,13 +139,27 @@ export class XmbCategory implements IXmbCategory {
     return this.position;
   }
 
+  moveTop(): number | null {
+    this.setPosition(0);
+
+    return this.position;
+  }
+
   moveDown(): number | null {
-    let max = this.items.length - 1;
-    let next = this.position + 1;
+    const max = this.items.length - 1;
+    const next = this.position + 1;
 
     if (next > max) return null;
 
     this.setPosition(next);
+
+    return this.position;
+  }
+
+  moveBottom(): number | null {
+    const max = this.items.length - 1;
+
+    this.setPosition(max);
 
     return this.position;
   }
@@ -245,9 +259,22 @@ export class XmbMenu implements IXmbMenu {
   }
 
   moveUp(): Position | null {
-    let current = this.getCurrentCategory();
+    const current = this.getCurrentCategory();
 
-    let newY = current.moveUp();
+    const newY = current.moveUp();
+    if (newY === null) {
+      return null;
+    }
+
+    this.y = newY;
+
+    return this.position;
+  }
+
+  moveTop(): Position | null {
+    const current = this.getCurrentCategory();
+
+    const newY = current.moveTop();
     if (newY === null) {
       return null;
     }
@@ -258,9 +285,22 @@ export class XmbMenu implements IXmbMenu {
   }
 
   moveDown(): Position | null {
-    let current = this.getCurrentCategory();
+    const current = this.getCurrentCategory();
 
-    let newY = current.moveDown();
+    const newY = current.moveDown();
+    if (newY === null) {
+      return null;
+    }
+
+    this.y = newY;
+
+    return this.position;
+  }
+
+  moveBottom(): Position | null {
+    const current = this.getCurrentCategory();
+
+    const newY = current.moveBottom();
     if (newY === null) {
       return null;
     }
@@ -271,16 +311,16 @@ export class XmbMenu implements IXmbMenu {
   }
 
   moveLeft(): Position | null{
-    let nextIndex = this.x - 1;
+    const nextIndex = this.x - 1;
 
     // can't move left, ignore
     if (nextIndex < 0) return null;
 
-    let previous = this.items[this.x];
+    const previous = this.items[this.x];
 
     previous.setInactive();
 
-    let next = this.items[nextIndex];
+    const next = this.items[nextIndex];
 
     next.setActive();
 
@@ -290,18 +330,39 @@ export class XmbMenu implements IXmbMenu {
     return this.position;
   }
 
+  moveFirst(): Position | null {
+    if (this.x === 0) return null;
+
+    const previous = this.getCurrentCategory();
+
+    previous.setInactive();
+
+    const next = this.items[0];
+
+    next.setActive();
+
+    if (previous.position >= next.items.length) {
+      next.position = 0;
+    }
+
+    this.x = 0;
+    this.y = next.position;
+
+    return this.position;
+  }
+
   moveRight(): Position | null {
-    let max = this.items.length - 1;
-    let nextIndex = this.x + 1;
+    const max = this.items.length - 1;
+    const nextIndex = this.x + 1;
 
     // can't move right, ignore
     if (nextIndex > max) return null;
 
-    let previous = this.getCurrentCategory();
+    const previous = this.getCurrentCategory();
 
     previous.setInactive();
 
-    let next = this.items[nextIndex];
+    const next = this.items[nextIndex];
 
     next.setActive();
 
@@ -310,6 +371,29 @@ export class XmbMenu implements IXmbMenu {
     }
 
     this.x = nextIndex;
+    this.y = next.position;
+
+    return this.position;
+  }
+
+  moveLast(): Position | null {
+    const max = this.items.length - 1;
+
+    if (this.x === max) return null;
+
+    const previous = this.getCurrentCategory();
+
+    previous.setInactive();
+
+    const next = this.items[max];
+
+    next.setActive();
+
+    if (previous.position >= next.items.length) {
+      next.position = 0;
+    }
+
+    this.x = max;
     this.y = next.position;
 
     return this.position;

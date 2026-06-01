@@ -1,9 +1,12 @@
+import React from "react";
+import { useState } from "react";
 import type { Metadata, Viewport } from 'next';
 import { Inter } from "next/font/google";
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "./globals.css";
 import Head from 'next/head';
+import { useGamepads } from 'awesome-react-gamepads';
 
 config.autoAddCss = false;
 
@@ -25,13 +28,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [secret, setSecret] = useState(false);
+  useGamepads({
+    onKonamiSuccess: () => {
+      setSecret(true);
+    }
+  });
   return (
     <html lang="en">
       <Head>
         <meta name="keywords" content={'gundwn, gundwn.gg, steam, xbox, syntax-tm, github, git, xmb, links, social, profile, games'} />
         <meta name="twitter:site" content="@gundwnsrc" />
       </Head>
-      <body className={`${inter.className} text-white`}>{children}</body>
+      <body className={`${inter.className} text-white ${secret ? 'secret' : ''}`}>{children}</body>
     </html>
   );
 }
