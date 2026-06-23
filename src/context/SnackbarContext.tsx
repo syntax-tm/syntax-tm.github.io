@@ -4,8 +4,7 @@ import React, { createContext, useContext, useState, useEffect, useRef } from "r
 import { faInfoCircle, faExclamationCircle, IconDefinition, faCheckCircle, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAudio } from '@context/AudioContext';
-
-type SnackbarVariant = "success" | "error" | "info" | "secret";
+import { SnackbarVariant } from '@components/types';
 
 const SNACKBAR_AUDIO_SRC = '/audio/snd_system_ok.wav';
 

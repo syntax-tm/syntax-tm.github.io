@@ -52,22 +52,22 @@ interface ControllerIconProps {
 }
 
 export default function ControllerIcon({
-    style = "white",
-    icon,
-    className = "",
-    width = 200,
-    height = 200,
-    styleProps = {},
+  style = "white",
+  icon,
+  className = "",
+  width = 200,
+  height = 200,
+  styleProps = {},
 }: ControllerIconProps) {
-    return (
-      <>
-        <Image
-            src={`/svg/xbox_${style}/${icon}.svg`}
-            alt={`${style} ${icon}`}
-            className={className}
-            width={width}
-            height={height}
-        />
-      </>
-    );
+  return (
+    <>
+      <Image
+        src={`/svg/xbox_${style}/${icon}.svg`}
+        alt={`${style} ${icon}`}
+        className={className}
+        width={width}
+        height={height}
+      />
+    </>
+  );
 }
