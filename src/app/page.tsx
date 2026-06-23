@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import Image from "next/image";
+import React from "react";
 import Background from '@components/background/background';
 import dynamic from "next/dynamic";
 import { useRef, useState, ReactNode, useEffect, Dispatch, SetStateAction, CSSProperties } from "react";
@@ -8,7 +8,7 @@ import { useRef, useState, ReactNode, useEffect, Dispatch, SetStateAction, CSSPr
 
 const Clock = dynamic(() => import('@components/clock/Clock'), { ssr: false });
 const Menu = dynamic(() => import('@components/xmb-menu/xmb-menu'), { ssr: false });
-const Modal = dynamic(() => import('@components/modal/Modal'), { ssr: false })
+const Modal = dynamic(() => import('@components/modal/Modal'), { ssr: false });
 
 export default function Home() {
 

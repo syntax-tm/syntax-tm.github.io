@@ -10468,6 +10468,7 @@ __metadata:
     webpack: "npm:^5.107.2"
     webpack-cli: "npm:^7.0.3"
     webpack-dev-server: "npm:^5.2.4"
+    webpack-shell-plugin-next: "npm:^2.3.3"
   languageName: unknown
   linkType: soft
 
@@ -11350,6 +11351,15 @@ __metadata:
     flat: "npm:^5.0.2"
     wildcard: "npm:^2.0.1"
   checksum: 10c0/bf1429567858b353641801b8a2696ca0aac270fc8c55d4de8a7b586fe07d27fdcfc83099a98ab47e6162383db8dd63bb8cc25b1beb2ec82150422eec843b0dc0
+  languageName: node
+  linkType: hard
+
+"webpack-shell-plugin-next@npm:^2.3.3":
+  version: 2.3.3
+  resolution: "webpack-shell-plugin-next@npm:2.3.3"
+  peerDependencies:
+    webpack: ^5.18.0
+  checksum: 10c0/30593bf9c4d3e910a8f990d81a9b43a9689c3ef3b6fca1922c7c49f00be8cb2cc1522f78726cad6a8d7d5b34c4f275866e3c0b371e0f9078d5367076c2a3fa7e
   languageName: node
   linkType: hard
 

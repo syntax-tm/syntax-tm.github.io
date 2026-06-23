@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import "./clock.css";
@@ -12,14 +12,14 @@ export default function Clock() {
     const hideColon = value.getSeconds() % 3 === 2;
     const formatted = value.toLocaleTimeString('en-US', { hour: "numeric", minute: "numeric" });
     if (hideColon) {
-      return formatted.replace(':', ' ');
+      return formatted.replace(':', "\u2008");
     }
     return formatted;
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-        setTime(new Date());
+      setTime(new Date());
     }, 1000);
 
     return () => clearInterval(interval);
@@ -29,7 +29,7 @@ export default function Clock() {
     <>
       <section className="clock">
         <div className="clock-container">
-          <p>{time.toLocaleDateString('en-US', { month: "numeric", day: "numeric" })} {getTimeString(time)}</p>
+          <span>{time.toLocaleDateString('en-US', { month: "numeric", day: "numeric" })} {getTimeString(time)}</span>
         </div>
       </section>
     </>

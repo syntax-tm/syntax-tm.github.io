@@ -174,7 +174,7 @@ export const HelpView = () => {
       </div>
     </div>
   );
-}
+};
 
 // TODO: need to fix this for mobile layouts
 // the fixed image sizes need to be changed on mobile

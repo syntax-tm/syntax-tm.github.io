@@ -1,10 +1,3 @@
-export enum Variant {
-  Success,
-  Info,
-  Warning,
-  Error,
-};
-
 export type SnackbarType = {
   key: string;
   text: React.ReactNode;

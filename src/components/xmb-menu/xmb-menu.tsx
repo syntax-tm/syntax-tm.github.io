@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { useRef, useState, CSSProperties } from "react";
@@ -15,37 +15,32 @@ import build from "@services/menuBuilder";
 import "./xmb.css";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { useGamepads } from 'awesome-react-gamepads';
+import { useSnackbar } from "@context/SnackbarContext";
+import { useAudio } from '@context/AudioContext';
 
 const config: XmbMenu = build();
+
+const XMB_AUDIO_SRC = "/audio/nav.mp3";
 
 export default function Menu() {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const router = useRouter();
 
   const currentDevice = useMobileDetect();
   const windowSize = useWindowSize();
+  const { showSnackbar } = useSnackbar();
 
   const [modal, setModal] = useState<string | null>(null);
 
-  const play = () => {
-    if (audioRef.current) {
-      audioRef.current.volume = 1;
-      audioRef.current.play().catch((error) => {
-        console.error("Playback failed:", error);
-      });
-    } else {
-      // Throw error
-    }
-  };
+  const { play } = useAudio();
 
   const openInNewTab = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   function onEsc() {
-    play();
+    play(XMB_AUDIO_SRC);
 
     if (x == 0 && y == 0) {
       return;
@@ -58,19 +53,19 @@ export default function Menu() {
   function onBack() {
     if (!modal) return;
 
-    play();
+    play(XMB_AUDIO_SRC);
 
     router.push('/');
   }
 
   function onHelp() {
-    play();
+    play(XMB_AUDIO_SRC);
 
     router.push('/?modal=help');
   }
 
   function onEnter() {
-    play();
+    play(XMB_AUDIO_SRC);
 
     const selectedCategory = config.getCurrentCategory();
     const selectedItem = selectedCategory.getCurrentItem();
@@ -97,7 +92,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveUp();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setY(position.y);
   }
 
@@ -105,7 +100,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveTop();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -114,7 +109,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveDown();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setY(position.y);
   }
 
@@ -122,7 +117,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveBottom();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -131,7 +126,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveLeft();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -140,7 +135,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveFirst();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -149,7 +144,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveRight();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -158,7 +153,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveLast();
     if (position === null) return;
-    play();
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -196,9 +191,13 @@ export default function Menu() {
       console.log(`gamepad connected: ${gamepad.id} (${gamepad.index})`);
       console.log('buttons:');
       console.log(JSON.stringify(gamepad.buttons, null, 2));
+
+      showSnackbar(`Gamepad ${gamepad.id} (${gamepad.index}) connected.`, 'success');
     },
     onDisconnect: (gamepad) => {
       console.log(`gamepad disconnected: ${gamepad.id} (${gamepad.index})`);
+
+      showSnackbar(`Gamepad ${gamepad.id} (${gamepad.index}) disconnected.`, 'error');
     },
     controllerProfile: 'xbox',
     onA: onEnter,
@@ -228,7 +227,7 @@ export default function Menu() {
     onWheelDown: onDown,
     onWheelLeft: onLeft,
     onWheelRight: onRight,
-    enabledOnModal: false
+    enabledOnModal: false,
   };
 
   useWheel(wheelInput);
@@ -238,7 +237,7 @@ export default function Menu() {
     onSwipedDown: onUp,
     onSwipedLeft: onRight,
     onSwipedRight: onLeft,
-    enabledOnModal: false
+    enabledOnModal: false,
   };
   useSwipe(swipeInput);
 
@@ -263,7 +262,6 @@ export default function Menu() {
 
   return (
     <div className='xmb-menu'>
-      <audio ref={audioRef} src='/audio/nav.mp3' />
       <Title />
       <main id="menu" className="">
         <section className="xmb-main" style={mainStyle}>

@@ -5,6 +5,8 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "./globals.css";
 import Head from 'next/head';
+import { SnackbarProvider } from "@context/SnackbarContext";
+import { AudioProvider } from '@context/AudioContext';
 
 config.autoAddCss = false;
 
@@ -35,7 +37,13 @@ export default function RootLayout({
         <meta name="keywords" content={'gundwn, gundwn.gg, steam, xbox, syntax-tm, github, git, xmb, links, social, profile, games'} />
         <meta name="twitter:site" content="@gundwnsrc" />
       </Head>
-      <body className={`${inter.className} text-white`}>{children}</body>
+      <body className={`${inter.className} text-white`}>
+        <AudioProvider>
+          <SnackbarProvider>
+            {children}
+          </SnackbarProvider>
+        </AudioProvider>
+      </body>
     </html>
   );
 }

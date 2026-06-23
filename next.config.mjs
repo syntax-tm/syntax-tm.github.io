@@ -1,6 +1,7 @@
 import version from './package.json' with { type: 'json' };
 import { fileURLToPath } from "url";
 import path from 'path';
+import WebpackShellPluginNext from "webpack-shell-plugin-next";
 //import prebuildTask from './scripts/preBuild.mjs';
 
 //prebuildTask();
@@ -28,6 +29,9 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  logging: {
+    browserToTerminal: true,
+  },
 
   /**
    * Disable server-based image optimization. Next.js does not support
@@ -47,7 +51,7 @@ const nextConfig = {
     description: version.description,
     version: version.version,
     packageManger: version.packageManager,
-    dependencies: dependencies
+    dependencies: dependencies,
   },
   turbopack: {
     root: path.join(__dirname),
@@ -57,15 +61,30 @@ const nextConfig = {
       config.plugins.push(
         new WebpackShellPluginNext({
           onBuildStart: {
-            scripts: ['node ./scripts/prebuild.cjs'],
+            scripts: [
+              () => {
+                console.log("Starting pre-build tasks...");
+              },
+              "node ./scripts/prebuild.cjs",
+              () => {
+                console.log("Completed pre-build tasks");
+              },
+            ],
             blocking: true,
             parallel: false,
           },
-        })
+          onBuildEnd: {
+            scripts: [
+              () => {
+                console.log("Build completed. Starting post-build tasks...");
+              },
+            ],
+          },
+        }),
       );
     }
 
-    return config
+    return config;
   },
 };
 

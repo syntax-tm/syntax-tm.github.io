@@ -1,8 +1,10 @@
-"use client"
+"use client";
 
+import React from "react";
 import { faCheckCircle, faCopy, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { useSnackbar } from "@context/SnackbarContext";
 import "./copy.css";
 
 export interface CopyViewProps
@@ -16,6 +18,8 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
 
   const [copied, setCopied] = useState(false);
   const [hover, setHover] = useState(false);
+
+  const { showSnackbar } = useSnackbar();
 
   return (
     <>
@@ -43,7 +47,7 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
                 setHover(true);
               }}
               onClick={(e => {
-                if (copied) return;
+                //if (copied) return;
 
                 const el = e.target as HTMLInputElement;
                 const value = el.value;
@@ -53,6 +57,8 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
                 console.log(`Copied ${value} to clipboard.`);
 
                 setCopied(true);
+
+                showSnackbar(`Copied "${value}" to clipboard.`, "info");
               })} />
             <div className="absolute justify-self-end items-center h-full content-center">
               {

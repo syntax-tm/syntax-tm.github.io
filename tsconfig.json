@@ -32,6 +32,9 @@
       "@components/*": [
         "./src/components/*"
       ],
+      "@context/*": [
+        "./src/context/*"
+      ],
       "@models/*": [
         "./src/models/*"
       ],
@@ -54,6 +57,9 @@
         "./public/config/*"
       ],
       "@audio/*": [
+        "./public/audio/*"
+      ],
+      "audio/*": [
         "./public/audio/*"
       ],
       "@app/*": [

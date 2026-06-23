@@ -34,8 +34,8 @@ export default function Modal() {
     onDisconnect: (gamepad) => {
       console.log("Gamepad disconnected:", gamepad);
       setGamepadConnected(false);
-    }
-  })
+    },
+  });
 
   const [modal, setModal] = useState<string | null>(modalParam);
 
@@ -82,7 +82,7 @@ export default function Modal() {
     }
   } else if (modal === 'bnet') {
     title = 'Battle.Net';
-    view = <CopyView title="BattleTag:" value={accounts.battleNet.id} />
+    view = <CopyView title="BattleTag:" value={accounts.battleNet.id} />;
   } else if (modal === 'about') {
     title = 'About';
     view = <AboutView />;

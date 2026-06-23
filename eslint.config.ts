@@ -10,6 +10,12 @@ export default defineConfig([
         plugins: { js },
         extends: ["js/recommended"],
         languageOptions: { globals: globals.browser },
+        rules: {
+          "semi": "warn",
+          "indent": ["warn", 2, { "SwitchCase": 1 }],
+          "comma-dangle": ["warn", "always-multiline"],
+          "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        }
     },
     tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
