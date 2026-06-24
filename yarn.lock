@@ -991,17 +991,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@next/env@npm:16.2.9":
+"@next/env@npm:16.2.9, @next/env@npm:^16.2.9":
   version: 16.2.9
   resolution: "@next/env@npm:16.2.9"
   checksum: 10c0/698d66e248b19728007094929f9a32c1cdf4d89cf8a6fa557af324833f1ee066f79fc0b6173a0fd18a301f70f757420185a46f3da1b8e738eba678952e57c8d3
-  languageName: node
-  linkType: hard
-
-"@next/env@npm:^16.2.6":
-  version: 16.2.6
-  resolution: "@next/env@npm:16.2.6"
-  checksum: 10c0/466722ce30a9561d29c08a7ba78091a47fef3644f422d04751c7124a24457ffe11eb25bb6c59c1e1d57735d9c68c58d185cc19ea58befd7a9c5b81dc05ca550d
   languageName: node
   linkType: hard
 
@@ -10568,7 +10561,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": "npm:^7.2.0"
     "@fortawesome/free-solid-svg-icons": "npm:^7.2.0"
     "@fortawesome/react-fontawesome": "npm:^3.3.1"
-    "@next/env": "npm:^16.2.6"
+    "@next/env": "npm:^16.2.9"
     "@tailwindcss/postcss": "npm:^4.3.0"
     "@types/node": "npm:^25.9.1"
     "@types/react": "npm:^19.2.15"
