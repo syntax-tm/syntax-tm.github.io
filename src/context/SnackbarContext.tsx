@@ -7,6 +7,7 @@ import { useAudio } from '@context/AudioContext';
 import { SnackbarVariant } from '@components/types';
 
 const SNACKBAR_AUDIO_SRC = '/audio/snd_system_ok.wav';
+const DEFAULT_TIMEOUT = 10000;
 
 interface SnackbarContextType {
   showSnackbar: (message: string, variant?: SnackbarVariant) => void;
@@ -26,16 +27,16 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
 
   const { play } = useAudio();
 
-  const showSnackbar = (message: string, variant: SnackbarVariant = "info") => {
+  const showSnackbar = async (message: string, variant: SnackbarVariant = "info", timeout: number = DEFAULT_TIMEOUT) => {
     if (timerRef.current) clearTimeout(timerRef.current);
 
     setSnackbar({ message, variant, isOpen: true });
 
-    play(SNACKBAR_AUDIO_SRC);
+    await play(SNACKBAR_AUDIO_SRC);
 
     timerRef.current = setTimeout(() => {
       setSnackbar((prev) => ({ ...prev, isOpen: false }));
-    }, 10000);
+    }, timeout);
   };
 
   useEffect(() => {
@@ -60,8 +61,8 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
           <div className="fixed top-5 right-5 z-50 animate-fade-in-up h-auto max-w-4/5 md:max-w-2/5"
             onClick={() => setSnackbar((prev) => ({ ...prev, isOpen: false }))}>
             {/* <audio ref={audioRef} src='/audio/snd_system_ok.wav' /> */}
-            <div className={`px-2 py-2 rounded-lg shadow-lg text-white bg-gray-500 flex relative min-h-15`}>
-              <FontAwesomeIcon icon={icon} className="mr-3 my-auto w-auto" size="2x" />
+            <div className={`px-2 py-2 rounded-lg text-white bg-gray-500 flex relative min-h-15`}>
+              <FontAwesomeIcon icon={icon} className="mr-2 my-auto w-auto text-3xl z-10" />
               <span className="inline-block align-middle my-auto text-balance mr-2">{snackbar.message}</span>
             </div>
           </div>

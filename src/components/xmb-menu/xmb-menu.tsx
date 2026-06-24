@@ -39,8 +39,8 @@ export default function Menu() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  function onEsc() {
-    play(XMB_AUDIO_SRC);
+  async function onEsc() {
+    await play(XMB_AUDIO_SRC);
 
     if (x == 0 && y == 0) {
       return;
@@ -50,22 +50,22 @@ export default function Menu() {
     setY(0);
   }
 
-  function onBack() {
+  async function onBack() {
     if (!modal) return;
 
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
 
     router.push('/');
   }
 
-  function onHelp() {
-    play(XMB_AUDIO_SRC);
+  async function onHelp() {
+    await play(XMB_AUDIO_SRC);
 
     router.push('/?modal=help');
   }
 
-  function onEnter() {
-    play(XMB_AUDIO_SRC);
+  async function onEnter() {
+    await play(XMB_AUDIO_SRC);
 
     const selectedCategory = config.getCurrentCategory();
     const selectedItem = selectedCategory.getCurrentItem();
@@ -88,72 +88,72 @@ export default function Menu() {
     console.warn(`No action for ${selectedItem.title} in ${selectedCategory.title}`);
   }
 
-  function onUp() {
+  async function onUp() {
     if (modal) return;
     const position = config.moveUp();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setY(position.y);
   }
 
-  function onTop() {
+  async function onTop() {
     if (modal) return;
     const position = config.moveTop();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
 
-  function onDown() {
+  async function onDown() {
     if (modal) return;
     const position = config.moveDown();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setY(position.y);
   }
 
-  function onBottom() {
+  async function onBottom() {
     if (modal) return;
     const position = config.moveBottom();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
 
-  function onLeft() {
+  async function onLeft() {
     if (modal) return;
     const position = config.moveLeft();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
 
-  function onFirst() {
+  async function onFirst() {
     if (modal) return;
     const position = config.moveFirst();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
 
-  function onRight() {
+  async function onRight() {
     if (modal) return;
     const position = config.moveRight();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
 
-  function onLast() {
+  async function onLast() {
     if (modal) return;
     const position = config.moveLast();
     if (position === null) return;
-    play(XMB_AUDIO_SRC);
+    await play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }

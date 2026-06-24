@@ -16,6 +16,9 @@ import "./modal.css";
 import { AboutView } from "./views/about";
 import { useGamepads } from 'awesome-react-gamepads';
 import ControllerIcon from "@components/icons/ControllerIcon";
+import { useAudio } from '@context/AudioContext';
+
+const AUDIO_SRC = '/audio/nav.mp3';
 
 export default function Modal() {
   const searchParams = useSearchParams();
@@ -24,6 +27,7 @@ export default function Modal() {
   const router = useRouter();
   const mobileDetect = useMobileDetect();
 
+  const { play } = useAudio();
 
   const [gamepadConnected, setGamepadConnected] = useState(false);
   useGamepads({
@@ -39,17 +43,8 @@ export default function Modal() {
 
   const [modal, setModal] = useState<string | null>(modalParam);
 
-  const play = () => {
-    if (audioRef.current) {
-      audioRef.current.volume = 1;
-      audioRef.current.play();
-    } else {
-      // Throw error
-    }
-  };
-
-  function onEsc() {
-    play();
+  async function onEsc() {
+    await play(AUDIO_SRC);
 
     router.push('/');
   }
@@ -94,7 +89,6 @@ export default function Modal() {
         <div className="absolute left-0 top-0 w-full h-screen overflow-clip block z-1">
           <dialog className="flex flex-col w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
             <div className="w-full h-[15%] relative">
-              <audio ref={audioRef} src='/audio/nav.mp3' />
               <div className="relative contents">
                 <div className="modal-title text-xl mx-3 h-full flex items-end">
                   <span className="inline-block align-text-bottom text-white my-2">{title}</span>

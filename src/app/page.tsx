@@ -5,6 +5,7 @@ import Background from '@components/background/background';
 import dynamic from "next/dynamic";
 import { useRef, useState, ReactNode, useEffect, Dispatch, SetStateAction, CSSProperties } from "react";
 //import Modal from "@/components/modal/Modal";
+import Secret from '@components/secret/Secret';
 
 const Clock = dynamic(() => import('@components/clock/Clock'), { ssr: false });
 const Menu = dynamic(() => import('@components/xmb-menu/xmb-menu'), { ssr: false });
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <div className="">
       <Background />
+      <Secret />
       <Clock />
       <Menu />
       <Modal />

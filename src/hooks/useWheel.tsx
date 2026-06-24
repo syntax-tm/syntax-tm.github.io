@@ -31,9 +31,9 @@ const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOn
   };
 
   useQuery({ onPathChanged: onPathChanged });
-  
+
   const onWheel = useCallback((e: WheelEvent) => {
-    let down = e.deltaY > 0;
+    const down = e.deltaY > 0;
     if (down) {
       if (shift.current) {
         onWheelRight();
@@ -73,14 +73,14 @@ const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOn
       document.body.removeEventListener('wheel', onWheel);
       document.body.removeEventListener('keydown', onKeyDown);
       document.body.removeEventListener('keyup', onKeyUp);
-    }
+    };
   }, [shift, modal, onWheel, enabledOnModal, onKeyDown, onKeyUp]);
 
   return {
-      onWheel,
-      onKeyDown,
-      onKeyUp
-  }
+    onWheel,
+    onKeyDown,
+    onKeyUp,
+  };
 };
 
 export default useWheel;
