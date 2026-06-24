@@ -2402,7 +2402,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.60.0, @typescript-eslint/parser@npm:^8.60.0":
+"@typescript-eslint/parser@npm:8.60.0":
   version: 8.60.0
   resolution: "@typescript-eslint/parser@npm:8.60.0"
   dependencies:
@@ -2418,7 +2418,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:8.60.1":
+"@typescript-eslint/parser@npm:8.60.1, @typescript-eslint/parser@npm:^8.60.1":
   version: 8.60.1
   resolution: "@typescript-eslint/parser@npm:8.60.1"
   dependencies:
@@ -10575,7 +10575,7 @@ __metadata:
     "@types/react-dom": "npm:^19.2.3"
     "@types/webpack": "npm:^5.28.5"
     "@typescript-eslint/eslint-plugin": "npm:^8.60.0"
-    "@typescript-eslint/parser": "npm:^8.60.0"
+    "@typescript-eslint/parser": "npm:^8.60.1"
     "@uidotdev/usehooks": "npm:^2.4.1"
     "@webpack-cli/generators": "npm:^3.0.7"
     autoprefixer: "npm:^10.5.0"
