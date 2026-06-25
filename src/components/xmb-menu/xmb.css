@@ -19,6 +19,14 @@ body {
   z-index: 2;
 }
 
+button:active, button:focus,
+input:active, input:focus,
+a:active, a:focus, * {
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
 /* TODO: clean up media queries and breakpoints for xmb menu */
 
 @media only screen and (min-width: 641px) {

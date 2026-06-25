@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 
-import { CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { XmbItem } from "@models/menu";
 import { useRouter } from "next/navigation";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -71,7 +71,7 @@ export const MenuItem = ({ index, item, y }: MenuItemProps) => {
           <div className="w-30">
             {item.icon}
           </div>
-          <div className="absolute pl-30 h-full m-1.25 align-middle place-content-evenly">
+          <div className="absolute pl-30 h-full m-1.25 -ml-3 lg:ml-0 align-middle place-content-evenly">
             <div className="-mt-5 h-full grid grid-cols-1 content-center auto-rows-max select-none w-300 text-left">
               <div className="row xmb-item-name text-nowrap select-none">
                 {item.title}

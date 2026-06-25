@@ -49,6 +49,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         await playPromiseRef.current;
       } catch (e) {
         // ignore interrupted play errors from previous actions
+        console.error('Audio playback failed', e);
       }
     }
 
