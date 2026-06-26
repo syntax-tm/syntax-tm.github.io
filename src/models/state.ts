@@ -1,5 +1,5 @@
 import build from "@/services/menuBuilder";
-import { Views, eventType } from '@/app/enums';
+import { eventType } from '@/app/enums';
 import { XmbMenu, XmbCategory, XmbItem } from "@/models/menu";
 
 export interface IAction {
@@ -11,8 +11,8 @@ export interface IState {
   menu: XmbMenu;
   categories: XmbCategory[];
   isMobile: boolean;
-  x: Number;
-  y: Number;
+  x: number;
+  y: number;
   currentCategory: XmbCategory;
   currentMenuItem: XmbItem;
 }

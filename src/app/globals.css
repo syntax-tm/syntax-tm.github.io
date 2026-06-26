@@ -40,6 +40,14 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* hide borders on everything except the clock */
+/* TODO: change this to only hide the borders on the xmb menu divs */
+*:not(.clock, .clock-container, hr, input) {
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
 /* Firefox */
 * {
   scrollbar-width: thin;

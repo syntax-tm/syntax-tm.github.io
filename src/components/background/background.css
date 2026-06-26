@@ -46,28 +46,28 @@ body {
 
 .wave {
   background: rgb(255 255 255 / 25%);
-  border-radius: 200% 400% 0 0;
+  border-radius: 200% 300% 0 0;
   position: fixed;
   width: 500%;
   height: 30%;
-  animation: wave 10s -3s linear infinite;
+  animation: wave 14s -3s linear infinite;
   transform: translate3d(0, 0, 0);
-  opacity: 0.8;
+  opacity: 0.2;
   bottom: 0;
-  left: -200;
+  left: -250;
   z-index: -1;
 }
 
 .wave:nth-of-type(2) {
-  bottom: -1.25em;
-  animation: wave 18s linear reverse infinite;
-  opacity: 0.8;
+  bottom: -1em;
+  animation: wave2 18s linear reverse infinite;
+  opacity: 0.3;
 }
 
 .wave:nth-of-type(3) {
   bottom: -2.5em;
-  animation: wave 20s -1s reverse infinite;
-  opacity: 0.9;
+  animation: wave2 20s -1s reverse infinite;
+  opacity: 0.2;
 }
 
 @keyframes wave {

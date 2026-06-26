@@ -61,23 +61,23 @@ export class XmbItem implements IXmbItem {
 
   static create(id: string = '', title: string = '', icon: ReactElement | null, onClick: null | (() => void)): XmbItem
   {
-      const item = new XmbItem(id, title, icon);
-      item.onClick = onClick;
-      return item;
+    const item = new XmbItem(id, title, icon);
+    item.onClick = onClick;
+    return item;
   }
 
   static createModal(id: string = '', title: string = '', icon: ReactElement | null, modal: string | null): XmbItem
   {
-      const item = new XmbItem(id, title, icon);
-      item.modal = modal;
-      return item;
+    const item = new XmbItem(id, title, icon);
+    item.modal = modal;
+    return item;
   }
 
   static createSubmenu(id: string = '', title: string = '', icon: ReactElement | null, items?: XmbItem[] | null): XmbItem
   {
-      const item = new XmbItem(id, title, icon);
-      item.items = items;
-      return item;
+    const item = new XmbItem(id, title, icon);
+    item.items = items;
+    return item;
   }
 
   setActive() {
