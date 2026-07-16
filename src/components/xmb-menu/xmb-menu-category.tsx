@@ -1,5 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-"use client"
+"use client";
+
+import React from "react";
 
 import { XmbCategory } from "@models/menu";
 import { MenuItem } from "./xmb-menu-item";
@@ -39,8 +40,8 @@ export const MenuCategory = ({ index, category, x, y }: MenuCategoryProps) => {
                   item={item}
                   y={y}
                 />
-              )
-            )}
+              ),
+              )}
           </div>
         )}
       </div>

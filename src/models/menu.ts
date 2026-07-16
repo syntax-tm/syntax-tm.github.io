@@ -99,6 +99,7 @@ export class XmbCategory implements IXmbCategory {
   isActive: boolean = false;
   position: number = 0;
   readonly [index: number]: IXmbItem;
+  [name: string]: unknown;
 
   constructor(index: number, title: string, icon: ReactElement | null, items: XmbItem[]) {
     this.index = index;
