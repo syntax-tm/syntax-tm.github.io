@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
+"use client";
 
 import React, { CSSProperties } from "react";
 import { XmbItem } from "@models/menu";
@@ -21,8 +21,7 @@ export const MenuItem = ({ index, item, y }: MenuItemProps) => {
   const size = useWindowSize();
   const platform = useMobileDetect();
 
-  let top = 0;
-  let bottom = 0;
+  let top, bottom;
 
   const height = size?.height ?? 0;
   const width = size?.width ?? 0;

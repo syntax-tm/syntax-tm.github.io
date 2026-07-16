@@ -40,7 +40,7 @@ export default function Menu() {
   };
 
   async function onEsc() {
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
 
     if (x == 0 && y == 0) {
       return;
@@ -53,19 +53,19 @@ export default function Menu() {
   async function onBack() {
     if (!modal) return;
 
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
 
     router.push('/');
   }
 
   async function onHelp() {
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
 
     router.push('/?modal=help');
   }
 
   async function onEnter() {
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
 
     const selectedCategory = config.getCurrentCategory();
     const selectedItem = selectedCategory.getCurrentItem();
@@ -92,7 +92,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveUp();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setY(position.y);
   }
 
@@ -100,7 +100,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveTop();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -109,7 +109,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveDown();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setY(position.y);
   }
 
@@ -117,7 +117,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveBottom();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -126,7 +126,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveLeft();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -135,7 +135,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveFirst();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -144,7 +144,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveRight();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }
@@ -153,7 +153,7 @@ export default function Menu() {
     if (modal) return;
     const position = config.moveLast();
     if (position === null) return;
-    await play(XMB_AUDIO_SRC);
+    play(XMB_AUDIO_SRC);
     setX(position.x);
     setY(position.y);
   }

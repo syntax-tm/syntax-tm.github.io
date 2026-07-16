@@ -1,10 +1,10 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, useRef } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 
 interface AudioContextType {
   isPlaying: boolean;
-  play: (src: string) => void;
+  play: (src: string) => Promise<void>;
   pause: () => void;
   currentTrack: string | null;
 }
@@ -12,108 +12,113 @@ interface AudioContextType {
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
 export function AudioProvider({ children }: { children: React.ReactNode }) {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const buffersRef = useRef<Record<string, AudioBuffer>>({});
+  const bufferPromisesRef = useRef<Record<string, Promise<AudioBuffer>>>({});
+  const activeSourcesRef = useRef<AudioBufferSourceNode[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState<string | null>(null);
-  const playPromiseRef = useRef<Promise<void> | null>(null);
 
-  // useEffect(() => {
-  //   // initialize Audio only on the client side
-  //   audioRef.current = new Audio();
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  //   return () => {
-  //     if (audioRef.current) {
-  //       audioRef.current.pause();
-  //       audioRef.current.src = '';
-  //     }
-  //   };
+    const AudioContextCtor = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
 
-  //   // // track when audio finishes playing naturally
-  //   // const handleEnded = () => setIsPlaying(false);
-  //   // audioRef.current.addEventListener("ended", handleEnded);
-
-  //   // return () => {
-  //   //   audioRef.current?.removeEventListener("ended", handleEnded);
-  //   //   audioRef.current?.pause();
-  //   // };
-  // }, []);
-
-  const play = async (src: string) => {
-
-    if (!audioRef.current) {
-      audioRef.current = new Audio();
+    if (!AudioContextCtor) {
+      console.warn("Web Audio API is not supported in this browser.");
+      return;
     }
 
-    if (playPromiseRef.current) {
-      try {
-        await playPromiseRef.current;
-      } catch (e) {
-        // ignore interrupted play errors from previous actions
-        console.error('Audio playback failed', e);
-      }
-    }
+    audioContextRef.current = new AudioContextCtor();
 
-    const audio = audioRef.current;
-
-    if (!audio) return;
-
-    if (currentTrack !== src) {
-      audio.pause();
-      audio.src = src;
-      setCurrentTrack(src);
-    }
-
-    playPromiseRef.current = audio.play()
-      .catch((err) => {
-        console.error("Audio playback blocked by browser policy:", err);
-        setIsPlaying(false);
-        setCurrentTrack(null);
+    return () => {
+      activeSourcesRef.current.forEach((source) => {
+        try {
+          source.stop();
+        } catch {
+          // ignore already-stopped nodes
+        }
       });
+      activeSourcesRef.current = [];
+      audioContextRef.current?.close();
+      audioContextRef.current = null;
+    };
+  }, []);
 
-    setIsPlaying(true);
+  const getBuffer = async (src: string) => {
+    const existing = buffersRef.current[src];
+    if (existing) return existing;
 
-    // return new Promise<void>((resolve) => {
-    //   const audio = audioRef.current;
+    if (bufferPromisesRef.current[src]) {
+      return bufferPromisesRef.current[src];
+    }
 
-    //   if (!audio) return resolve();
+    const loadPromise = (async () => {
+      const response = await fetch(src);
+      if (!response.ok) {
+        throw new Error(`Failed to load audio: ${response.status}`);
+      }
 
-    //   audio.pause();
-    //   audio.src = src;
-    //   audio.load();
+      const arrayBuffer = await response.arrayBuffer();
+      const context = audioContextRef.current;
+      if (!context) {
+        throw new Error("Audio context is not available");
+      }
 
-    //   audio.onended = () => {
-    //     setIsPlaying(false);
-    //     setCurrentTrack(null);
-    //     resolve(); // resolves the promise when the audio finishes
-    //   };
+      const audioBuffer = await context.decodeAudioData(arrayBuffer.slice(0));
+      buffersRef.current[src] = audioBuffer;
+      return audioBuffer;
+    })();
 
-    //   audio.onerror = (e) => {
-    //     setIsPlaying(false);
-    //     setCurrentTrack(null);
-    //     console.error('Audio playback failed', e);
-    //     resolve(); // resolve anyway to prevent hanging on error
-    //   };
+    bufferPromisesRef.current[src] = loadPromise;
 
-    //   setIsPlaying(true);
-
-    //   audio.play()
-    //     .catch((err) => {
-    //       console.error("Audio playback blocked by browser policy:", err);
-    //       setIsPlaying(false);
-    //       setCurrentTrack(null);
-    //       resolve();
-    //     });
-
-    // });
+    try {
+      return await loadPromise;
+    } finally {
+      delete bufferPromisesRef.current[src];
+    }
   };
 
-  const pause = async () => {
-    const audio = audioRef.current;
+  const play = async (src: string) => {
+    const context = audioContextRef.current;
+    if (!context) return;
 
-    if (!audio) return;
+    if (context.state === "suspended") {
+      await context.resume();
+    }
 
-    audio.pause();
+    try {
+      const buffer = await getBuffer(src);
+      const source = context.createBufferSource();
+      source.buffer = buffer;
+      source.connect(context.destination);
+      source.onended = () => {
+        activeSourcesRef.current = activeSourcesRef.current.filter((activeSource) => activeSource !== source);
+        if (activeSourcesRef.current.length === 0) {
+          setIsPlaying(false);
+        }
+      };
+
+      source.start(0);
+      activeSourcesRef.current.push(source);
+      setCurrentTrack(src);
+      setIsPlaying(true);
+    } catch (error) {
+      console.error("Audio playback failed:", error);
+    }
+  };
+
+  const pause = () => {
+    activeSourcesRef.current.forEach((source) => {
+      try {
+        source.stop();
+      } catch {
+        // ignore already-stopped nodes
+      }
+    });
+    activeSourcesRef.current = [];
     setIsPlaying(false);
+    setCurrentTrack(null);
   };
 
   return (

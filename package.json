@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node ./scripts/prebuild.cjs && next dev",
+    "dev": "node ./scripts/prebuild.cjs && next dev --webpack",
     "build": "node ./scripts/prebuild.cjs && webpack --mode=production --node-env=production",
     "start": "next start",
     "lint": "next lint",
