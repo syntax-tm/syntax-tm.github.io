@@ -62,6 +62,9 @@
       "audio/*": [
         "./public/audio/*"
       ],
+      "fonts/*": [
+        "./public/fonts/*"
+      ],
       "@app/*": [
         "./src/app/*"
       ],

@@ -5,7 +5,8 @@ export enum Views {
 
 export enum ModalViews {
   HELP,
-  
+  ABOUT,
+  COPY,
 }
 
 export enum Direction {
@@ -13,6 +14,18 @@ export enum Direction {
   DOWN,
   LEFT,
   RIGHT,
+}
+
+export enum DeviceType {
+  DESKTOP,
+  MOBILE,
+}
+
+export enum InputType {
+  UNKNOWN = -1,
+  DEFAULT,
+  TOUCH,
+  GAMEPAD,
 }
 
 export enum eventType {

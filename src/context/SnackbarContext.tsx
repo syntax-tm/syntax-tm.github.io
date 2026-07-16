@@ -33,7 +33,7 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
     setSnackbar({ message, variant, isOpen: true });
 
     if (variant !== 'secret') {
-      await play(SNACKBAR_AUDIO_SRC);
+      play(SNACKBAR_AUDIO_SRC);
     }
 
     timerRef.current = setTimeout(() => {

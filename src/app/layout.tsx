@@ -7,8 +7,22 @@ import "./globals.css";
 import Head from 'next/head';
 import { SnackbarProvider } from "@context/SnackbarContext";
 import { AudioProvider } from '@context/AudioContext';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+//import localFont from 'next/font/local';
 
 config.autoAddCss = false;
+
+library.add(fas, fab);
+
+// const xmbFont = localFont({
+//   src: 'font.ttf',
+//   variable: '--sce-ps3-rodin-font',
+//   style: 'normal',
+//   weight: "400",
+//   preload: true,
+// });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,9 +46,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.className}>
       <Head>
-        <meta name="keywords" content={'gundwn, gundwn.gg, steam, xbox, syntax-tm, github, git, xmb, links, social, profile, games'} />
+        <meta name="keywords" content={'trey, discord, gundwn, gundwn.gg, steam, xbox, syntax-tm, github, git, xmb, links, social, profile, games'} />
         <meta name="twitter:site" content="@gundwnsrc" />
       </Head>
       <body className={`${inter.className} text-white`}>

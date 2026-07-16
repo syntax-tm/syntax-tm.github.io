@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -20,60 +20,60 @@ export interface KeyboardOutput {
 }
 
 const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
-    const [keysDown, setKeysDown] = useState<string[]>([]);
-    const [modal, setModal] = useState<boolean>(false);
+  const [keysDown, setKeysDown] = useState<string[]>([]);
+  const [modal, setModal] = useState<boolean>(false);
 
-    function onPathChanged(p: string, s: ReadonlyURLSearchParams, m: string | null) {
-      setModal(!!m);
-    }
-  
-    useQuery({ onPathChanged: onPathChanged });
-  
-    const isMapped = useCallback((key: string): boolean => {
-      return actions.has(key.toLowerCase());
-    }, [actions]);
+  function onPathChanged(p: string, s: ReadonlyURLSearchParams, m: string | null) {
+    setModal(!!m);
+  }
 
-    const handleKeyUp = useCallback((e: KeyboardEvent): void => {
-      const updated = keysDown.filter((i) => i !== e.key);
-      setKeysDown(updated);
-    }, [keysDown, setKeysDown]);
+  useQuery({ onPathChanged: onPathChanged });
 
-    const handleKeyDown = useCallback((e: KeyboardEvent) => {
-      // key is not mapped, ignore
-      if (!isMapped(e.key)) return;
+  const isMapped = useCallback((key: string): boolean => {
+    return actions.has(key.toLowerCase());
+  }, [actions]);
 
-      // key is mapped, so retrieve the KeyPressAction
-      const action = actions.get(e.key.toLowerCase());
+  const handleKeyUp = useCallback((e: KeyboardEvent): void => {
+    const updated = keysDown.filter((i) => i !== e.key);
+    setKeysDown(updated);
+  }, [keysDown, setKeysDown]);
 
-      // TODO: this should throw an error
-      if (action === undefined) return;
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    // key is not mapped, ignore
+    if (!isMapped(e.key)) return;
 
-      // if this is a repeat and we don't allow repeats
-      if (e.repeat && !action.repeat) return;
+    // key is mapped, so retrieve the KeyPressAction
+    const action = actions.get(e.key.toLowerCase());
 
-      e.preventDefault();
+    // TODO: this should throw an error
+    if (action === undefined) return;
 
-      action.onKeyPress();
+    // if this is a repeat and we don't allow repeats
+    if (e.repeat && !action.repeat) return;
 
-      setKeysDown((prevState) => [...prevState, e.key]);
-    }, [actions, isMapped]);
+    e.preventDefault();
 
-    useEffect(() => {
-      if (modal && !enabledOnModal) return;
+    action.onKeyPress();
 
-      document.body.addEventListener('keydown', handleKeyDown);
-      document.body.addEventListener('keyup', handleKeyUp);
+    setKeysDown((prevState) => [...prevState, e.key]);
+  }, [actions, isMapped]);
 
-      return () => {
-        document.body.removeEventListener('keydown', handleKeyDown);
-        document.body.removeEventListener('keyup', handleKeyUp);
-      }
-    }, [handleKeyUp, handleKeyDown, modal, enabledOnModal]);
+  useEffect(() => {
+    if (modal && !enabledOnModal) return;
 
-    return {
-      onKeyDown: handleKeyDown,
-      onKeyUp: handleKeyUp,
+    document.body.addEventListener('keydown', handleKeyDown);
+    document.body.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      document.body.removeEventListener('keydown', handleKeyDown);
+      document.body.removeEventListener('keyup', handleKeyUp);
     };
+  }, [handleKeyUp, handleKeyDown, modal, enabledOnModal]);
+
+  return {
+    onKeyDown: handleKeyDown,
+    onKeyUp: handleKeyUp,
+  };
 };
 
 export default useKeyboard;

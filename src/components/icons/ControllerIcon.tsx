@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 
-type ControllerButton =
+export type ControllerButton =
     | "a"
     | "b"
     | "d_pad_down"

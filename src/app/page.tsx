@@ -3,7 +3,6 @@
 import React from "react";
 import Background from '@components/background/background';
 import dynamic from "next/dynamic";
-import { useRef, useState, ReactNode, useEffect, Dispatch, SetStateAction, CSSProperties } from "react";
 //import Modal from "@/components/modal/Modal";
 import Secret from '@components/secret/Secret';
 
@@ -14,7 +13,7 @@ const Modal = dynamic(() => import('@components/modal/Modal'), { ssr: false });
 export default function Home() {
 
   return (
-    <div className="">
+    <div className="root-container">
       <Background />
       <Secret />
       <Clock />

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 export interface QueryInput {
@@ -30,7 +30,7 @@ const useQuery = ({ onPathChanged }: QueryInput): QueryOutput => {
     pathName: pathName,
     params: searchParams,
     modal: modalRoute,
-  }
+  };
 };
 
 export default useQuery;

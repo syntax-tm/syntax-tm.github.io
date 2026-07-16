@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@plugin 'tailwind-scrollbar';
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -47,6 +45,10 @@ body {
     border: none !important;
     -webkit-tap-highlight-color: transparent !important;
 }
+
+/* * {
+  font-family: var(--sce-ps3-rodin-font);
+} */
 
 /* Firefox */
 * {

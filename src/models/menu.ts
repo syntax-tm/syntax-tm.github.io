@@ -5,19 +5,6 @@ export type Position = {
   y: number;
 }
 
-export interface IXmbMenu {
-  items: IXmbCategory[];
-  readonly [index: number]: IXmbCategory;
-}
-
-export interface IXmbCategory {
-  title: string;
-  icon: ReactElement | null;
-  items: IXmbItem[];
-  readonly [index: number]: IXmbItem;
-  [name: string]: any;
-}
-
 export interface IXmbItem {
   id: string;
   title: string;
@@ -31,7 +18,20 @@ export interface IXmbItem {
   modal?: string | null;
   items?: IXmbItem[] | null;
   readonly [index: number]: IXmbItem;
-  [name: string]: any;
+  [name: string]: unknown;
+}
+
+export interface IXmbMenu {
+  items: IXmbCategory[];
+  readonly [index: number]: IXmbCategory;
+}
+
+export interface IXmbCategory {
+  title: string;
+  icon: ReactElement | null;
+  items: IXmbItem[];
+  readonly [index: number]: IXmbItem;
+  [name: string]: unknown;
 }
 
 export class XmbItem implements IXmbItem {
@@ -47,9 +47,10 @@ export class XmbItem implements IXmbItem {
   isActive: boolean = false;
   visible: boolean = true;
   modal?: string | null = '';
-  items?: XmbItem[] | null;
+  items?: IXmbItem[] | null;
   onClick?: (() => void) | null = null;
   readonly [index: number]: IXmbItem;
+  [name: string]: unknown;
 
   constructor(id: string = '', title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null) {
     this.id = id;

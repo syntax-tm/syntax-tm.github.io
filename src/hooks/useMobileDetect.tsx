@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { DeviceType } from "@/app/enums";
 
 const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
   const isAndroid = () => Boolean(userAgent.match(/Android/i));
@@ -9,12 +10,19 @@ const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
   const isMobile = () =>
     Boolean(isAndroid() || isIos() || isOpera() || isWindows());
   const isDesktop = () => Boolean(!isMobile() && !isSSR());
+  const deviceType = () => {
+    if (isMobile()) {
+      return DeviceType.MOBILE;
+    }
+    return DeviceType.DESKTOP;
+  };
   return {
     isMobile,
     isDesktop,
     isAndroid,
     isIos,
     isSSR,
+    deviceType,
   };
 };
 const useMobileDetect = () => {

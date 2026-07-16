@@ -1,9 +1,105 @@
-import React from "react";
+import React, { ReactElement } from "react";
+import { IconLookup, IconDefinition, findIconDefinition, IconPrefix, IconName } from '@fortawesome/fontawesome-svg-core';
 import { faA, faAngleDown, faAngleUp, faD, faH, faLeftRight, faS, faUpDown, faW } from "@fortawesome/free-solid-svg-icons";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./help.css";
-import ControllerIcon from "@components/icons/ControllerIcon";
+import ControllerIcon, { ControllerButton } from "@components/icons/ControllerIcon";
+import { Type } from "typescript";
+
+// export type HelpItemType = 'keyboard' | 'controller' | 'secret' | 'info';
+
+// interface ItemProps<T> {
+//   description: string;
+//   icon: T[] | T;
+//   //kind: "controller" | "keyboard";
+// }
+
+// interface ControllerItemProps extends ItemProps<ControllerButton> {
+//   kind: "controller";
+// }
+
+// interface HelpItemProps extends ItemProps<string> {
+//   kind: "keyboard";
+// }
+
+// interface KeyboardIcon {
+//   text: string;
+// }
+
+// type HelpItem = ControllerItemProps | HelpItemProps;
+
+// function GetFontAwesomeIcon(prefix: IconPrefix, icon: IconName): IconDefinition {
+//   const iconLookup: IconLookup = { prefix: prefix, iconName: icon };
+//   const iconDefinition: IconDefinition = findIconDefinition(iconLookup);
+//   return iconDefinition;
+// }
+
+// type IconLookupProps = {
+//   iconName: string;
+//   prefix: IconPrefix;
+// }
+
+// const DynamicIconComponent = (props: IconLookupProps) => {
+//   // Example: If iconName is "user", it translates to ["fas", "user"]
+//   const name = props.iconName;
+//   const lookup: IconLookup = {
+//     prefix = props.prefix,
+//     iconName = name,
+//   };
+//   return (
+//     <div>
+//       <FontAwesomeIcon icon={lookup} />
+//     </div>
+//   );
+// };
+
+// function HelpItemView(item: HelpItem) {
+
+//   const header = [];
+//   const kind = item.kind;
+
+//   if (kind === "controller") {
+//     const icons = Array.isArray(item.icon) ? item.icon : [item.icon];
+//     for (let i = 0; i < icons.length; i++) {
+//       const el = icons[i];
+//       const controllerIcon = <ControllerIcon icon={el} className="object-scale-down" width={50} height={50} />;
+//       header.push(controllerIcon);
+//       if (i < icons.length - 1) {
+//         header.push(<span className="mx-2 my-auto">or</span>);
+//       }
+//     }
+//   } else if (kind === "keyboard") {
+//     const icons = Array.isArray(item.icon) ? item.icon : [item.icon];
+//     for (let i = 0; i < icons.length; i++) {
+//       const name = icons[i];
+//       const keyboardIcon = GetFontAwesomeIcon("far", el);
+//       const el = DynamicIconComponent({
+//         prefix: "fas",
+//         iconName: IconName(),
+//       });
+//       header.push(controllerIcon);
+//       if (i < icons.length - 1) {
+//         header.push(<span className="mx-2 my-auto">or</span>);
+//       }
+//     }
+//   }
+
+//   return (
+//     <tr className="content-center">
+//       <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
+//         <div className="flex relative">
+//           {header.map(el => {
+//             return el;
+//           })}
+//         </div>
+//       </th>
+//       <td className="px-6 py-2.5">
+//         {item.description}
+//       </td>
+//     </tr>
+//   );
+// };
 
 export const HelpView = () => {
   return (
@@ -303,7 +399,7 @@ export const GamepadView = () => {
       </div>
     </div>
   );
-}
+};
 
 export const MobileHelpView = () => {
   return (
