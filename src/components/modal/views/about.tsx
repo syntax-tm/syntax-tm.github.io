@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import useMobileDetect from "@/hooks/useMobileDetect";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -22,6 +23,46 @@ const displayItems: Record<string, string | undefined> = {
 };
 
 export const AboutView = () => {
+  const mobileDetect = useMobileDetect();
+  const tapCountRef = useRef(0);
+  const tapTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!mobileDetect.isMobile()) return;
+
+    const resetTapCount = () => {
+      tapCountRef.current = 0;
+      if (tapTimerRef.current) {
+        window.clearTimeout(tapTimerRef.current);
+        tapTimerRef.current = null;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      tapCountRef.current += 1;
+
+      if (tapTimerRef.current) {
+        window.clearTimeout(tapTimerRef.current);
+      }
+
+      tapTimerRef.current = window.setTimeout(() => {
+        tapCountRef.current = 0;
+        tapTimerRef.current = null;
+      }, 500);
+
+      if (tapCountRef.current >= 3) {
+        window.dispatchEvent(new CustomEvent("secret:activate"));
+        resetTapCount();
+      }
+    };
+
+    document.body.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      document.body.removeEventListener("touchend", handleTouchEnd);
+      resetTapCount();
+    };
+  }, [mobileDetect]);
 
   return (
     <div className="grid h-full p-1">

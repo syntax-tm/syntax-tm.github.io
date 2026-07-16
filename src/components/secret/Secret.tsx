@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useGamepads } from 'awesome-react-gamepads';
 import { useKeySequence } from "@hooks/useKeySequence";
@@ -29,6 +29,18 @@ export default function Secret() {
     const message = isActive ? 'activated' : 'deactivated';
     showSnackbar(`Secret ${message}.`, 'success');
   };
+
+  useEffect(() => {
+    const handleSecretActivate = () => {
+      void toggleSecret();
+    };
+
+    window.addEventListener("secret:activate", handleSecretActivate);
+
+    return () => {
+      window.removeEventListener("secret:activate", handleSecretActivate);
+    };
+  }, [secret]);
 
   useKeySequence(KONAMI_CODE, () => {
     toggleSecret();
