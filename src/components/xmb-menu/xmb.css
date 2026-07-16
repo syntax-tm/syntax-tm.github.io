@@ -17,6 +17,7 @@ body {
 
 .xmb-icon {
   z-index: 2;
+  overflow: visible !important;
 }
 
 /* TODO: clean up media queries and breakpoints for xmb menu */
@@ -51,8 +52,8 @@ body {
     height: 90px;
     margin: 5px 5px;
     filter: drop-shadow(0 0 0.25rem black);
-    overflow-clip-margin: content-box;
-    overflow: clip;
+    /* overflow-clip-margin: content-box;
+    overflow: clip; */
     z-index: -2;
     color: white;
     /* scale: 0.8; */
@@ -99,8 +100,8 @@ body {
     width: 60px;
     height: 60px;
     filter: drop-shadow(0 0 0.25rem black);
-    overflow-clip-margin: content-box;
-    overflow: clip;
+    /* overflow-clip-margin: content-box;
+    overflow: clip; */
     z-index: -2;
     color: white;
     /* scale: 0.8; */
@@ -129,8 +130,8 @@ body {
 
   .xmb-icon {
     filter: drop-shadow(0 0 0.25rem black);
-    overflow-clip-margin: content-box;
-    overflow: clip;
+    /* overflow-clip-margin: content-box;
+    overflow: clip; */
     z-index: -2;
     color: white;
     width: 80px;
@@ -177,8 +178,8 @@ body {
 
   img, svg {
     filter: drop-shadow(0 0 0.25rem black);
-    overflow-clip-margin: content-box;
-    overflow: clip;
+    /* overflow-clip-margin: content-box;
+    overflow: clip; */
     /* z-index: -2; */
     color: white;
     width: 80px;
@@ -217,8 +218,8 @@ body {
 
   img, svg {
     filter: drop-shadow(0 0 0.25rem black);
-    overflow-clip-margin: content-box;
-    overflow: clip;
+    /* overflow-clip-margin: content-box;
+    overflow: clip; */
     z-index: -2;
     color: white;
     width: 60px;
