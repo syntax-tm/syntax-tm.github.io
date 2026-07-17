@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import type { Metadata, Viewport } from 'next';
 import { Inter } from "next/font/google";
@@ -6,6 +8,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import "./globals.css";
 import { SnackbarProvider } from "@context/SnackbarContext";
 import { AudioProvider } from '@context/AudioContext';
+import { BootProvider } from '@context/BootContext';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -23,17 +26,7 @@ library.add(fas, fab);
 //   preload: true,
 // });
 
-export const metadata: Metadata = {
-  title: 'Trey | Social, Games, and More Links',
-  description: 'Profiles for gaming, social media, development, and more.',
-  category: "Personal Website",
-  publisher: "@syntax-tm",
-  creator: "@syntax-tm",
-  keywords: ['trey', 'discord', 'gundwn', 'gundwn.gg', 'steam', 'xbox', 'syntax-tm', 'github', 'git', 'xmb', 'links', 'social', 'profile', 'games'],
-  twitter: {
-    site: "@gundwnsrc",
-  },
-};
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,11 +42,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en">
       <body className={`${inter.className} text-white`}>
         <AudioProvider>
           <SnackbarProvider>
-            {children}
+            <BootProvider>
+              {children}
+            </BootProvider>
           </SnackbarProvider>
         </AudioProvider>
       </body>

@@ -1,6 +1,6 @@
 body {
   margin: auto;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   overflow: auto;
 }
 
@@ -48,13 +48,13 @@ body {
   background: rgb(255 255 255 / 25%);
   border-radius: 200% 300% 0 0;
   position: fixed;
-  width: 500%;
+  width: 450%;
   height: 30%;
-  animation: wave 14s -3s linear infinite;
+  animation: wave 12s -3s linear infinite;
   transform: translate3d(0, 0, 0);
   opacity: 0.2;
   bottom: 0;
-  left: -250;
+  left: -400;
   z-index: -1;
 }
 

@@ -15,9 +15,22 @@ body {
   overflow: hidden;
 }
 
+.xmb-main {
+  animation: bootFadeIn 2s ease-in-out forwards;
+}
+
 .xmb-icon {
   z-index: 2;
   overflow: visible !important;
+}
+
+@keyframes bootFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* TODO: clean up media queries and breakpoints for xmb menu */

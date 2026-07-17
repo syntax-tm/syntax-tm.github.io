@@ -79,7 +79,7 @@ import nugetIcon from "public/image/xmb/nuget.png";
 import halo3generalBwIcon from "public/image/halo_3_general_bw.png";
 //import statsFmIcon from "public/svg/statsfm.svg";
 
-const xmbIconClassName = "xmb-icon object-contain justify-self-center w-full h-full";
+const xmbIconClassName = "xmb-icon object-contain justify-self-center w-full h-full overflow-visible";
 
 export const info: ReactElement = (
   <FontAwesomeIcon icon={faInfoCircle} className={xmbIconClassName} />
@@ -124,7 +124,7 @@ export const award: ReactElement = (
   <FontAwesomeIcon icon={faAward} className={xmbIconClassName} />
 );
 export const message: ReactElement = (
-  <FontAwesomeIcon icon={faMessage} className={xmbIconClassName} />
+  <FontAwesomeIcon icon={faMessage} className={`${xmbIconClassName} overflow-auto`} />
 );
 // export const music: ReactElement = <FontAwesomeIcon icon={faMusic} className='xmb-icon object-contain justify-self-center w-full h-full' />
 export const c: ReactElement = (

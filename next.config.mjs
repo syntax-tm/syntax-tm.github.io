@@ -45,6 +45,7 @@ const nextConfig = {
   experimental: {
     // TODO: add missing Suspense and remove this suppression
     // missingSuspenseWithCSRBailout: false,
+    viewTransition: true,
   },
   env: {
     name: version.name,
