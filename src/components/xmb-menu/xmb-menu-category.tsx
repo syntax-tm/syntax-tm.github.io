@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { MouseEvent, RefObject, useCallback } from "react";
 
-import { XmbCategory } from "@models/menu";
+import { XmbMenu, XmbCategory } from "@models/menu";
 import { MenuItem } from "./xmb-menu-item";
 import "./xmb.css";
 
@@ -11,17 +11,25 @@ interface MenuCategoryProps {
   category: XmbCategory;
   x: number;
   y: number;
+  menuRef: RefObject<XmbMenu | null>;
 }
 
-export const MenuCategory = ({ index, category, x, y }: MenuCategoryProps) => {
+export const MenuCategory = ({ index, category, x, y, menuRef }: MenuCategoryProps) => {
 
   const active = index === x;
+
+  const handleClick = useCallback((e: MouseEvent) => {
+    e.preventDefault();
+    const xmb = menuRef.current;
+    if (xmb === null) return;
+    xmb.setX(x);
+  }, [menuRef]);
 
   return (
     <>
       <div id={category.title} className={`xmb-category ${ active ? 'active' : 'inactive' }`}
       >
-        <div className="xmb-category-header grid select-none">
+        <div className="xmb-category-header grid hover:cursor-pointer" onClick={handleClick}>
           {category.icon}
           {active && (
             <p className="xmb-category-title select-none">

@@ -4,15 +4,12 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Background from "@components/background/background";
-import Secret from "@components/secret/Secret";
 import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBug,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBug } from "@fortawesome/free-solid-svg-icons";
 import sh404 from "public/image/404.png";
-import "./globals.css";
-import "./404.css";
+import "@styles/global.css";
+import "./not-found.css";
 
 const Clock = dynamic(() => import('@components/clock/Clock'), { ssr: false });
 
@@ -20,7 +17,6 @@ export default function NotFound() {
   return (
     <div className="root-container">
       <Background />
-      <Secret />
       <Clock />
       <div className="grid content-center z-100 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
         <Link href="/" aria-label="Return to the home page">

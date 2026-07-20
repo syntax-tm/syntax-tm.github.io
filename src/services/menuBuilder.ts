@@ -2,9 +2,6 @@ import { XmbMenu, XmbCategory, XmbItem } from "@/models/menu";
 import * as icons from '@components/icons/icons';
 
 function buildHomeCategory(): XmbCategory {
-  // const welcome = XmbItem.createModal("welcome", "Welcome", icons.star, 'help');
-  // welcome.description = "Click to view controls";
-  // welcome.setActive();
 
   const about = XmbItem.createModal("about", "About", icons.info, 'about');
   about.description = "Display the about screen";

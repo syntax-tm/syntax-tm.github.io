@@ -4,15 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node ./scripts/prebuild.cjs && next dev --webpack",
-    "build": "node ./scripts/prebuild.cjs && webpack --mode=production --node-env=production",
+    "dev": "node ./scripts/prebuild.mjs && next dev --webpack",
+    "build": "node ./scripts/prebuild.mjs && webpack --mode=production --node-env=production",
     "start": "next start",
     "lint": "next lint",
-    "build:dev": "node ./scripts/prebuild.cjs && webpack --mode=development",
-    "build:prod": "node ./scripts/prebuild.cjs && webpack --mode=production --node-env=production",
+    "build:dev": "node ./scripts/prebuild.mjs && webpack --mode=development",
+    "build:prod": "node ./scripts/prebuild.mjs && webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
     "serve": "webpack serve",
-    "prebuild": "node ./scripts/prebuild.cjs"
+    "prebuild": "node ./scripts/prebuild.mjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.3.1",

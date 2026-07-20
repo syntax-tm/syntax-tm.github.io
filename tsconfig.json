@@ -17,9 +17,14 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+    "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
+    "inlineSources": false,
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "newLine": "lf",
     "plugins": [
       {
         "name": "next"
@@ -28,6 +33,12 @@
     "paths": {
       "@root/*": [
         "./"
+      ],
+      "@/*": [
+        "./src/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
       ],
       "@components/*": [
         "./src/components/*"
@@ -44,8 +55,11 @@
       "@hooks/*": [
         "./src/hooks/*"
       ],
-      "@/*": [
-        "./src/*"
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "public/*": [
+        "./public/*"
       ],
       "image/*": [
         "./public/image/*"
@@ -65,12 +79,6 @@
       "fonts/*": [
         "./public/fonts/*"
       ],
-      "@app/*": [
-        "./src/app/*"
-      ],
-      "public/*": [
-        "./public/*"
-      ]
     }
   },
   "include": [

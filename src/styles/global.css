@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* import external styles */
+@import './animations.css';
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+html {
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  overflow-y: hidden;
+  color: white;
+  /* Cross-browser standard properties */
+  scrollbar-width: thin; /* Options: auto, thin, none */
+  scrollbar-color: #dddddd73 transparent; /* thumb color | track color */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* hide borders on everything except the clock */
+/* TODO: change this to only hide the borders on the xmb menu divs */
+*:not(.clock, .clock-container, hr, input) {
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+/* * {
+  font-family: var(--sce-ps3-rodin-font);
+} */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #dddddd73 transparent;
+  scroll-padding: 50px;
+  scroll-margin: 10px;
+  scroll-margin-inline: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(85, 60, 154, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+a {
+  color: unset;
+}

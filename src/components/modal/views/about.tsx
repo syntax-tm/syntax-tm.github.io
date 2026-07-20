@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import useMobileDetect from "@/hooks/useMobileDetect";
+import { useSecret } from "@/context/SecretContext";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -22,10 +23,13 @@ const displayItems: Record<string, string | undefined> = {
   "Dependencies": process.env.dependencies,
 };
 
+const SECRET_TAP_MIN = 5;
+
 export const AboutView = () => {
   const mobileDetect = useMobileDetect();
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<number | null>(null);
+  const { toggleSecret } = useSecret();
 
   useEffect(() => {
     if (!mobileDetect.isMobile()) return;
@@ -50,8 +54,8 @@ export const AboutView = () => {
         tapTimerRef.current = null;
       }, 500);
 
-      if (tapCountRef.current >= 3) {
-        window.dispatchEvent(new CustomEvent("secret:activate"));
+      if (tapCountRef.current >= SECRET_TAP_MIN) {
+        toggleSecret();
         resetTapCount();
       }
     };
@@ -68,35 +72,25 @@ export const AboutView = () => {
     <div className="grid h-full p-1">
       <div className="modal-content content-center justify-items-center mx-auto md:w-[80%] overflow-y-auto overscroll-contain my-[2%] md:my-2">
         <table className="w-auto text-base rtl:text-right text-gray-500 dark:text-gray-400 max-w-[500px] -my-1">
-          {/* <thead className="text-m text-gray-400 uppercase">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Created By
-              </th>
-              <td scope="col" className="px-6 py-3">
-                Trey (@syntax-tm)
-              </td>
-            </tr>
-          </thead> */}
           <tbody className="">
             {
               Object.entries(displayItems).map(([key, value]) => (
                 <tr className="" key={key}>
                   <th scope="row" className="px-3 py-2.5 text-sm md:text-base text-gray-300 whitespace-nowrap dark:text-gray-300 text-right">
-                    <span className="inline-block align-baseline">{key}</span>
+                    <span className="inline-block align-baseline select-none">{key}</span>
                   </th>
                   <td className="px-3 py-2.5 text-wrap whitespace-normal text-left text-sm md:text-base -indent-4 md:indent-0">
                     <div className="grid grid-cols-1">
                       {
                         value !== null && isMultiLine(value) && getLines(value).map((line, index) => (
-                          <span key={index} className="inline-block align-baseline text-gray-400 dark:text-gray-400">
+                          <span key={index} className="inline-block align-baseline text-gray-400 dark:text-gray-400 select-all">
                             {line}
                           </span>
                         ))
                       }
                       {
                         !isMultiLine(value) && (
-                          <span className="inline-block align-baseline">{value}</span>
+                          <span className="inline-block align-baseline select-none">{value}</span>
                         )
                       }
                     </div>

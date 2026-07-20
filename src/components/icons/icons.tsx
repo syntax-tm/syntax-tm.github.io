@@ -262,7 +262,7 @@ export const video: ReactElement = (
   <Image src={videoIcon} className={xmbIconClassName} alt="video icon" />
 );
 export const h3general: ReactElement = (
-  <Image src={halo3generalBwIcon} className="h3-general" alt="h3 general icon" />
+  <Image src={halo3generalBwIcon} className="h3-general" alt="h3 general icon" loading="eager" />
 );
 export const trueachievements: ReactElement = (
   <Image src={trueachievementsIcon} className={xmbIconClassName} alt="trueachievements icon" />

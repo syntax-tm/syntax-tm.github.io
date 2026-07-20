@@ -32,7 +32,9 @@ const nextConfig = {
   logging: {
     browserToTerminal: true,
   },
-
+  sassOptions: {
+    implementation: 'sass-embedded',
+  },
   /**
    * Disable server-based image optimization. Next.js does not support
    * dynamic features with static exports.
@@ -66,7 +68,7 @@ const nextConfig = {
               () => {
                 console.log("Starting pre-build tasks...");
               },
-              "node ./scripts/prebuild.cjs",
+              "node ./scripts/prebuild.mjs",
               () => {
                 console.log("Completed pre-build tasks");
               },
