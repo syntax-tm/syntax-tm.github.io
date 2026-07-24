@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import useMobileDetect from "@/hooks/useMobileDetect";
-import { useSecret } from "@/context/SecretContext";
+import useMobileDetect from "@hooks/useMobileDetect";
+import { useSecret } from "@context/SecretContext";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -83,7 +83,7 @@ export const AboutView = () => {
                     <div className="grid grid-cols-1">
                       {
                         value !== null && isMultiLine(value) && getLines(value).map((line, index) => (
-                          <span key={index} className="inline-block align-baseline text-gray-400 dark:text-gray-400 select-all">
+                          <span key={index} className="inline-block align-baseline text-gray-400 dark:text-gray-400 select-none">
                             {line}
                           </span>
                         ))

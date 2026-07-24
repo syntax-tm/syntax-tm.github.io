@@ -34,13 +34,23 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
   }, [actions]);
 
   const handleKeyUp = useCallback((e: KeyboardEvent): void => {
+    // key is not mapped, ignore
+    if (!isMapped(e.key)) return;
+
+    //e.stopPropagation();
+    //e.preventDefault();
     const updated = keysDown.filter((i) => i !== e.key);
     setKeysDown(updated);
-  }, [keysDown, setKeysDown]);
+
+    console.log(`keyup: ${e.key}`);
+  }, [keysDown]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     // key is not mapped, ignore
     if (!isMapped(e.key)) return;
+
+    //e.stopPropagation();
+    //e.preventDefault();
 
     // key is mapped, so retrieve the KeyPressAction
     const action = actions.get(e.key.toLowerCase());
@@ -51,7 +61,7 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
     // if this is a repeat and we don't allow repeats
     if (e.repeat && !action.repeat) return;
 
-    e.preventDefault();
+    console.log(`keydown: ${e.key} => ${action.onKeyPress.name}()`);
 
     action.onKeyPress();
 
@@ -61,14 +71,14 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
   useEffect(() => {
     if (modal && !enabledOnModal) return;
 
-    document.body.addEventListener('keydown', handleKeyDown);
-    document.body.addEventListener('keyup', handleKeyUp);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      document.body.removeEventListener('keydown', handleKeyDown);
-      document.body.removeEventListener('keyup', handleKeyUp);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [handleKeyUp, handleKeyDown, modal, enabledOnModal]);
+  }, [handleKeyUp, handleKeyDown, modal]);
 
   return {
     onKeyDown: handleKeyDown,

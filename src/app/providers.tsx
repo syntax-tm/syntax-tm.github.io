@@ -1,24 +1,30 @@
 'use client';
 
 import React from "react";
+//import { ProviderComposer } from "@providers/ProviderComposer";
 import { AudioProvider } from "@context/AudioContext";
 import { BootProvider } from "@context/BootContext";
+import { MessengerProvider } from "@context/MessageContext";
 import { SnackbarProvider } from "@context/SnackbarContext";
 import { SecretProvider } from "@context/SecretContext";
-import { XmbProvider } from "@/context/XmbContext";
+import { XmbProvider } from "@context/XmbContext";
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({ children }: ({ children: React.ReactNode })) {
   return (
-    <AudioProvider>
-      <BootProvider>
-        <SnackbarProvider>
-          <SecretProvider>
-            <XmbProvider>
-              {children}
-            </XmbProvider>
-          </SecretProvider>
-        </SnackbarProvider>
-      </BootProvider>
-    </AudioProvider>
+    <>
+      <AudioProvider>
+        <BootProvider>
+          <MessengerProvider>
+            <SnackbarProvider>
+              <SecretProvider>
+                <XmbProvider>
+                  {children}
+                </XmbProvider>
+              </SecretProvider>
+            </SnackbarProvider>
+          </MessengerProvider>
+        </BootProvider>
+      </AudioProvider>
+    </>
   );
 }

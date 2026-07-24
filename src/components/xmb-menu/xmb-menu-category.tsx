@@ -1,52 +1,52 @@
 "use client";
 
-import React, { MouseEvent, RefObject, useCallback } from "react";
-
-import { XmbMenu, XmbCategory } from "@models/menu";
+import React, { useState, useEffect } from "react";
+import { XmbCategory, XmbItem } from "@models/menu";
+import { useXmb } from "@context/XmbContext";
 import { MenuItem } from "./xmb-menu-item";
 import "./xmb.css";
 
 interface MenuCategoryProps {
   index: number;
   category: XmbCategory;
-  x: number;
-  y: number;
-  menuRef: RefObject<XmbMenu | null>;
+  openItem: (item: XmbItem) => void;
 }
 
-export const MenuCategory = ({ index, category, x, y, menuRef }: MenuCategoryProps) => {
+export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) => {
 
-  const active = index === x;
+  const { x } = useXmb();
+  const [isActive, setIsActive] = useState(false);
 
-  const handleClick = useCallback((e: MouseEvent) => {
-    e.preventDefault();
-    const xmb = menuRef.current;
-    if (xmb === null) return;
-    xmb.setX(x);
-  }, [menuRef]);
+  useEffect(() => {
+    const active = x === index;
+    setIsActive(active);
+  }, [x]);
 
   return (
     <>
-      <div id={category.title} className={`xmb-category ${ active ? 'active' : 'inactive' }`}
+      <div id={category.title}
+        className={`xmb-category ${ isActive ? 'active' : 'inactive' }`}
+        data-index={index}
+        data-active={isActive}
       >
-        <div className="xmb-category-header grid hover:cursor-pointer" onClick={handleClick}>
+        <div className="xmb-category-header grid hover:cursor-pointer">
           {category.icon}
-          {active && (
+          {isActive && (
             <p className="xmb-category-title select-none">
               {category.title}
             </p>
           )}
         </div>
-        {active && (
+        {isActive && (
           <div className="xmb-category-items select-none">
-            {category.items !== undefined &&
-              category.items.length > 0 &&
+            {category.items &&
               category.items.map((item, i) => (
                 <MenuItem
+                  catIndex={index}
                   index={i}
                   key={item.id}
                   item={item}
-                  y={y}
+                  openItem={openItem}
                 />
               ),
               )}

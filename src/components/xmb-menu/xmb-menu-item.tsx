@@ -1,69 +1,78 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useMemo } from "react";
 import { XmbItem } from "@models/menu";
-import { useRouter } from "next/navigation";
+import { useXmb } from "@context/XmbContext";
 import { useWindowSize } from "@uidotdev/usehooks";
-import useMobileDetect from "@/hooks/useMobileDetect";
+import useMobileDetect from "@hooks//useMobileDetect";
 import Link from "next/link";
 import "./xmb.css";
+import { useMessenger, EventName } from "@src/context/MessageContext";
 
 interface MenuItemProps {
+  catIndex: number;
   index: number;
   item: XmbItem;
-  y: number;
+  openItem: (item: XmbItem) => void;
 }
 
-export const MenuItem = ({ index, item, y }: MenuItemProps) => {
-  const active = index === y;
-  const router = useRouter();
+export const MenuItem = ({ catIndex, index, item, openItem }: MenuItemProps) => {
   const size = useWindowSize();
   const platform = useMobileDetect();
+  const { x, y, toXmbKey } = useXmb();
+  //const { publish, subscribe, unsubscribe } = useMessenger();
 
-  let top, bottom;
+  //const isVisible = x === catIndex;
+  const active = x === catIndex
+    && y === index;
 
-  const height = size?.height ?? 0;
-  const width = size?.width ?? 0;
-  const isPortrait = height > width;
+  // const eventKey = useMemo(() => {
+  //   toXmbKey(catIndex, index);
+  // }, []);
 
-  if (platform.isMobile() || isPortrait) {
-    top = index === 0
-      ? (active ? 30 : -300 + -110 * y)
-      : (active ? 350 : 30);
-    bottom = index === 0
-      ? (active ? 40 : 0)
-      : 30;
-  } else {
-    top = index === 0
-      ? (active ? 50 : -190 + -120 * y)
-      : (active ? 250 - 5 * y : 15);
-    bottom = index === 0
-      ? (active ? 30 : 20)
-      : (active ? 20 : 30);
-  }
+  const style = useMemo(() => {
+    let top, bottom;
 
-  const styleProps: CSSProperties = {
-    marginTop: `${top}px`,
-    marginBottom: `${bottom}px`,
-  };
+    const height = size?.height ?? 0;
+    const width = size?.width ?? 0;
+    const isPortrait = height > width;
+
+    if (platform.isMobile() || isPortrait) {
+      top = index === 0
+        ? (active ? 30 : -300 + -110 * y)
+        : (active ? 350 : 30);
+      bottom = index === 0
+        ? (active ? 40 : 0)
+        : 30;
+    } else {
+      top = index === 0
+        ? (active ? 50 : -190 + -120 * y)
+        : (active ? 250 - 5 * y : 15);
+      bottom = index === 0
+        ? (active ? 30 : 20)
+        : (active ? 20 : 30);
+    }
+
+    const styleProps: CSSProperties = {
+      marginTop: `${top}px`,
+      marginBottom: `${bottom}px`,
+    };
+
+    return styleProps;
+  }, [y, size, active]);
 
   return (
     <>
       <Link
         id={item.id}
-        className={`w-100 max-w-[120px] relative xmb-item flex justify-self-center select-none ${active ? "active" : "inactive"} ${index === 0 ? "first" : ""}`}
-        style={styleProps}
+        className={`w-100 max-w-[120px] relative xmb-item flex justify-self-center select-none ${active ? "active" : "inactive"} ${!index && "first"}`}
+        style={style}
         href={item.link || ""}
+        data-index={index}
+        data-active={active}
         onClick={(e) => {
-          if (item === null) return;
-          if (item.modal) {
-            e.preventDefault();
-            router.push(`/?modal=${item.modal}`);
-            return;
-          }
-          if (item.onClick === null || item.onClick === undefined) return;
-          item.onClick();
+          e.preventDefault();
+          openItem(item);
         }}
         target={item.link && "_blank" || undefined}>
         <div className="grid grid-cols-1 overflow-visible relative">

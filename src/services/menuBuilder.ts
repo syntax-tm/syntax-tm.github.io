@@ -1,4 +1,4 @@
-import { XmbMenu, XmbCategory, XmbItem } from "@/models/menu";
+import { XmbMenu, XmbCategory, XmbItem } from "@models/menu";
 import * as icons from '@components/icons/icons';
 
 function buildHomeCategory(): XmbCategory {
@@ -24,8 +24,6 @@ function buildHomeCategory(): XmbCategory {
     icons.home,
     items,
   );
-
-  category.setActive();
 
   return category;
 }

@@ -29,6 +29,7 @@ export function useKeySequence(targetSequence: string[], callback: () => void, d
       );
 
       if (isMatch) {
+        console.log(`keysequencecomplete: ${callback.name}()`);
         callback();
         sequenceRef.current = []; // reset buffer on success
       } else {
@@ -40,11 +41,11 @@ export function useKeySequence(targetSequence: string[], callback: () => void, d
     };
 
     // safely attach listener on the client side
-    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     // clean up listeners and timers when component unmounts
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [targetSequence, callback, delay]);

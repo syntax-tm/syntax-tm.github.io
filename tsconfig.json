@@ -34,7 +34,7 @@
       "@root/*": [
         "./"
       ],
-      "@/*": [
+      "@src/*": [
         "./src/*"
       ],
       "@app/*": [
@@ -48,6 +48,9 @@
       ],
       "@models/*": [
         "./src/models/*"
+      ],
+      "@providers/*": [
+        "./src/providers/*"
       ],
       "@services/*": [
         "./src/services/*"

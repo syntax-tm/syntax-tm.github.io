@@ -1,6 +1,6 @@
-import build from "@/services/menuBuilder";
-import { eventType } from '@/app/enums';
-import { XmbMenu, XmbCategory, XmbItem } from "@/models/menu";
+import build from "@services/menuBuilder";
+import { eventType } from '@app/enums';
+import { XmbMenu, XmbCategory, XmbItem } from "@models/menu";
 
 export interface IAction {
   type: eventType;

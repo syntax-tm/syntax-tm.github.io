@@ -1,8 +1,31 @@
 import { ReactElement } from "react";
 
+// export type Position = {
+//   x: number;
+//   y: number;
+// }
+
 export type Position = {
   x: number;
   y: number;
+}
+
+export class XmbPosition implements Position {
+  constructor(public x: number, public y: number) { }
+
+  public update(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+
+  public equals(other: Position) {
+    if (this.x !== other.x) return false;
+    return this.y !== other.y;
+  }
+
+  toString() {
+    [this.x, this.y].join(',');
+  }
 }
 
 export interface IXmbItem {
@@ -17,21 +40,21 @@ export interface IXmbItem {
   shortCategory?: string;
   modal?: string | null;
   items?: IXmbItem[] | null;
-  readonly [index: number]: IXmbItem;
-  [name: string]: unknown;
+  parent?: IXmbCategory | null;
 }
 
 export interface IXmbMenu {
   items: IXmbCategory[];
   readonly [index: number]: IXmbCategory;
+  getCategory(p: number | Position): IXmbCategory;
+  getItem(p: number | Position): IXmbItem;
 }
 
 export interface IXmbCategory {
   title: string;
   icon: ReactElement | null;
   items: IXmbItem[];
-  readonly [index: number]: IXmbItem;
-  [name: string]: unknown;
+  itemCount: number;
 }
 
 export class XmbItem implements IXmbItem {
@@ -48,11 +71,10 @@ export class XmbItem implements IXmbItem {
   visible: boolean = true;
   modal?: string | null = '';
   items?: IXmbItem[] | null;
+  parent?: XmbCategory | null;
   onClick?: (() => void) | null = null;
-  readonly [index: number]: IXmbItem;
-  [name: string]: unknown;
 
-  constructor(id: string = '', title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null) {
+  constructor(id: string, title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null) {
     this.id = id;
     this.title = title;
     this.icon = icon;
@@ -60,21 +82,21 @@ export class XmbItem implements IXmbItem {
     this.description = description;
   }
 
-  static create(id: string = '', title: string = '', icon: ReactElement | null, onClick: null | (() => void)): XmbItem
+  static create(id: string, title: string = '', icon: ReactElement | null, onClick: null | (() => void)): XmbItem
   {
     const item = new XmbItem(id, title, icon);
     item.onClick = onClick;
     return item;
   }
 
-  static createModal(id: string = '', title: string = '', icon: ReactElement | null, modal: string | null): XmbItem
+  static createModal(id: string, title: string = '', icon: ReactElement | null, modal: string | null): XmbItem
   {
     const item = new XmbItem(id, title, icon);
     item.modal = modal;
     return item;
   }
 
-  static createSubmenu(id: string = '', title: string = '', icon: ReactElement | null, items?: XmbItem[] | null): XmbItem
+  static createSubmenu(id: string, title: string = '', icon: ReactElement | null, items?: XmbItem[] | null): XmbItem
   {
     const item = new XmbItem(id, title, icon);
     item.items = items;
@@ -98,6 +120,7 @@ export class XmbCategory implements IXmbCategory {
   current: XmbItem | null = null;
   isActive: boolean = false;
   position: number = 0;
+  itemCount: number = 0;
   readonly [index: number]: IXmbItem;
   [name: string]: unknown;
 
@@ -106,64 +129,12 @@ export class XmbCategory implements IXmbCategory {
     this.title = title;
     this.icon = icon;
     this.items = items;
-  }
+    this.itemCount = this.items.length;
 
-  getCurrentItem(): XmbItem {
-    return this.items[this.position];
-  }
-
-  setActive() {
-    this.isActive = true;
-  }
-
-  setInactive() {
-    this.isActive = false;
-  }
-
-  setPosition(i: number) {
-    if (this.position === i) return;
-
-    const previous = this.items[this.position];
-    previous.setInactive();
-    const next = this.items[i];
-    next.setActive();
-    this.current = next;
-    this.position = i;
-  }
-
-  moveUp(): number | null {
-    const next = this.position - 1;
-
-    if (next < 0) return null;
-
-    this.setPosition(next);
-
-    return this.position;
-  }
-
-  moveTop(): number | null {
-    this.setPosition(0);
-
-    return this.position;
-  }
-
-  moveDown(): number | null {
-    const max = this.items.length - 1;
-    const next = this.position + 1;
-
-    if (next > max) return null;
-
-    this.setPosition(next);
-
-    return this.position;
-  }
-
-  moveBottom(): number | null {
-    const max = this.items.length - 1;
-
-    this.setPosition(max);
-
-    return this.position;
+    // ensure that the items all have a reference to this category
+    this.items.forEach((item) => {
+      item.parent = this;
+    });
   }
 }
 
@@ -177,6 +148,9 @@ export class XmbMenu implements IXmbMenu {
   }
 
   public set x(value: number) {
+    const nextCategory = this.items[value];
+    this.setY(nextCategory.position);
+
     this._position.x = value;
   }
 
@@ -185,6 +159,9 @@ export class XmbMenu implements IXmbMenu {
   }
 
   public set y(value: number) {
+    if (value < 0) value = 0;
+    const maxY = this.getCurrentCategory().items.length - 1;
+    if (value >= maxY) value = maxY;
     this._position.y = value;
   }
 
@@ -193,6 +170,9 @@ export class XmbMenu implements IXmbMenu {
   }
 
   public set position(value: Position) {
+    this.x = value.x;
+    this.y = value.y;
+
     this._position = value;
   }
 
@@ -200,12 +180,26 @@ export class XmbMenu implements IXmbMenu {
     this.items = items;
   }
 
+  getCategory(p: number | Position): IXmbCategory {
+    if (typeof p === "number") {
+      return this.items[p];
+    }
+    return this.items[p.x];
+  }
+
   getCurrentCategory(): XmbCategory {
     return this.items[this.position.x];
   }
 
+  getItem(p: number | Position): IXmbItem {
+    if (typeof p === "number") {
+      return this.getCurrentCategory().items[p];
+    }
+    return this.items[p.x].items[p.y];
+  }
+
   getCurrentItem(): XmbItem {
-    return this.items[this.position.x].getCurrentItem();
+    return this.items[this.position.x].items[this.position.y];
   }
 
   getCurrentPosition(): Position {
@@ -214,8 +208,12 @@ export class XmbMenu implements IXmbMenu {
 
   setX(x: number): Position {
     if (x < 0) throw new RangeError("Argument value cannot be negative");
+    if (x >= this.items.length) throw new RangeError("Argument value greater than number of categories.");
 
-    this._position.x = x;
+    // no change
+    if (x === this.x) return this._position;
+
+    this.x = x;
 
     return this._position;
   }
@@ -223,20 +221,18 @@ export class XmbMenu implements IXmbMenu {
   setY(y: number): Position {
     if (y < 0) throw new RangeError("Argument value cannot be negative");
 
-    this._position.y = y;
+    // no change
+    if (y === this.y) return this._position;
 
+    const currentCategory = this.getCurrentCategory();
+    if (y >= currentCategory.items.length) y = currentCategory.items.length - 1;
+    this.y = y;
     return this._position;
   }
 
   setPosition(x: number, y: number): Position {
-    if (x < 0) throw new RangeError("Argument value cannot be negative");
-    if (y < 0) throw new RangeError("Argument value cannot be negative");
-
-    if (x >= this.items.length) throw new RangeError("Argument value greater than number of categories.");
-
-    this._position.x = x;
-    this._position.y = y;
-
+    this.setX(x);
+    this.setY(y);
     return this._position;
   }
 
@@ -253,61 +249,46 @@ export class XmbMenu implements IXmbMenu {
   }
 
   maxY(): number {
-    return this.items[this.x].items.length - 1;
-  }
-
-  canMoveUp(): boolean {
-    return this.y > 0;
+    return this.getCurrentCategory().items.length - 1;
   }
 
   moveUp(): Position | null {
-    const current = this.getCurrentCategory();
+    const nextY = this.y - 1;
 
-    const newY = current.moveUp();
-    if (newY === null) {
-      return null;
-    }
+    if (nextY <= 0) return null;
 
-    this.y = newY;
+    this.y = nextY;
 
     return this.position;
   }
 
   moveTop(): Position | null {
-    const current = this.getCurrentCategory();
+    const nextY = 0;
+    if (nextY == this.y) return null;
 
-    const newY = current.moveTop();
-    if (newY === null) {
-      return null;
-    }
-
-    this.y = newY;
+    this.y = nextY;
 
     return this.position;
   }
 
   moveDown(): Position | null {
     const current = this.getCurrentCategory();
+    const maxY = current.items.length - 1;
 
-    const newY = current.moveDown();
-    if (newY === null) {
-      return null;
-    }
+    const nextY = this.y + 1;
 
-    this.y = newY;
+    if (nextY >= maxY) return null;
+
+    this.y = nextY;
 
     return this.position;
   }
 
   moveBottom(): Position | null {
     const current = this.getCurrentCategory();
+    const maxY = current.items.length - 1;
 
-    const newY = current.moveBottom();
-    if (newY === null) {
-      return null;
-    }
-
-    this.y = newY;
+    this.y = maxY;
 
     return this.position;
   }
@@ -318,38 +299,14 @@ export class XmbMenu implements IXmbMenu {
     // can't move left, ignore
     if (nextIndex < 0) return null;
 
-    const previous = this.items[this.x];
-
-    previous.setInactive();
-
-    const next = this.items[nextIndex];
-
-    next.setActive();
-
     this.x = nextIndex;
-    this.y = next.position;
 
     return this.position;
   }
 
   moveFirst(): Position | null {
     if (this.x === 0) return null;
-
-    const previous = this.getCurrentCategory();
-
-    previous.setInactive();
-
-    const next = this.items[0];
-
-    next.setActive();
-
-    if (previous.position >= next.items.length) {
-      next.position = 0;
-    }
-
     this.x = 0;
-    this.y = next.position;
-
     return this.position;
   }
 
@@ -360,20 +317,7 @@ export class XmbMenu implements IXmbMenu {
     // can't move right, ignore
     if (nextIndex > max) return null;
 
-    const previous = this.getCurrentCategory();
-
-    previous.setInactive();
-
-    const next = this.items[nextIndex];
-
-    next.setActive();
-
-    if (previous.position >= next.items.length) {
-      next.position = 0;
-    }
-
     this.x = nextIndex;
-    this.y = next.position;
 
     return this.position;
   }
@@ -383,17 +327,7 @@ export class XmbMenu implements IXmbMenu {
 
     if (this.x === max) return null;
 
-    const previous = this.getCurrentCategory();
-
-    previous.setInactive();
-
     const next = this.items[max];
-
-    next.setActive();
-
-    if (previous.position >= next.items.length) {
-      next.position = 0;
-    }
 
     this.x = max;
     this.y = next.position;

@@ -1,0 +1,153 @@
+@use 'breakpoints.module.scss';
+@use 'variables.module.scss';
+
+$margin-top-base: -190;
+$margin-top-scale: -120;
+$margin-top-first: 50;
+$margin-top-active-base: 250;
+$margin-top-active-scale: -5;
+$margin-top-inactive: 15;
+
+@mixin xmb-main(
+  $color: $info,
+  $fontSize: 1.5rem,
+  $fontWeight: 500,
+  $textAlign: center
+) {
+    display: flex;
+    justify-content: start;
+    text-align: center;
+    margin-top: 14%;
+    color: #dadada;
+    transition: margin-right 300ms, margin-left 300ms;
+    z-index: 1;
+    position: absolute;
+}
+
+@mixin xmb-icon(
+  $size: 90px,
+  $margin: 5px,
+) {
+    width: $size;
+    height: $size;
+    margin: $margin;
+    filter: drop-shadow(0 0 0.25rem black);
+    z-index: 1;
+    color: white;
+}
+
+@mixin xmb-item(
+  $first-child,
+  $active,
+  $is-mobile: false
+) {
+  @if ($is-mobile) {
+    @if ($first-child) {
+      @if ($active) {
+        margin-top: 30px;
+        margin-bottom: 40px;
+      }
+      @else {
+        margin-top: calc(-300px + (-110px * var(--n)));
+        margin-bottom: 0;
+      }
+    }
+    @else {
+      @if ($active) {
+        margin-top: 350px;
+      }
+      @else {
+        margin-top: 30px;
+      }
+      margin-bottom: 30px
+    }
+  }
+  @else {
+    @if ($first-child) {
+      @if ($active) {
+        margin-top: 50px;
+        margin-bottom: 30px;
+      }
+      @else {
+        margin-top: calc(-190px + (-120 * var(--n)));
+        margin-bottom: 20px;
+      }
+    }
+    @else {
+      @if ($active) {
+        margin-top: calc(250px - (5 * var(--n)));
+        margin-bottom: 20px;
+      }
+      @else {
+        margin-top: 15px;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+.xmb-root {
+  .xmb-inactive-items {
+    height: 30%;
+  }
+
+  .xmb-main {
+    margin-top: 30%
+  }
+}
+
+.xmb-root {
+  width: 500px;
+
+  @include breakpoints.lg-breakpoint {
+  width: 1000px;
+  }
+
+  @include breakpoints.xl-breakpoint {
+  width: 1250px;
+  }
+}
+
+.active {
+  --active: true;
+}
+
+.xmb-item {
+  // mobile
+  @media only screen and (max-width: 640px) {
+    .active {
+      :nth-child(1) {
+        @include xmb-item(true, true, true)
+      }
+      :not(:nth-child(1)) {
+        @include xmb-item(false, true, true)
+      }
+    }
+    :not(.active) {
+      :nth-child(1) {
+        @include xmb-item(true, false, true)
+      }
+      :not(:nth-child(1)) {
+        @include xmb-item(true, false, true)
+      }
+    }
+  }
+  @media only screen and (max-width: 641px) {
+    .active {
+      :nth-child(1) {
+        @include xmb-item(true, true, false)
+      }
+      :not(:nth-child(1)) {
+        @include xmb-item(false, true, false)
+      }
+    }
+    :not(.active) {
+      :nth-child(1) {
+        @include xmb-item(true, false, false)
+      }
+      :not(:nth-child(1)) {
+        @include xmb-item(true, false, false)
+      }
+    }
+  }
+}

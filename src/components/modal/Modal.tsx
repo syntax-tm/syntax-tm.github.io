@@ -1,29 +1,27 @@
 "use client"
 
-import React from "react";
+import React, { useState } from "react";
 import { ReadonlyURLSearchParams, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
-import { GamepadView, HelpView, MobileHelpView } from "./views/help";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import useMobileDetect from "@hooks/useMobileDetect";
 import useQuery from "@hooks/useQuery";
-import Link from "next/link";
-import { CopyView } from "./views/copy";
-import accounts from "@/config/accounts.json";
-import "./modal.css";
 import { AboutView } from "./views/about";
+import { CopyView } from "./views/copy";
+import { GamepadView, HelpView, MobileHelpView } from "./views/help";
 import { useGamepads } from 'awesome-react-gamepads';
 import ControllerIcon from "@components/icons/ControllerIcon";
 import { useAudio } from '@context/AudioContext';
+import accounts from "@src/config/accounts.json";
+import "./modal.css";
 
 const AUDIO_SRC = '/audio/nav.mp3';
 
 export default function Modal() {
   const searchParams = useSearchParams();
   const modalParam = searchParams.get("modal");
-  const audioRef = useRef<HTMLAudioElement | null>(null);
   const router = useRouter();
   const mobileDetect = useMobileDetect();
 

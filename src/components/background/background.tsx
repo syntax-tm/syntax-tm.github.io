@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSecret } from '@/context/SecretContext';
+import { useSecret } from '@context/SecretContext';
 import './background.css';
 
 export default function Background() {

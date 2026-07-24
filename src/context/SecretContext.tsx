@@ -14,16 +14,22 @@ const KONAMI_CODE = [
   "ArrowLeft", "ArrowRight",
   "b", "a",
 ];
+const PSP = [
+  "p", "s", "p",
+];
 
 interface SecretContextType {
   isSecretActive: boolean;
+  isPspSecretActive: boolean;
   toggleSecret: () => Promise<void>;
+  togglePspSecret: () => Promise<void>;
 }
 
 const SecretContext = createContext<SecretContextType | undefined>(undefined);
 
 export function SecretProvider({ children }: { children: React.ReactNode }) {
   const [isSecretActive, setIsSecretActive] = useState(false);
+  const [isPspSecretActive, setIsPspSecretActive] = useState(false);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
 
@@ -33,9 +39,22 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     await play(SECRET_AUDIO_SRC);
     const message = newState ? 'activated' : 'deactivated';
     showSnackbar(`Secret ${message}.`, 'success');
-  }, [isSecretActive, play, showSnackbar]);
+  }, [isSecretActive]);
+
+  const togglePspSecret = useCallback(async () => {
+    const newState = !isPspSecretActive;
+    setIsPspSecretActive(newState);
+    await play(SECRET_AUDIO_SRC);
+    const message = newState ? 'activated' : 'deactivated';
+    showSnackbar(`PSP secret ${message}.`, 'success');
+  }, [isPspSecretActive]);
 
   useKeySequence(KONAMI_CODE, () => {
+    toggleSecret();
+  });
+
+  useKeySequence(PSP, () => {
+    togglePspSecret();
     toggleSecret();
   });
 
@@ -50,17 +69,25 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       void toggleSecret();
     };
 
-    window.addEventListener("secret:activate", handleSecretActivate);
+    const handlePspSecretActivate = () => {
+      void togglePspSecret();
+    };
+
+    document.addEventListener("secret:activate", handleSecretActivate);
+    document.addEventListener("pspsecret:activate", handlePspSecretActivate);
 
     return () => {
-      window.removeEventListener("secret:activate", handleSecretActivate);
+      document.removeEventListener("secret:activate", handleSecretActivate);
+      document.removeEventListener("pspsecret:activate", handlePspSecretActivate);
     };
-  }, [toggleSecret]);
+  }, [toggleSecret, togglePspSecret]);
 
   const value = useMemo(
     () => ({
       isSecretActive,
+      isPspSecretActive,
       toggleSecret,
+      togglePspSecret,
     }),
     [isSecretActive, toggleSecret],
   );

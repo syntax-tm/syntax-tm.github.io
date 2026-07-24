@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { InputType } from "@/app/enums";
+import { InputType } from "@app/enums";
 import { useGamepads } from "awesome-react-gamepads";
 
 const getInputType = (userAgent: NavigatorID["userAgent"]) => {
@@ -39,7 +39,7 @@ const getInputType = (userAgent: NavigatorID["userAgent"]) => {
     const type = getInputType();
     setInputType(type);
     return () => { };
-  }, [userAgent, isGamepadConnected]);
+  }, [isGamepadConnected]);
 
   return inputType;
 };

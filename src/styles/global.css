@@ -28,10 +28,6 @@ html {
 }
 
 body {
-  overflow-x: hidden;
-}
-
-body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -39,6 +35,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  overflow-y: hidden;
 }
 
 /* hide borders on everything except the clock */

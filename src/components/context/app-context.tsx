@@ -8,9 +8,9 @@ import {
   useEffect,
   useReducer,
 } from 'react';
-import { Views, eventType } from '@/app/enums';
+import { Views, eventType } from '@app/enums';
 import React from 'react';
-import { IAction, IState, initialState } from '@/models/state';
+import { IAction, IState, initialState } from '@models/state';
 
 const AppContext = createContext({
   state: initialState,

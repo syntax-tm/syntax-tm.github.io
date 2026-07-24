@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+"use client";
+
+import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import useQuery from "./useQuery";
 
@@ -18,6 +20,8 @@ export interface WheelOutput {
 
 const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOnModal = false }: WheelInput): WheelOutput => {
 
+  //const [shift, setShift] = useState(false);
+
   const shift = useRef(false);
 
   //const [path, setPath] = useState('');
@@ -32,40 +36,43 @@ const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOn
 
   useQuery({ onPathChanged: onPathChanged });
 
-  const onWheel = useCallback((e: WheelEvent) => {
+  const onWheel = (e: WheelEvent) => {
     const down = e.deltaY > 0;
     if (down) {
       if (shift.current) {
+        console.log(`wheelright: ${onWheelLeft.name}()`);
         onWheelRight();
         return;
       }
+      console.log(`wheeldown: ${onWheelLeft.name}()`);
       onWheelDown();
       return;
     }
     if (shift.current) {
+      console.log(`wheelleft: ${onWheelLeft.name}()`);
       onWheelLeft();
       return;
     }
+    console.log(`wheelup: ${onWheelLeft.name}()`);
     onWheelUp();
-  }, [onWheelDown, onWheelUp, onWheelLeft, onWheelRight]);
+  };
 
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Shift') {
-      e.preventDefault();
-      shift.current = true;
-      return;
-    }
-  }, [shift]);
+  const onKeyDown = useEffectEvent((e: KeyboardEvent) => {
+    if (e.key !== 'Shift') return;
+    e.preventDefault();
+    e.stopPropagation();
+    shift.current = true;
+  });
 
-  const onKeyUp = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Shift') {
-      e.preventDefault();
-      shift.current = false;
-    }
-  }, [shift]);
+  const onKeyUp = useEffectEvent((e: KeyboardEvent) => {
+    if (e.key !== 'Shift') return;
+    e.preventDefault();
+    e.stopPropagation();
+    shift.current = false;
+  });
 
   useEffect(() => {
-    if (modal !== enabledOnModal) return;
+    if (modal && !enabledOnModal) return;
     document.body.addEventListener('wheel', onWheel);
     document.body.addEventListener('keydown', onKeyDown);
     document.body.addEventListener('keyup', onKeyUp);
@@ -74,7 +81,7 @@ const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOn
       document.body.removeEventListener('keydown', onKeyDown);
       document.body.removeEventListener('keyup', onKeyUp);
     };
-  }, [shift, modal, onWheel, enabledOnModal, onKeyDown, onKeyUp]);
+  }, [modal, enabledOnModal, onWheel, onKeyDown, onKeyUp]);
 
   return {
     onWheel,

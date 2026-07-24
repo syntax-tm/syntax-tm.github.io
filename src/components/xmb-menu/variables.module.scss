@@ -1,0 +1,7 @@
+$max-n-vars: 20;
+
+@for $i from 1 through $max-n-vars {
+  :nth-child(#{$i}) {
+    --n: #{$i};
+  }
+}

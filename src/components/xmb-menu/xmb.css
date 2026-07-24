@@ -33,7 +33,7 @@ body {
     transition: margin-right 300ms, margin-left 300ms;
     z-index: -2;
     position: absolute;
-    /* overflow: hidden; */
+    width: 200%;
   }
 
   .xmb-category {
@@ -43,20 +43,13 @@ body {
     display: grid;
   }
 
-  .xmb-item {
-    /* margin-left: 10px; */
-  }
-
   .xmb-icon {
     width: 90px;
     height: 90px;
     margin: 5px 5px;
     filter: drop-shadow(0 0 0.25rem black);
-    /* overflow-clip-margin: content-box;
-    overflow: clip; */
     z-index: -2;
     color: white;
-    /* scale: 0.8; */
   }
 }
 
@@ -70,7 +63,6 @@ body {
     color: #dadada;
     transition: margin-right 300ms, margin-left 300ms;
     z-index: -2;
-    /* overflow: hidden; */
   }
 
   .xmb-category {
@@ -78,10 +70,6 @@ body {
     width: 130px;
     justify-content: center;
     display: grid;
-  }
-
-  .xmb-item {
-    /* margin-left: 20px; */
   }
 
   .xmb-category-header > .icon {
@@ -100,11 +88,8 @@ body {
     width: 60px;
     height: 60px;
     filter: drop-shadow(0 0 0.25rem black);
-    /* overflow-clip-margin: content-box;
-    overflow: clip; */
     z-index: -2;
     color: white;
-    /* scale: 0.8; */
   }
 }
 
@@ -118,7 +103,6 @@ body {
     color: #dadada;
     transition: margin-right 300ms, margin-left 300ms;
     z-index: -2;
-    /* overflow: hidden; */
   }
 
   .xmb-category {
@@ -130,8 +114,6 @@ body {
 
   .xmb-icon {
     filter: drop-shadow(0 0 0.25rem black);
-    /* overflow-clip-margin: content-box;
-    overflow: clip; */
     z-index: -2;
     color: white;
     width: 80px;
@@ -143,7 +125,7 @@ body {
   }
 }
 
-@media only screen and (min-height: 400px) and (max-height: 1200px) and (max-width: 640px) {
+@media only screen and (max-width: 640px) {
 
   .xmb-main {
     display: flex;
@@ -153,11 +135,6 @@ body {
     color: #dadada;
     transition: margin-right 300ms, margin-left 300ms;
     z-index: -2;
-    /* overflow: hidden; */
-  }
-
-  .xmb-item {
-    /* margin-left: 20px; */
   }
 
   .xmb-category {
@@ -178,9 +155,6 @@ body {
 
   img, svg {
     filter: drop-shadow(0 0 0.25rem black);
-    /* overflow-clip-margin: content-box;
-    overflow: clip; */
-    /* z-index: -2; */
     color: white;
     width: 80px;
     height: 80px;
@@ -218,22 +192,12 @@ body {
 
   img, svg {
     filter: drop-shadow(0 0 0.25rem black);
-    /* overflow-clip-margin: content-box;
-    overflow: clip; */
     z-index: -2;
     color: white;
     width: 60px;
     height: 60px;
   }
 }
-
-/* .xmb-category.active {
-  background-color: #47d7f175;
-}
-
-.xmb-item.active {
-  background-color: #7cf16d67;
-} */
 
 .xmb-item.active > .xmb-icon {
   scale: 1.05;
@@ -244,7 +208,8 @@ body {
 }
 
 .xmb-item {
-  transition: all 300ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: all 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+  animation-composition: add;
 }
 
 .xmb-item-name {
