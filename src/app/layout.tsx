@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata, Viewport } from 'next';
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -51,9 +51,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} text-white`}>
-        <Providers>
-          {children}
-        </Providers>
+        <Suspense>
+          <Providers>
+            {children}
+          </Providers>
+        </Suspense>
         {/* Invisible anchor strictly to trigger Next.js route preloading */}
         <div style={{ display: 'none' }}>
           <Link href="/not-found-page" prefetch={true} />
