@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { unstable_catchError as catchError, type ErrorInfo } from 'next/error';
 import Background from "@components/background/background";
 import Clock from "@components/clock/Clock";
@@ -69,8 +69,10 @@ export default function ErrorPage({
 
   return (
     <div className="root-container">
-      <Background />
-      <Clock />
+      <Suspense>
+        <Background />
+        <Clock />
+      </Suspense>
       <div className="grid content-center z-100 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
         {error && (
           <>

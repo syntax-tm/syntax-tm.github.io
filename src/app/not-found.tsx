@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Background from "@components/background/background";
@@ -15,8 +15,10 @@ import "./not-found.css";
 export default function NotFound() {
   return (
     <div className="root-container">
-      <Background />
-      <Clock />
+      <Suspense>
+        <Background />
+        <Clock />
+      </Suspense>
       <div className="grid content-center z-100 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
         <Link href="/" aria-label="Return to the home page">
           <div className="flex flex-row justify-center items-center text-9xl hover:animate-pulse">
