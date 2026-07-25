@@ -69,7 +69,7 @@ const XmbContext = createContext<XmbContextType | undefined>(undefined);
 export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const router = useRouter();
-  const [xmbState, setXmbState] = useState<XmbState | null>(null);
+  //const [xmbState, setXmbState] = useState<XmbState | null>(null);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
   //const [position, setPositon] = useState<Position>({} as Position);

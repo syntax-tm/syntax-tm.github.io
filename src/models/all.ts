@@ -1,2 +1,7 @@
-import { XmbMenu, XmbCategory, XmbItem } from "./menu";
-import { IState } from "./state";
+import { EventType } from "@src/app/enums";
+
+export interface IAction {
+  type: EventType;
+  payload?: unknown;
+}
+

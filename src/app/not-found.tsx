@@ -1,17 +1,16 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Background from "@components/background/background";
-import dynamic from "next/dynamic";
+import Clock from "@components/clock/Clock";
+//import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import sh404 from "public/image/404.png";
 import "@styles/global.css";
 import "./not-found.css";
 
-const Clock = dynamic(() => import('@components/clock/Clock'), { ssr: false });
+//const Clock = dynamic(() => import('@components/clock/Clock'));
 
 export default function NotFound() {
   return (

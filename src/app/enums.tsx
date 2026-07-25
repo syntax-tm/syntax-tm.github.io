@@ -28,7 +28,7 @@ export enum InputType {
   GAMEPAD,
 }
 
-export enum eventType {
+export enum EventType {
   KEY_PRESS,
   MOVE_UP,
   MOVE_DOWN,

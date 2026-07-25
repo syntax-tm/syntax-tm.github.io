@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Roboto, Google_Sans } from "next/font/google";
+import { Google_Sans } from "next/font/google";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -9,6 +9,7 @@ const clockFont = Google_Sans({
   weight: ["400", "500", "600"],
   preload: true,
   subsets: ['latin'],
+  adjustFontFallback: false,
 });
 
 // const clockFont = Roboto({
