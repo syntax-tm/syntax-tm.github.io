@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState, useMemo, RefObject } from "react";
+import React, { createContext, useCallback, useContext, useRef, useState } from "react";
 import { useRouter, ReadonlyURLSearchParams } from "next/navigation";
 // import { useAudio } from '@context/AudioContext';
 // import { useSnackbar } from "@context/SnackbarContext";
@@ -22,22 +22,10 @@ export interface XmbContextType {
   currentCategory: XmbCategory | null;
   currentItem: XmbItem | null;
   currentItems: XmbItem[] | null;
-  //position: Position;
   x: number;
-  //setX: (newValue: number) => void;
   y: number;
-  //setY: (newValue: number) => void;
   openInNewTab: (url: string) => void;
   openItem: (item: XmbItem) => void;
-  // moveDefault: () => Position | null;
-  // moveUp: () => Position | null;
-  // moveDown: () => Position | null;
-  // moveLeft: () => Position | null;
-  // moveRight: () => Position | null;
-  // moveBottom: () => Position | null;
-  // moveTop: () => Position | null;
-  // moveFirst: () => Position | null;
-  // moveLast: () => Position | null;
   toXmbKey: (x: number, y: number) => string;
 }
 
@@ -162,10 +150,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   }, [modal, currentItem]);
 
   const moveDefault = useCallback(() => {
-    // TODO: remove this hack
-    cache[0] = 0;
-
     updateX(0, false);
+    updateY(0);
 
     return defPos;
   }, []);
@@ -192,6 +178,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const moveUp = () => {
     const nextY = y - 1;
+
+    play(XMB_AUDIO_SRC);
 
     if (nextY < 0) return null;
 
@@ -243,6 +231,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const moveLeft = () => {
     if (!categories) return null;
+
     play(XMB_AUDIO_SRC);
 
     const nextX = x - 1;
@@ -257,6 +246,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const moveFirst = () => {
     if (!categories) return null;
+
     play(XMB_AUDIO_SRC);
 
     const nextX = 0;
@@ -271,6 +261,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const moveRight = () => {
     if (!categories) return null;
+
     play(XMB_AUDIO_SRC);
 
     const max = categories.length - 1;
@@ -382,9 +373,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const value = {
     x,
-    //setX,
     y,
-    //setY,
     menu: xmbMenuRef.current,
     currentCategory,
     currentItem,
@@ -392,15 +381,6 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     openInNewTab,
     openItem,
     categories,
-    //moveDefault,
-    //moveUp,
-    //moveTop,
-    //moveDown,
-    //moveBottom,
-    //moveLeft,
-    //moveFirst,
-    //moveRight,
-    //moveLast,
     toXmbKey,
   };
 

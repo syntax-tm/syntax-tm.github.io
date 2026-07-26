@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { XmbCategory, XmbItem } from "@models/menu";
 import { useXmb } from "@context/XmbContext";
 import { MenuItem } from "./xmb-menu-item";
-import "./xmb.css";
+import "./xmb.scss";
 
 interface MenuCategoryProps {
   index: number;
@@ -14,7 +14,7 @@ interface MenuCategoryProps {
 
 export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) => {
 
-  const { x } = useXmb();
+  const { x, y } = useXmb();
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) =
         data-index={index}
         data-active={isActive}
       >
-        <div className="xmb-category-header grid hover:cursor-pointer">
+        <div className={`xmb-category-header grid hover:cursor-pointer`}>
           {category.icon}
           {isActive && (
             <p className="xmb-category-title select-none">
@@ -38,7 +38,7 @@ export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) =
           )}
         </div>
         {isActive && (
-          <div className="xmb-category-items select-none">
+          <div className="xmb-category-items select-none" data-y={y}>
             {category.items &&
               category.items.map((item, i) => (
                 <MenuItem

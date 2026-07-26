@@ -102,15 +102,15 @@ export default function ErrorPage({
                     {stackTrace.map((line) => {
                       return (
                         <>
-                          <div className="flex">
-                            <div className="text-center opacity-50 inline-block w-8">{line.id}</div>
-                            <div className="text-right select-all overflow-clip text-ellipsis text-nowrap w-auto max-w-[80%] mx-2"
+                          <tr className="flex" key={line.id}>
+                            <td className="text-center opacity-50 inline-block w-8">{line.id}</td>
+                            <td className="text-right select-all overflow-clip text-ellipsis text-nowrap max-w-[80%] mx-2"
                               dir="rtl"
                               title={line.line}>
                               {line.file}
-                            </div>
-                            <div className="text-left select-all inline-block w-8">{line.lineNo}</div>
-                          </div>
+                            </td>
+                            <td className="text-left select-all inline-block w-8">{line.lineNo}</td>
+                          </tr>
                         </>
                       );
                     })}
