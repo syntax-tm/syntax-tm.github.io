@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { ReadonlyURLSearchParams, useRouter, useSearchParams } from "next/navigation";
@@ -15,6 +15,7 @@ import { useGamepads } from 'awesome-react-gamepads';
 import ControllerIcon from "@components/icons/ControllerIcon";
 import { useAudio } from '@context/AudioContext';
 import accounts from "@src/config/accounts.json";
+import { SecretsView } from "./views/secrets";
 import "./modal.css";
 
 const AUDIO_SRC = '/audio/nav.mp3';
@@ -37,6 +38,8 @@ export default function Modal() {
       console.log("Gamepad disconnected:", gamepad);
       setGamepadConnected(false);
     },
+    onStart: onEsc,
+    onB: onEsc,
   });
 
   const [modal, setModal] = useState<string | null>(modalParam);
@@ -79,6 +82,9 @@ export default function Modal() {
   } else if (modal === 'about') {
     title = 'About';
     view = <AboutView />;
+  } else if (modal === 'secrets') {
+    title = 'Secrets';
+    view = <SecretsView title="Secrets" />;
   }
 
   return (
@@ -121,7 +127,7 @@ export default function Modal() {
                       )}
                       {!gamepadConnected && mobileDetect.isDesktop() && (
                         <div className="justify-between w-auto mt-4 text-lg hover:animate-pulse">
-                          <kbd className="px-2 py-1.5 text-gray-800 bg-gray-100 mx-[3px] border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">Esc</kbd>
+                          <kbd className="px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">Esc</kbd>
                           <span className="mx-2 my-auto">close</span>
                         </div>
                       )}

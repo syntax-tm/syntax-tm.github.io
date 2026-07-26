@@ -9,8 +9,8 @@ import Clock from "@components/clock/Clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import sh404 from "public/image/404.png";
-import "@styles/global.css";
 import "./not-found.css";
+import "@styles/global.scss";
 
 //const Clock = dynamic(() => import('@components/clock/Clock'));
 

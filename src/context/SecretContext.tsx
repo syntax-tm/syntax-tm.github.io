@@ -144,9 +144,14 @@ const saveSecretStat = (id: AchievementId, isUnlocked: boolean = true, overwrite
   // if this is already in storage, don't overwrite it (only if it's unlocked)
   const statText = localStorage.getItem(id.toString());
   if (statText) {
-    const currentStat: AchievementStatSchema = JSON.parse(statText);
-    if (currentStat && currentStat.isUnlocked && !overwrite) {
-      return;
+    try {
+      const currentStat: AchievementStatSchema = JSON.parse(statText);
+      if (currentStat && currentStat.isUnlocked && !overwrite) {
+        return;
+      }
+    }
+    catch {
+      console.warn(`Unable to load current stat for ${id}.`);
     }
   }
 

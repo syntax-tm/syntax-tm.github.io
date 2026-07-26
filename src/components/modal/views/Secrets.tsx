@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useSecret } from "@context/SecretContext";
-import "./xmb.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faLock, faLockOpen, faUnlock, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -26,7 +25,7 @@ export const SecretsView = ({ title, description }: SecretsViewProps) => {
             </label>
             {description && (
               <FontAwesomeIcon icon={faQuestionCircle} className="w-5 h-5 mb-1 opacity-25 hover:opacity-100 align-self-end justify-self-end text-white justify-right"
-                title={description} />
+                aria-label={description} />
             )}
           </div>
           <div className="grid grid-cols-2 grid-rows-1 relative w-fit max-w-150 text-ellipsis">
