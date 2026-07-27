@@ -1,9 +1,7 @@
-"use client";
-
 import React from "react";
 import { useSecret } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle, faLock, faLockOpen, faUnlock, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
+import { faQuestionCircle, faLock, faUnlock } from "@fortawesome/free-solid-svg-icons";
 
 export interface SecretsViewProps
 {
