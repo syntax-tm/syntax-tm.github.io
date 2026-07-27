@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import useMobileDetect from "@hooks/useMobileDetect";
-import { useSecret } from "@context/SecretContext";
+import { AchievementId, useSecret } from "@context/SecretContext";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -55,7 +55,7 @@ export const AboutView = () => {
       }, 500);
 
       if (tapCountRef.current >= SECRET_TAP_MIN) {
-        toggleSecret();
+        toggleSecret(AchievementId.konami_code);
         resetTapCount();
       }
     };
