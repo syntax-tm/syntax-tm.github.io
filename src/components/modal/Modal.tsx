@@ -15,7 +15,7 @@ import { useGamepads } from 'awesome-react-gamepads';
 import ControllerIcon from "@components/icons/ControllerIcon";
 import { useAudio } from '@context/AudioContext';
 import accounts from "@src/config/accounts.json";
-import { SecretsView } from "./views/Secrets";
+import { SecretsView } from "./views/secrets_new";
 import "./modal.css";
 
 const AUDIO_SRC = '/audio/nav.mp3';
