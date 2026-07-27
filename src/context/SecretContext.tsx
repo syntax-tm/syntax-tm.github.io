@@ -40,7 +40,7 @@ export interface Stat {
   // TODO: add a hint indicating how this can be unlocked
 }
 
-interface AchievementStatSchema {
+export interface AchievementStatSchema {
   id: AchievementId;
   isUnlocked: boolean,
   dateUnlocked?: Date | null,
@@ -94,7 +94,7 @@ export const secrets: SecretMap =
   },
 };
 
-interface SecretContextType {
+export interface SecretContextType {
   isKonamiSecretActive: boolean;
   isPspSecretActive: boolean;
   isIwhbydActive: boolean;
@@ -108,7 +108,11 @@ interface SecretContextType {
   loadPlayerStats: () => Map<AchievementId, PlayerStat>;
 }
 
-const getSecretStat = (id: AchievementId) => {
+export const getSecretStat = (id: AchievementId) => {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+
   // if it does not exist, save the current state
   if (!localStorage.getItem(id.toString())) {
     saveSecretStat(id, false);
@@ -121,7 +125,6 @@ const getSecretStat = (id: AchievementId) => {
 
   const loadedStat = localStorage.getItem(id.toString());
   if (!loadedStat) throw new Error(`Unable to load the stats for ${id}.`);
-
 
   try {
     const savedStat: AchievementStatSchema = JSON.parse(loadedStat);
@@ -141,6 +144,10 @@ const getSecretStat = (id: AchievementId) => {
 };
 
 const saveSecretStat = (id: AchievementId, isUnlocked: boolean = true, overwrite: boolean = false) => {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return;
+  }
+
   // if this is already in storage, don't overwrite it (only if it's unlocked)
   const statText = localStorage.getItem(id.toString());
   if (statText) {
@@ -164,13 +171,16 @@ const saveSecretStat = (id: AchievementId, isUnlocked: boolean = true, overwrite
 };
 
 const loadPlayerStats = () => {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return new Map<AchievementId, PlayerStat>();
+  }
   const results = new Map<AchievementId, PlayerStat>();
   Object.keys(AchievementId)
     .map((id) => {
       const achId = AchievementId[id as keyof typeof AchievementId];
       const playerStat: PlayerStat = {
         id: achId,
-        isUnlocked: getSecretStat(achId).isUnlocked,
+        isUnlocked: getSecretStat(achId)?.isUnlocked ?? false,
         stat: secrets[achId],
         dateUnlocked: null,
       };
