@@ -13,10 +13,14 @@ function buildHomeCategory(): XmbCategory {
   const contact = new XmbItem("contact", "Contact", icons.message, 'mailto:info@test.com');
   contact.description = 'Send a message';
 
+  const secrets = XmbItem.createModal("secrets", "Secrets", icons.egg, 'secrets');
+  secrets.description = 'View current secret progress';
+
   const items: XmbItem[] = [
     about,
     help,
     contact,
+    secrets,
   ];
   const category: XmbCategory = new XmbCategory(
     0,

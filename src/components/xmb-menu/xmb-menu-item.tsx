@@ -37,7 +37,7 @@ export const MenuItem = ({ catIndex, index, item, openItem }: MenuItemProps) => 
         }}
         target={item.link && "_blank" || undefined}>
         <div className="grid grid-cols-1 overflow-visible relative">
-          <div className="w-30 overflow-visible">
+          <div className="overflow-visible justify-items-center">
             {item.icon}
           </div>
           <div className="absolute pl-30 h-full m-1.25 -ml-3 lg:ml-0 align-middle place-content-evenly">

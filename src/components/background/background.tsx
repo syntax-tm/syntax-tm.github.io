@@ -6,15 +6,28 @@ import './background.css';
 
 export default function Background() {
 
-  const { isKonamiSecretActive } = useSecret();
+  const { isKonamiSecretActive, isPspSecretActive } = useSecret();
 
   return (
     <>
-      <div className={`background ${isKonamiSecretActive && 'secret'} absolute top-0 left-0 overflow-hidden h-dvh -z-50`}>
-        <div className='wave' />
-        <div className='wave' />
-        <div className='wave' />
-      </div>
+      {isPspSecretActive && (
+        <>
+          <object
+            type="image/svg+xml"
+            data="/psp.svg"
+            className="w-full h-full -z-50 absolute top-0 left-0 overflow-hidden"
+          ></object>
+        </>
+      )}
+      {!isPspSecretActive && (
+        <>
+          <div className={`background ${isKonamiSecretActive && 'secret'} absolute top-0 left-0 overflow-hidden h-dvh -z-50`}>
+            <div className='wave' />
+            <div className='wave' />
+            <div className='wave' />
+          </div>
+        </>
+      )}
     </>
   );
 };

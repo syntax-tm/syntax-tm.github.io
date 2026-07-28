@@ -55,7 +55,7 @@ export const AboutView = () => {
       }, 500);
 
       if (tapCountRef.current >= SECRET_TAP_MIN) {
-        toggleSecret(AchievementId.konami_code);
+        toggleSecret(AchievementId.android);
         resetTapCount();
       }
     };

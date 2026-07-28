@@ -9,7 +9,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import Providers from "@app/providers";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@styles/global.scss";
-//import localFont from 'next/font/local';
+import { useSecret } from "@src/context/SecretContext";
+import localFont from 'next/font/local';
 
 config.autoAddCss = false;
 
@@ -48,6 +49,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body id="body" className={`${inter.className} text-white`}>

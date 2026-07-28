@@ -3,8 +3,9 @@
 import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Background from "@components/background/background";
+//import Background from "@components/background/background";
 import Clock from "@components/clock/Clock";
+import WebGlBackground from "@components/background/webGlBackground";
 //import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
@@ -18,7 +19,7 @@ export default function NotFound() {
   return (
     <div className="root-container">
       <Suspense>
-        <Background />
+        <WebGlBackground />
         <Clock />
       </Suspense>
       <div className="grid content-center z-100 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">

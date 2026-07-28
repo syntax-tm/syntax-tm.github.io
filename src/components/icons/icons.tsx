@@ -30,7 +30,8 @@ import {
   faInfo,
   faCircleInfo,
   faQuestion,
-  faQuestionCircle
+  faQuestionCircle,
+  faEgg,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -77,10 +78,14 @@ import exophaseIcon from "public/image/xmb/exophase.png";
 import chocoIcon from "public/image/xmb/choco.png";
 import nugetIcon from "public/image/xmb/nuget.png";
 import halo3generalBwIcon from "public/image/halo_3_general_bw.png";
+import pspBatteryIcon from "public/image/psp_full_battery.png";
 //import statsFmIcon from "public/svg/statsfm.svg";
 
 const xmbIconClassName = "xmb-icon object-contain justify-self-center w-full h-full overflow-visible";
 
+export const egg: ReactElement = (
+  <FontAwesomeIcon icon={faEgg} className={xmbIconClassName} />
+);
 export const info: ReactElement = (
   <FontAwesomeIcon icon={faInfoCircle} className={xmbIconClassName} />
 );
@@ -275,6 +280,9 @@ export const choco: ReactElement = (
 );
 export const nuget: ReactElement = (
   <Image src={nugetIcon} className={xmbIconClassName} alt="nuget icon" />
+);
+export const PspBattery: ReactElement = (
+  <Image src={pspBatteryIcon} className="object-contain justify-self-center w-full h-full overflow-visible" alt="psp battery icon" />
 );
 // #1ed760
 export const statsFm: ReactElement = (

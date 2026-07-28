@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="exkTvp564Fh1" viewBox="0 0 600 200" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" project-id="ee29f9147975454d907f0c48c4ed60d5" export-id="2beda950aba54203bdd51c9963f90949" cached="false">
+    <style>
+    .bg-gradient {
+      -webkit-animation: bg-kf 10s infinite alternate linear both;
+      -moz-animation: bg-kf 10s infinite alternate linear both;
+      -o-animation: bg-kf 10s infinite alternate linear both;
+      animation: bg-kf 10s infinite alternate linear both;
+    }
+
+    @-webkit-keyframes bg-kf {
+      0% { fill: #744f8d }
+      25% { fill: #7358b1 }
+      50% { fill: #5b6bb3 }
+      75% { fill: #5dc7c7 }
+      100% { fill: #76c996 }
+    }
+    @-moz-keyframes bg-kf {
+      0% { fill: #744f8d }
+      25% { fill: #7358b1 }
+      50% { fill: #5b6bb3 }
+      75% { fill: #5dc7c7 }
+      100% { fill: #76c996 }
+    }
+    @keyframes bg-kf {
+      0% { fill: #744f8d }
+      25% { fill: #7358b1 }
+      50% { fill: #5b6bb3 }
+      75% { fill: #5dc7c7 }
+      100% { fill: #76c996 }
+    }
+    #exkTvp564Fh3_to {
+      animation: exkTvp564Fh3_to__to 120s cubic-bezier(0.2, 0.05, 0.55, 0.95) infinite normal forwards;
+    }
+    @keyframes exkTvp564Fh3_to__to {
+      0% {
+        transform: translate(3125.1px, 1056.25px);
+      }
+      50% {
+        transform: translate(-2274.9px, 1056.25px);
+      }
+      100% {
+        transform: translate(3118.828048px, 1056.25px);
+      }
+    }
+    #exkTvp564Fh4_to {
+      animation: exkTvp564Fh4_to__to 240s cubic-bezier(0.2, 0.05, 0.55, 0.95) infinite normal forwards;
+    }
+    @keyframes exkTvp564Fh4_to__to {
+      0% {
+        transform: translate(2950px, 123.207512px);
+      }
+      50% {
+        transform: translate(-2450px, 123.207512px);
+      }
+      100% {
+        transform: translate(2679.498243px, 123.207512px);
+      }
+    }
+    </style>
+    <defs>
+        <radialGradient id="exkTvp564Fh2-fill" cx="50%" cy="50%" r="50%" spreadMethod="pad">
+            <stop id="exkTvp564Fh2-fill-0" offset="0%" stop-color="#744f8d"/>
+            <stop id="exkTvp564Fh2-fill-1" offset="25%" stop-color="#7358b1"/>
+            <stop id="exkTvp564Fh2-fill-2" offset="50%" stop-color="#5b6bb3"/>
+            <stop id="exkTvp564Fh2-fill-3" offset="75%" stop-color="#5dc7c7"/>
+            <stop id="exkTvp564Fh2-fill-4" offset="100%" stop-color="#76c996"/>
+            <!-- <animateTransform type="rotate" additive="sum" attributeName="gradientTransform" values="0;179;-180;0;180" begin="0s" dur="5s" fill="freeze" repeatCount="indefinite" keyTimes="0; 0.22593; 0.325926; 0.43148; 1"></animateTransform> -->
+            <!-- <animate attributeName="position" values="0;300;0" dur="2s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true"  /> -->
+            
+            <!-- <animate attributeName="cx" values="0; 50%; 0;" keyTimes="0; 0.5; 1;" dur="2s" repeatCount="indefinite" autoReverse="true" />
+            <animate attributeName="cy" values="0; 50%; 0;" keyTimes="0; 0.5; 1;" dur="2s" repeatCount="indefinite" autoReverse="true" /> -->
+            <animate attributeName="r" values="100%; 500%; 100%;" keyTimes="0; 0.5; 1;" dur="2s" repeatCount="indefinite" autoReverse="true" />
+            <animate attributeName="fx" values="0; 100; 0;" keyTimes="0; 0.5; 1;" dur="2s" repeatCount="indefinite" autoReverse="true" />
+            <animate attributeName="fy" values="0; 100; 0;" keyTimes="0; 0.5; 1;" dur="2s" repeatCount="indefinite" autoReverse="true" />
+
+            <!-- <animate attributeName="y2" values="0;50%;0" dur="10s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+            <!-- <animate attributeName="y2" values="0;100%;0" dur="10s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+            <!-- <animate attributeName="y2" values="0;10;0" dur="2s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+
+        </radialGradient>
+        <!-- <linearGradient id="exkTvp564Fh2-fill" x1="0" x2="100" y1="0" y2="0" gradientUnits="userSpaceOnUse">
+            <stop id="exkTvp564Fh2-fill-0" offset="10%" stop-color="#508aa5"/>
+            <stop id="exkTvp564Fh2-fill-1" offset="30%" stop-color="#34a37e"/>
+            <stop id="exkTvp564Fh2-fill-2" offset="50%" stop-color="#4478a3"/>
+            <stop id="exkTvp564Fh2-fill-3" offset="70%" stop-color="#6a4a8f"/>
+            <stop id="exkTvp564Fh2-fill-4" offset="90%" stop-color="#8f4a70"/>
+            <animateTransform type="rotate" additive="sum" attributeName="gradientTransform" values="0;179;-180;0;180" begin="0s" dur="5s" fill="freeze" repeatCount="indefinite" keyTimes="0; 0.22593; 0.325926; 0.43148; 1"></animateTransform> -->
+            <!-- <animate attributeName="position" values="0;300;0" dur="2s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true"  /> -->
+            <!-- <animate attributeName="x1" values="0;100;0" dur="10s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+            <!-- <animate attributeName="y2" values="0;50%;0" dur="10s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+            <!-- <animate attributeName="y2" values="0;100%;0" dur="10s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+            <!-- <animate attributeName="y2" values="0;10;0" dur="2s" fill="freeze" keyTimes="0; 0.5; 1" repeatCount="indefinite" autoReverse="true" /> -->
+
+        <!-- </linearGradient> -->
+    </defs>
+    <rect width="600" height="200" rx="0" ry="0" class="bg-gradient" />
+    <g id="exkTvp564Fh3_to" transform="translate(3125.1,1056.25)">
+        <path d="M-2874.9,952.243455c45.760161,10.064128,88.810838-19.197999,127.947817-33.787851c64.42549-26.043451,161.072561,35.726543,253.41264,33.787851c117.967501-2.474338,156.306939-31.765512,254.240304-9.599c127.120153,28.798152,330.512396-9.598999,406.784488-9.598999s50.848061,9.598999,127.120152,9.598999c152.544183,0,172.27323,28.798152,305.088365,28.798152c127.120153,0,282.144539-47.567298,434.688722-23.569222c152.503504,23.999227,212.543904-29.877349,326.342198-14.827929c149.706861,14.219376,291.340888,28.858051,510.099416,19.197999c163.37482-7.213361,381.360457-38.397153,584.7527,19.199152c100.780857,28.537817,103.770723,9.435426,254.240305,0c84.69253-5.311532,287.054476-28.798152,338.778765-23.569223c147.516307,8.376616,191.470145-17.528395,229.703963-9.295354c78.876067,20.81305,284.867165-26.584825,339.357883-8.233043c59.006523,12.051526,118.013046-7.65026,162.870046,6.015056s164.16481,2.745378,186.141729-3.314587c83.000267-10.350729,124.465604,27.748527,176.718515,14.827928c92.797711-23.009724,114.798515-24.548696,179.812845,0c83.620842,26.998433,120.923232-26.623352,199.448068-14.827928c112.694431,16.412444,150.976469,38.402924,219.25991,38.397151c76.272091,0,179.800433-36.542715,256.072525-36.542715C3048.829417,934.899892,3125.1,956.25,3125.1,956.25v-100h-217.599192c-74.868685,0-225.76539,0-376.29599,0-149.279737,0-301.03069,0-451.530781,0-148.455998,0-296.973015,0-447.473105,0-151.293321,0-301.000182,0-451.500272,0s-301.030691,0-451.56129,0c-149.676352,0-301.000181,0-451.530781,0-148.455999,0-296.932336,0-447.442597,0-151.730613,0-301.02052,0-451.530781,0-150.917044,0-301.010351,0-451.479932,0-149.696692,0-301.020521,0-451.530781,0-148.883123,0-301.020521,0-447.462936,0-152.137398,0-301.020521,0-451.530781,0-151.323829,0-301.020521,0-378.309573,0h-73.221208v95.993455Z" transform="rotate(180) translate(0,0)" fill="#fff" fill-opacity="0.3"/>
+    </g>
+    <g id="exkTvp564Fh4_to" transform="translate(2950,123.207512)">
+        <path d="M0,123.30352c0,0,64.124436,38.253971,127.118644,38.253971c104.090588-3.555054,178.651551-36.745816,236.754913-24.648426c43.351731,9.599,236.633217,21.394424,309.387858-5.228929c54.69142-24.287303,292.84028,25.760224,369.111466,25.760224s50.847458-8.231826,127.118644-8.231826c152.542373,0,172.342373-24.697912,305.084746-24.697912c127.118644,0,203.389831,37.046869,355.932204,16.464869s240.732203-5.35544,391.240678-17.615423c149.705084-12.195387,305.257627,9.331189,524.013559,17.615423c163.372881,6.186666,381.355932,32.930957,584.745763-16.464869c100.779661-24.47609,103.769491-8.092882,254.237288,0c84.691525,4.554683,132.366101,18.50759,254.359322,17.466728c178.728813-1.524728,137.349152-21.58386,254.115254-21.58386c152.542373,0,155.572881,22.139637,305.084746,4.117132c72.355932-8.721786,184.159322-21.939752,254.237288,0c70.077966,21.938532,175.103964,43.036089,257.161591,16.464869c76.271186-24.699132,96.02485-16.162605,149.61807-16.473401c114.233898-.66425,141.783051,19.956752,203.38983.008532c76.271187-24.699132,148.825223-.486305,227.303189,16.464869c94.606779,20.433306,140.3341-3.840462,209.984947,0c76.149153,4.20001,119.367787,34.756537,201.555444,15.883322C5950.712238,145.570661,6000,143.193478,6000,143.193478v80.110015h-217.59661c-74.867797,0-225.762712,0-376.291526,0-149.277966,0-301.027118,0-451.525423,0-148.454238,0-296.969492,0-447.467797,0-151.291525,0-300.99661,0-451.494915,0s-301.027119,0-451.555932,0c-149.674577,0-300.996611,0-451.525424,0-148.454237,0-296.928814,0-447.437288,0-151.728814,0-301.016949,0-451.525424,0-150.915254,0-301.016949,0-451.525424,0-149.694915,0-301.016949,0-451.525423,0-148.871187,0-301.00678,0-447.477967,0-152.135593,0-301.016949,0-451.525423,0-151.322034,0-301.016949,0-378.305085,0h-73.220339v-99.999973Z" transform="translate(-2950,-146.51104)" fill="#fff" fill-opacity="0.25"/>
+    </g>
+</svg>

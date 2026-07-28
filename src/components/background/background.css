@@ -54,9 +54,9 @@
 
 .wave {
   background: rgb(255 255 255 / 25%);
-  border-radius: 200% 300% 0 0;
+  border-radius: 400% 500% 0 0;
   position: fixed;
-  width: 450%;
+  width: 750%;
   height: 30%;
   animation: wave 12s -3s linear infinite;
   transform: translate3d(0, 0, 0);

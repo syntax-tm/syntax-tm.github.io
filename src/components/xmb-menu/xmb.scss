@@ -113,21 +113,21 @@ $margin-top-inactive: 15;
   transition: all 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
 
   margin-bottom: 30px;
-  max-width: 120px;
-  max-height: 120px;
 
   @media only screen and (max-width: 640px) {
+    max-width: 100px;
+    max-height: 100px;
     &.first {
       //margin-top: calc(-190px + (-120px * var(--n)));
-      margin-top: calc(-300px + (-110px * var(--y)));
+      margin-top: calc(-295px + (-110px * var(--y)));
       margin-bottom: 0;
       &.active {
-        margin-top: 30px;
-        margin-bottom: 40px;
+        margin-top: 20px;
+        margin-bottom: 20px;
       }
     }
     &:not(.first) {
-      margin-top: 30px;
+      margin-top: 20px;
       margin-bottom: 30px;
       &.active {
         margin-top: 350px;
@@ -136,23 +136,21 @@ $margin-top-inactive: 15;
   }
 
   @media only screen and (min-width: 641px) {
+    max-width: 120px;
+    max-height: 120px;
     &.first {
       //margin-top: calc(-190px + (-120px * var(--n)));
       margin-top: calc(-190px + (-120px * var(--y)));
       &.active {
-        margin-top: 15px;
+        margin-top: 25px;
       }
     }
     &:not(.first) {
-      margin-top: 15px;
+      margin-top: 25px;
       &.active {
         margin-top: calc(250px - (5px * var(--y)));
       }
     }
-  }
-
-  .grid {
-
   }
 
   > .xmb-icon {
@@ -160,9 +158,9 @@ $margin-top-inactive: 15;
   }
 }
 
-$XMB_MAIN_MOBILE_SCALEX: 140;
+$XMB_MAIN_MOBILE_SCALEX: 110;
+$XMB_MAIN_MOBILE_BASE_MARGIN_LEFT: 10;
 $XMB_MAIN_DESKTOP_SCALEX: 270;
-$XMB_MAIN_MOBILE_BASE_MARGIN_LEFT: 20;
 $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 
 // .xmb-menu {
@@ -196,20 +194,21 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 
 .xmb-category {
   @media only screen and (max-width: 640px) {
-    margin-left: 20px;
+    margin-left: 15px;
+    width: 100px;
 
     &.active {
-      margin-left: 30px;
+      margin-left: 0;
     }
   }
   @media only screen and (min-width: 641px) {
     margin-left: 150px;
+    width: 120px;
 
     &.active {
       margin-left: 80px;
     }
   }
-  width: 120px;
   justify-content: center;
   display: grid;
 }
@@ -236,18 +235,36 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
   //}
 }
 
-.xmb-item.active > .xmb-item-name {
-  left: 20px;
+@media only screen and (max-width: 640px) {
+  .xmb-item.active > .xmb-item-name {
+    left: 0;
+  }
+
+  .xmb-item-name {
+    font-size: 1.5rem;
+    padding-left: 5px;
+  }
+
+  .xmb-item-description {
+    padding-left: 5px;
+  }
+}
+@media only screen and (min-width: 641px) {
+  .xmb-item.active > .xmb-item-name {
+    left: 20px;
+  }
+
+  .xmb-item-name {
+    font-size: 1.5rem;
+    padding-left: 20px;
+  }
+
+  .xmb-item-description {
+    padding-left: 20px;
+  }
 }
 
-.xmb-item-name {
-  font-size: 1.5rem;
-  padding-left: 20px;
-}
 
-.xmb-item-description {
-  padding-left: 20px;
-}
 
 .xmb-item.active {
   -webkit-animation: glow 1s ease-in-out infinite alternate;

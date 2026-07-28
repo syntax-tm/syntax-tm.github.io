@@ -145,8 +145,6 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     play(XMB_AUDIO_SRC);
 
     openItem(currentItem);
-
-    console.warn(`No action for ${currentItem.title} in ${currentItem.category}`);
   }, [modal, currentItem]);
 
   const moveDefault = useCallback(() => {
