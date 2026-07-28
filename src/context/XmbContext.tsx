@@ -81,7 +81,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     const menu = build();
     xmbMenuRef.current = menu;
     setCategories(menu.items);
-    const cat = menu.getCurrentCategory();
+    const cat = menu.items[0];
     setCurrentCategory(cat);
     setCurrentItems(cat.items);
     if (cat.items[0])

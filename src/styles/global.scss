@@ -1,7 +1,8 @@
 @use './breakpoints.module.scss';
 @use './variables.module.scss';
+@use './components/boot.scss';
 
-@import './components.css';
+@import './imports.css';
 @import './animations.css';
 @import './xmb.css';
 

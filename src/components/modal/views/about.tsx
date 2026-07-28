@@ -29,7 +29,7 @@ export const AboutView = () => {
   const mobileDetect = useMobileDetect();
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<number | null>(null);
-  const { toggleSecret } = useSecret();
+  const { unlockSecret } = useSecret();
 
   useEffect(() => {
     if (!mobileDetect.isMobile()) return;
@@ -55,7 +55,7 @@ export const AboutView = () => {
       }, 500);
 
       if (tapCountRef.current >= SECRET_TAP_MIN) {
-        toggleSecret(AchievementId.android);
+        unlockSecret(AchievementId.android);
         resetTapCount();
       }
     };

@@ -1,0 +1,56 @@
+div {
+}
+
+@-webkit-keyframes idea{
+  0%{
+    -webkit-clip-path: polygon(50% 50%, 0% 100%, 0% 100%);
+  }
+  33%{
+    -webkit-clip-path: polygon(50% 50%, 0% 100%, 100% 100%);
+  }
+  100%{
+    -webkit-clip-path: polygon(50% 50%, 0% 100%, 0% 100%);
+    transform:none;
+  }
+}
+@keyframes idea{
+  0%{
+    clip-path: polygon(50% 50%, 0% 100%, 0% 100%);
+  }
+  33%{
+    clip-path: polygon(50% 50%, 0% 100%, 100% 100%);
+  }
+  100%{
+    clip-path: polygon(50% 50%, 0% 100%, 0% 100%);
+    transform:none;
+    border-color:#6bb858;
+  }
+}
+
+.anim-container {
+  justify-content: center;
+  align-items: center;
+}
+
+.anim {
+  width: 180px;
+  background: none;
+  -webkit-clip-path: polygon(50% 50%, 25% 100%, 75% 100%);
+  -moz-clip-path: polygon(50% 50%, 25% 100%, 75% 100%);
+  -ms-clip-path: polygon(50% 50%, 25% 100%, 75% 100%);
+  clip-path: polygon(50% 50%, 25% 100%, 75% 100%);
+  border-radius:50%;
+  border:10px solid #3f789e;
+  transform:rotate(360deg);
+  will-change: transform;
+  -webkit-animation:idea 2s linear infinite;
+  -moz-animation:idea 2s linear infinite;
+}
+/* Center the demo */
+html, 
+body { 
+  height: 100vh;
+}
+body {
+  display: flex;
+}

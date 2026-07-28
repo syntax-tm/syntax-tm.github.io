@@ -30,7 +30,6 @@ export default function Clock() {
   const [minute, setMinute] = useState<string | null>(null);
   const [meridiem, setMeridiem] = useState<string | null>(null);
   const [showColon, setShowColon] = useState(false);
-  const [icon, setIcon] = useState<React.JSX.Element | null>(null);
 
   const { isPspSecretActive, pspFontClass } = useSecret();
 
@@ -73,18 +72,10 @@ export default function Clock() {
     return () => clearInterval(interval);
   }, [loaded]);
 
-  useEffect(() => {
-    const image = isPspSecretActive
-      ? <Image src={pspBatteryIcon} alt="psp battery" className="clock-icon" width={20} height={20} />
-      : <FontAwesomeIcon icon={faClock} />;
-
-    setIcon(image);
-  }, [isPspSecretActive]);
-
   return (
     <>
-      <div className="clock boot-fade-in rounded-sm absolute top-[5%] right-0 border-white border-[1.5px] border-r-0 p-2 text-[18px] select-none pointer-events-none tabular-nums">
-        <div className={`clock-container ${loaded ? 'flex' : 'hidden'} ${isPspSecretActive ? pspFontClass : clockFont.className} tracking-normal align-middle flex flex-nowrap items-center -mt-1`}>
+      <div className={`${ !isPspSecretActive ? 'clock' : 'psp-clock' } boot-fade-in rounded-sm absolute p-2  select-none pointer-events-none tabular-nums`}>
+        <div className={`clock-container ${loaded ? 'flex' : 'hidden'} ${isPspSecretActive ? pspFontClass : clockFont.className} tracking-normal align-middle flex flex-nowrap items-center ${isPspSecretActive && '-mt-1'}`}>
           <div className="flex flex-nowrap gap-0 items-center mx-2">
             <span>{month}</span>
             <span className="font-light mx-0.5 text-[14px]">/</span>
@@ -101,12 +92,12 @@ export default function Clock() {
               ? (
                 <>
                   <div className="mx-3 object-scale-down h-8 -my-2 -mt-1">
-                    <Image src={pspBatteryIcon} alt="psp battery" className="clock-icon" width={20} height={20} />
+                    <Image src={pspBatteryIcon} alt="psp battery" className="clock-icon" width={20} height={20} title="100%" />
                   </div>
                 </>
               )
               : (
-                <FontAwesomeIcon icon={faClock} className="mx-3" />
+                <FontAwesomeIcon icon={faClock} className="mx-3" alignmentBaseline="middle" />
               )
           }
         </div>

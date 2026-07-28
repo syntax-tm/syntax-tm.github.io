@@ -3,3 +3,25 @@
   height: 100% !important;
   margin: 0;
 }
+
+.clock, .psp-clock {
+  position: absolute;
+  font-size: 18px;
+}
+/* 
+border-white border-[1.5px] border-r-0 */
+
+.clock {
+  top: 5%;
+  right: 0;
+  border-width: 1.5px;
+  border-color: white;
+  border-right: 0;
+}
+
+.psp-clock {
+  top: 5px;
+  right: 0;
+  border: 0;
+  border-color: transparent;
+}

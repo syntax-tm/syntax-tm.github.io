@@ -7,10 +7,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import Providers from "@app/providers";
+import LoadingView from "@components/loading/Loading";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@styles/global.scss";
-import { useSecret } from "@src/context/SecretContext";
-import localFont from 'next/font/local';
 
 config.autoAddCss = false;
 
@@ -50,10 +49,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
+  const loadingView = (
+    <>
+      <LoadingView />
+    </>
+  );
+
   return (
     <html lang="en">
       <body id="body" className={`${inter.className} text-white`}>
-        <Suspense>
+        <Suspense fallback={loadingView}>
           <Providers>
             {children}
           </Providers>

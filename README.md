@@ -1,24 +1,18 @@
 # syntax-tm.github.io
 
-## Current Deployment
-
-[View](https://syntax-tm.github.io/)
-
 ## Preview
 
-<p align="center">
-  <img src="docs/preview.webp" alt="Preview" />
-</p>
+<a href="https://syntax-tm.github.io">
+  <p align="center">
+    <img src="docs/preview.webp" alt="Preview" />
+  </p>
+</a>
 
 ## Building
 
-This project has been created using **webpack-cli**, you can now run
-
 ```sh
-yarn build
+yarn next build
 ```
-
-to bundle your application
 
 ## Deployment
 

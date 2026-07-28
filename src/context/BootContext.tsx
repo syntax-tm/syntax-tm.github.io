@@ -3,7 +3,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '@components/boot/boot.css';
 
 interface BootContextType {
   isBootVisible: boolean;
@@ -72,42 +71,13 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
           <div className="fixed">
 
           </div>
-          {/* <div className="boot-title text-3xl select-none"> */}
           <div className="relative grid">
             <div className="text-3xl select-none">
               <FontAwesomeIcon icon={faSpinner} spin className="mr-4" />
               Loading
             </div>
           </div>
-          {/* <div className="dropping-texts text-right">
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faGithub} /><span>GitHub</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faXbox} /><span>Xbox</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faSpotify} /><span>Spotify</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faFacebook} /><span>Facebook</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faSteam} /><span>Steam</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faDiscord} /><span>Discord</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faBattleNet} /><span>Battle.Net</span>
-              </div>
-              <div className="inline-block">
-                <FontAwesomeIcon icon={faInstagram} /><span>Instagram</span>
-              </div>
-            </div>
-          </div>*/}
         </div>
-        {/* <div className="boot-subtitle select-none text-lg opacity-85"><FontAwesomeIcon icon={faGithub}></FontAwesomeIcon> syntax-tm</div> */}
       </div>
     )}
   </BootContext.Provider>;

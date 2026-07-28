@@ -42,7 +42,7 @@ const pspFont = localFont({
   preload: true,
 });
 
-export interface Stat {
+export interface StatDefinition {
   id: AchievementId;
   title: string;
   description?: string;
@@ -50,20 +50,14 @@ export interface Stat {
   // TODO: add a hint indicating how this can be unlocked
 }
 
-export interface AchievementStatSchema {
-  id: AchievementId;
-  isUnlocked: boolean,
-  dateUnlocked?: Date | null,
-};
-
 export interface PlayerStat {
   id: AchievementId;
-  stat: Stat;
+  stat: StatDefinition;
   isUnlocked: boolean;
-  dateUnlocked: Date | null;
+  isEnabled: boolean;
 }
 
-export type SecretMap = Record<AchievementId, Stat>;
+export type SecretMap = Record<AchievementId, StatDefinition>;
 
 export const secrets: SecretMap =
 {
@@ -105,27 +99,53 @@ export const secrets: SecretMap =
 };
 
 export interface SecretContextType {
+  // unlocked
+  isKonamiSecretUnlocked: boolean;
+  isPspSecretUnlocked: boolean;
+  isIwhbydSecretUnlocked: boolean;
+  is404SecretUnlocked: boolean;
+  isOceangateSecretUnlocked: boolean;
+  isAndroidSecretUnlocked: boolean;
+  isMissingNoSecretUnlocked: boolean;
+
+  // active (setting)
   isKonamiSecretActive: boolean;
   isPspSecretActive: boolean;
-  isIwhbydActive: boolean;
+  isIwhbydSecretActive: boolean;
   is404SecretActive: boolean;
   isOceangateSecretActive: boolean;
   isAndroidSecretActive: boolean;
   isMissingNoSecretActive: boolean;
+
+  isSecretUnlocked: (id: AchievementId) => boolean;
+  setSecretUnlocked: (id: AchievementId, isUnlocked: boolean) => void;
+  isSecretEnabled: (id: AchievementId) => boolean;
+  setSecretEnabled: (id: AchievementId, isEnabled: boolean) => void;
+  unlockSecret: (id: AchievementId) => Promise<void>;
   toggleSecret: (id: AchievementId) => Promise<void>;
-  secrets: Record<AchievementId, Stat>;
+  secrets: Record<AchievementId, StatDefinition>;
   stats: Map<AchievementId, PlayerStat> | null;
   pspFontClass: string;
-  //loadPlayerStats: () => Map<AchievementId, PlayerStat>;
 }
 
 const SecretContext = createContext<SecretContextType | undefined>(undefined);
 
 export function SecretProvider({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<Map<AchievementId, PlayerStat> | null>(null);
+
+  // is unlocked (enables preference)
+  const [isKonamiSecretUnlocked, setIsKonamiSecretUnlocked] = useState(false);
+  const [isPspSecretUnlocked, setIsPspSecretUnlocked] = useState(false);
+  const [isIwhbydSecretUnlocked, setIsIwhbydSecretUnlocked] = useState(false);
+  const [is404SecretUnlocked, setIs404SecretUnlocked] = useState(false);
+  const [isOceangateSecretUnlocked, setIsOceangateSecretUnlocked] = useState(false);
+  const [isAndroidSecretUnlocked, setIsAndroidSecretUnlocked] = useState(false);
+  const [isMissingNoSecretUnlocked, setIsMissingNoSecretUnlocked] = useState(false);
+
+  // is active (preference)
   const [isKonamiSecretActive, setIsKonamiSecretActive] = useState(false);
   const [isPspSecretActive, setIsPspSecretActive] = useState(false);
-  const [isIwhbydActive, setIsIwhbydActive] = useState(false);
+  const [isIwhbydSecretActive, setIsIwhbydSecretActive] = useState(false);
   const [is404SecretActive, setIs404SecretActive] = useState(false);
   const [isOceangateSecretActive, setIsOceangateSecretActive] = useState(false);
   const [isAndroidSecretActive, setIsAndroidSecretActive] = useState(false);
@@ -133,182 +153,216 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
 
-  const getSecretStat = useCallback((id: AchievementId) => {
-    // does not exist
-    if (!localStorage.getItem(id.toString())) {
-      const def: AchievementStatSchema = {
-        id,
-        isUnlocked: false,
-      };
-      return def;
+  const getUnlockedKey = (id: AchievementId) => `${id}_unlocked`;
+  const getEnabledKey = (id: AchievementId) => `${id}_enabled`;
+
+  const isSecretUnlocked = (id: AchievementId) => {
+    const settingName = getUnlockedKey(id);
+    const value = localStorage.getItem(settingName);
+    if (!value) return false;
+    return value === 'true';
+  };
+
+  const setSecretUnlocked = useCallback((id: AchievementId, isUnlocked: boolean) => {
+    const settingName = getUnlockedKey(id);
+    localStorage.setItem(settingName, isUnlocked ? 'true' : 'false');
+
+    refreshStats();
+  }, [stats]);
+
+  const isSecretEnabled = (id: AchievementId) => {
+    const settingName = getEnabledKey(id);
+    const value = localStorage.getItem(settingName);
+    if (!value) return false;
+    return value === 'true';
+  };
+
+  const setSecretEnabled = useCallback((id: AchievementId, isEnabled: boolean) => {
+    const settingName = getEnabledKey(id);
+    localStorage.setItem(settingName, isEnabled ? 'true' : 'false');
+
+    refreshStats();
+  }, [stats]);
+
+  const unlockSecret = useCallback(async (id: AchievementId) => {
+
+    // check to see if it has already been unlocked
+    const isUnlocked = isSecretUnlocked(id);
+    if (isUnlocked) return;
+
+    // save that it's unlocked and enabled automatically
+    setSecretUnlocked(id, true);
+    setSecretEnabled(id, true);
+
+    const secret = secrets[id];
+    showSnackbar(`Secret ${secret.title} Unlocked`, secret.description, 'success');
+
+    play(SECRET_AUDIO_SRC);
+
+    if (id === AchievementId.konami_code) {
+      setIsKonamiSecretUnlocked(true);
+      setIsKonamiSecretActive(true);
     }
-
-    const loadedStat = localStorage.getItem(id.toString());
-    if (!loadedStat) throw new Error(`Unable to load the stats for ${id}.`);
-
-    try {
-      const savedStat: AchievementStatSchema = JSON.parse(loadedStat);
-      return savedStat;
+    else if (id === AchievementId.psp_code) {
+      setIsPspSecretUnlocked(true);
+      setIsPspSecretActive(true);
     }
-    catch {
-
-      // reset the achievement state in case it was corrupted
-      saveSecretStat(id, false, true);
-
-      return {
-        id,
-        isUnlocked: false,
-        dateUnlocked: null,
-      } as AchievementStatSchema;
+    else if (id === AchievementId.iwhbyd) {
+      setIsIwhbydSecretUnlocked(true);
+      setIsIwhbydSecretActive(true);
     }
-  }, []);
-
-  const saveSecretStat = useCallback((id: AchievementId, isUnlocked: boolean = true, overwrite: boolean = false) => {
-    const statValue: AchievementStatSchema = {
-      id,
-      isUnlocked,
-      dateUnlocked: isUnlocked ? new Date() : null,
-    };
-
-    // if this is already in storage, don't overwrite it (only if it's unlocked)
-    const statText = localStorage.getItem(id.toString());
-    if (statText) {
-      const result = tryParseJSONObject(statText) as AchievementStatSchema;
-      if (!result) {
-        console.warn(`Unable to load current stat for ${id}.`);
-      }
-      else if (result.isUnlocked && !overwrite) {
-        return;
-      }
+    else if (id === AchievementId._404) {
+      setIs404SecretUnlocked(true);
+      setIs404SecretActive(true);
     }
-
-    localStorage.setItem(id.toString(), JSON.stringify(statValue, null, 0));
-  }, []);
+    else if (id === AchievementId.oceangate) {
+      setIsOceangateSecretUnlocked(true);
+      setIsOceangateSecretActive(true);
+    }
+    else if (id === AchievementId.android) {
+      setIsAndroidSecretUnlocked(true);
+      setIsAndroidSecretActive(true);
+    }
+    else if (id === AchievementId.missing_no) {
+      setIsMissingNoSecretUnlocked(true);
+      setIsMissingNoSecretActive(true);
+    }
+    else {
+      // if any enum case is missed, TypeScript flags an error here
+      const exhaustiveCheck: never = id;
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
+    }
+  }, [isKonamiSecretUnlocked, isPspSecretUnlocked, isIwhbydSecretUnlocked, isAndroidSecretUnlocked, isMissingNoSecretUnlocked, isOceangateSecretUnlocked, is404SecretUnlocked]);
 
   const toggleSecret = useCallback(async (id: AchievementId) => {
-    saveSecretStat(id, true);
 
-    await play(SECRET_AUDIO_SRC);
+    // make sure that it has been unlocked first
+    // TODO: conisder throwing error here if not unlocked
+    const isUnlocked = isSecretUnlocked(id);
+    if (!isUnlocked) return;
 
-    const state = stats?.get(id);
+    const isEnabled = isSecretEnabled(id);
+    const newState = !isEnabled;
 
-    if (!state) return;
+    const action = newState ? 'Enabled' : 'Disabled';
 
-    const newState = !state.isUnlocked;
+    showSnackbar(`Secret ${id} ${action}`, 'info');
 
-    const action = newState ? 'Unlocked' : 'Locked';
+    // save the new setting value
+    setSecretEnabled(id, newState);
 
-    showSnackbar(`Secret ${action}`, state?.stat.title, 'success');
-
-    switch (id) {
-      case AchievementId.konami_code: {
-        setIsKonamiSecretActive(newState);
-        break;
-      }
-      case AchievementId.psp_code: {
-        setIsPspSecretActive(newState);
-        break;
-      }
-      case AchievementId.iwhbyd: {
-        setIsIwhbydActive(newState);
-        break;
-      }
-      case AchievementId._404: {
-        setIs404SecretActive(newState);
-        break;
-      }
-      case AchievementId.oceangate: {
-        setIsOceangateSecretActive(newState);
-        break;
-      }
-      case AchievementId.android: {
-        setIsAndroidSecretActive(newState);
-        break;
-      }
-      case AchievementId.missing_no: {
-        setIsMissingNoSecretActive(newState);
-        break;
-      }
-      default: {
-        // if any enum case is missed, TypeScript flags an error here
-        const exhaustiveCheck: never = id;
-        throw new Error(`Unhandled case: ${exhaustiveCheck}`);
-      }
+    if (id === AchievementId.konami_code) setIsKonamiSecretActive(newState);
+    else if (id === AchievementId.psp_code) setIsPspSecretActive(newState);
+    else if (id === AchievementId.iwhbyd) setIsIwhbydSecretActive(newState);
+    else if (id === AchievementId._404) setIs404SecretActive(newState);
+    else if (id === AchievementId.oceangate) setIsOceangateSecretActive(newState);
+    else if (id === AchievementId.android) setIsAndroidSecretActive(newState);
+    else if (id === AchievementId.missing_no) setIsMissingNoSecretActive(newState);
+    else {
+      // if any enum case is missed, TypeScript flags an error here
+      const exhaustiveCheck: never = id;
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
     }
   }, [stats]);
 
+  const refreshStats = () => {
+    const playerStats = new Map<AchievementId, PlayerStat>();
+    Object.keys(AchievementId)
+      .map((achId) => {
+        const id = AchievementId[achId as keyof typeof AchievementId];
+        const isUnlocked = isSecretUnlocked(id);
+        const isEnabled = isSecretEnabled(id);
+        const playerStat: PlayerStat = {
+          id,
+          isUnlocked,
+          stat: secrets[id],
+          isEnabled,
+        };
+        playerStats.set(id, playerStat);
+
+        if (id === AchievementId.konami_code) {
+          setIsKonamiSecretUnlocked(isUnlocked);
+          setIsKonamiSecretActive(isEnabled);
+        }
+        else if (id === AchievementId.psp_code) {
+          setIsPspSecretUnlocked(isUnlocked);
+          setIsPspSecretActive(isEnabled);
+        }
+        else if (id === AchievementId.iwhbyd) {
+          setIsIwhbydSecretUnlocked(isUnlocked);
+          setIsIwhbydSecretActive(isEnabled);
+        }
+        else if (id === AchievementId._404) {
+          setIs404SecretUnlocked(isUnlocked);
+          setIs404SecretActive(isEnabled);
+        }
+        else if (id === AchievementId.oceangate) {
+          setIsOceangateSecretUnlocked(isUnlocked);
+          setIsOceangateSecretActive(isEnabled);
+        }
+        else if (id === AchievementId.android) {
+          setIsAndroidSecretUnlocked(isUnlocked);
+          setIsAndroidSecretActive(isEnabled);
+        }
+        else if (id === AchievementId.missing_no) {
+          setIsMissingNoSecretUnlocked(isUnlocked);
+          setIsMissingNoSecretActive(isEnabled);
+        }
+      });
+
+    setStats(playerStats);
+  };
+
   useKeySequence(KONAMI_CODE, () => {
-    toggleSecret(AchievementId.konami_code);
+    unlockSecret(AchievementId.konami_code);
   });
 
   useKeySequence(PSP, () => {
-    toggleSecret(AchievementId.psp_code);
+    unlockSecret(AchievementId.psp_code);
   });
 
   useKeySequence(IWHBYD_CODE, () => {
-    toggleSecret(AchievementId.iwhbyd);
+    unlockSecret(AchievementId.iwhbyd);
   });
 
   useGamepads({
     onConnect: () => {
-      toggleSecret(AchievementId.oceangate);
+      unlockSecret(AchievementId.oceangate);
     },
     onKonamiSuccess: () => {
-      toggleSecret(AchievementId.konami_code);
+      unlockSecret(AchievementId.konami_code);
     },
   });
 
   useEffect(() => {
 
-    const playerStats = new Map<AchievementId, PlayerStat>();
-    Object.keys(AchievementId)
-      //.filter(v => typeof v !== "string")
-      //.filter(v => !isNaN(Number(v)))
-      .map((id) => {
-        const achId = AchievementId[id as keyof typeof AchievementId];
-        const playerStat: PlayerStat = {
-          id: achId,
-          isUnlocked: getSecretStat(achId)?.isUnlocked ?? false,
-          stat: secrets[achId],
-          dateUnlocked: null,
-        };
-        playerStats.set(achId, playerStat);
-      });
+    refreshStats();
 
-    setStats(playerStats);
-
-    setIsKonamiSecretActive(playerStats.get(AchievementId.konami_code)?.isUnlocked ?? false);
-    setIsPspSecretActive(playerStats.get(AchievementId.psp_code)?.isUnlocked ?? false);
-    setIs404SecretActive(playerStats.get(AchievementId._404)?.isUnlocked ?? false);
-    setIsAndroidSecretActive(playerStats.get(AchievementId.android)?.isUnlocked ?? false);
-    setIsOceangateSecretActive(playerStats.get(AchievementId.oceangate)?.isUnlocked ?? false);
-    setIsMissingNoSecretActive(playerStats.get(AchievementId.missing_no)?.isUnlocked ?? false);
-    setIsIwhbydActive(playerStats.get(AchievementId.iwhbyd)?.isUnlocked ?? false);
   }, []);
 
   useEffect(() => {
     const handleSecretActivate = () => {
-      void toggleSecret(AchievementId.konami_code);
+      void unlockSecret(AchievementId.konami_code);
     };
 
     const handlePspSecretActivate = () => {
-      void toggleSecret(AchievementId.psp_code);
+      void unlockSecret(AchievementId.psp_code);
     };
 
     const handleOceangateSecretActivate = () => {
-      void toggleSecret(AchievementId.oceangate);
+      void unlockSecret(AchievementId.oceangate);
     };
 
     const handle404SecretActivate = () => {
-      void toggleSecret(AchievementId._404);
+      void unlockSecret(AchievementId._404);
     };
 
     const handleIwhbydSecretActivate = () => {
-      void toggleSecret(AchievementId.iwhbyd);
+      void unlockSecret(AchievementId.iwhbyd);
     };
 
     const handleMissingNoSecretActivate = () => {
-      void toggleSecret(AchievementId.missing_no);
+      void unlockSecret(AchievementId.missing_no);
     };
 
     document.addEventListener("secret:konami:activate", handleSecretActivate);
@@ -330,24 +384,36 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     };
   }, [toggleSecret]);
 
-  const value = useMemo(
-    () => ({
-      isKonamiSecretActive,
-      isPspSecretActive,
-      isIwhbydActive,
-      is404SecretActive,
-      isOceangateSecretActive,
-      isAndroidSecretActive,
-      isMissingNoSecretActive,
-      toggleSecret,
-      secrets,
-      stats,
-      pspFontClass: pspFont.className,
-    }),
-    [isKonamiSecretActive, isPspSecretActive, isIwhbydActive,
-      is404SecretActive, isOceangateSecretActive, isAndroidSecretActive,
-      isMissingNoSecretActive, toggleSecret, stats],
-  );
+  const value = {
+
+    // unlocked
+    isKonamiSecretUnlocked,
+    isPspSecretUnlocked,
+    isIwhbydSecretUnlocked,
+    is404SecretUnlocked,
+    isOceangateSecretUnlocked,
+    isAndroidSecretUnlocked,
+    isMissingNoSecretUnlocked,
+
+    // setting enabled
+    isKonamiSecretActive,
+    isPspSecretActive,
+    isIwhbydSecretActive,
+    is404SecretActive,
+    isOceangateSecretActive,
+    isAndroidSecretActive,
+    isMissingNoSecretActive,
+
+    isSecretUnlocked,
+    setSecretUnlocked,
+    isSecretEnabled,
+    setSecretEnabled,
+    unlockSecret,
+    toggleSecret,
+    secrets,
+    stats,
+    pspFontClass: pspFont.className,
+  };
 
   return (
     <SecretContext.Provider value={value}>
