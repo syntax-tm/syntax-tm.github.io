@@ -88,9 +88,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
       setCurrentItem(cat.items[0]);
 
     // save the item ref to find items by key directly
-    for (let i = 0; i < menu.items.length - 1; i++) {
+    for (let i = 0; i < menu.items.length; i++) {
       const cat = menu.items[i];
-      for (let j = 0; j < cat.items.length - 1; j++) {
+      for (let j = 0; j < cat.items.length; j++) {
         const item = cat.items[j];
         xmbItemRef.current.set(toXmbKey(i, j), item);
       }
@@ -140,12 +140,17 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const onEnter = useCallback(() => {
-    if (!currentItem) return;
+    if (!xmbItemRef.current) return;
 
     play(XMB_AUDIO_SRC);
 
-    openItem(currentItem);
-  }, [modal, currentItem]);
+    const key = toXmbKey(x, y);
+    const item = xmbItemRef.current.get(key);
+
+    if (!item) return;
+
+    openItem(item);
+  }, [x, y]);
 
   const moveDefault = useCallback(() => {
     updateX(0, false);
