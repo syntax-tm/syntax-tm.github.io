@@ -22,10 +22,9 @@ const AUDIO_SRC = '/audio/nav.mp3';
 
 export default function Modal() {
   const searchParams = useSearchParams();
-  const modalParam = searchParams.get("modal");
+  const modal = searchParams.get("modal");
   const router = useRouter();
   const mobileDetect = useMobileDetect();
-
   const { play } = useAudio();
 
   const [gamepadConnected, setGamepadConnected] = useState(false);
@@ -42,19 +41,11 @@ export default function Modal() {
     onB: onEsc,
   });
 
-  const [modal, setModal] = useState<string | null>(modalParam);
-
   async function onEsc() {
     await play(AUDIO_SRC);
 
     router.push('/');
   }
-
-  function onPathChanged(p: string, s: ReadonlyURLSearchParams, m: string | null) {
-    setModal(m);
-  }
-
-  useQuery({ onPathChanged: onPathChanged });
 
   const actions = new Map<string, KeyPressAction>();
 
@@ -109,7 +100,7 @@ export default function Modal() {
                 <div className="grid justify-center">
                   <span className="text-white mt-[1em] ml-[0.5em] text-center modal-action object-center mx-auto">
                     {/* need to set the href so that the user can close modal by clicking on the buttton */}
-                    <Link href="/">
+                    <Link href="/" onClick={(e) => { e.preventDefault(); onEsc(); }}>
                       {gamepadConnected && (
                         <div className="text-xl items-center justify-items-center align-items-center inline-flex">
                           <div className="relative max-w-10">
