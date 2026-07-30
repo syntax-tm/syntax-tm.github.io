@@ -103,7 +103,7 @@ import { Type } from "typescript";
 
 export const HelpView = () => {
   return (
-    <div className="grid h-full">
+    <div className="modal-content modal-content-help grid h-full">
       <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
         <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 max-w-[600px]">
           <thead className="text-xs text-gray-400 uppercase items-center relative">

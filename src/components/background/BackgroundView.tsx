@@ -2,17 +2,26 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useSecret } from '@context/SecretContext';
-import PixelatedBackground from '@components/background/PixelatedBackground';
+import SecretBackground from '@src/components/background/SecretBackground';
 import WebGlBackground from '@components/background/webGlBackground';
 
 export default function BackgroundView() {
 
-  const { isMissingNoSecretActive } = useSecret();
+  const [isSecretBg, setIsSecretBg] = useState(false);
+
+  // if konami, missingno, or 404 secrets are active, use the PixelatedBackground
+  // otherwise default to WebGlBackground
+  const { isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive } = useSecret();
+
+  useEffect(() => {
+    const secretBg = isKonamiSecretActive || isMissingNoSecretActive || is404SecretActive;
+    setIsSecretBg(secretBg);
+  }, [isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive]);
 
   return (
     <>
-      {isMissingNoSecretActive
-        ? <PixelatedBackground />
+      {isSecretBg
+        ? <SecretBackground />
         : <WebGlBackground />}
     </>
   );

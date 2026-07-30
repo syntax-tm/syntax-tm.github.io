@@ -1,24 +1,18 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSecret, StatDefinition, PlayerStat, AchievementId, SecretGroupType } from "@context/SecretContext";
+import { useSecret, PlayerStat, AchievementId, SecretGroupType } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faLock, faUnlock, faUnlockAlt, faCheck, faCheckCircle, faToggleOff, faToggleOn, IconDefinition, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./secrets.css";
 
-export interface SecretsViewProps
-{
-  title: string;
-  description?: string;
-}
+const SECRET_TAP_MIN = 5;
 
 export interface SecretViewProps
 {
   id: AchievementId,
   stat: PlayerStat;
 }
-
-const SECRET_TAP_MIN = 5;
 
 const SecretView = ({ id, stat }: SecretViewProps) => {
 
@@ -93,17 +87,19 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
   }, [unlocked]);
 
   return (
-    <>
-      <tr key={id} className="">
-        <td className={`border-b border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : 'bg-gray-700'} pointer-events-none select-none`}>
+    <React.Fragment key={id}>
+      <tr>
+        <td className={`border-b border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : 'bg-gray-800'} pointer-events-none select-none justify-center items-center`}>
           <FontAwesomeIcon icon={stat.isUnlocked ? faUnlockAlt : faLock}
-            className={`py-3 w-full h-full mx-auto`} size="xl" />
+            className={`py-3 w-full h-full mx-3`} size="lg" />
         </td>
         <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}
           ref={elementRef}>
-          {unlocked ? secret.title : 'Hidden'}
+          <span className="pointer-events-none select-none">
+            {unlocked ? secret.title : 'Hidden'}
+          </span>
         </td>
-        <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>
+        <td className={`border border-gray-300/25 text-wrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>
           {unlocked ? secret.description : 'Hidden'}
         </td>
         <td className={`border border-gray-300/25 ${enabled && 'bg-green-300/50'}`}>
@@ -117,33 +113,30 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
               )
             }
           </div>
-          {/* <button onClick={toggleEnabled} className={`${enabled ? 'bg-green-300' : 'bg-gray-500'} w-full h-full text-white`}>
-            {icon && <FontAwesomeIcon icon={icon} />}
-          </button> */}
         </td>
       </tr>
-    </>
+    </React.Fragment>
   );
 
 };
 
-export const SecretsView = ({ title, description }: SecretsViewProps) => {
+export const SecretsView = () => {
 
   const { stats, secrets, secretGroups } = useSecret();
 
   return (
     <>
-      <div className="w-full h-full text-white my-auto">
-        <table className="table-auto border-collapse mx-auto w-full my-auto">
-          <thead className="">
+      <div className="modal-content modal-content-secrets text-white h-full lg:m-4">
+        <table className="table-auto border-collapse mx-auto w-full">
+          <thead className="bg-gray-600/40">
             <tr className="content-center">
-              <th className=" bg-gray-800 text-sm md:text-md border border-gray-400/25">
-                <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
-                  aria-label="Status" />
+              <th className=" text-sm md:text-lg border border-gray-400/25">
+                {/* <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
+                  aria-label="Status" /> */}
               </th>
-              <th className="p-2 bg-gray-800 text-sm border border-gray-400/25">Name</th>
-              <th className="p-2 bg-gray-800 text-sm border border-gray-400/25">Description</th>
-              <th className="p-2 bg-gray-800 text-sm border border-gray-400/25">Enabled</th>
+              <th className="p-2 text-sm md:text-lg border border-gray-400/25">Name</th>
+              <th className="p-2 text-sm md:text-lg border border-gray-400/25">Description</th>
+              <th className="p-2 text-sm md:text-lg border border-gray-400/25">Enabled</th>
             </tr>
           </thead>
           <tbody className="bg-gray-600/40">
@@ -156,22 +149,23 @@ export const SecretsView = ({ title, description }: SecretsViewProps) => {
                   if (type === 'default') return stat[1].stat.type === undefined;
                   return stat[1].stat.type === type;
                 });
-                return <>
-                  <tr className="text-xl secret-group-title my-2 text-left">
-                    <td colSpan={3} className="text-xl py-2">
-                      <div className="text-left w-full h-full pl-2">
+                return (
+                  <React.Fragment key={g}>
+                    <tr className="bg-gray-600/40">
+                      <td />
+                      <th className="md:text-xl py-2 pl-2 text-left align-middle pointer-events-none select-none" colSpan={4}>
                         {group.title}
-                      </div>
-                    </td>
-                  </tr>
-                  {
-                    items && items.map(([id, stat]) => {
-                      return (
-                        <SecretView key={id} id={id} stat={stat} />
-                      );
-                    })
-                  }
-                </>;
+                      </th>
+                    </tr>
+                    {
+                      items && items.map(([id, stat]) => {
+                        return (
+                          <SecretView key={id} id={id} stat={stat} />
+                        );
+                      })
+                    }
+                  </React.Fragment>
+                );
               })
             }
           </tbody>

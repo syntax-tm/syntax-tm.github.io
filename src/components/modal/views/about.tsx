@@ -76,7 +76,7 @@ export const AboutView = () => {
             {
               Object.entries(displayItems).map(([key, value]) => (
                 <tr className="" key={key}>
-                  <th scope="row" className="px-3 py-2.5 text-sm md:text-base text-gray-300 whitespace-nowrap dark:text-gray-300 text-right">
+                  <th scope="row" className="px-3 py-2.5 text-sm md:text-base text-gray-300 whitespace-nowrap dark:text-gray-300 text-right align-baseline">
                     <span className="inline-block align-baseline select-none">{key}</span>
                   </th>
                   <td className="px-3 py-2.5 text-wrap whitespace-normal text-left text-sm md:text-base -indent-4 md:indent-0">

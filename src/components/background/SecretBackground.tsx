@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
-import "./pixelatedBackground.css";
+import React, { useEffect, useRef, useState } from 'react';
+import "./secretBackground.css";
 import { useSecret } from '@src/context/SecretContext';
 
-export default function PixelatedBackground() {
+export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<WebGLRenderingContext | null>(null);
   const shaderProgramRef = useRef<WebGLProgram | null>(null);
@@ -13,7 +13,8 @@ export default function PixelatedBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { isMissingNoSecretActive, is404SecretActive } = useSecret();
+  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive } = useSecret();
+  const [fsSource, setFsSource] = useState<string | null>(null);
 
   // 2. Define Vertex Shader (Draws a full-screen quad)
   const vsSource = `
@@ -179,7 +180,28 @@ void main() {
 }
 `;
 
-  // Render loop
+  // sets the current fsSource based on which secret is active
+  useEffect(() => {
+
+    let source;
+
+    if (is404SecretActive) {
+      // 404
+      source = sh1fsSource;
+    }
+    else if (isMissingNoSecretActive) {
+      // missingno
+      source = missingNofsSource;
+    }
+    else {
+      // konami
+      source = defaultfsSource;
+    }
+
+    setFsSource(source);
+
+  }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive]);
+
   function render(time: number) {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -215,18 +237,7 @@ void main() {
     if (!canvas) return;
     const gl = contextRef.current;
     if (!gl) return;
-
-    let fsSource;
-
-    if (is404SecretActive) {
-      fsSource = sh1fsSource;
-    }
-    else if (isMissingNoSecretActive) {
-      fsSource = missingNofsSource;
-    }
-    else {
-      fsSource = defaultfsSource;
-    }
+    if (!fsSource) return;
 
     const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
     const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
@@ -328,7 +339,7 @@ void main() {
       }
       contextRef.current = null;
     };
-  }, []);
+  }, [fsSource]);
 
   return (
     <canvas

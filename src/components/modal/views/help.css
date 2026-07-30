@@ -1,4 +1,4 @@
-tr:not(.content-center) > :first-child {
+.modal-content-help tr:not(.content-center) > :first-child {
   text-align: right;
   display: flex;
   justify-content: end;

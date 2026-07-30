@@ -149,9 +149,9 @@ export interface SecretContextType {
   isMissingNoSecretActive: boolean;
 
   isSecretUnlocked: (id: AchievementId) => boolean;
-  setSecretUnlocked: (id: AchievementId, isUnlocked: boolean) => void;
+  setSecretUnlocked: (id: AchievementId, isUnlocked: boolean, refresh?: boolean) => void;
   isSecretEnabled: (id: AchievementId) => boolean;
-  setSecretEnabled: (id: AchievementId, isEnabled: boolean) => void;
+  setSecretEnabled: (id: AchievementId, isEnabled: boolean, refresh?: boolean) => void;
   lockSecret: (id: AchievementId) => Promise<void>;
   unlockSecret: (id: AchievementId) => Promise<void>;
   toggleSecret: (id: AchievementId) => Promise<void>;
@@ -196,12 +196,13 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     return value === 'true';
   };
 
-  const setSecretUnlocked = useCallback((id: AchievementId, isUnlocked: boolean) => {
+  const setSecretUnlocked = (id: AchievementId, isUnlocked: boolean, refresh: boolean = true) => {
     const settingName = getUnlockedKey(id);
     localStorage.setItem(settingName, isUnlocked ? 'true' : 'false');
 
-    refreshStats();
-  }, [stats]);
+    if (refresh)
+      refreshStats();
+  };
 
   const isSecretEnabled = (id: AchievementId) => {
     const settingName = getEnabledKey(id);
@@ -210,12 +211,13 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     return value === 'true';
   };
 
-  const setSecretEnabled = useCallback((id: AchievementId, isEnabled: boolean) => {
+  const setSecretEnabled = (id: AchievementId, isEnabled: boolean, refresh: boolean = true) => {
     const settingName = getEnabledKey(id);
     localStorage.setItem(settingName, isEnabled ? 'true' : 'false');
 
-    refreshStats();
-  }, [stats]);
+    if (refresh)
+      refreshStats();
+  };
 
   const lockSecret = useCallback(async (id: AchievementId) => {
 
@@ -229,7 +231,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
     const secret = secrets[id];
     const variant: SnackbarVariant = 'lock';
-    showSnackbar(`Secret ${secret.title} Locked`, undefined, variant);
+    showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, variant);
 
     if (id === AchievementId.konami_code) {
       setIsKonamiSecretUnlocked(false);
@@ -278,7 +280,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, true);
 
     const secret = secrets[id];
-    showSnackbar(`Secret ${secret.title} Unlocked`, secret.description, 'unlock');
+    showSnackbar(`Secret Unlocked`, `${secret.description}`, 'unlock');
 
     play(SECRET_AUDIO_SRC);
 
@@ -330,7 +332,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const action = newState ? 'Enabled' : 'Disabled';
     const variant: SnackbarVariant = newState ? 'enable' : 'disable';
 
-    showSnackbar(`Secret ${id} ${action}`, variant);
+    showSnackbar(`Secret ${action}`, `'${id}' is now disabled.`, variant);
 
     // save the new setting value
     setSecretEnabled(id, newState);
@@ -396,6 +398,40 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
     setStats(playerStats);
   };
+
+  // only allow one bg to be active at a time
+  useEffect(() => {
+    if (isKonamiSecretActive) {
+      setSecretEnabled(AchievementId.missing_no, false, false);
+      setIsMissingNoSecretActive(false);
+      setSecretEnabled(AchievementId._404, false, false);
+      setIs404SecretActive(false);
+    }
+
+    refreshStats();
+  }, [isKonamiSecretActive]);
+
+  useEffect(() => {
+    if (isMissingNoSecretActive) {
+      setSecretEnabled(AchievementId.konami_code, false, false);
+      setIsKonamiSecretActive(false);
+      setSecretEnabled(AchievementId._404, false, false);
+      setIs404SecretActive(false);
+    }
+
+    refreshStats();
+  }, [isMissingNoSecretActive]);
+
+  useEffect(() => {
+    if (is404SecretActive) {
+      setSecretEnabled(AchievementId.konami_code, false, false);
+      setIsKonamiSecretActive(false);
+      setSecretEnabled(AchievementId.missing_no, false, false);
+      setIsMissingNoSecretActive(false);
+    }
+
+    refreshStats();
+  }, [is404SecretActive]);
 
   useKeySequence(KONAMI_CODE, () => {
     unlockSecret(AchievementId.konami_code);
