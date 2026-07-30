@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSecret, StatDefinition, PlayerStat, AchievementId } from "@context/SecretContext";
+import { useSecret, StatDefinition, PlayerStat, AchievementId, SecretGroupType } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faLock, faUnlock, faUnlockAlt, faCheck, faCheckCircle, faToggleOff, faToggleOn, IconDefinition, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./secrets.css";
@@ -129,7 +129,7 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
 
 export const SecretsView = ({ title, description }: SecretsViewProps) => {
 
-  const { stats } = useSecret();
+  const { stats, secrets, secretGroups } = useSecret();
 
   return (
     <>
@@ -148,10 +148,30 @@ export const SecretsView = ({ title, description }: SecretsViewProps) => {
           </thead>
           <tbody className="bg-gray-600/40">
             {
-              stats && Array.from(stats).map(([id, stat]) => {
-                return (
-                  <SecretView key={id} id={id} stat={stat} />
-                );
+              stats &&
+              Array.from(Object.keys(secretGroups)).map(g => {
+                const type = g as SecretGroupType;
+                const group = secretGroups[type];
+                const items = Array.from(stats).filter(stat => {
+                  if (type === 'default') return stat[1].stat.type === undefined;
+                  return stat[1].stat.type === type;
+                });
+                return <>
+                  <tr className="text-xl secret-group-title my-2 text-left">
+                    <td colSpan={3} className="text-xl py-2">
+                      <div className="text-left w-full h-full pl-2">
+                        {group.title}
+                      </div>
+                    </td>
+                  </tr>
+                  {
+                    items && items.map(([id, stat]) => {
+                      return (
+                        <SecretView key={id} id={id} stat={stat} />
+                      );
+                    })
+                  }
+                </>;
               })
             }
           </tbody>

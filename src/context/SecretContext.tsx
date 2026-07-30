@@ -43,10 +43,13 @@ const pspFont = localFont({
   preload: true,
 });
 
+export type SecretGroupType = 'default' | 'bg' | 'icons';
+
 export interface StatDefinition {
   id: AchievementId;
   title: string;
   description?: string;
+  type?: SecretGroupType;
   // TODO: add icon for locked/unlocked
   // TODO: add a hint indicating how this can be unlocked
 }
@@ -58,6 +61,29 @@ export interface PlayerStat {
   isEnabled: boolean;
 }
 
+export interface SecretGroup {
+  type: SecretGroupType,
+  title: string,
+}
+
+export type SecretGroupMap = Record<SecretGroupType, SecretGroup>;
+
+export const secretGroups: SecretGroupMap =
+{
+  ['default']: {
+    type: 'default',
+    title: 'Misc.',
+  },
+  ['bg']: {
+    type: 'bg',
+    title: 'Background',
+  },
+  ['icons']: {
+    type: 'icons',
+    title: 'Icons',
+  },
+};
+
 export type SecretMap = Record<AchievementId, StatDefinition>;
 
 export const secrets: SecretMap =
@@ -66,16 +92,19 @@ export const secrets: SecretMap =
     id: AchievementId.konami_code,
     title: 'Konami Code',
     description: 'Entered the Konami Code.',
+    type: 'bg',
   },
   [AchievementId.psp_code]: {
     id: AchievementId.psp_code,
     title: 'PSP Mode',
     description: 'Flash CFW.',
+    type: 'icons',
   },
   [AchievementId._404]: {
     id: AchievementId._404,
     title: '404',
     description: "There was a page here, but it's gone now.",
+    type: 'bg',
   },
   [AchievementId.iwhbyd]: {
     id: AchievementId.iwhbyd,
@@ -96,6 +125,7 @@ export const secrets: SecretMap =
     id: AchievementId.missing_no,
     title: 'MissingNo.',
     description: "<Memory Corrupted>",
+    type: 'bg',
   },
 };
 
@@ -125,7 +155,8 @@ export interface SecretContextType {
   lockSecret: (id: AchievementId) => Promise<void>;
   unlockSecret: (id: AchievementId) => Promise<void>;
   toggleSecret: (id: AchievementId) => Promise<void>;
-  secrets: Record<AchievementId, StatDefinition>;
+  secrets: Record<string, StatDefinition>;
+  secretGroups: Record<SecretGroupType, SecretGroup>;
   stats: Map<AchievementId, PlayerStat> | null;
   pspFontClass: string;
 }
@@ -464,6 +495,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     lockSecret,
     unlockSecret,
     toggleSecret,
+    secretGroups,
     secrets,
     stats,
     pspFontClass: pspFont.className,
