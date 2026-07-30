@@ -8,8 +8,8 @@ canvas.pixelated {
 .xmb-main, .xmb-category-title,
   .xmb-item-name, .xmb-item-description,
   .clock-container {
-  /* text-shadow: -1px -1px 0 #0000009f, 1px -1px 0 #0000009f, -1px 1px 0 #0000009f, 1px 1px 0 #0000009f; */
-  filter: drop-shadow(0 0 1px black);
+  text-shadow: -1px -1px 0 #0000009f, 1px -1px 0 #0000009f, -1px 1px 0 #0000009f, 1px 1px 0 #0000009f;
+  /* filter: drop-shadow(0 0 1px black); */
 }
 
 .clock, .psp-clock {
