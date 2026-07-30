@@ -84,7 +84,7 @@ export default function Modal() {
     view = <AboutView />;
   } else if (modal === 'secrets') {
     title = 'Secrets';
-    view = <SecretsView title="Secrets" />;
+    view = <SecretsView />;
   }
 
   return (
