@@ -148,6 +148,9 @@ function buildSettingsCategory(): XmbCategory {
   viewSource.description = 'View this project on GitHub';
   viewSource.setActive();
 
+  const builds = new XmbItem("builds", "Source", icons.githubActions, 'https://github.com/syntax-tm/syntax-tm.github.io/actions');
+  builds.description = 'View latest builds on GitHub';
+
   const fork = new XmbItem("fork", "Fork", icons.codeFork, 'https://github.com/syntax-tm/syntax-tm.github.io/fork');
   fork.description = 'Fork this project on GitHub';
 
@@ -159,6 +162,7 @@ function buildSettingsCategory(): XmbCategory {
 
   const items: XmbItem[] = [
     viewSource,
+    builds,
     fork,
     nextJs,
     fa,

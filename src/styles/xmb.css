@@ -4,6 +4,7 @@
   .xmb-icon {
     filter: drop-shadow(0 0 0.25rem black);
     color: white;
+    fill: white;
     width: 60px;
     height: 60px;
   }
@@ -13,6 +14,7 @@
   .xmb-icon {
     filter: drop-shadow(0 0 0.25rem black);
     color: white;
+    fill: white;
     width: 80px;
     height: 80px;
   }
