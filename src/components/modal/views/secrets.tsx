@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSecret, StatDefinition, PlayerStat, AchievementId } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faLock, faUnlock, faUnlockAlt, faCheck, faCheckCircle, faToggleOff, faToggleOn, IconDefinition, faMinus } from "@fortawesome/free-solid-svg-icons";
@@ -18,11 +18,16 @@ export interface SecretViewProps
   stat: PlayerStat;
 }
 
+const SECRET_TAP_MIN = 5;
+
 const SecretView = ({ id, stat }: SecretViewProps) => {
 
-  const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled } = useSecret();
+  const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, stats } = useSecret();
   const [unlocked, setUnlocked] = useState(false);
   const [enabled, setEnabled] = useState(false);
+  const unlockCountRef = useRef(0);
+  const unlockTimerRef = useRef<number | null>(null);
+  const elementRef = useRef<HTMLTableCellElement | null>(null);
 
   const secret = secrets[id];
 
@@ -40,7 +45,52 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
     const isEnabled = isSecretEnabled(id);
     setEnabled(isEnabled);
 
-  }, []);
+  }, [stats]);
+
+  useEffect(() => {
+
+    if (!elementRef.current) return;
+
+    const resetTapCount = () => {
+      unlockCountRef.current = 0;
+      if (unlockTimerRef.current) {
+        window.clearTimeout(unlockTimerRef.current);
+        unlockTimerRef.current = null;
+      }
+    };
+
+    const handleTouchEnd = () => {
+      unlockCountRef.current += 1;
+
+      if (unlockTimerRef.current) {
+        window.clearTimeout(unlockTimerRef.current);
+      }
+
+      unlockTimerRef.current = window.setTimeout(() => {
+        unlockCountRef.current = 0;
+        unlockTimerRef.current = null;
+      }, 500);
+
+      if (unlockCountRef.current >= SECRET_TAP_MIN) {
+        resetTapCount();
+        if (unlocked) {
+          lockSecret(id);
+        }
+        else {
+          unlockSecret(id);
+        }
+      }
+    };
+
+    elementRef.current.addEventListener("touchend", handleTouchEnd);
+    elementRef.current.addEventListener("click", handleTouchEnd);
+
+    return () => {
+      elementRef.current?.removeEventListener("touchend", handleTouchEnd);
+      elementRef.current?.removeEventListener("click", handleTouchEnd);
+      resetTapCount();
+    };
+  }, [unlocked]);
 
   return (
     <>
@@ -49,7 +99,8 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
           <FontAwesomeIcon icon={stat.isUnlocked ? faUnlockAlt : faLock}
             className={`py-3 w-full h-full mx-auto`} size="xl" />
         </td>
-        <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>
+        <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}
+          ref={elementRef}>
           {unlocked ? secret.title : 'Hidden'}
         </td>
         <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>

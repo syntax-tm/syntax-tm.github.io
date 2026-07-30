@@ -210,11 +210,9 @@ export default function WebGlBackground() {
   // draw each animation frame.
   const renderFrame = (timeMs: number) => {
     if (!contextRef.current) return;
-
     const context = contextRef.current;
 
     if (!canvasRef.current) return;
-
     const canvas = canvasRef.current;
 
     context.clear(context.COLOR_BUFFER_BIT);

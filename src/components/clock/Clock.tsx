@@ -74,7 +74,7 @@ export default function Clock() {
 
   return (
     <>
-      <div className={`${ !isPspSecretActive ? 'clock' : 'psp-clock' } boot-fade-in rounded-sm absolute p-2  select-none pointer-events-none tabular-nums`}>
+      <div className={`${ !isPspSecretActive ? 'clock' : 'psp-clock' } boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums`}>
         <div className={`clock-container ${loaded ? 'flex' : 'hidden'} ${isPspSecretActive ? pspFontClass : clockFont.className} tracking-normal align-middle flex flex-nowrap items-center ${isPspSecretActive && '-mt-1'}`}>
           <div className="flex flex-nowrap gap-0 items-center mx-2">
             <span>{month}</span>

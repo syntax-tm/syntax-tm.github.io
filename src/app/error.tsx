@@ -4,6 +4,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { unstable_catchError as catchError, type ErrorInfo } from 'next/error';
 //import Background from "@components/background/background";
 import WebGlBackground from "@components/background/webGlBackground";
+import BackgroundView from "@components/background/BackgroundView";
 import Clock from "@components/clock/Clock";
 //import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -71,7 +72,7 @@ export default function ErrorPage({
   return (
     <div className="root-container">
       <Suspense>
-        <WebGlBackground />
+        <BackgroundView />
         <Clock />
       </Suspense>
       <div className="grid content-center z-100 w-full h-full text-white">

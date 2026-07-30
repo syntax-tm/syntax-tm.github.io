@@ -1,25 +1,33 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 //import Background from "@components/background/background";
 import Clock from "@components/clock/Clock";
 import WebGlBackground from "@components/background/webGlBackground";
-//import dynamic from "next/dynamic";
+import BackgroundView from "@components/background/BackgroundView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
+import { AchievementId, useSecret } from "@context/SecretContext";
 import sh404 from "public/image/404.png";
 import "./not-found.css";
 import "@styles/global.scss";
 
-//const Clock = dynamic(() => import('@components/clock/Clock'));
-
 export default function NotFound() {
+
+  const { unlockSecret } = useSecret();
+
+  useEffect(() => {
+
+    unlockSecret(AchievementId._404);
+
+  }, []);
+
   return (
     <div className="root-container">
       <Suspense>
-        <WebGlBackground />
+        <BackgroundView />
         <Clock />
       </Suspense>
       <div className="grid content-center z-100 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">

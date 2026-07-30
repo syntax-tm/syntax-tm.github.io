@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 //import Background from '@components/background/background';
 import WebGlBackground from '@components/background/webGlBackground';
+import BackgroundView from "@components/background/BackgroundView";
 import { useBoot } from '@context/BootContext';
 
 export default function BootPage() {
@@ -24,7 +25,7 @@ export default function BootPage() {
 
   return (
     <div className="root-container relative min-h-screen overflow-hidden pointer-events-auto opacity-100">
-      <WebGlBackground />
+      <BackgroundView />
     </div>
   );
 }

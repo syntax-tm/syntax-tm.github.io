@@ -1,0 +1,22 @@
+canvas.pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.xmb-main, .xmb-category-title,
+  .xmb-item-name, .xmb-item-description,
+  .clock-container {
+  /* text-shadow: -1px -1px 0 #0000009f, 1px -1px 0 #0000009f, -1px 1px 0 #0000009f, 1px 1px 0 #0000009f; */
+  filter: drop-shadow(0 0 1px black);
+}
+
+.clock, .psp-clock {
+  border-color: black !important;
+  text-shadow: -1px -1px 0 #0000009f, 1px -1px 0 #0000009f, -1px 1px 0 #0000009f, 1px 1px 0 #0000009f;
+}
+
+.clock svg, .clock img, .psp-clock svg, .psp-clock img {
+  filter: drop-shadow(0 0 1px black);
+}

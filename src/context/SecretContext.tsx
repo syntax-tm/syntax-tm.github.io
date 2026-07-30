@@ -7,6 +7,7 @@ import { useGamepads } from 'awesome-react-gamepads';
 import { useKeySequence } from "@hooks/useKeySequence";
 import { tryParseJSONObject } from "@services/utils";
 import localFont from "next/font/local";
+import { SnackbarVariant } from "@src/components/types";
 
 const SECRET_AUDIO_SRC = '/audio/startup.mp3';
 const KONAMI_CODE = [
@@ -121,6 +122,7 @@ export interface SecretContextType {
   setSecretUnlocked: (id: AchievementId, isUnlocked: boolean) => void;
   isSecretEnabled: (id: AchievementId) => boolean;
   setSecretEnabled: (id: AchievementId, isEnabled: boolean) => void;
+  lockSecret: (id: AchievementId) => Promise<void>;
   unlockSecret: (id: AchievementId) => Promise<void>;
   toggleSecret: (id: AchievementId) => Promise<void>;
   secrets: Record<AchievementId, StatDefinition>;
@@ -184,6 +186,56 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     refreshStats();
   }, [stats]);
 
+  const lockSecret = useCallback(async (id: AchievementId) => {
+
+    // check to see if it is already locked
+    const isUnlocked = isSecretUnlocked(id);
+    if (!isUnlocked) return;
+
+    // save that it's unlocked and enabled automatically
+    setSecretUnlocked(id, false);
+    setSecretEnabled(id, false);
+
+    const secret = secrets[id];
+    const variant: SnackbarVariant = 'lock';
+    showSnackbar(`Secret ${secret.title} Locked`, undefined, variant);
+
+    if (id === AchievementId.konami_code) {
+      setIsKonamiSecretUnlocked(false);
+      setIsKonamiSecretActive(false);
+    }
+    else if (id === AchievementId.psp_code) {
+      setIsPspSecretUnlocked(false);
+      setIsPspSecretActive(false);
+    }
+    else if (id === AchievementId.iwhbyd) {
+      setIsIwhbydSecretUnlocked(false);
+      setIsIwhbydSecretActive(false);
+    }
+    else if (id === AchievementId._404) {
+      setIs404SecretUnlocked(false);
+      setIs404SecretActive(false);
+    }
+    else if (id === AchievementId.oceangate) {
+      setIsOceangateSecretUnlocked(false);
+      setIsOceangateSecretActive(false);
+    }
+    else if (id === AchievementId.android) {
+      setIsAndroidSecretUnlocked(false);
+      setIsAndroidSecretActive(false);
+    }
+    else if (id === AchievementId.missing_no) {
+      setIsMissingNoSecretUnlocked(false);
+      setIsMissingNoSecretActive(false);
+    }
+    else {
+      // if any enum case is missed, TypeScript flags an error here
+      const exhaustiveCheck: never = id;
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
+    }
+  }, [isKonamiSecretUnlocked, isPspSecretUnlocked, isIwhbydSecretUnlocked, isAndroidSecretUnlocked, isMissingNoSecretUnlocked, isOceangateSecretUnlocked, is404SecretUnlocked]);
+
+
   const unlockSecret = useCallback(async (id: AchievementId) => {
 
     // check to see if it has already been unlocked
@@ -195,7 +247,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, true);
 
     const secret = secrets[id];
-    showSnackbar(`Secret ${secret.title} Unlocked`, secret.description, 'success');
+    showSnackbar(`Secret ${secret.title} Unlocked`, secret.description, 'unlock');
 
     play(SECRET_AUDIO_SRC);
 
@@ -245,8 +297,9 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const newState = !isEnabled;
 
     const action = newState ? 'Enabled' : 'Disabled';
+    const variant: SnackbarVariant = newState ? 'enable' : 'disable';
 
-    showSnackbar(`Secret ${id} ${action}`, 'info');
+    showSnackbar(`Secret ${id} ${action}`, variant);
 
     // save the new setting value
     setSecretEnabled(id, newState);
@@ -408,6 +461,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretUnlocked,
     isSecretEnabled,
     setSecretEnabled,
+    lockSecret,
     unlockSecret,
     toggleSecret,
     secrets,

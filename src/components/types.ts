@@ -4,7 +4,7 @@ export type SnackbarType = {
   icon?: React.FunctionComponent<React.SVGProps<SVGElement>>;
 }
 
-export type SnackbarVariant = 'success' | 'error' | 'secret' | 'info';
+export type SnackbarVariant = 'success' | 'warn' | 'error' | 'secret' | 'info' | 'lock' | 'unlock' | 'enable' | 'disable';
 
 export type TSnackbarProps = Omit<SnackbarType, 'key'> & {
   handleClose: () => void;
