@@ -44,7 +44,7 @@ export default function Modal() {
   async function onEsc() {
     await play(AUDIO_SRC);
 
-    router.push('/');
+    router.replace('/');
   }
 
   const actions = new Map<string, KeyPressAction>();
