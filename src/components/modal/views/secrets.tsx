@@ -89,9 +89,9 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
   return (
     <React.Fragment key={id}>
       <tr>
-        <td className={`border-b border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : 'bg-gray-800'} pointer-events-none select-none justify-center items-center`}>
+        <td className={`border-b border-t border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : ''} pointer-events-none select-none justify-center items-center`}>
           <FontAwesomeIcon icon={stat.isUnlocked ? faUnlockAlt : faLock}
-            className={`py-3 w-full h-full mx-3`} size="lg" />
+            className={`py-3 w-full h-full mx-3`} />
         </td>
         <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}
           ref={elementRef}>
@@ -123,11 +123,24 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
 export const SecretsView = () => {
 
   const { stats, secrets, secretGroups } = useSecret();
+  const [allUnlocked, setAllUnlocked] = useState(false);
+
+  useEffect(() => {
+
+    if (!stats) return;
+
+    const lockedCount = Array.from(stats).filter(([, stat]) => {
+      return !stat.isUnlocked;
+    }).length;
+
+    setAllUnlocked(lockedCount !== 0);
+
+  }, [stats]);
 
   return (
     <>
-      <div className="modal-content modal-content-secrets text-white h-full lg:m-4">
-        <table className="table-auto border-collapse mx-auto w-full">
+      <div className="modal-content modal-content-secrets text-white h-full grid">
+        <table className="table-auto border-collapse mx-auto mb-0 w-full lg:mt-5 lg:max-w-[90%]">
           <thead className="bg-gray-600/40">
             <tr className="content-center">
               <th className=" text-sm md:text-lg border border-gray-400/25">
@@ -151,9 +164,8 @@ export const SecretsView = () => {
                 });
                 return (
                   <React.Fragment key={g}>
-                    <tr className="bg-gray-600/40">
-                      <td />
-                      <th className="md:text-xl py-2 pl-2 text-left align-middle pointer-events-none select-none" colSpan={4}>
+                    <tr className="">
+                      <th className="text-lg md:text-xl py-2 lg:py-5 pl-2 my-2 text-left align-middle pointer-events-none select-none" colSpan={4}>
                         {group.title}
                       </th>
                     </tr>
@@ -170,6 +182,15 @@ export const SecretsView = () => {
             }
           </tbody>
         </table>
+        {
+          allUnlocked && (
+            <div className="h-full w-full grid">
+              <p className="opacity-50 align-middle my-auto text-center mx-2">
+                {`Tip: You can tap on a hidden secret's name ${SECRET_TAP_MIN} times instead of unlocking them normally.`}
+              </p>
+            </div>
+          )
+        }
       </div>
     </>
   );
