@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import "./secretBackground.css";
 import { useSecret } from '@src/context/SecretContext';
+import "./secret-background.css";
 
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);

@@ -1,12 +1,11 @@
 "use client";
 
 import React, { ReactElement } from "react";
-import { IconLookup, IconDefinition, findIconDefinition, IconPrefix, IconName } from '@fortawesome/fontawesome-svg-core';
 import { faA, faAngleDown, faAngleUp, faD, faH, faLeftRight, faS, faUpDown, faW } from "@fortawesome/free-solid-svg-icons";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ControllerIcon from "@src/components/icons/controller-icon";
-import useInput from "@src/hooks/useInput";
+import ControllerIcon from "@components/icons/controller-icon";
+import useInput from "@hooks/useInput";
 import { InputType } from "@src/app/enums";
 import { Modal } from "@components/modal/modal";
 import "./help.css";

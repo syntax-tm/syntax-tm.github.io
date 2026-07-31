@@ -2,11 +2,8 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import { unstable_catchError as catchError, type ErrorInfo } from 'next/error';
-//import Background from "@components/background/background";
-import WebGlBackground from "@src/components/background/webgl-background";
 import BackgroundView from "@src/components/background/background-view";
-import Clock from "@src/components/clock/clock";
-//import dynamic from "next/dynamic";
+import Clock from "@components/clock/clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import "@styles/global.scss";

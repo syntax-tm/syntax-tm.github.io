@@ -3,14 +3,12 @@
 import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-//import Background from "@components/background/background";
-import Clock from "@src/components/clock/clock";
-import WebGlBackground from "@src/components/background/webgl-background";
-import BackgroundView from "@src/components/background/background-view";
+import BackgroundView from "@components/background/background-view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { AchievementId, useSecret } from "@context/SecretContext";
 import sh404 from "public/image/404.png";
+import Clock from "@components/clock/clock";
 import "./not-found.css";
 import "@styles/global.scss";
 

@@ -1,19 +1,19 @@
 "use client";
 
 import React from "react";
-import useInput from "@src/hooks/useInput";
+import useInput from "@hooks/useInput";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { InputType } from "../../app/enums";
-import { useAudio } from "@src/context/AudioContext";
-import { KeyPressAction } from "@src/components/types";
-import useKeyboard from "@src/hooks/useKeyboard";
-import ControllerIcon from "@src/components/icons/controller-icon";
+import { useAudio } from "@context/AudioContext";
+import { KeyPressAction } from "@components/types";
+import useKeyboard from "@hooks/useKeyboard";
+import ControllerIcon from "@components/icons/controller-icon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
-import BackgroundView from "../background/background-view";
-import Clock from "../clock/clock";
-import Menu from "../xmb-menu/xmb-menu";
+import BackgroundView from "@components/background/background-view";
+import Clock from "@components/clock/clock";
+import Menu from "@components/xmb-menu/xmb-menu";
 import "./modal.css";
 
 const AUDIO_SRC = '/audio/nav.mp3';

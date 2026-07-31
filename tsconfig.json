@@ -90,8 +90,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/**/*.d.ts",
-    ".next/dev/types/**/*.ts"
-, "src/app/@modal/default.tsx"  ],
+    ".next/dev/types/**/*.ts",  ],
   "exclude": [
     "node_modules",
     "./tsconfig.json"

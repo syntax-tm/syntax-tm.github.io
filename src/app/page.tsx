@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useBoot } from '@context/BootContext';
-import Clock from "@src/components/clock/clock";
+import Clock from "@components/clock/clock";
 import Menu from "@components/xmb-menu/xmb-menu";
 import BackgroundView from "@src/components/background/background-view";
 
