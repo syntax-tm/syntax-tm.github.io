@@ -45,6 +45,7 @@ div {
   will-change: transform;
   -webkit-animation:idea 2s linear infinite;
   -moz-animation:idea 2s linear infinite;
+  animation:idea 2s linear infinite;
 }
 /* Center the demo */
 html, 

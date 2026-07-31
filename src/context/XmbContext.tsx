@@ -122,7 +122,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const openItem = useCallback((item: XmbItem) => {
     if (item.modal) {
-      router.push(`/?modal=${item.modal}`);
+      router.push(`/${item.modal}`);
       return;
     }
 

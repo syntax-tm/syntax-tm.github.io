@@ -3,8 +3,8 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 //import Background from '@components/background/background';
-import WebGlBackground from '@components/background/webGlBackground';
-import BackgroundView from "@components/background/BackgroundView";
+import WebGlBackground from '@src/components/background/webgl-background';
+import BackgroundView from "@src/components/background/background-view";
 import { useBoot } from '@context/BootContext';
 
 export default function BootPage() {

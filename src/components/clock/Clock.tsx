@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Google_Sans } from "next/font/google";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSecret } from "@src/context/SecretContext";
+import { useSecret } from "@context/SecretContext";
 import pspBatteryIcon from "public/image/psp_full_battery.png";
 import Image from "next/image";
 import "./clock.css";

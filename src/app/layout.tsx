@@ -7,21 +7,13 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import Providers from "@app/providers";
-import LoadingView from "@components/loading/Loading";
+import LoadingView from "@src/components/loading/loading";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@styles/global.scss";
 
 config.autoAddCss = false;
 
 library.add(fas, fab);
-
-// const xmbFont = localFont({
-//   src: 'font.ttf',
-//   variable: '--sce-ps3-rodin-font',
-//   style: 'normal',
-//   weight: "400",
-//   preload: true,
-// });
 
 export const metadata: Metadata = {
   title: 'Trey | Social, Games, and More Links',
@@ -45,8 +37,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
 
   const loadingView = (
@@ -61,6 +55,7 @@ export default function RootLayout({
         <Suspense fallback={loadingView}>
           <Providers>
             {children}
+            {modal}
           </Providers>
         </Suspense>
         {/* Invisible anchor strictly to trigger Next.js route preloading */}

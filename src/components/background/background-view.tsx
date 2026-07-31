@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useSecret } from '@context/SecretContext';
-import SecretBackground from '@src/components/background/SecretBackground';
-import WebGlBackground from '@components/background/webGlBackground';
+import SecretBackground from '@components/background/secret-background';
+import WebGlBackground from '@components/background/webgl-background';
 
 export default function BackgroundView() {
 

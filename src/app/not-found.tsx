@@ -4,9 +4,9 @@ import React, { Suspense, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 //import Background from "@components/background/background";
-import Clock from "@components/clock/Clock";
-import WebGlBackground from "@components/background/webGlBackground";
-import BackgroundView from "@components/background/BackgroundView";
+import Clock from "@src/components/clock/clock";
+import WebGlBackground from "@src/components/background/webgl-background";
+import BackgroundView from "@src/components/background/background-view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { AchievementId, useSecret } from "@context/SecretContext";
@@ -30,7 +30,7 @@ export default function NotFound() {
         <BackgroundView />
         <Clock />
       </Suspense>
-      <div className="grid content-center z-100 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
+      <div className="grid content-center z-0 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
         <Link href="/" aria-label="Return to the home page">
           <div className="flex flex-row justify-center items-center text-9xl hover:animate-pulse">
             <FontAwesomeIcon icon={faBug} className="object-contain justify-self-center w-full h-full" />

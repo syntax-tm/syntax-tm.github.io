@@ -1,13 +1,10 @@
 "use client";
 
 import React from "react";
-import Background from '@components/background/background';
 import { useBoot } from '@context/BootContext';
-import Clock from "@components/clock/Clock";
+import Clock from "@src/components/clock/clock";
 import Menu from "@components/xmb-menu/xmb-menu";
-import Modal from "@components/modal/Modal";
-import WebGlBackground from "@components/background/webGlBackground";
-import BackgroundView from "@components/background/BackgroundView";
+import BackgroundView from "@src/components/background/background-view";
 
 export default function Home() {
   const { isBootVisible, isBootTransitioningOut } = useBoot();
@@ -19,7 +16,6 @@ export default function Home() {
         <>
           <Clock />
           <Menu />
-          <Modal />
         </>
       )}
     </div>

@@ -1,6 +1,9 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import useMobileDetect from "@hooks/useMobileDetect";
 import { AchievementId, useSecret } from "@context/SecretContext";
+import { ModalHeader, ModalClose } from "@components/modal/modal";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -104,3 +107,16 @@ export const AboutView = () => {
     </div>
   );
 };
+
+export default function AboutPage() {
+
+  return (
+    <>
+      <ModalHeader title="About" />
+      <div className=" w-full h-[70%]">
+        <AboutView />
+      </div>
+      <ModalClose />
+    </>
+  );
+}

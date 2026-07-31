@@ -1,109 +1,19 @@
+"use client";
+
 import React, { ReactElement } from "react";
 import { IconLookup, IconDefinition, findIconDefinition, IconPrefix, IconName } from '@fortawesome/fontawesome-svg-core';
 import { faA, faAngleDown, faAngleUp, faD, faH, faLeftRight, faS, faUpDown, faW } from "@fortawesome/free-solid-svg-icons";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ControllerIcon from "@src/components/icons/controller-icon";
+import useInput from "@src/hooks/useInput";
+import { InputType } from "@src/app/enums";
+import { Modal } from "@components/modal/modal";
 import "./help.css";
-import ControllerIcon, { ControllerButton } from "@components/icons/ControllerIcon";
-import { Type } from "typescript";
-
-// export type HelpItemType = 'keyboard' | 'controller' | 'secret' | 'info';
-
-// interface ItemProps<T> {
-//   description: string;
-//   icon: T[] | T;
-//   //kind: "controller" | "keyboard";
-// }
-
-// interface ControllerItemProps extends ItemProps<ControllerButton> {
-//   kind: "controller";
-// }
-
-// interface HelpItemProps extends ItemProps<string> {
-//   kind: "keyboard";
-// }
-
-// interface KeyboardIcon {
-//   text: string;
-// }
-
-// type HelpItem = ControllerItemProps | HelpItemProps;
-
-// function GetFontAwesomeIcon(prefix: IconPrefix, icon: IconName): IconDefinition {
-//   const iconLookup: IconLookup = { prefix: prefix, iconName: icon };
-//   const iconDefinition: IconDefinition = findIconDefinition(iconLookup);
-//   return iconDefinition;
-// }
-
-// type IconLookupProps = {
-//   iconName: string;
-//   prefix: IconPrefix;
-// }
-
-// const DynamicIconComponent = (props: IconLookupProps) => {
-//   // Example: If iconName is "user", it translates to ["fas", "user"]
-//   const name = props.iconName;
-//   const lookup: IconLookup = {
-//     prefix = props.prefix,
-//     iconName = name,
-//   };
-//   return (
-//     <div>
-//       <FontAwesomeIcon icon={lookup} />
-//     </div>
-//   );
-// };
-
-// function HelpItemView(item: HelpItem) {
-
-//   const header = [];
-//   const kind = item.kind;
-
-//   if (kind === "controller") {
-//     const icons = Array.isArray(item.icon) ? item.icon : [item.icon];
-//     for (let i = 0; i < icons.length; i++) {
-//       const el = icons[i];
-//       const controllerIcon = <ControllerIcon icon={el} className="object-scale-down" width={50} height={50} />;
-//       header.push(controllerIcon);
-//       if (i < icons.length - 1) {
-//         header.push(<span className="mx-2 my-auto">or</span>);
-//       }
-//     }
-//   } else if (kind === "keyboard") {
-//     const icons = Array.isArray(item.icon) ? item.icon : [item.icon];
-//     for (let i = 0; i < icons.length; i++) {
-//       const name = icons[i];
-//       const keyboardIcon = GetFontAwesomeIcon("far", el);
-//       const el = DynamicIconComponent({
-//         prefix: "fas",
-//         iconName: IconName(),
-//       });
-//       header.push(controllerIcon);
-//       if (i < icons.length - 1) {
-//         header.push(<span className="mx-2 my-auto">or</span>);
-//       }
-//     }
-//   }
-
-//   return (
-//     <tr className="content-center">
-//       <th scope="row" className="flex justify-center px-6 py-1 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
-//         <div className="flex relative">
-//           {header.map(el => {
-//             return el;
-//           })}
-//         </div>
-//       </th>
-//       <td className="px-6 py-2.5">
-//         {item.description}
-//       </td>
-//     </tr>
-//   );
-// };
 
 export const HelpView = () => {
   return (
-    <div className="modal-content modal-content-help grid h-full">
+    <div className="grid h-full">
       <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
         <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 max-w-[600px]">
           <thead className="text-xs text-gray-400 uppercase items-center relative">
@@ -274,7 +184,7 @@ export const HelpView = () => {
 
 // TODO: need to fix this for mobile layouts
 // the fixed image sizes need to be changed on mobile
-export const GamepadView = () => {
+export const GamepadHelpView = () => {
   return (
     <div className="grid h-full">
       <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
@@ -420,8 +330,8 @@ export const MobileHelpView = () => {
             <tbody>
               <tr className="">
                 <th scope="row" className="px-3 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400 text-right">
-                    <span className="mr-2 my-auto">Swipe</span>
-                    <FontAwesomeIcon icon={faUpDown} className="ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
+                  <span className="mr-2 my-auto">Swipe</span>
+                  <FontAwesomeIcon icon={faUpDown} className="ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
                 </th>
                 <td className="px-3 py-2.5">
                   Move up/down
@@ -450,5 +360,23 @@ export const MobileHelpView = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+export default function HelpPage() {
+  const inputType = useInput();
+
+  const isDefault = inputType === InputType.DEFAULT;
+  const isGamepad = inputType === InputType.GAMEPAD;
+  const isMobile = inputType === InputType.TOUCH;
+
+  return (
+    <Modal title="Help">
+      <div className=" w-full h-[70%]">
+        { isDefault && <HelpView /> }
+        { isGamepad && <GamepadHelpView /> }
+        { isMobile && <MobileHelpView /> }
+      </div>
+    </Modal>
   );
 }

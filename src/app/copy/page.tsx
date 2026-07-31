@@ -1,20 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { faCheckCircle, faCopy, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useSnackbar } from "@context/SnackbarContext";
-import "./copy.css";
+import { Modal } from "@components/modal/modal";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export interface CopyViewProps
 {
-  title: string;
+  name: string;
   description?: string;
   value: string;
 }
 
-export const CopyView = ({ title, description, value }: CopyViewProps) => {
+export const CopyView = ({ name, description, value }: CopyViewProps) => {
 
   const [copied, setCopied] = useState(false);
   const [hover, setHover] = useState(false);
@@ -27,7 +28,7 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
         <div className="relative my-auto">
           <div className="flex mb-2 ">
             <label className="text-lg sm:text-xl my-auto opacity-50 text-white grow align-bottom mb-1">
-              {title}
+              {name}
             </label>
             {description && (
               <FontAwesomeIcon icon={faQuestionCircle} className="w-5 h-5 mb-1 opacity-25 hover:opacity-100 align-self-end justify-self-end text-white justify-right"
@@ -74,3 +75,38 @@ export const CopyView = ({ title, description, value }: CopyViewProps) => {
     </>
   );
 };
+
+export default function CopyPage() {
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const title = searchParams.get("title");
+  const name = searchParams.get("name");
+  const description = searchParams.get("description");
+  const value = searchParams.get("value");
+
+  if (!title || !name || !value) {
+    let message = `Copy modal dialog is missing one or more required paramters.\n`;
+    message += `\ntitle: ${title}\nname: ${name}\ndescription: ${description}\nvalue: ${value}`;
+    console.error(message);
+    router.push('/');
+
+    return;
+  }
+
+  useEffect(() => {
+
+    router.replace('/copy', { });
+
+  }, []);
+
+  return (
+    <>
+      <Modal title={title}>
+        <div className=" w-full h-[70%]">
+          <CopyView name={name} description={description || ''} value={value} />
+        </div>
+      </Modal>
+    </>
+  );
+}

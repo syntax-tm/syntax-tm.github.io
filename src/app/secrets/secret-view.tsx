@@ -1,20 +1,19 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSecret, PlayerStat, AchievementId, SecretGroupType } from "@context/SecretContext";
+import { useSecret, PlayerStat, AchievementId } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faLock, faUnlock, faUnlockAlt, faCheck, faCheckCircle, faToggleOff, faToggleOn, IconDefinition, faMinus } from "@fortawesome/free-solid-svg-icons";
 import "./secrets.css";
 
-const SECRET_TAP_MIN = 5;
-
 export interface SecretViewProps
 {
-  id: AchievementId,
+  id: AchievementId;
   stat: PlayerStat;
+  unlockMinimum: number;
 }
 
-const SecretView = ({ id, stat }: SecretViewProps) => {
+export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
 
   const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, stats } = useSecret();
   const [unlocked, setUnlocked] = useState(false);
@@ -65,7 +64,7 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
         unlockTimerRef.current = null;
       }, 500);
 
-      if (unlockCountRef.current >= SECRET_TAP_MIN) {
+      if (unlockCountRef.current >= unlockMinimum) {
         resetTapCount();
         if (unlocked) {
           lockSecret(id);
@@ -106,7 +105,6 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
           <div className={`grid items-center w-full h-full cursor-pointer`} onClick={toggleEnabled}>
             {
               unlocked && (
-                // <input type="checkbox" checked={enabled} readOnly className="m-0 w-full h-full mx-auto" />
                 enabled
                   ? <FontAwesomeIcon icon={faCheck} className="mx-auto my-0.5" />
                   : <FontAwesomeIcon icon={faMinus} className="mx-auto my-0.5" />
@@ -118,80 +116,4 @@ const SecretView = ({ id, stat }: SecretViewProps) => {
     </React.Fragment>
   );
 
-};
-
-export const SecretsView = () => {
-
-  const { stats, secrets, secretGroups } = useSecret();
-  const [allUnlocked, setAllUnlocked] = useState(false);
-
-  useEffect(() => {
-
-    if (!stats) return;
-
-    const lockedCount = Array.from(stats).filter(([, stat]) => {
-      return !stat.isUnlocked;
-    }).length;
-
-    setAllUnlocked(lockedCount !== 0);
-
-  }, [stats]);
-
-  return (
-    <>
-      <div className="modal-content modal-content-secrets text-white h-full grid">
-        <table className="table-auto border-collapse mx-auto mb-0 w-full lg:mt-5 lg:max-w-[90%]">
-          <thead className="bg-gray-600/40">
-            <tr className="content-center">
-              <th className=" text-sm md:text-lg border border-gray-400/25">
-                {/* <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
-                  aria-label="Status" /> */}
-              </th>
-              <th className="p-2 text-sm md:text-lg border border-gray-400/25">Name</th>
-              <th className="p-2 text-sm md:text-lg border border-gray-400/25">Description</th>
-              <th className="p-2 text-sm md:text-lg border border-gray-400/25">Enabled</th>
-            </tr>
-          </thead>
-          <tbody className="bg-gray-600/40">
-            {
-              stats &&
-              Array.from(Object.keys(secretGroups)).map(g => {
-                const type = g as SecretGroupType;
-                const group = secretGroups[type];
-                const items = Array.from(stats).filter(stat => {
-                  if (type === 'default') return stat[1].stat.type === undefined;
-                  return stat[1].stat.type === type;
-                });
-                return (
-                  <React.Fragment key={g}>
-                    <tr className="">
-                      <th className="text-lg md:text-xl py-2 lg:py-5 pl-2 my-2 text-left align-middle pointer-events-none select-none" colSpan={4}>
-                        {group.title}
-                      </th>
-                    </tr>
-                    {
-                      items && items.map(([id, stat]) => {
-                        return (
-                          <SecretView key={id} id={id} stat={stat} />
-                        );
-                      })
-                    }
-                  </React.Fragment>
-                );
-              })
-            }
-          </tbody>
-        </table>
-        {
-          allUnlocked && (
-            <div className="h-full w-full grid">
-              <p className="opacity-50 align-middle my-auto text-center mx-2">
-                {`Tip: You can tap on a hidden secret's name ${SECRET_TAP_MIN} times instead of unlocking them normally.`}
-              </p>
-            </div>
-          )
-        }
-      </div>
-    </>
-  );
 };
