@@ -1,4 +1,4 @@
-import { SecretGroupType, useSecret } from "@src/context/SecretContext";
+import { SecretGroupType, useSecret } from "@context/SecretContext";
 import React, { useEffect, useState } from "react";
 import SecretView from "./secret-view";
 

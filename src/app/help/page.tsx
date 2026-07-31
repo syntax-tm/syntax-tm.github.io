@@ -6,7 +6,7 @@ import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ControllerIcon from "@components/icons/controller-icon";
 import useInput from "@hooks/useInput";
-import { InputType } from "@src/app/enums";
+import { InputType } from "@app/enums";
 import { Modal } from "@components/modal/modal";
 import "./help.css";
 

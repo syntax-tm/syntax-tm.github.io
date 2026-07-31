@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import Providers from "@app/providers";
-import LoadingView from "@src/components/loading/loading";
+import LoadingView from "@components/loading/loading";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@styles/global.scss";
 

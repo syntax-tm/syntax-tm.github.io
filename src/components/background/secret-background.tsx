@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { useSecret } from '@src/context/SecretContext';
+import { useSecret } from '@context/SecretContext';
 import "./secret-background.css";
 
 export default function SecretBackground() {

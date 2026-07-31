@@ -2,7 +2,7 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import { unstable_catchError as catchError, type ErrorInfo } from 'next/error';
-import BackgroundView from "@src/components/background/background-view";
+import BackgroundView from "@components/background/background-view";
 import Clock from "@components/clock/clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";

@@ -5,9 +5,8 @@ import { useAudio } from '@context/AudioContext';
 import { useSnackbar } from "@context/SnackbarContext";
 import { useGamepads } from 'awesome-react-gamepads';
 import { useKeySequence } from "@hooks/useKeySequence";
-import { tryParseJSONObject } from "@services/utils";
 import localFont from "next/font/local";
-import { SnackbarVariant } from "@src/components/types";
+import { SnackbarVariant } from "@components/types";
 
 const SECRET_AUDIO_SRC = '/audio/startup.mp3';
 const KONAMI_CODE = [

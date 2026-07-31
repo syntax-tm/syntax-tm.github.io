@@ -1,4 +1,4 @@
-import { EventType } from "@src/app/enums";
+import { EventType } from "@app/enums";
 
 export interface IAction {
   type: EventType;
