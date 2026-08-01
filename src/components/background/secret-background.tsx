@@ -390,16 +390,18 @@ void main() {
     const gl = contextRef.current;
     if (!gl) return;
 
-    //const scale = 4;
-    const dpr = window.devicePixelRatio;
-    const width = Math.floor(window.innerWidth / dpr);
-    const height = Math.floor(window.innerHeight / dpr);
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+    const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(viewportWidth * dpr));
+    const height = Math.max(1, Math.round(viewportHeight * dpr));
 
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
-      gl.viewport(0, 0, width, height);
     }
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
   }, []);
 
   // Helper function to compile shaders
@@ -420,7 +422,14 @@ void main() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl', { antialias: false });
+    const gl = canvas.getContext('webgl', {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: 'high-performance',
+      preserveDrawingBuffer: false,
+    });
     if (!gl) {
       console.error('WebGL not supported');
       return;
@@ -428,14 +437,21 @@ void main() {
 
     contextRef.current = gl;
 
-    window.addEventListener('resize', resize);
+    const handleViewportResize = () => {
+      resize();
+    };
+
+    window.addEventListener('resize', handleViewportResize);
+    window.visualViewport?.addEventListener('resize', handleViewportResize);
+
     resize();
     setup();
 
     frameRef.current = requestAnimationFrame(render);
 
     return () => {
-      window.removeEventListener('resize', resize);
+      window.removeEventListener('resize', handleViewportResize);
+      window.visualViewport?.removeEventListener('resize', handleViewportResize);
       if (frameRef.current !== null) {
         cancelAnimationFrame(frameRef.current);
       }

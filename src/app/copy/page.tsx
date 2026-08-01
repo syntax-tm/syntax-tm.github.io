@@ -76,7 +76,7 @@ function CopyView({ name, description, value }: CopyViewProps) {
   );
 };
 
-export function CopyPage() {
+function CopyPage() {
 
   const searchParams = useSearchParams();
   //const router = useRouter();
