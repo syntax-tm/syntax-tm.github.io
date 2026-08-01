@@ -31,9 +31,6 @@
       }
     ],
     "paths": {
-      "@root/*": [
-        "./"
-      ],
       "@/*": [
         "./src/*"
       ],
@@ -90,9 +87,10 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/**/*.d.ts",
-    ".next/dev/types/**/*.ts",  ],
+    ".next/dev/types/**/*.ts",
+  ],
   "exclude": [
     "node_modules",
-    "./tsconfig.json"
+    "./tsconfig.json",
   ]
 }

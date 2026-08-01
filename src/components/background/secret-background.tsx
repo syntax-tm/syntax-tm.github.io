@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSecret } from '@context/SecretContext';
 import "./secret-background.css";
+
+type bgShaderKind = "silent-hill" | "konami-code" | "missing-no" | "oceangate";
 
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -13,8 +15,9 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive } = useSecret();
+  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive, isOceangateSecretActive } = useSecret();
   const [fsSource, setFsSource] = useState<string | null>(null);
+  const [kind, setKind] = useState<bgShaderKind | null>(null);
 
   // 2. Define Vertex Shader (Draws a full-screen quad)
   const vsSource = `
@@ -64,14 +67,14 @@ void main() {
 
   // 2. Set pixel sizes to look like a raw Game Boy VRAM dump
   // MissingNo blocks are wider horizontally than they are tall!
-  vec2 blockDimensions = vec2(8.0, 4.0);  //vec2(32.0, 12.0);
+  vec2 blockDimensions = vec2(16.0, 8.0);  //vec2(32.0, 12.0);
 
   // Get base pixel coordinates
   vec2 blockCoord = floor(gl_FragCoord.xy / blockDimensions);
 
   // 3. Inject horizontal shifting to simulate data misalignment
   // Every horizontal row shifts left or right based on time and row hash
-  float shiftTime = floor(u_time * 2.0); // 8.0 Steps smoothly like 8-bit frames
+  float shiftTime = floor(u_time * 4.0); // 8.0 Steps smoothly like 8-bit frames
   float rowShift = floor(rand(vec2(blockCoord.y, shiftTime)) * 12.0) - 6.0;
   blockCoord.x += rowShift;
 
@@ -180,29 +183,133 @@ void main() {
 }
 `;
 
+    // oceangate
+    const oceangatefsSource = `
+precision mediump float;
+uniform vec2 u_resolution;
+uniform float u_time;
+
+// Pseudo-random function for generating floating particles
+float hash(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
+}
+
+void main() {
+    float pixelSize = 6.0; // Control pixel clump size
+    
+    // 1. Quantize screen space coordinates
+    vec2 pixelCoord = floor(gl_FragCoord.xy / pixelSize) * pixelSize;
+    vec2 uv = pixelCoord / u_resolution;
+
+    // 2. Very dark abyss blue background gradient
+    vec3 deepAbyss = vec3(0.005, 0.01, 0.06); // Near black-blue
+    vec3 midOcean  = vec3(0.01, 0.04, 0.12);  // Muted dark teal-blue
+    vec3 finalColor = mix(deepAbyss, midOcean, uv.y);
+
+    // Apply global water wave distortion to all visual elements
+    float waterWave = sin(uv.y * 8.0 + u_time * 1.5) * 0.015;
+    vec2 distortedUV = uv + vec2(waterWave, 0.0);
+
+    // 3. Draw Seaweed Bed (Multiple stems layered together)
+    float seaweedLayer = 0.0;
+    
+    // Loop to draw 4 distinct pixelated seaweed stalks
+    for(int i = 1; i <= 4; i++) {
+        float fi = float(i);
+        
+        // Define unique X-positions and heights for each plant
+        float xOffset = 0.15 * fi + 0.1; 
+        float maxHeight = 0.35 + 0.12 * sin(fi * 45.3);
+
+        // Sway math: Make seaweed sway side-to-side based on its vertical position
+        float sway = sin(distortedUV.y * 6.0 - (u_time * 1.2) + fi) * (0.04 * distortedUV.y);
+        
+        // Base width of the stalk tapering as it grows upward
+        float width = (0.025 - (distortedUV.y * 0.03)) * (1.0 + 0.2 * cos(distortedUV.y * 40.0));
+
+        // Check if current fragment pixel falls inside the stalk limits
+        if (distortedUV.y < maxHeight) {
+            float distanceToCenter = abs(distortedUV.x - (xOffset + sway));
+            if (distanceToCenter < width) {
+                // Closer stalks are lighter, deeper background stalks are darker
+                seaweedLayer = 0.3 + (fi * 0.15); 
+            }
+        }
+    }
+
+    // Blend seaweed into the scene (Muted deep sea organic greens)
+    vec3 seaweedColor = vec3(0.02, 0.22, 0.14);
+    if(seaweedLayer > 0.0) {
+        finalColor = mix(finalColor, seaweedColor * seaweedLayer, 0.85);
+    }
+
+    // 4. Floating Plankton / Bubble Particles
+    // Create a repeating grid system to check for procedural dots
+    vec2 particleGrid = floor(distortedUV * vec2(25.0, 15.0));
+    
+    // Shift particle rows vertically over time to simulate floating upwards
+    particleGrid.y = floor((distortedUV.y - u_time * 0.05) * 15.0);
+    
+    // Generate a unique identifier hash for each grid cell
+    float particleID = hash(particleGrid);
+    
+    // Only spawn particles in cells that clear a high random threshold
+    if(particleID > 0.94) {
+        // Local center point math inside the active grid tile
+        vec2 localUV = fract(distortedUV * vec2(25.0, 15.0) - vec2(0.0, u_time * 0.75));
+        float distToBubble = length(localUV - vec2(0.5));
+        
+        // Render small pixelated bubble points
+        if(distToBubble < 0.18) {
+            vec3 bubbleTeal = vec3(0.1, 0.5, 0.5);
+            finalColor += bubbleTeal * (1.0 - distToBubble);
+        }
+    }
+
+    // 5. Ambient Abyss Vignette (Darkens the frame edges)
+    vec2 vignetteUV = gl_FragCoord.xy / u_resolution;
+    vignetteUV *=  1.0 - vignetteUV.yx;
+    float vignette = vignetteUV.x * vignetteUV.y * 15.0;
+    vignette = clamp(pow(vignette, 0.4), 0.0, 1.0);
+    finalColor *= vignette;
+
+    gl_FragColor = vec4(finalColor, 1.0);
+}
+`;
+
   // sets the current fsSource based on which secret is active
   useEffect(() => {
 
-    let source;
-
+    let source: string;
+    let sfKind: bgShaderKind;
+    
     if (is404SecretActive) {
       // 404
       source = sh1fsSource;
+      sfKind = "silent-hill";
     }
     else if (isMissingNoSecretActive) {
       // missingno
       source = missingNofsSource;
+      sfKind = "missing-no";
     }
-    else {
+    else if (isKonamiSecretActive) {
       // konami
       source = defaultfsSource;
+      sfKind = "konami-code";
     }
-
+    else
+    {
+      source = oceangatefsSource;
+      sfKind = "oceangate";
+    }
+  
     setFsSource(source);
+    setKind(kind);
 
-  }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive]);
+  }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive, isOceangateSecretActive]);
 
-  function render(time: number) {
+  const render = useCallback((time: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl = contextRef.current;
@@ -230,9 +337,9 @@ void main() {
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     frameRef.current = requestAnimationFrame(render);
-  }
+  }, []);
 
-  function setup() {
+  const setup = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl = contextRef.current;
@@ -274,28 +381,29 @@ void main() {
       ]),
       gl.STATIC_DRAW,
     );
-  }
+  }, [fsSource, vsSource]);
 
   // Resize handler to match screen dimensions
-  function resize() {
+  const resize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl = contextRef.current;
     if (!gl) return;
 
-    const scale = 4;
-    const width = Math.floor(window.innerWidth / scale);
-    const height = Math.floor(window.innerHeight / scale);
+    //const scale = 4;
+    const dpr = window.devicePixelRatio;
+    const width = Math.floor(window.innerWidth / dpr);
+    const height = Math.floor(window.innerHeight / dpr);
 
     if (canvas.width !== width || canvas.height !== height) {
       canvas.width = width;
       canvas.height = height;
       gl.viewport(0, 0, width, height);
     }
-  }
+  }, []);
 
   // Helper function to compile shaders
-  function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+  const createShader = useCallback((gl: WebGLRenderingContext, type: number, source: string) => {
     const shader = gl.createShader(type);
     if (!shader) return null;
     gl.shaderSource(shader, source);
@@ -306,7 +414,7 @@ void main() {
       return null;
     }
     return shader;
-  }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -339,13 +447,13 @@ void main() {
       }
       contextRef.current = null;
     };
-  }, [fsSource]);
+  }, [fsSource, resize, setup]);
 
   return (
     <canvas
       id="webgl-canvas"
       ref={canvasRef}
-      className="pixelated fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none"
+      className={`${kind} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
       style={{ imageRendering: 'pixelated' }}
     />
   );

@@ -91,7 +91,7 @@ export default function Clock() {
             isPspSecretActive
               ? (
                 <>
-                  <div className="mx-3 object-scale-down h-8 -mb-1">
+                  <div className="mx-3 object-scale-down h-8 my-auto">
                     <Image src={pspBatteryIcon} alt="psp battery" className="clock-icon" width={20} height={20} title="100%" />
                   </div>
                 </>

@@ -2,10 +2,6 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
-// import { useAudio } from '@context/AudioContext';
-// import { useSnackbar } from "@context/SnackbarContext";
-// import { useGamepads } from 'awesome-react-gamepads';
-// import { useKeySequence } from "@hooks/useKeySequence";
 import useWheel, { WheelInput } from "@hooks//useWheel";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import useQuery from "@hooks/useQuery";
@@ -130,7 +126,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const openItem = useCallback((item: XmbItem) => {
     if (item.modal) {
-      router.push(`/${item.modal}`);
+      router.push(item.modal);
       return;
     }
 

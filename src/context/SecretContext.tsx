@@ -58,6 +58,7 @@ export interface PlayerStat {
   stat: StatDefinition;
   isUnlocked: boolean;
   isEnabled: boolean;
+  type?: SecretGroupType;
 }
 
 export interface SecretGroup {
@@ -71,7 +72,7 @@ export const secretGroups: SecretGroupMap =
 {
   ['default']: {
     type: 'default',
-    title: 'Misc.',
+    title: ' ',
   },
   ['bg']: {
     type: 'bg',
@@ -114,6 +115,7 @@ export const secrets: SecretMap =
     id: AchievementId.oceangate,
     title: 'Oceangate',
     description: "Submersible not included.",
+    type: 'bg',
   },
   [AchievementId.android]: {
     id: AchievementId.android,
@@ -153,7 +155,7 @@ export interface SecretContextType {
   setSecretEnabled: (id: AchievementId, isEnabled: boolean, refresh?: boolean) => void;
   lockSecret: (id: AchievementId) => Promise<void>;
   unlockSecret: (id: AchievementId) => Promise<void>;
-  toggleSecret: (id: AchievementId) => Promise<void>;
+  toggleSecret: (id: AchievementId) => void;
   secrets: Record<string, StatDefinition>;
   secretGroups: Record<SecretGroupType, SecretGroup>;
   stats: Map<AchievementId, PlayerStat> | null;
@@ -224,7 +226,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const isUnlocked = isSecretUnlocked(id);
     if (!isUnlocked) return;
 
-    // save that it's unlocked and enabled automatically
+    // save that it's locked and disabled now
     setSecretUnlocked(id, false);
     setSecretEnabled(id, false);
 
@@ -279,7 +281,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, true);
 
     const secret = secrets[id];
-    showSnackbar(`Secret Unlocked`, `${secret.description}`, 'unlock');
+    showSnackbar(`Secret'${secret.title}' Unlocked`, `${secret.description}`, 'unlock');
 
     play(SECRET_AUDIO_SRC);
 
@@ -318,7 +320,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isKonamiSecretUnlocked, isPspSecretUnlocked, isIwhbydSecretUnlocked, isAndroidSecretUnlocked, isMissingNoSecretUnlocked, isOceangateSecretUnlocked, is404SecretUnlocked]);
 
-  const toggleSecret = useCallback(async (id: AchievementId) => {
+  const toggleSecret = (id: AchievementId) => {
 
     // make sure that it has been unlocked first
     // TODO: conisder throwing error here if not unlocked
@@ -348,7 +350,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       const exhaustiveCheck: never = id;
       throw new Error(`Unhandled case: ${exhaustiveCheck}`);
     }
-  }, [stats]);
+  };
 
   const refreshStats = () => {
     const playerStats = new Map<AchievementId, PlayerStat>();
@@ -362,6 +364,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
           isUnlocked,
           stat: secrets[id],
           isEnabled,
+          type: secrets[id].type,
         };
         playerStats.set(id, playerStat);
 
@@ -402,33 +405,36 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isKonamiSecretActive) {
       setSecretEnabled(AchievementId.missing_no, false, false);
-      setIsMissingNoSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
-      setIs404SecretActive(false);
+      setSecretEnabled(AchievementId.oceangate, false, false);
     }
-
     refreshStats();
   }, [isKonamiSecretActive]);
 
   useEffect(() => {
+    if (isOceangateSecretUnlocked) {
+      setSecretEnabled(AchievementId.konami_code, false, false);
+      setSecretEnabled(AchievementId.missing_no, false, false);
+      setSecretEnabled(AchievementId._404, false, false);
+    }
+    refreshStats();
+  }, [isOceangateSecretUnlocked]);
+
+  useEffect(() => {
     if (isMissingNoSecretActive) {
       setSecretEnabled(AchievementId.konami_code, false, false);
-      setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
-      setIs404SecretActive(false);
+      setSecretEnabled(AchievementId.oceangate, false, false);
     }
-
     refreshStats();
   }, [isMissingNoSecretActive]);
 
   useEffect(() => {
     if (is404SecretActive) {
       setSecretEnabled(AchievementId.konami_code, false, false);
-      setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId.missing_no, false, false);
-      setIsMissingNoSecretActive(false);
+      setSecretEnabled(AchievementId.oceangate, false, false);
     }
-
     refreshStats();
   }, [is404SecretActive]);
 
@@ -454,9 +460,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-
     refreshStats();
-
   }, []);
 
   useEffect(() => {
