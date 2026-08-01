@@ -3,17 +3,17 @@ import * as icons from '@components/icons/icons';
 
 function buildHomeCategory(): XmbCategory {
 
-  const about = XmbItem.createModal("about", "About", icons.info, 'about');
+  const about = XmbItem.createModal("about", "About", icons.info, '/about');
   about.description = "Display the about screen";
   about.setActive();
 
-  const help = XmbItem.createModal("help", "Help", icons.questionCircle, 'help');
+  const help = XmbItem.createModal("help", "Help", icons.questionCircle, '/help');
   help.description = "Display the help screen";
 
   const contact = new XmbItem("contact", "Contact", icons.message, 'mailto:info@test.com');
   contact.description = 'Send a message';
 
-  const secrets = XmbItem.createModal("secrets", "Secrets", icons.egg, 'secrets');
+  const secrets = XmbItem.createModal("secrets", "Secrets", icons.egg, '/secrets');
   secrets.description = 'View current secret progress';
 
   const items: XmbItem[] = [
@@ -79,7 +79,7 @@ function buildGamingCategory(): XmbCategory {
   xbox.description = 'View Xbox profile';
 
   // TODO: load the copy data from a config file
-  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, "copy?title=Battle.Net&value=Gundwn#11586&name=BattleTag");
+  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, "/copy?title=Battle.Net&name=BattleTag&value=Gundwn%2311586");
   bnet.description = 'View Battle.Net profile';
 
   const ep = new XmbItem("exophase", "Exophase", icons.exophase, 'https://www.exophase.com/user/Gundwn/');
