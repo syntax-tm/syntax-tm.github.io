@@ -1,12 +1,12 @@
 "use client";
 
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import { faCheckCircle, faCopy, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { useSnackbar } from "@context/SnackbarContext";
 import { Modal } from "@components/modal/modal";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export interface CopyViewProps
 {
@@ -32,7 +32,7 @@ function CopyView({ name, description, value }: CopyViewProps) {
             </label>
             {description && (
               <FontAwesomeIcon icon={faQuestionCircle} className="w-5 h-5 mb-1 opacity-25 hover:opacity-100 align-self-end justify-self-end text-white justify-right"
-                title={description} />
+                aria-label={description} />
             )}
           </div>
           <div className="grid grid-cols-2 grid-rows-1 relative w-fit max-w-150 text-ellipsis">
