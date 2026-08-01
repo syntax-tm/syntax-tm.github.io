@@ -29,10 +29,14 @@ export const metadata: Metadata = {
 
 const inter = Inter({ subsets: ["latin"] });
 
+// width=device-width, initial-scale=1.0, maximum-scale=1.0,
+// user-scalable=no, interactive-widget=resizes-content
 export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   width: 'device-width',
+  userScalable: 'no',
+  interactiveWidget: 'resizes-content',
 };
 
 export default function RootLayout({
