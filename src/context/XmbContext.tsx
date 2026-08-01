@@ -66,14 +66,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const xmbMenuRef = useRef<XmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
-  const [modal, setModal] = useState(false);
-
   const segment = useSelectedLayoutSegments('modal');
-
-  useEffect(() => {
-    const isModal = segment.filter(s => !s.startsWith('(')).length !== 0;
-    setModal(isModal);
-  }, [segment]);
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
   if (!xmbItemRef.current) {
     xmbItemRef.current = new Map<string, XmbItem>();

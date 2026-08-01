@@ -22,7 +22,6 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
   const touchEndX = useRef(0);
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
-  const [modal, setModal] = useState(false);
 
   const minSwipeDistance = 50;
 
@@ -34,11 +33,7 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
   }, [touchStartX, touchEndX, touchStartY, touchEndY]);
 
   const segment = useSelectedLayoutSegments('modal');
-
-  useEffect(() => {
-    const isModal = segment.filter(s => !s.startsWith('(')).length !== 0;
-    setModal(isModal);
-  }, [segment]);
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
   const onTouchMove = useCallback((e: TouchEvent) => {
     //console.log(`onTouchMove: ${e}`);

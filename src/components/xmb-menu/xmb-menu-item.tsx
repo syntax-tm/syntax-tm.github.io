@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { XmbItem } from "@models/menu";
 import { useXmb } from "@context/XmbContext";
 import Link from "next/link";
@@ -15,13 +15,7 @@ interface MenuItemProps {
 
 export const MenuItem = ({ catIndex, index, item, openItem }: MenuItemProps) => {
   const { x, y } = useXmb();
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    const active = x === catIndex
-    && y === index;
-    setIsActive(active);
-  }, [x, y]);
+  const isActive = x === catIndex && y === index;
 
   return (
     <>

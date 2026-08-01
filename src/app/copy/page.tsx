@@ -15,7 +15,7 @@ export interface CopyViewProps
   value: string;
 }
 
-export const CopyView = ({ name, description, value }: CopyViewProps) => {
+function CopyView({ name, description, value }: CopyViewProps) {
 
   const [copied, setCopied] = useState(false);
   const [hover, setHover] = useState(false);

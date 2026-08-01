@@ -10,7 +10,7 @@ import { InputType } from "@app/enums";
 import { Modal } from "@components/modal/modal";
 import "./help.css";
 
-export const HelpView = () => {
+function HelpView() {
   return (
     <div className="grid h-full">
       <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
@@ -183,7 +183,7 @@ export const HelpView = () => {
 
 // TODO: need to fix this for mobile layouts
 // the fixed image sizes need to be changed on mobile
-export const GamepadHelpView = () => {
+function GamepadHelpView() {
   return (
     <div className="grid h-full">
       <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
@@ -310,7 +310,7 @@ export const GamepadHelpView = () => {
   );
 };
 
-export const MobileHelpView = () => {
+function MobileHelpView() {
   return (
     <div className="grid h-full">
       <div className="w-full">

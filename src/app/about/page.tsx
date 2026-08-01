@@ -28,7 +28,7 @@ const displayItems: Record<string, string | undefined> = {
 
 const SECRET_TAP_MIN = 5;
 
-export const AboutView = () => {
+function AboutView() {
   const mobileDetect = useMobileDetect();
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<number | null>(null);
