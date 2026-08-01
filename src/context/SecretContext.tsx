@@ -281,7 +281,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, true);
 
     const secret = secrets[id];
-    showSnackbar(`Secret Unlocked`, `${secret.description}`, 'unlock');
+    showSnackbar(`Secret'${secret.title}' Unlocked`, `${secret.description}`, 'unlock');
 
     play(SECRET_AUDIO_SRC);
 
@@ -405,52 +405,36 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isKonamiSecretActive) {
       setSecretEnabled(AchievementId.missing_no, false, false);
-      //setIsMissingNoSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
-      //setIs404SecretActive(false);
       setSecretEnabled(AchievementId.oceangate, false, false);
-      //setIsOceangateSecretActive(false);
     }
-
     refreshStats();
   }, [isKonamiSecretActive]);
 
   useEffect(() => {
     if (isOceangateSecretUnlocked) {
       setSecretEnabled(AchievementId.konami_code, false, false);
-      //setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId.missing_no, false, false);
-      //setIsMissingNoSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
-      //setIs404SecretActive(false);
     }
-
     refreshStats();
   }, [isOceangateSecretUnlocked]);
 
   useEffect(() => {
     if (isMissingNoSecretActive) {
       setSecretEnabled(AchievementId.konami_code, false, false);
-      //setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
-      //setIs404SecretActive(false);
       setSecretEnabled(AchievementId.oceangate, false, false);
-      //setIsOceangateSecretActive(false);
     }
-
     refreshStats();
   }, [isMissingNoSecretActive]);
 
   useEffect(() => {
     if (is404SecretActive) {
       setSecretEnabled(AchievementId.konami_code, false, false);
-      //setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId.missing_no, false, false);
-      //setIsMissingNoSecretActive(false);
       setSecretEnabled(AchievementId.oceangate, false, false);
-      //setIsOceangateSecretActive(false);
     }
-
     refreshStats();
   }, [is404SecretActive]);
 
@@ -476,9 +460,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-
     refreshStats();
-
   }, []);
 
   useEffect(() => {
