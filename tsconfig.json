@@ -30,7 +30,6 @@
         "name": "next"
       }
     ],
-    "basePath": ".",
     "paths": {
       "@/*": [
         "./src/*"
