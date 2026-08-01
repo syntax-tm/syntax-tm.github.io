@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSecret } from '@context/SecretContext';
 import "./secret-background.css";
 
@@ -78,14 +78,14 @@ void main() {
 
   // 2. Set pixel sizes to look like a raw Game Boy VRAM dump
   // MissingNo blocks are wider horizontally than they are tall!
-  vec2 blockDimensions = vec2(8.0, 4.0);  //vec2(32.0, 12.0);
+  vec2 blockDimensions = vec2(16.0, 8.0);  //vec2(32.0, 12.0);
 
   // Get base pixel coordinates
   vec2 blockCoord = floor(gl_FragCoord.xy / blockDimensions);
 
   // 3. Inject horizontal shifting to simulate data misalignment
   // Every horizontal row shifts left or right based on time and row hash
-  float shiftTime = floor(u_time * 2.0); // 8.0 Steps smoothly like 8-bit frames
+  float shiftTime = floor(u_time * 4.0); // 8.0 Steps smoothly like 8-bit frames
   float rowShift = floor(rand(vec2(blockCoord.y, shiftTime)) * 12.0) - 6.0;
   blockCoord.x += rowShift;
 
@@ -216,7 +216,7 @@ void main() {
 
   }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive]);
 
-  function render(time: number) {
+  const render = useCallback((time: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl = contextRef.current;
@@ -244,9 +244,9 @@ void main() {
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
     frameRef.current = requestAnimationFrame(render);
-  }
+  }, []);
 
-  function setup() {
+  const setup = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl = contextRef.current;
@@ -288,10 +288,10 @@ void main() {
       ]),
       gl.STATIC_DRAW,
     );
-  }
+  }, [fsSource, vsSource]);
 
   // Resize handler to match screen dimensions
-  function resize() {
+  const resize = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const gl = contextRef.current;
@@ -306,10 +306,10 @@ void main() {
       canvas.height = height;
       gl.viewport(0, 0, width, height);
     }
-  }
+  }, []);
 
   // Helper function to compile shaders
-  function createShader(gl: WebGLRenderingContext, type: number, source: string) {
+  const createShader = useCallback((gl: WebGLRenderingContext, type: number, source: string) => {
     const shader = gl.createShader(type);
     if (!shader) return null;
     gl.shaderSource(shader, source);
@@ -320,7 +320,7 @@ void main() {
       return null;
     }
     return shader;
-  }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -353,7 +353,7 @@ void main() {
       }
       contextRef.current = null;
     };
-  }, [fsSource]);
+  }, [fsSource, resize, setup]);
 
   return (
     <canvas
