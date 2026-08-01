@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { faCheckCircle, faCopy, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -79,7 +79,7 @@ export const CopyView = ({ name, description, value }: CopyViewProps) => {
 export default function CopyPage() {
 
   const searchParams = useSearchParams();
-  const router = useRouter();
+  //const router = useRouter();
   const title = searchParams.has("title") ? decodeURIComponent(searchParams.get("title")!) : '';
   const name = searchParams.has("name") ? decodeURIComponent(searchParams.get("name")!) : '';
   const description = searchParams.has("description") ? decodeURIComponent(searchParams.get("description")!) : '';
@@ -98,11 +98,13 @@ export default function CopyPage() {
 
   return (
     <>
-      <Modal title={title}>
-        <div className=" w-full h-[70%]">
-          <CopyView name={name} description={description || ''} value={value} />
-        </div>
-      </Modal>
+      <Suspense>
+        <Modal title={title}>
+          <div className=" w-full h-[70%]">
+            <CopyView name={name} description={description || ''} value={value} />
+          </div>
+        </Modal>
+      </Suspense>
     </>
   );
 }
