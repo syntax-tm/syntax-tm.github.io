@@ -226,7 +226,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const isUnlocked = isSecretUnlocked(id);
     if (!isUnlocked) return;
 
-    // save that it's unlocked and enabled automatically
+    // save that it's locked and disabled now
     setSecretUnlocked(id, false);
     setSecretEnabled(id, false);
 
@@ -320,7 +320,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     }
   }, [isKonamiSecretUnlocked, isPspSecretUnlocked, isIwhbydSecretUnlocked, isAndroidSecretUnlocked, isMissingNoSecretUnlocked, isOceangateSecretUnlocked, is404SecretUnlocked]);
 
-  const toggleSecret = useCallback(async (id: AchievementId) => {
+  const toggleSecret = (id: AchievementId) => {
 
     // make sure that it has been unlocked first
     // TODO: conisder throwing error here if not unlocked
@@ -350,7 +350,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       const exhaustiveCheck: never = id;
       throw new Error(`Unhandled case: ${exhaustiveCheck}`);
     }
-  }, [stats]);
+  };
 
   const refreshStats = () => {
     const playerStats = new Map<AchievementId, PlayerStat>();
