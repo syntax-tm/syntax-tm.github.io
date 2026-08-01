@@ -1,8 +1,7 @@
 "use client";
 
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import useQuery from "./useQuery";
 
 export interface SwipeInput {
   onSwipedUp: () => void;
@@ -27,25 +26,15 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
   const minSwipeDistance = 50;
 
   const onTouchStart = useCallback((e: TouchEvent) => {
-    //console.log(`onTouchStart: ${e}`);
     touchStartX.current = e.targetTouches[0].clientX;
     touchEndX.current = e.targetTouches[0].clientX; // otherwise the swipe is fired even with usual touch events
     touchStartY.current = e.targetTouches[0].clientY;
     touchEndY.current = e.targetTouches[0].clientY; // otherwise the swipe is fired even with usual touch events
   }, [touchStartX, touchEndX, touchStartY, touchEndY]);
 
-  //const [path, setPath] = useState('');
-  //const [searchParams, setSearchParams] = useState<ReadonlyURLSearchParams | null>(null);
-  const [modal, setModal] = useState<boolean>(false);
+  const segment = useSelectedLayoutSegments('modal');
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
-  const onPathChanged = (p: string, s: ReadonlyURLSearchParams, m: string | null) => {
-    //setPath(p);
-    //setSearchParams(s);
-    setModal(!!m);
-  };
-
-  useQuery({ onPathChanged: onPathChanged });
-  
   const onTouchMove = useCallback((e: TouchEvent) => {
     //console.log(`onTouchMove: ${e}`);
     touchEndX.current = e.targetTouches[0].clientX;
@@ -100,7 +89,7 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
     if (isRightSwipe) {
       input.onSwipedRight();
     }
-  }, [input]);
+  }, [input, modal]);
 
   useEffect(() => {
     if (modal !== input.enabledOnModal) return;
@@ -111,14 +100,14 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
       document.body.removeEventListener('touchstart', onTouchStart);
       document.body.removeEventListener('touchend', onTouchEnd);
       document.body.removeEventListener('touchmove', onTouchMove);
-    }
+    };
   }, [modal, input.enabledOnModal, onTouchStart, onTouchEnd, onTouchMove]);
 
   return {
     onTouchStart,
     onTouchMove,
-    onTouchEnd
-  }
+    onTouchEnd,
+  };
 };
 
 export default useSwipe;

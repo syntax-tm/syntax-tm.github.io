@@ -96,7 +96,7 @@ export function Modal({ title, children }: { title: string, children: React.Reac
         <BackgroundView />
         <Clock />
         <Menu />
-        <div className="fixed left-0 top-0 z-100 flex flex-col h-full w-full">
+        <div className={`modal modal-${title.toLowerCase().replace(/\s+/g, '-')} fixed left-0 top-0 z-100 flex flex-col h-full w-full`}>
           <div className="flex flex-col w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
             <ModalHeader title={title} />
             {children}

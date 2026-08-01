@@ -3,6 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 interface BootContextType {
   isBootVisible: boolean;
@@ -20,6 +21,9 @@ const BOOT_FADE_OUT_MS = 600;
 export function BootProvider({ children }: { children: React.ReactNode }) {
   const [isBootVisible, setIsBootVisible] = useState(true);
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
+
+  const segment = useSelectedLayoutSegments('modal');
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
   const showBootScreen = useCallback(() => {
     setIsBootVisible(true);
@@ -61,7 +65,7 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
     [isBootVisible, isBootTransitioningOut, showBootScreen, hideBootScreen],
   );
 
-  const shouldShowOverlay = isBootVisible || isBootTransitioningOut;
+  const shouldShowOverlay = (isBootVisible || isBootTransitioningOut) && !modal;
 
   return <BootContext.Provider value={value}>
     {children}

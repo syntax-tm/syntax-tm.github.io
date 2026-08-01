@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useRef, useState } from "react";
-import { useRouter, ReadonlyURLSearchParams } from "next/navigation";
+import { useRouter, ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
 // import { useAudio } from '@context/AudioContext';
 // import { useSnackbar } from "@context/SnackbarContext";
 // import { useGamepads } from 'awesome-react-gamepads';
@@ -67,10 +67,13 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const [currentCategory, setCurrentCategory] = useState<XmbCategory | null>(null);
   const [currentItem, setCurrentItem] = useState<XmbItem | null>(null);
   const [currentItems, setCurrentItems] = useState<XmbItem[] | null>(null);
-  const [modal, setModal] = useState<string | null>(null);
+  //const [modal, setModal] = useState<string | null>(null);
   const xmbMenuRef = useRef<XmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
+
+  const segment = useSelectedLayoutSegments('modal');
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
   if (!xmbItemRef.current) {
     xmbItemRef.current = new Map<string, XmbItem>();
@@ -98,7 +101,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   }
 
   // udpates the selected item (y)
-  const updateY = (newY: number) => {
+  const updateY = useCallback((newY: number) => {
     // update cache
     cache[positionRef.current.x] = newY;
     positionRef.current = { ...positionRef.current, y: newY };
@@ -106,10 +109,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     const item = currentCategory.items[newY];
     setCurrentItem(item);
     setY(newY);
-  };
+  }, [currentCategory]);
 
   // udpates both the category (x) and restores the previous selected item (y)
-  const updateX = (newX: number, loadCache: boolean = true) => {
+  const updateX = useCallback((newX: number, loadCache: boolean = true) => {
     const prevY = loadCache ? (cache[newX] ?? 0) : 0;
     setX(newX);
     positionRef.current = { x: newX, y: prevY };
@@ -118,7 +121,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     setCurrentCategory(cat);
     setCurrentItems(cat.items);
     updateY(prevY);
-  };
+  }, [categories, updateY]);
 
   const openItem = useCallback((item: XmbItem) => {
     if (item.modal) {
@@ -179,7 +182,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     router.push('/?modal=help');
   }, []);
 
-  const moveUp = () => {
+  const moveUp = useCallback(() => {
     const nextY = y - 1;
 
     play(XMB_AUDIO_SRC);
@@ -189,9 +192,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  };
+  }, [y, updateY]);
 
-  const moveTop = () => {
+  const moveTop = useCallback(() => {
     const nextY = 0;
 
     play(XMB_AUDIO_SRC);
@@ -201,9 +204,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  };
+  }, [y, updateY]);
 
-  const moveDown = () => {
+  const moveDown = useCallback(() => {
     if (!currentCategory) return null;
 
     play(XMB_AUDIO_SRC);
@@ -216,9 +219,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  };
+  }, [currentCategory, y, updateY]);
 
-  const moveBottom = () => {
+  const moveBottom = useCallback(() => {
     if (!currentCategory) return null;
 
     play(XMB_AUDIO_SRC);
@@ -230,9 +233,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(max);
 
     return positionRef.current;
-  };
+  }, [currentCategory, y, updateY]);
 
-  const moveLeft = () => {
+  const moveLeft = useCallback(() => {
     if (!categories) return null;
 
     play(XMB_AUDIO_SRC);
@@ -245,9 +248,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(nextX);
 
     return positionRef.current;
-  };
+  }, [x, categories, updateX]);
 
-  const moveFirst = () => {
+  const moveFirst = useCallback(() => {
     if (!categories) return null;
 
     play(XMB_AUDIO_SRC);
@@ -260,9 +263,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(nextX);
 
     return positionRef.current;
-  };
+  }, [x, categories, updateX]);
 
-  const moveRight = () => {
+  const moveRight = useCallback(() => {
     if (!categories) return null;
 
     play(XMB_AUDIO_SRC);
@@ -276,9 +279,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(nextX);
 
     return positionRef.current;
-  };
+  }, [x, categories, updateX]);
 
-  const moveLast = () => {
+  const moveLast = useCallback(() => {
     if (!categories) return null;
     play(XMB_AUDIO_SRC);
 
@@ -290,13 +293,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(max);
 
     return positionRef.current;
-  };
-
-  const onPathChanged = useCallback((path: string, searchParams: ReadonlyURLSearchParams, modal: string | null) => {
-    setModal(modal);
-  }, []);
-
-  useQuery({ onPathChanged: onPathChanged });
+  }, [x, categories, updateX]);
 
   const actions = new Map<string, KeyPressAction>();
 

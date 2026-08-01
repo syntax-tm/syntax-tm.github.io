@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
 import useQuery from "./useQuery";
 
 export interface WheelInput {
@@ -26,15 +26,10 @@ const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOn
 
   //const [path, setPath] = useState('');
   //const [searchParams, setSearchParams] = useState<ReadonlyURLSearchParams | null>(null);
-  const [modal, setModal] = useState<boolean>(false);
-
-  const onPathChanged = (p: string, s: ReadonlyURLSearchParams, m: string | null) => {
-    //setPath(p);
-    //setSearchParams(s);
-    setModal(!!m);
-  };
-
-  useQuery({ onPathChanged: onPathChanged });
+  //const [modal, setModal] = useState<boolean>(false);
+  
+  const segment = useSelectedLayoutSegments('modal');
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
   const onWheel = (e: WheelEvent) => {
     const down = e.deltaY > 0;

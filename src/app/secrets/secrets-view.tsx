@@ -1,6 +1,9 @@
+"use client";
+
 import { SecretGroupType, useSecret } from "@context/SecretContext";
 import React, { useEffect, useState } from "react";
 import SecretView from "./secret-view";
+import "./secrets.css";
 
 const SECRET_TAP_MIN = 5;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { ReadonlyURLSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import useQuery from "./useQuery";
 
@@ -21,13 +21,15 @@ export interface KeyboardOutput {
 
 const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
-  const [modal, setModal] = useState<boolean>(false);
+  //const [modal, setModal] = useState<boolean>(false);
 
-  function onPathChanged(p: string, s: ReadonlyURLSearchParams, m: string | null) {
-    setModal(!!m);
-  }
+  const segment = useSelectedLayoutSegments('modal');
+  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
-  useQuery({ onPathChanged: onPathChanged });
+  // useEffect(() => {
+  //   const isModal = segment !== null;
+  //   setModal(isModal);
+  // }, [segment]);
 
   const isMapped = useCallback((key: string): boolean => {
     return actions.has(key.toLowerCase());
@@ -36,6 +38,8 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
   const handleKeyUp = useCallback((e: KeyboardEvent): void => {
     // key is not mapped, ignore
     if (!isMapped(e.key)) return;
+
+    if (modal && !enabledOnModal) return;
 
     //e.stopPropagation();
     //e.preventDefault();
@@ -48,6 +52,8 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     // key is not mapped, ignore
     if (!isMapped(e.key)) return;
+
+    if (modal && !enabledOnModal) return;
 
     //e.stopPropagation();
     //e.preventDefault();
@@ -66,7 +72,7 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
     action.onKeyPress();
 
     setKeysDown((prevState) => [...prevState, e.key]);
-  }, [actions, isMapped]);
+  }, [actions, isMapped, modal]);
 
   useEffect(() => {
     if (modal && !enabledOnModal) return;
