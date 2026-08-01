@@ -155,7 +155,7 @@ export interface SecretContextType {
   setSecretEnabled: (id: AchievementId, isEnabled: boolean, refresh?: boolean) => void;
   lockSecret: (id: AchievementId) => Promise<void>;
   unlockSecret: (id: AchievementId) => Promise<void>;
-  toggleSecret: (id: AchievementId) => Promise<void>;
+  toggleSecret: (id: AchievementId) => void;
   secrets: Record<string, StatDefinition>;
   secretGroups: Record<SecretGroupType, SecretGroup>;
   stats: Map<AchievementId, PlayerStat> | null;
