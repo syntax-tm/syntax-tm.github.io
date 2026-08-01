@@ -19,6 +19,16 @@ export default function SecretBackground() {
   type bgShaderKind = "silent-hill" | "konami-code" | "missing-no";
 
   let kind: bgShaderKind;
+
+  if (isKonamiSecretActive) {
+    kind = "konami-code";
+  }
+  else if (is404SecretActive) {
+    kind = "silent-hill";
+  }
+  else {
+    kind = "missing-no";
+  }
   
   // 2. Define Vertex Shader (Draws a full-screen quad)
   const vsSource = `
@@ -187,24 +197,19 @@ void main() {
   // sets the current fsSource based on which secret is active
   useEffect(() => {
 
-    let source;
-
     if (is404SecretActive) {
       // 404
       source = sh1fsSource;
-      kind = "silent-hill";
     }
     else if (isMissingNoSecretActive) {
       // missingno
       source = missingNofsSource;
-      kind = "missing-no";
     }
     else {
       // konami
       source = defaultfsSource;
-      kind = "konami-code";
     }
-
+  
     setFsSource(source);
 
   }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive]);
