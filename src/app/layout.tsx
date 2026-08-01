@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import type { Metadata, Viewport } from 'next';
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -7,7 +7,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import Providers from "@app/providers";
-import LoadingView from "@components/loading/loading";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@styles/global.scss";
 
@@ -43,21 +42,13 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
 
-  const loadingView = (
-    <>
-      <LoadingView />
-    </>
-  );
-
   return (
     <html lang="en">
       <body id="body" className={`${inter.className} text-white`}>
-        <Suspense fallback={loadingView}>
-          <Providers>
-            {children}
-            {modal}
-          </Providers>
-        </Suspense>
+        <Providers>
+          {children}
+          {modal}
+        </Providers>
         {/* Invisible anchor strictly to trigger Next.js route preloading */}
         <div style={{ display: 'none' }}>
           <Link href="/not-found-page" prefetch={true} />

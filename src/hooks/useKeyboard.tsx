@@ -21,15 +21,14 @@ export interface KeyboardOutput {
 
 const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
-  //const [modal, setModal] = useState<boolean>(false);
+  const [modal, setModal] = useState(false);
 
   const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
 
-  // useEffect(() => {
-  //   const isModal = segment !== null;
-  //   setModal(isModal);
-  // }, [segment]);
+  useEffect(() => {
+    const isModal = segment.filter(s => !s.startsWith('(')).length !== 0;
+    setModal(isModal);
+  }, [segment]);
 
   const isMapped = useCallback((key: string): boolean => {
     return actions.has(key.toLowerCase());

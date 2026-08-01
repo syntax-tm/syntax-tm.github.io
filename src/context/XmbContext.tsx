@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
 // import { useAudio } from '@context/AudioContext';
 // import { useSnackbar } from "@context/SnackbarContext";
@@ -71,9 +71,14 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const xmbMenuRef = useRef<XmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
+  const [modal, setModal] = useState(false);
 
   const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+
+  useEffect(() => {
+    const isModal = segment.filter(s => !s.startsWith('(')).length !== 0;
+    setModal(isModal);
+  }, [segment]);
 
   if (!xmbItemRef.current) {
     xmbItemRef.current = new Map<string, XmbItem>();
@@ -295,25 +300,29 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     return positionRef.current;
   }, [x, categories, updateX]);
 
-  const actions = new Map<string, KeyPressAction>();
+  const actions: Map<string, KeyPressAction> = useMemo(() => {
+    const map = new Map<string, KeyPressAction>();
 
-  actions.set('w', { repeat: true, onKeyPress: moveUp });
-  actions.set('arrowup', { repeat: true, onKeyPress: moveUp });
-  actions.set('a', { repeat: true, onKeyPress: moveLeft });
-  actions.set('arrowleft', { repeat: true, onKeyPress: moveLeft });
-  actions.set('s', { repeat: true, onKeyPress: moveDown });
-  actions.set('arrowdown', { repeat: true, onKeyPress: moveDown });
-  actions.set('d', { repeat: true, onKeyPress: moveRight });
-  actions.set('arrowright', { repeat: true, onKeyPress: moveRight });
-  actions.set(' ', { repeat: false, onKeyPress: onEnter });
-  actions.set('enter', { repeat: false, onKeyPress: onEnter });
-  actions.set('escape', { repeat: false, onKeyPress: onEsc });
-  actions.set('h', { repeat: false, onKeyPress: onHelp });
-  actions.set('f1', { repeat: false, onKeyPress: onHelp });
-  actions.set('q', { repeat: false, onKeyPress: moveFirst });
-  actions.set('e', { repeat: false, onKeyPress: moveLast });
-  actions.set('z', { repeat: false, onKeyPress: moveTop });
-  actions.set('x', { repeat: false, onKeyPress: moveBottom });
+    map.set('w', { repeat: true, onKeyPress: moveUp });
+    map.set('arrowup', { repeat: true, onKeyPress: moveUp });
+    map.set('a', { repeat: true, onKeyPress: moveLeft });
+    map.set('arrowleft', { repeat: true, onKeyPress: moveLeft });
+    map.set('s', { repeat: true, onKeyPress: moveDown });
+    map.set('arrowdown', { repeat: true, onKeyPress: moveDown });
+    map.set('d', { repeat: true, onKeyPress: moveRight });
+    map.set('arrowright', { repeat: true, onKeyPress: moveRight });
+    map.set(' ', { repeat: false, onKeyPress: onEnter });
+    map.set('enter', { repeat: false, onKeyPress: onEnter });
+    map.set('escape', { repeat: false, onKeyPress: onEsc });
+    map.set('h', { repeat: false, onKeyPress: onHelp });
+    map.set('f1', { repeat: false, onKeyPress: onHelp });
+    map.set('q', { repeat: false, onKeyPress: moveFirst });
+    map.set('e', { repeat: false, onKeyPress: moveLast });
+    map.set('z', { repeat: false, onKeyPress: moveTop });
+    map.set('x', { repeat: false, onKeyPress: moveBottom });
+
+    return map;
+  }, [moveUp, moveDown, moveLeft, moveRight, onEnter, onEsc, onHelp, moveFirst, moveLast, moveTop, moveBottom]);
 
   useKeyboard({ actions: actions, enabledOnModal: false });
 
@@ -353,36 +362,43 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     onRB: moveLast,
   });
 
-  const wheelInput: WheelInput = {
-    onWheelUp: moveUp,
-    onWheelDown: moveDown,
-    onWheelLeft: moveLeft,
-    onWheelRight: moveRight,
-    enabledOnModal: false,
-  };
+  const wheelInput: WheelInput = useMemo(() => {
+    return {
+      onWheelUp: moveUp,
+      onWheelDown: moveDown,
+      onWheelLeft: moveLeft,
+      onWheelRight: moveRight,
+      enabledOnModal: false,
+    };
+  }, [moveUp, moveDown, moveLeft, moveRight]);
   useWheel(wheelInput);
 
-  const swipeInput: SwipeInput = {
-    onSwipedDown: moveUp,
-    onSwipedUp: moveDown,
-    onSwipedRight: moveLeft,
-    onSwipedLeft: moveRight,
-    enabledOnModal: false,
-  };
+  const swipeInput: SwipeInput = useMemo(() => {
+    return {
+      onSwipedDown: moveUp,
+      onSwipedUp: moveDown,
+      onSwipedRight: moveLeft,
+      onSwipedLeft: moveRight,
+      enabledOnModal: false,
+    };
+  }, [moveUp, moveDown, moveLeft, moveRight]);
   useSwipe(swipeInput);
 
-  const value = {
-    x,
-    y,
-    menu: xmbMenuRef.current,
-    currentCategory,
-    currentItem,
-    currentItems,
-    openInNewTab,
-    openItem,
-    categories,
-    toXmbKey,
-  };
+  const value = useMemo(() => {
+    return {
+      x,
+      y,
+      menu: xmbMenuRef.current,
+      currentCategory,
+      currentItem,
+      currentItems,
+      openInNewTab,
+      openItem,
+      categories,
+      toXmbKey,
+    };
+  }, [x, y, xmbMenuRef, currentCategory, currentItem,
+    currentItems, openInNewTab, openItem, categories, toXmbKey]);
 
   return (
     <XmbContext.Provider value={value}>

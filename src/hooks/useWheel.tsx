@@ -20,16 +20,15 @@ export interface WheelOutput {
 
 const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOnModal = false }: WheelInput): WheelOutput => {
 
-  //const [shift, setShift] = useState(false);
-
   const shift = useRef(false);
+  const [modal, setModal] = useState(false);
 
-  //const [path, setPath] = useState('');
-  //const [searchParams, setSearchParams] = useState<ReadonlyURLSearchParams | null>(null);
-  //const [modal, setModal] = useState<boolean>(false);
-  
   const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+
+  useEffect(() => {
+    const isModal = segment.filter(s => !s.startsWith('(')).length !== 0;
+    setModal(isModal);
+  }, [segment]);
 
   const onWheel = (e: WheelEvent) => {
     const down = e.deltaY > 0;

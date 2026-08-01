@@ -21,9 +21,14 @@ const BOOT_FADE_OUT_MS = 600;
 export function BootProvider({ children }: { children: React.ReactNode }) {
   const [isBootVisible, setIsBootVisible] = useState(true);
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+
+  useEffect(() => {
+    const isModal = segment.filter(s => !s.startsWith('(')).length !== 0;
+    setModal(isModal);
+  }, [segment]);
 
   const showBootScreen = useCallback(() => {
     setIsBootVisible(true);
