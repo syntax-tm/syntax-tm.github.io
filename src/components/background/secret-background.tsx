@@ -67,14 +67,14 @@ void main() {
 
   // 2. Set pixel sizes to look like a raw Game Boy VRAM dump
   // MissingNo blocks are wider horizontally than they are tall!
-  vec2 blockDimensions = vec2(16.0, 8.0);  //vec2(32.0, 12.0);
+  vec2 blockDimensions = vec2(32.0, 12.0);  //vec2(32.0, 12.0);
 
   // Get base pixel coordinates
   vec2 blockCoord = floor(gl_FragCoord.xy / blockDimensions);
 
   // 3. Inject horizontal shifting to simulate data misalignment
   // Every horizontal row shifts left or right based on time and row hash
-  float shiftTime = floor(u_time * 4.0); // 8.0 Steps smoothly like 8-bit frames
+  float shiftTime = floor(u_time * 8.0); // 8.0 Steps smoothly like 8-bit frames
   float rowShift = floor(rand(vec2(blockCoord.y, shiftTime)) * 12.0) - 6.0;
   blockCoord.x += rowShift;
 
@@ -183,8 +183,8 @@ void main() {
 }
 `;
 
-    // oceangate
-    const oceangatefsSource = `
+  // oceangate
+  const oceangatefsSource = `
 precision mediump float;
 uniform vec2 u_resolution;
 uniform float u_time;
@@ -232,7 +232,7 @@ void main() {
             float distanceToCenter = abs(distortedUV.x - (xOffset + sway));
             if (distanceToCenter < width) {
                 // Closer stalks are lighter, deeper background stalks are darker
-                seaweedLayer = 0.3 + (fi * 0.15); 
+                seaweedLayer = 0.3 + (fi * 0.15);
             }
         }
     }
