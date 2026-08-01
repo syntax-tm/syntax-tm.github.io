@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSecret } from '@context/SecretContext';
 import "./secret-background.css";
 
+type bgShaderKind = "silent-hill" | "konami-code" | "missing-no";
+
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<WebGLRenderingContext | null>(null);
@@ -15,21 +17,8 @@ export default function SecretBackground() {
   const frameRef = useRef<number | null>(null);
   const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive } = useSecret();
   const [fsSource, setFsSource] = useState<string | null>(null);
+  const [kind, setKind] = useState<bgShaderKind | null>(null);
 
-  type bgShaderKind = "silent-hill" | "konami-code" | "missing-no";
-
-  let kind: bgShaderKind;
-
-  if (isKonamiSecretActive) {
-    kind = "konami-code";
-  }
-  else if (is404SecretActive) {
-    kind = "silent-hill";
-  }
-  else {
-    kind = "missing-no";
-  }
-  
   // 2. Define Vertex Shader (Draws a full-screen quad)
   const vsSource = `
   attribute vec2 position;
@@ -198,21 +187,26 @@ void main() {
   useEffect(() => {
 
     let source: string;
+    let sfKind: bgShaderKind;
     
     if (is404SecretActive) {
       // 404
       source = sh1fsSource;
+      sfKind = "silent-hill";
     }
     else if (isMissingNoSecretActive) {
       // missingno
       source = missingNofsSource;
+      sfKind = "missing-no";
     }
     else {
       // konami
       source = defaultfsSource;
+      sfKind = "konami-code";
     }
   
     setFsSource(source);
+    setKind(kind);
 
   }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive]);
 
