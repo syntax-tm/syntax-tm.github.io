@@ -100,7 +100,9 @@ export default function CopyPage() {
     <>
       <Modal title={title}>
         <div className=" w-full h-[70%]">
-          <CopyView name={name} description={description || ''} value={value} />
+          <Suspense>
+            <CopyView name={name} description={description || ''} value={value} />
+          </Suspense>
         </div>
       </Modal>
     </>
