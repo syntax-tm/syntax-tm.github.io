@@ -85,6 +85,7 @@ export class XmbItem implements IXmbItem {
   {
     const item = new XmbItem(id, title, icon);
     item.modal = modal;
+    item.link = modal;
     return item;
   }
 
