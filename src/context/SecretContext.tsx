@@ -114,6 +114,7 @@ export const secrets: SecretMap =
     id: AchievementId.oceangate,
     title: 'Oceangate',
     description: "Submersible not included.",
+    type: 'bg',
   },
   [AchievementId.android]: {
     id: AchievementId.android,
@@ -405,10 +406,25 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       setIsMissingNoSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
       setIs404SecretActive(false);
+      setSecretEnabled(AchievementId.oceangate, false, false);
+      setIsOceangateSecretActive(false);
     }
 
     refreshStats();
   }, [isKonamiSecretActive]);
+
+  useEffect(() => {
+    if (isOceangateSecretUnlocked) {
+      setSecretEnabled(AchievementId.konami_code, false, false);
+      setIsKonamiSecretActive(false);
+      setSecretEnabled(AchievementId.missing_no, false, false);
+      setIsMissingNoSecretActive(false);
+      setSecretEnabled(AchievementId._404, false, false);
+      setIs404SecretActive(false);
+    }
+
+    refreshStats();
+  }, [isOceangateSecretUnlocked]);
 
   useEffect(() => {
     if (isMissingNoSecretActive) {
@@ -416,6 +432,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId._404, false, false);
       setIs404SecretActive(false);
+      setSecretEnabled(AchievementId.oceangate, false, false);
+      setIsOceangateSecretActive(false);
     }
 
     refreshStats();
@@ -427,6 +445,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       setIsKonamiSecretActive(false);
       setSecretEnabled(AchievementId.missing_no, false, false);
       setIsMissingNoSecretActive(false);
+      setSecretEnabled(AchievementId.oceangate, false, false);
+      setIsOceangateSecretActive(false);
     }
 
     refreshStats();
