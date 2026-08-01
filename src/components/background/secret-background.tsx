@@ -197,6 +197,8 @@ void main() {
   // sets the current fsSource based on which secret is active
   useEffect(() => {
 
+    let source: string;
+    
     if (is404SecretActive) {
       // 404
       source = sh1fsSource;
