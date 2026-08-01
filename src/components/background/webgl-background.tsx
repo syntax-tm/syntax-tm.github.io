@@ -285,7 +285,7 @@ export default function WebGlBackground() {
     resolutionUniformLocationRef.current = resolutionLocation;
 
     //context.clearColor(1.0, 1.0, 1.0, 0.2);
-    //context.clearColor(0.0, 0.0, 0.0, 1.0);
+    context.clearColor(0.0, 0.0, 0.0, 1.0);
     //context.clearColor(1.0, 1.0, 1.0, 0.1);
 
     gradientStops.forEach((stop, index) => {
@@ -351,7 +351,7 @@ export default function WebGlBackground() {
 
   return (
     <>
-      <canvas id="webgl-canvas" ref={canvasRef} className="absolute left-0 top-0 w-full h-full -z-5"></canvas>
+      <canvas id="webgl-canvas" ref={canvasRef} className="absolute left-0 top-0 w-full h-full -z-50"></canvas>
     </>
   );
 }
