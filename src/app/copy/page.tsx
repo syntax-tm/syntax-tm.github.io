@@ -76,7 +76,7 @@ export const CopyView = ({ name, description, value }: CopyViewProps) => {
   );
 };
 
-export default function CopyPage() {
+export function CopyPage() {
 
   const searchParams = useSearchParams();
   //const router = useRouter();
@@ -100,11 +100,17 @@ export default function CopyPage() {
     <>
       <Modal title={title}>
         <div className=" w-full h-[70%]">
-          <Suspense>
-            <CopyView name={name} description={description || ''} value={value} />
-          </Suspense>
+          <CopyView name={name} description={description || ''} value={value} />
         </div>
       </Modal>
     </>
+  );
+}
+
+export default function CopyPageWrapper(){
+  return (
+    <Suspense fallback={<div className="text-white">Loading...</div>}>
+      <CopyPage />
+    </Suspense>
   );
 }
