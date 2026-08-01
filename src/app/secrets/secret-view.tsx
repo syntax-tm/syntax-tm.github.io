@@ -28,7 +28,7 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
     const newState = !enabled;
     setSecretEnabled(id, newState);
     setEnabled(newState);
-  }, [enabled]);
+  }, [enabled, unlocked, stats]);
 
   useEffect(() => {
 
@@ -38,7 +38,7 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
     const isEnabled = isSecretEnabled(id);
     setEnabled(isEnabled);
 
-  }, [stats]);
+  }, [stats, enabled, unlocked]);
 
   useEffect(() => {
 
