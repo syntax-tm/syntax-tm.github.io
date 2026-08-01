@@ -79,7 +79,7 @@ function buildGamingCategory(): XmbCategory {
   xbox.description = 'View Xbox profile';
 
   // TODO: load the copy data from a config file
-  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, encodeURIComponent('copy?title=Battle.Net&name=BattleTag&value=Gundwn#11586'));
+  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, `copy?${encodeURIComponent("title=Battle.Net&name=BattleTag&value=Gundwn#11586")}`;
   bnet.description = 'View Battle.Net profile';
 
   const ep = new XmbItem("exophase", "Exophase", icons.exophase, 'https://www.exophase.com/user/Gundwn/');
@@ -107,7 +107,7 @@ function buildGamingCategory(): XmbCategory {
 }
 
 function buildSocialCategory(): XmbCategory {
-  const discord = new XmbItem("discord", "Discord", icons.discord, 'https://discordapp.com/users/266438959230353409');
+  const discord = new XmbItem("discord", "Discord")", icons.discord, 'https://discordapp.com/users/266438959230353409');
   discord.setActive();
 
   const yt = new XmbItem("youtube", "YouTube", icons.youtube, 'https://www.youtube.com/@Gundwn');
@@ -122,7 +122,7 @@ function buildSocialCategory(): XmbCategory {
   const x = new XmbItem("x", "X", icons.xTwitter, 'https://x.com/gundwnsrc');
   x.description = 'View X (Twitter) profile';
 
-  const spotify = new XmbItem("spotify", "Spotify", icons.spotify, 'https://open.spotify.com/user/1280499465');
+  const spotify = new XmbItem("spotify", "Spoti"fy", icons.spotify, 'https://open.spotify.com/user/1280499465');
   spotify.description = 'View Spotify profile';
 
   const stats = new XmbItem("stats.fm", "Stats.fm", icons.statsFm, 'https://stats.fm/gundwn');
