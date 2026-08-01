@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "node ./scripts/prebuild.mjs && yarn next dev --webpack",
-    "build": "node ./scripts/prebuild.mjs && yarn webpack --mode=production",
+    "build": "node ./scripts/prebuild.mjs && yarn next build",
     "start": "next start",
     "lint": "next lint",
-    "build:dev": "node ./scripts/prebuild.mjs && yarn webpack --mode=development",
-    "build:prod": "node ./scripts/prebuild.mjs && yarn webpack --mode=production",
+    "build:dev": "node ./scripts/prebuild.mjs && yarn next build",
+    "build:prod": "node ./scripts/prebuild.mjs && yarn next build",
     "watch": "webpack --watch",
     "serve": "webpack serve",
     "prebuild": "node ./scripts/prebuild.mjs"
