@@ -71,7 +71,7 @@ export const secretGroups: SecretGroupMap =
 {
   ['default']: {
     type: 'default',
-    title: 'Misc.',
+    title: ' ',
   },
   ['bg']: {
     type: 'bg',
