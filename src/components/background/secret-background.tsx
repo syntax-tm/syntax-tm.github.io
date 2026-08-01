@@ -16,6 +16,10 @@ export default function SecretBackground() {
   const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive } = useSecret();
   const [fsSource, setFsSource] = useState<string | null>(null);
 
+  type bgShaderKind = "silent-hill" | "konami-code" | "missing-no";
+
+  let kind: bgShaderKind;
+  
   // 2. Define Vertex Shader (Draws a full-screen quad)
   const vsSource = `
   attribute vec2 position;
@@ -188,14 +192,17 @@ void main() {
     if (is404SecretActive) {
       // 404
       source = sh1fsSource;
+      kind = "silent-hill";
     }
     else if (isMissingNoSecretActive) {
       // missingno
       source = missingNofsSource;
+      kind = "missing-no";
     }
     else {
       // konami
       source = defaultfsSource;
+      kind = "konami-code";
     }
 
     setFsSource(source);
@@ -345,7 +352,7 @@ void main() {
     <canvas
       id="webgl-canvas"
       ref={canvasRef}
-      className="pixelated fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none"
+      className={`${kind} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
       style={{ imageRendering: 'pixelated' }}
     />
   );
