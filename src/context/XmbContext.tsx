@@ -4,7 +4,6 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { useRouter, ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
 import useWheel, { WheelInput } from "@hooks//useWheel";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
-import useQuery from "@hooks/useQuery";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
 import { useSnackbar } from "@context/SnackbarContext";
 import { useAudio } from '@context/AudioContext';

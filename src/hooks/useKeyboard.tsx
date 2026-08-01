@@ -1,8 +1,7 @@
 'use client';
 
+import React, { useCallback, useEffect, useState } from "react";
 import { ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import useQuery from "./useQuery";
 
 export interface KeyPressAction {
     repeat: boolean;

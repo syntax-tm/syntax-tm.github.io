@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
 import { ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
-import useQuery from "./useQuery";
 
 export interface WheelInput {
   onWheelUp: () => void;
