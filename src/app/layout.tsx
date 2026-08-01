@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import type { Metadata, Viewport } from 'next';
 import { Inter } from "next/font/google";
 import Link from "next/link";
@@ -51,7 +51,9 @@ export default function RootLayout({
       <body id="body" className={`${inter.className} text-white`}>
         <Providers>
           {children}
-          {modal}
+          <Suspense>
+            {modal}
+          </Suspense>
         </Providers>
         {/* Invisible anchor strictly to trigger Next.js route preloading */}
         <div style={{ display: 'none' }}>
