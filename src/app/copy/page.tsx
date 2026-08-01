@@ -80,25 +80,21 @@ export default function CopyPage() {
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  const title = searchParams.get("title");
-  const name = searchParams.get("name");
-  const description = searchParams.get("description");
-  const value = searchParams.get("value");
+  const title = searchParams.has("title") && decodeURIComponent(searchParams.get("title"));
+  const name = searchParams.has("name") && decodeURIComponent(searchParams.get("name"));
+  const description = searchParams.has("description") && decodeURIComponent(searchParams.get("description"));
+  const value = searchParams.has("value") && decodeURIComponent(searchParams.get("value"));
 
   if (!title || !name || !value) {
     let message = `Copy modal dialog is missing one or more required paramters.\n`;
     message += `\ntitle: ${title}\nname: ${name}\ndescription: ${description}\nvalue: ${value}`;
     console.error(message);
-    router.push('/');
+    alert(message);
+
+    //router.push('/');
 
     return;
   }
-
-  useEffect(() => {
-
-    router.replace('/copy', { });
-
-  }, []);
 
   return (
     <>
