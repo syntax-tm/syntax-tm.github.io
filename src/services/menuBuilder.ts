@@ -79,7 +79,7 @@ function buildGamingCategory(): XmbCategory {
   xbox.description = 'View Xbox profile';
 
   // TODO: load the copy data from a config file
-  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, `copy?${encodeURIComponent("title=Battle.Net&name=BattleTag&value=Gundwn#11586")}`;
+  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, `copy?${encodeURIComponent("title=Battle.Net&name=BattleTag&value=Gundwn#11586")}`);
   bnet.description = 'View Battle.Net profile';
 
   const ep = new XmbItem("exophase", "Exophase", icons.exophase, 'https://www.exophase.com/user/Gundwn/');
