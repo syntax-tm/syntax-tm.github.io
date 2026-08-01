@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSecret } from '@context/SecretContext';
 import "./secret-background.css";
 
-type bgShaderKind = "silent-hill" | "konami-code" | "missing-no";
+type bgShaderKind = "silent-hill" | "konami-code" | "missing-no" | "oceangate";
 
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -15,7 +15,7 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive } = useSecret();
+  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive, isOceangateSecretActive } = useSecret();
   const [fsSource, setFsSource] = useState<string | null>(null);
   const [kind, setKind] = useState<bgShaderKind | null>(null);
 
@@ -183,6 +183,36 @@ void main() {
 }
 `;
 
+  // oceangate
+  const oceangatefsSource = `
+      precision mediump float;
+      uniform vec2 u_resolution;
+      uniform float u_time;
+
+      void main() {
+        float pixelSize = 8.0; // Size of the retro pixels
+        
+        // Quantize coordinates for pixelation
+        vec2 pixelCoord = floor(gl_FragCoord.xy / pixelSize) * pixelSize;
+        vec2 uv = pixelCoord / u_resolution;
+
+        // Underwater wave math
+        float wave = sin(uv.y * 10.0 + u_time * 2.0) * 0.02;
+        uv.x += wave;
+
+        // Deep sea color gradient (Dark blue to cyan teal)
+        vec3 deepBlue = vec3(0.01, 0.05, 0.2);
+        vec3 teal = vec3(0.0, 0.5, 0.6);
+        vec3 color = mix(deepBlue, teal, uv.y);
+
+        // Add a pixelated light shimmer effect at the top
+        float shimmer = step(0.85, uv.y + sin(uv.x * 20.0 + u_time) * 0.05);
+        color += shimmer * vec3(0.3, 0.2, 0.1);
+
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
   // sets the current fsSource based on which secret is active
   useEffect(() => {
 
@@ -199,16 +229,21 @@ void main() {
       source = missingNofsSource;
       sfKind = "missing-no";
     }
-    else {
+    else if (isKonamiSecretActive) {
       // konami
       source = defaultfsSource;
       sfKind = "konami-code";
+    }
+    else
+    {
+      source = oceangatefsSource;
+      sfKind = "oceangate";
     }
   
     setFsSource(source);
     setKind(kind);
 
-  }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive]);
+  }, [isKonamiSecretActive, is404SecretActive, isMissingNoSecretActive, isOceangateSecretActive]);
 
   const render = useCallback((time: number) => {
     const canvas = canvasRef.current;
