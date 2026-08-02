@@ -21,10 +21,6 @@ kbd > svg {
   }
 }
 
-.modal-content {
-  min-height: 400px;
-}
-
 dialog {
   inset: 0;
 }

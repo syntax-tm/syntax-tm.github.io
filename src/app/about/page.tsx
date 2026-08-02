@@ -72,9 +72,9 @@ function AboutView() {
   }, [mobileDetect]);
 
   return (
-    <div className="grid h-full p-1">
-      <div className="modal-content content-center justify-items-center mx-auto md:w-[80%] overflow-y-auto overscroll-contain my-[2%] md:my-2">
-        <table className="w-auto text-base rtl:text-right text-gray-500 dark:text-gray-400 max-w-[500px] -my-1">
+    <div className="grid h-full lg:p-1">
+      <div className="modal-content content-center justify-items-center mx-auto md:w-[80%] overflow-y-auto overscroll-contain my-[2%] lg:my-2">
+        <table className="w-auto text-base rtl:text-right text-gray-500 dark:text-gray-400 max-w-125 -my-1">
           <tbody className="">
             {
               Object.entries(displayItems).map(([key, value]) => (
@@ -113,7 +113,7 @@ export default function AboutPage() {
   return (
     <>
       <Modal title="About">
-        <div className=" w-full h-[70%]">
+        <div className="w-full">
           <AboutView />
         </div>
       </Modal>

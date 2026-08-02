@@ -2,9 +2,9 @@
 @use './variables.module.scss';
 @use './components/boot.scss';
 
-@import './imports.css';
-@import './animations.css';
-@import './xmb.css';
+@use './imports.css';
+@use './animations.css';
+@use './xmb.css';
 
 :root {
   --foreground-rgb: 0, 0, 0;

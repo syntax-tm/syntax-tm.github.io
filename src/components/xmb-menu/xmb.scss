@@ -52,14 +52,12 @@ $margin-top-inactive: 15;
   overscroll-behavior: none;
   width: 100%;
   height: 100%;
-
 }
 
 .xmb-root {
   .xmb-inactive-items {
     height: 30%;
   }
-
 }
 
 .xmb-root {
@@ -74,39 +72,6 @@ $margin-top-inactive: 15;
 
 .active {
   --active: true;
-}
-
-.xmb-category {
-  &:has(.xmb-item.active:nth-child(1)) {
-    --y: 0;
-  }
-  &:has(.xmb-item.active:nth-child(2)) {
-    --y: 1;
-  }
-  &:has(.xmb-item.active:nth-child(3)) {
-    --y: 2;
-  }
-  &:has(.xmb-item.active:nth-child(4)) {
-    --y: 3;
-  }
-  &:has(.xmb-item.active:nth-child(5)) {
-    --y: 4;
-  }
-  &:has(.xmb-item.active:nth-child(6)) {
-    --y: 5;
-  }
-  &:has(.xmb-item.active:nth-child(7)) {
-    --y: 6;
-  }
-  &:has(.xmb-item.active:nth-child(8)) {
-    --y: 7;
-  }
-  &:has(.xmb-item.active:nth-child(9)) {
-    --y: 8;
-  }
-  &:has(.xmb-item.active:nth-child(10)) {
-    --y: 9;
-  }
 }
 
 .xmb-item {
@@ -195,7 +160,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 @media (min-width: 1025px) and (max-width: 1280px) {
 
   /* CSS */
-  margin-top: 18%;
+  margin-top: 15%;
   margin-left: calc(#{$XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT}px - (#{$XMB_MAIN_DESKTOP_SCALEX}px * var(--x)));
 
 }
@@ -234,7 +199,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 @media (min-width: 481px) and (max-width: 767px) {
 
   /* CSS */
-  margin-top: 17%;
+  margin-top: 25%;
   margin-left: calc(#{$XMB_MAIN_MOBILE_BASE_MARGIN_LEFT}px - (#{$XMB_MAIN_MOBILE_SCALEX}px * var(--x)));
 
 }
@@ -257,7 +222,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
   text-align: center;
   color: #dadada;
   transition: margin-right 300ms, margin-left 300ms;
-  z-index: -2;
+  z-index: 1;
   position: absolute;
   //overflow: clip;
   overscroll-behavior: none;
@@ -334,8 +299,6 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
     padding-left: 20px;
   }
 }
-
-
 
 .xmb-item.active {
   -webkit-animation: glow 1s ease-in-out infinite alternate;

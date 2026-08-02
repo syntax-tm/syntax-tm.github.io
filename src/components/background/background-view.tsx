@@ -7,16 +7,12 @@ import WebGlBackground from '@components/background/webgl-background';
 
 export default function BackgroundView() {
 
-  const [isSecretBg, setIsSecretBg] = useState(false);
-
-  // if konami, missingno, or 404 secrets are active, use the PixelatedBackground
+  // if konami, missingno, android, oceangate, or 404 secrets are active, use the SecretBackground,
   // otherwise default to WebGlBackground
-  const { isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive, isOceangateSecretActive, isAndroidSecretActive } = useSecret();
+  const { getBackground } = useSecret();
 
-  useEffect(() => {
-    const secretBg = isKonamiSecretActive || isMissingNoSecretActive || is404SecretActive || isOceangateSecretActive || isAndroidSecretActive;
-    setIsSecretBg(secretBg);
-  }, [isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive, isOceangateSecretActive, isAndroidSecretActive]);
+  const bg = getBackground();
+  const isSecretBg = bg !== null;
 
   return (
     <>

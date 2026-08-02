@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { XmbItem } from "@models/menu";
 import { useXmb } from "@context/XmbContext";
 import Link from "next/link";
@@ -10,12 +10,23 @@ interface MenuItemProps {
   catIndex: number;
   index: number;
   item: XmbItem;
-  openItem: (item: XmbItem) => void;
 }
 
-export const MenuItem = ({ catIndex, index, item, openItem }: MenuItemProps) => {
-  const { x, y } = useXmb();
+export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
+  const { x, y, openItem, updateY } = useXmb();
   const isActive = x === catIndex && y === index;
+
+  const handleClick: MouseEventHandler = (e) => {
+    e.preventDefault();
+
+    if (isActive) {
+      openItem(item);
+      return;
+    }
+
+    updateY(index);
+  };
+
 
   return (
     <>
@@ -25,10 +36,7 @@ export const MenuItem = ({ catIndex, index, item, openItem }: MenuItemProps) => 
         href={item.link || ""}
         data-index={index}
         data-active={isActive}
-        onClick={(e) => {
-          e.preventDefault();
-          openItem(item);
-        }}
+        onClick={handleClick}
         target={item.link && "_blank" || undefined}>
         <div className="grid grid-cols-1 overflow-visible relative">
           <div className="overflow-visible justify-items-center">

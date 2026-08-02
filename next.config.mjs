@@ -2,9 +2,7 @@ import version from './package.json' with { type: 'json' };
 import { fileURLToPath } from "url";
 import path from 'path';
 import WebpackShellPluginNext from "webpack-shell-plugin-next";
-//import prebuildTask from './scripts/preBuild.mjs';
-
-//prebuildTask();
+//import type { NextConfig } from 'next';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -86,6 +84,12 @@ const nextConfig = {
         }),
       );
     }
+
+    // load shader files as raw text
+    config.module.rules.push({
+      test: /\.([gh]lsl|vert)$/,
+      type: 'asset/source', // Loads file content as a string
+    });
 
     return config;
   },

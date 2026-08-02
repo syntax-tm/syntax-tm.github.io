@@ -19,6 +19,8 @@ export interface XmbContextType {
   currentItems: XmbItem[] | null;
   x: number;
   y: number;
+  updateX: (newX: number) => void;
+  updateY: (newY: number) => void;
   openInNewTab: (url: string) => void;
   openItem: (item: XmbItem) => void;
   toXmbKey: (x: number, y: number) => string;
@@ -173,7 +175,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const onHelp = useCallback(() => {
     play(XMB_AUDIO_SRC);
 
-    router.push('/?modal=help');
+    router.push('/help');
   }, []);
 
   const moveUp = useCallback(() => {
@@ -377,6 +379,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     return {
       x,
       y,
+      updateX,
+      updateY,
       menu: xmbMenuRef.current,
       currentCategory,
       currentItem,

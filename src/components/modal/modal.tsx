@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
@@ -27,15 +27,16 @@ export function ModalClose() {
 
   const { play } = useAudio();
 
-  async function onEsc() {
+  const onEsc = useCallback(async () => {
     await play(AUDIO_SRC);
-
     router.push('/');
-  }
+  }, []);
 
-  const actions = new Map<string, KeyPressAction>();
-
-  actions.set('escape', { repeat: false, onKeyPress: onEsc });
+  const actions: Map<string, KeyPressAction> = useMemo(() => {
+    const newActions = new Map<string, KeyPressAction>();
+    newActions.set('escape', { repeat: false, onKeyPress: onEsc });
+    return newActions;
+  }, [onEsc]);
 
   useKeyboard({ actions: actions, enabledOnModal: true });
 
@@ -94,21 +95,19 @@ export function Modal({ title, children }: { title: string, children: React.Reac
   const modalClass = title.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <>
-      <div className="root-container">
-        <BackgroundView />
-        <Clock />
-        <Menu />
-        <div className={`modal modal-${modalClass} fixed left-0 top-0 z-100 flex flex-col h-full w-full`}>
-          <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
-            <ModalHeader title={title} />
-            <div className="absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
-              {children}
-            </div>
-            <ModalClose />
+    <div className="root-container">
+      <BackgroundView />
+      <Clock />
+      <Menu />
+      <div className={`modal modal-${modalClass} fixed left-0 top-0 z-100 flex flex-col h-full w-full`}>
+        <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
+          <ModalHeader title={title} />
+          <div className="grid absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
+            {children}
           </div>
+          <ModalClose />
         </div>
       </div>
-    </>
+    </div>
   );
 }

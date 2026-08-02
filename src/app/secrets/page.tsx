@@ -10,7 +10,7 @@ export default function SecretsPage() {
   return (
     <>
       <Modal title="Secrets">
-        <div className=" w-full h-[70%]">
+        <div className="w-full h-full grid">
           <SecretsView />
         </div>
       </Modal>

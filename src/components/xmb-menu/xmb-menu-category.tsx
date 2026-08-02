@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { XmbCategory, XmbItem } from "@models/menu";
+import React, { MouseEventHandler } from "react";
+import { XmbCategory } from "@models/menu";
 import { useXmb } from "@context/XmbContext";
 import { MenuItem } from "./xmb-menu-item";
 import "./xmb.scss";
@@ -9,13 +9,20 @@ import "./xmb.scss";
 interface MenuCategoryProps {
   index: number;
   category: XmbCategory;
-  openItem: (item: XmbItem) => void;
 }
 
-export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) => {
+export const MenuCategory = ({ index, category }: MenuCategoryProps) => {
 
-  const { x, y } = useXmb();
+  const { x, y, updateX } = useXmb();
   const isActive = x === index;
+
+  const handleClick: MouseEventHandler = (e) => {
+    if (isActive) return;
+
+    e.preventDefault();
+
+    updateX(index);
+  };
 
   return (
     <>
@@ -23,6 +30,8 @@ export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) =
         className={`xmb-category ${ isActive ? 'active' : 'inactive' }`}
         data-index={index}
         data-active={isActive}
+        style={{ '--y': y } as React.CSSProperties}
+        onClick={handleClick}
       >
         <div className={`xmb-category-header grid hover:cursor-pointer`}>
           {category.icon}
@@ -41,7 +50,6 @@ export const MenuCategory = ({ index, category, openItem }: MenuCategoryProps) =
                   index={i}
                   key={item.id}
                   item={item}
-                  openItem={openItem}
                 />
               ),
               )}
