@@ -63,7 +63,7 @@ const nextConfig = {
       '*.hlsl': {
         type: 'raw',
       },
-      '*.raw': {
+      '*.vert': {
         type: 'raw',
       },
     },
