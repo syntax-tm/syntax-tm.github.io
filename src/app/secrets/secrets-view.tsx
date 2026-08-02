@@ -46,7 +46,6 @@ export default function SecretsView() {
                 const type = g as SecretGroupType;
                 const group = secretGroups[type];
                 const items = Array.from(stats).filter(stat => {
-                  if (type === 'default') return stat[1].stat.type === undefined;
                   return stat[1].stat.type === type;
                 });
                 return (

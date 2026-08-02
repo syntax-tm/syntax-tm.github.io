@@ -7,7 +7,7 @@ import "./xmb.scss";
 
 export default function Menu() {
 
-  const { openItem, menu, x } = useXmb();
+  const { menu, x } = useXmb();
 
   return (
     <div className='xmb-menu fixed w-full h-full' data-x={x} style={{ '--x': x } as React.CSSProperties}>
@@ -20,7 +20,6 @@ export default function Menu() {
                 index={i}
                 key={item.title}
                 category={item}
-                openItem={openItem}
               />
             ))
           }
