@@ -1,11 +1,11 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import localFont from "next/font/local";
 import { useAudio } from '@context/AudioContext';
 import { useSnackbar } from "@context/SnackbarContext";
 import { useGamepads } from 'awesome-react-gamepads';
 import { useKeySequence } from "@hooks/useKeySequence";
-import localFont from "next/font/local";
 import { SnackbarVariant } from "@components/types";
 
 const SECRET_AUDIO_SRC = '/audio/startup.mp3';
@@ -91,34 +91,10 @@ export type SecretMap = Record<AchievementId, StatDefinition>;
 
 export const secrets: SecretMap =
 {
-  [AchievementId.konami_code]: {
-    id: AchievementId.konami_code,
-    title: 'Konami Code',
-    description: 'Entered the Konami Code.',
-    type: 'bg',
-  },
-  [AchievementId.psp_code]: {
-    id: AchievementId.psp_code,
-    title: 'PSP Mode',
-    description: 'Flash CFW.',
-    type: 'theme',
-  },
   [AchievementId._404]: {
     id: AchievementId._404,
     title: '404',
     description: "There was a page here, but it's gone now.",
-    type: 'bg',
-  },
-  [AchievementId.iwhbyd]: {
-    id: AchievementId.iwhbyd,
-    title: 'IWHBYD',
-    description: '"I Would Have Been Your Daddy"',
-    type: 'bg',
-  },
-  [AchievementId.oceangate]: {
-    id: AchievementId.oceangate,
-    title: 'Oceangate',
-    description: "Submersible not included.",
     type: 'bg',
   },
   [AchievementId.android]: {
@@ -127,11 +103,35 @@ export const secrets: SecretMap =
     description: "Tap tap tap.",
     type: 'bg',
   },
+  [AchievementId.iwhbyd]: {
+    id: AchievementId.iwhbyd,
+    title: 'IWHBYD',
+    description: '"I Would Have Been Your Daddy"',
+    type: 'bg',
+  },
+  [AchievementId.konami_code]: {
+    id: AchievementId.konami_code,
+    title: 'Konami Code',
+    description: 'Entered the Konami Code.',
+    type: 'bg',
+  },
   [AchievementId.missing_no]: {
     id: AchievementId.missing_no,
     title: 'MissingNo.',
     description: "<Memory Corrupted>",
     type: 'bg',
+  },
+  [AchievementId.oceangate]: {
+    id: AchievementId.oceangate,
+    title: 'Oceangate',
+    description: "Submersible not included.",
+    type: 'bg',
+  },
+  [AchievementId.psp_code]: {
+    id: AchievementId.psp_code,
+    title: 'PSP Mode',
+    description: 'Flash CFW.',
+    type: 'theme',
   },
 };
 

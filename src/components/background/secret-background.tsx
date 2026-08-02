@@ -16,7 +16,7 @@ const resolveShaderKind = (secretBg: AchievementId | null): ShaderKind | null =>
     case AchievementId.konami_code:
       return 'konami_code';
     case AchievementId.android:
-      return 'android';
+      return 'dreamcast';
     case AchievementId.iwhbyd:
       return 'iwhbyd';
     case AchievementId.oceangate:

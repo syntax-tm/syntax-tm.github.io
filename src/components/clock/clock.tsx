@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Google_Sans } from "next/font/google";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +30,8 @@ export default function Clock() {
   const [minute, setMinute] = useState<string | null>(null);
   const [meridiem, setMeridiem] = useState<string | null>(null);
   const [showColon, setShowColon] = useState(false);
+  const shownRef = useRef<NodeJS.Timeout | null>(null);
+  const isLoadingRef = useRef(true);
 
   const { isPspSecretActive, pspFontClass } = useSecret();
 
@@ -65,16 +67,26 @@ export default function Clock() {
       refreshTime();
     }
 
+    if (!shownRef.current) {
+      shownRef.current = setInterval(() => {
+        isLoadingRef.current = false;
+      }, 5000);
+    }
+
     const interval = setInterval(() => {
       refreshTime();
     }, 1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (shownRef.current)
+        clearInterval(shownRef.current);
+    };
   }, [loaded]);
 
   return (
     <>
-      <div className={`${ !isPspSecretActive ? 'clock' : 'psp-clock' } boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums`}>
+      <div className={`${ !isPspSecretActive ? 'clock' : 'psp-clock' } ${!isLoadingRef.current && 'boot-fade-in'} rounded-sm absolute p-2 select-none pointer-events-none tabular-nums`}>
         <div className={`clock-container ${loaded ? 'flex' : 'hidden'} ${isPspSecretActive ? pspFontClass : clockFont.className} tracking-normal align-middle flex flex-nowrap items-center ${isPspSecretActive && '-mt-1'}`}>
           <div className="flex flex-nowrap gap-0 items-center mx-2">
             <span>{month}</span>

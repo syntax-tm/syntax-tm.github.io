@@ -16,14 +16,14 @@ void main() {
 
   // 2. Set pixel sizes to look like a raw Game Boy VRAM dump
   // MissingNo blocks are wider horizontally than they are tall!
-  vec2 blockDimensions = vec2(32.0, 12.0);  //vec2(32.0, 12.0);
+  vec2 blockDimensions = vec2(64.0, 24.0);  //vec2(32.0, 12.0);
 
   // Get base pixel coordinates
   vec2 blockCoord = floor(gl_FragCoord.xy / blockDimensions);
 
   // 3. Inject horizontal shifting to simulate data misalignment
   // Every horizontal row shifts left or right based on time and row hash
-  float shiftTime = floor(u_time * 8.0); // 8.0 Steps smoothly like 8-bit frames
+  float shiftTime = floor(u_time * 2.0); // 8.0 Steps smoothly like 8-bit frames
   float rowShift = floor(rand(vec2(blockCoord.y, shiftTime)) * 12.0) - 6.0;
   blockCoord.x += rowShift;
 
@@ -37,7 +37,7 @@ void main() {
   // Generate random empty transparent holes to break the background up
   float maskingNoise = rand(floor(gl_FragCoord.xy / vec2(64.0, 64.0)) + shiftTime);
   if (maskingNoise > 0.82) {
-    //discard; // Erases sections dynamically to replicate broken sprite data
+    discard; // Erases sections dynamically to replicate broken sprite data
   }
 
   // 6. Map the raw float noise cleanly to the 4 discrete colors

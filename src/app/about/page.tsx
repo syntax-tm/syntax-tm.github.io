@@ -73,7 +73,7 @@ function AboutView() {
 
   return (
     <div className="grid h-full lg:p-1">
-      <div className="modal-content content-center justify-items-center mx-auto md:w-[80%] overflow-y-auto overscroll-contain my-[2%] lg:my-2">
+      <div className="modal-content content-center justify-items-center mx-auto md:w-[80%] my-[2%] lg:my-2">
         <table className="w-auto text-base rtl:text-right text-gray-500 dark:text-gray-400 max-w-125 -my-1">
           <tbody className="">
             {
