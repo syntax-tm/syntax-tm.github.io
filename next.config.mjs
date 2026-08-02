@@ -56,6 +56,17 @@ const nextConfig = {
   },
   turbopack: {
     root: path.join(__dirname),
+    rules: {
+      '*.glsl': {
+        type: 'raw',
+      },
+      '*.hlsl': {
+        type: 'raw',
+      },
+      '*.raw': {
+        type: 'raw',
+      },
+    },
   },
   webpack: (config, { dev, isServer }) => {
     if (isServer && !dev) {
