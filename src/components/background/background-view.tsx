@@ -1,25 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSecret } from '@context/SecretContext';
 import SecretBackground from '@components/background/secret-background';
 import WebGlBackground from '@components/background/webgl-background';
 
 export default function BackgroundView() {
-
-  // if konami, missingno, android, oceangate, or 404 secrets are active, use the SecretBackground,
-  // otherwise default to WebGlBackground
+  // if any background secret is active, use the secret shader; otherwise use the default WebGL background.
   const { getBackground } = useSecret();
+  const isSecretBg = getBackground() !== null;
 
-  const bg = getBackground();
-  const isSecretBg = bg !== null;
-
-  return (
-    <>
-      {isSecretBg
-        ? <SecretBackground />
-        : <WebGlBackground />}
-    </>
-  );
-
+  return isSecretBg ? <SecretBackground /> : <WebGlBackground />;
 }

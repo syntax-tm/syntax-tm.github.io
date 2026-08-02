@@ -1,9 +1,30 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { AchievementId, useSecret } from '@context/SecretContext';
-import useShader, { ShaderKind } from './shaders';
+import getShaderSource, { ShaderKind } from './shaders';
 import "./secret-background.css";
+
+const resolveShaderKind = (secretBg: AchievementId | null): ShaderKind | null => {
+  if (!secretBg) return null;
+
+  switch (secretBg) {
+    case AchievementId._404:
+      return 'silent_hill';
+    case AchievementId.missing_no:
+      return 'missing_no';
+    case AchievementId.konami_code:
+      return 'konami_code';
+    case AchievementId.android:
+      return 'android';
+    case AchievementId.iwhbyd:
+      return 'iwhbyd';
+    case AchievementId.oceangate:
+      return 'oceangate';
+    default:
+      throw new Error('No secret background shader is active.');
+  }
+};
 
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -14,56 +35,16 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { stats } = useSecret();
-  const [vsSource, setVsSource] = useState<string | null>(null);
-  const [fsSource, setFsSource] = useState<string | null>(null);
-  const [kind, setKind] = useState<ShaderKind | null>(null);
+  const { getBackground } = useSecret();
 
-  // sets the current fsSource based on which secret is active
-  useEffect(() => {
+  const secretBg = getBackground();
+  const kind = useMemo(() => resolveShaderKind(secretBg), [secretBg]);
+  const vsSource = useMemo(() => getShaderSource('default') ?? null, []);
+  const fsSource = useMemo(() => (kind ? getShaderSource(kind) ?? null : null), [kind]);
 
-    let sfKind: ShaderKind;
-
-    if (!stats) return;
-
-    if (stats.get(AchievementId._404)?.isUnlocked) {
-      sfKind = "silent_hill";
-    }
-    else if (stats.get(AchievementId.missing_no)?.isUnlocked) {
-      sfKind = "missing_no";
-    }
-    else if (stats.get(AchievementId.konami_code)?.isUnlocked) {
-      sfKind = "konami_code";
-    }
-    else if (stats.get(AchievementId.android)?.isUnlocked) {
-      sfKind = "android";
-    }
-    else if (stats.get(AchievementId.iwhbyd)?.isUnlocked) {
-      sfKind = "iwhbyd";
-    }
-    else if (stats.get(AchievementId.oceangate)?.isUnlocked) {
-      sfKind = "oceangate";
-    }
-    else {
-      throw new Error("No secret background shader is active.");
-    }
-
-    setKind(sfKind);
-
-    const shader = useShader(sfKind);
-    if (!shader) {
-      throw new Error(`Shader source for ${sfKind} not found.`);
-    }
-    setFsSource(shader);
-
-    // default vertex shader
-    const vs = useShader("default");
-    if (!vs) {
-      throw new Error(`Shader source for 'default' not found.`);
-    }
-
-    setVsSource(vs);
-  }, [stats]);
+  if (!kind || !vsSource || !fsSource) {
+    return null;
+  }
 
   const render = useCallback((time: number) => {
     const canvas = canvasRef.current;

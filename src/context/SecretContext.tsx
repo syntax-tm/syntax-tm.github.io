@@ -252,7 +252,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     return Object.values(secrets).filter(s => s.id !== id && s.type === type).map(s => s.id);
   };
 
-  const lockSecret = useCallback(async (id: AchievementId) => {
+  const lockSecret = async (id: AchievementId) => {
 
     // check to see if it is already locked
     const isUnlocked = isSecretUnlocked(id);
@@ -292,9 +292,9 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       const exhaustiveCheck: never = id;
       throw new Error(`Unhandled case: ${exhaustiveCheck}`);
     }
-  }, []);
+  };
 
-  const unlockSecret = useCallback(async (id: AchievementId) => {
+  const unlockSecret = async (id: AchievementId) => {
 
     // check to see if it has already been unlocked
     const isUnlocked = isSecretUnlocked(id);
@@ -311,9 +311,9 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
     refreshStats();
 
-  }, []);
+  };
 
-  const toggleSecret = useCallback((id: AchievementId) => {
+  const toggleSecret = (id: AchievementId) => {
 
     // make sure that it has been unlocked first
     // TODO: conisder throwing error here if not unlocked
@@ -332,7 +332,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, newState);
 
     refreshStats();
-  }, []);
+  };
 
   const getBackground = useCallback((): AchievementId | null => {
     if (!stats) return null;
@@ -348,9 +348,9 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const isBackground = useCallback((id: AchievementId): boolean => {
     const secret = secrets[id];
     return secret.type === 'bg';
-  }, []);
+  }, [secrets]);
 
-  const refreshStats = useCallback(() => {
+  const refreshStats = () => {
     const playerStats = new Map<AchievementId, PlayerStat>();
     Object.keys(AchievementId)
       .map((achId) => {
@@ -397,7 +397,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       });
 
     setStats(playerStats);
-  }, []);
+  };
 
   useKeySequence(KONAMI_CODE, () => {
     unlockSecret(AchievementId.konami_code);
