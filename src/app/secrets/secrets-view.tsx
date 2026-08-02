@@ -27,7 +27,7 @@ export default function SecretsView() {
   return (
     <>
       <div className="modal-content modal-content-secrets text-white h-full grid">
-        <table className="table-auto border-collapse mx-auto mb-0 w-full lg:mt-5 lg:max-w-[90%]">
+        <table className="table-auto border-collapse mb-0 w-full">
           <thead className="bg-gray-600/40">
             <tr className="content-center">
               <th className=" text-sm md:text-lg border border-gray-400/25">

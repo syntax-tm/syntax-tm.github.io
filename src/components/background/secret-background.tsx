@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useSecret } from '@context/SecretContext';
 import "./secret-background.css";
 
-type bgShaderKind = "silent-hill" | "konami-code" | "missing-no" | "oceangate";
+type bgShaderKind = "silent-hill" | "konami-code" | "missing-no" | "oceangate" | "android";
 
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -15,7 +15,7 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive, isOceangateSecretActive } = useSecret();
+  const { isMissingNoSecretActive, is404SecretActive, isKonamiSecretActive, isOceangateSecretActive, isAndroidSecretActive } = useSecret();
   const [fsSource, setFsSource] = useState<string | null>(null);
   const [kind, setKind] = useState<bgShaderKind | null>(null);
 
@@ -277,6 +277,124 @@ void main() {
 }
 `;
 
+  // android
+  const androidfsSource = `
+precision mediump float;
+uniform vec2 u_resolution;
+uniform float u_time;
+
+// Retro 8-bit Pseudorandom Hash
+float rand(vec2 co) {
+  return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main() {
+  // 1. Android Color Palette
+  vec3 androidGreen = vec3(0.24, 0.73, 0.42); // Primary background #3DDC84
+  vec3 glitchVoid   = vec3(0.04, 0.05, 0.08); // Dark space color used for tearing cracks
+  vec3 glitchRed    = vec3(0.90, 0.15, 0.20); // Chromatic aberration red splitting
+  vec3 starWhite    = vec3(0.88, 0.92, 0.90); // Glitched white data spikes
+
+  // 2. Pixelation Grid Constraints (PS1-style downscaling)
+  float pixelSize = 4.0;
+  vec2 pixelCoord = floor(gl_FragCoord.xy / pixelSize) * pixelSize;
+  vec2 uv = pixelCoord / u_resolution.xy;
+
+  // 3. Frame-Rate Step Lock (Crucial for old hardware look)
+  float glitchTime = floor(u_time * 10.0); // Changes states heavily 10 times a second
+
+  // 4. Horizontal Scanline Tearing
+  // Calculate a row-based hash to determine if this section of the screen slips sideways
+  float lineNoise = rand(vec2(floor(pixelCoord.y / 16.0), glitchTime));
+  float xOffset = 0.0;
+  
+  if (lineNoise > 0.85) {
+    // Sharp, blocky horizontal displacement step
+    xOffset = (rand(vec2(glitchTime, 1.2)) - 0.5) * 0.15;
+  }
+  
+  // Apply offset to horizontal coordinate for all subsequent visual layers
+  vec2 glitchedUV = vec2(fract(uv.x + xOffset), uv.y);
+  vec2 modifiedPixelCoord = glitchedUV * u_resolution.xy;
+
+  // 5. Procedural Structural Glitches (Memory blocks eating the green screen)
+  float baseGlitchMask = 0.0;
+  
+  // Break screen into massive rectangular data blocks
+  vec2 blockGrid = floor(modifiedPixelCoord / vec2(64.0, 32.0));
+  float blockNoise = rand(blockGrid + glitchTime);
+  
+  if (blockNoise > 0.93) {
+    baseGlitchMask = 1.0; // Inverts or corrupts this whole block sector
+  }
+
+  // 6. Vector Spaceship Remnant Artifacts
+  // Renders fragments of the ship vector floating ruined in the background code
+  float shipMask = 0.0;
+  vec2 centeredUV = (modifiedPixelCoord - 0.5 * u_resolution.xy) / u_resolution.y;
+  
+  // Broken floating triangle hull slices
+  if (centeredUV.y > -0.2 && centeredUV.y < 0.2) {
+    float widthAtY = (0.2 - centeredUV.y) * 0.6;
+    if (abs(centeredUV.x) < widthAtY) {
+      // Only draw chunks of the ship based on a high-frequency coordinate noise check
+      if (rand(floor(modifiedPixelCoord / 8.0) + glitchTime) > 0.40) {
+        shipMask = 1.0;
+      }
+    }
+  }
+
+  // 7. Layer Composition & Chromatic Aberration
+  vec3 finalColor = androidGreen;
+
+  if (baseGlitchMask > 0.5) {
+    // Corrupted block sector pulls down to the space void color
+    finalColor = glitchVoid; 
+  } else if (shipMask > 0.5) {
+    // Vector ruins show up as corrupted white code data
+    finalColor = starWhite;
+  }
+
+  // Inject a flickering red color split channel right at the tearing seam boundaries
+  if (abs(xOffset) > 0.0 && rand(pixelCoord + glitchTime) > 0.6) {
+    finalColor.r = glitchRed.r;
+  }
+
+  // 8. PS1 4x4 Ordered Bayer Matrix Dithering
+  float ditherPatternX = mod(pixelCoord.x / pixelSize, 4.0);
+  float ditherPatternY = mod(pixelCoord.y / pixelSize, 4.0);
+  float ditherThreshold = 0.0;
+
+  if (ditherPatternY == 0.0) {
+    if (ditherPatternX == 0.0) ditherThreshold = 0.0000;
+    if (ditherPatternX == 1.0) ditherThreshold = 0.5000;
+    if (ditherPatternX == 2.0) ditherThreshold = 0.1250;
+    if (ditherPatternX == 3.0) ditherThreshold = 0.6250;
+  } else if (ditherPatternY == 1.0) {
+    if (ditherPatternX == 0.0) ditherThreshold = 0.7500;
+    if (ditherPatternX == 1.0) ditherThreshold = 0.2500;
+    if (ditherPatternX == 2.0) ditherThreshold = 0.8750;
+    if (ditherPatternX == 3.0) ditherThreshold = 0.3750;
+  } else if (ditherPatternY == 2.0) {
+    if (ditherPatternX == 0.0) ditherThreshold = 0.1875;
+    if (ditherPatternX == 1.0) ditherThreshold = 0.6875;
+    if (ditherPatternX == 2.0) ditherThreshold = 0.0625;
+    if (ditherPatternX == 3.0) ditherThreshold = 0.5625;
+  } else if (ditherPatternY == 3.0) {
+    if (ditherPatternX == 0.0) ditherThreshold = 0.9375;
+    if (ditherPatternX == 1.0) ditherThreshold = 0.4375;
+    if (ditherPatternX == 2.0) ditherThreshold = 0.8125;
+    if (ditherPatternX == 3.0) ditherThreshold = 0.3125;
+  }
+
+  // Apply cross-hatch shading pattern reduction
+  finalColor += (ditherThreshold - 0.5) * 0.08;
+  finalColor = floor(finalColor * 6.0) / 6.0; // Sharp color depth crushing
+
+  gl_FragColor = vec4(finalColor, 1.0);
+}
+`;
+
   // sets the current fsSource based on which secret is active
   useEffect(() => {
 
@@ -298,8 +416,11 @@ void main() {
       source = defaultfsSource;
       sfKind = "konami-code";
     }
-    else
-    {
+    else if (isAndroidSecretActive) {
+      source = androidfsSource;
+      sfKind = "android";
+    }
+    else {
       source = oceangatefsSource;
       sfKind = "oceangate";
     }
@@ -469,7 +590,7 @@ void main() {
     <canvas
       id="webgl-canvas"
       ref={canvasRef}
-      className={`${kind} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
+      className={`secret-background ${kind} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
       style={{ imageRendering: 'pixelated' }}
     />
   );

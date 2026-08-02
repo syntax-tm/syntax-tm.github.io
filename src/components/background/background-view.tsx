@@ -11,12 +11,12 @@ export default function BackgroundView() {
 
   // if konami, missingno, or 404 secrets are active, use the PixelatedBackground
   // otherwise default to WebGlBackground
-  const { isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive, isOceangateSecretActive } = useSecret();
+  const { isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive, isOceangateSecretActive, isAndroidSecretActive } = useSecret();
 
   useEffect(() => {
-    const secretBg = isKonamiSecretActive || isMissingNoSecretActive || is404SecretActive || isOceangateSecretActive;
+    const secretBg = isKonamiSecretActive || isMissingNoSecretActive || is404SecretActive || isOceangateSecretActive || isAndroidSecretActive;
     setIsSecretBg(secretBg);
-  }, [isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive, isOceangateSecretActive]);
+  }, [isKonamiSecretActive, isMissingNoSecretActive, is404SecretActive, isOceangateSecretActive, isAndroidSecretActive]);
 
   return (
     <>

@@ -182,7 +182,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 @media (min-width: 1281px) {
 
   /* CSS */
-  margin-top: 14%;
+  top: 16%;
   margin-left: calc(#{$XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT}px - (#{$XMB_MAIN_DESKTOP_SCALEX}px * var(--x)));
 
 }

@@ -1,18 +1,18 @@
 "use client";
 
 import React from "react";
-import useInput from "@hooks/useInput";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { InputType } from "../../app/enums";
-import { useAudio } from "@context/AudioContext";
-import { KeyPressAction } from "@components/types";
-import useKeyboard from "@hooks/useKeyboard";
-import ControllerIcon from "@components/icons/controller-icon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
+import { InputType } from "@app/enums";
+import { useAudio } from "@context/AudioContext";
+import useInput from "@hooks/useInput";
+import useKeyboard from "@hooks/useKeyboard";
 import BackgroundView from "@components/background/background-view";
 import Clock from "@components/clock/clock";
+import ControllerIcon from "@components/icons/controller-icon";
+import { KeyPressAction } from "@components/types";
 import Menu from "@components/xmb-menu/xmb-menu";
 import "./modal.css";
 
@@ -40,13 +40,13 @@ export function ModalClose() {
   useKeyboard({ actions: actions, enabledOnModal: true });
 
   return (
-    <div className="w-full h-[15%] relative">
+    <div className="w-full h-[15%] absolute bottom-0 left-0">
       <div className="relative contents">
         <hr className="absolute top-0 w-full" />
         <div className="grid justify-center">
           <span className="text-white mt-[1em] ml-[0.5em] text-center modal-action object-center mx-auto">
             {/* need to set the href so that the user can close modal by clicking on the buttton */}
-            <Link href="/">
+            <Link href="/" >
               {isGamepad && (
                 <div className="text-xl items-center justify-items-center align-items-center inline-flex">
                   <div className="relative max-w-10">
@@ -78,7 +78,7 @@ export function ModalClose() {
 
 export function ModalHeader({ title }: { title: string }) {
   return (
-    <div className="w-full h-[15%] relative">
+    <div className="w-full h-[15%] absolute top-0 left-0">
       <div className="relative contents">
         <div className="modal-title text-xl mx-3 h-full flex items-end">
           <span className="inline-block align-text-bottom text-white my-2">{title}</span>
@@ -90,16 +90,21 @@ export function ModalHeader({ title }: { title: string }) {
 }
 
 export function Modal({ title, children }: { title: string, children: React.ReactNode }) {
+
+  const modalClass = title.toLowerCase().replace(/\s+/g, '-');
+
   return (
     <>
       <div className="root-container">
         <BackgroundView />
         <Clock />
         <Menu />
-        <div className={`modal modal-${title.toLowerCase().replace(/\s+/g, '-')} fixed left-0 top-0 z-100 flex flex-col h-full w-full`}>
-          <div className="flex flex-col w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
+        <div className={`modal modal-${modalClass} fixed left-0 top-0 z-100 flex flex-col h-full w-full`}>
+          <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen bg-black/75 z-100 overflow-none backdrop-blur">
             <ModalHeader title={title} />
-            {children}
+            <div className="absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
+              {children}
+            </div>
             <ModalClose />
           </div>
         </div>

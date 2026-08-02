@@ -19,11 +19,11 @@
   animation:idea 2s linear infinite;
 }
 /* Center the demo */
-html .anim-container,
-body .anim-container {
+html .loading,
+body .loading {
   height: 100vh;
 }
-body .anim-container {
+body .loading {
   display: flex;
 }
 

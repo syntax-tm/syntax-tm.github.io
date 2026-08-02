@@ -42,7 +42,7 @@ const pspFont = localFont({
   preload: true,
 });
 
-export type SecretGroupType = 'default' | 'bg' | 'icons';
+export type SecretGroupType = 'default' | 'bg' | 'theme';
 
 export interface StatDefinition {
   id: AchievementId;
@@ -64,6 +64,7 @@ export interface PlayerStat {
 export interface SecretGroup {
   type: SecretGroupType,
   title: string,
+  isRadio?: boolean,
 }
 
 export type SecretGroupMap = Record<SecretGroupType, SecretGroup>;
@@ -77,10 +78,12 @@ export const secretGroups: SecretGroupMap =
   ['bg']: {
     type: 'bg',
     title: 'Background',
+    isRadio: true,
   },
-  ['icons']: {
-    type: 'icons',
-    title: 'Icons',
+  ['theme']: {
+    type: 'theme',
+    title: 'Theme',
+    isRadio: true,
   },
 };
 
@@ -98,7 +101,7 @@ export const secrets: SecretMap =
     id: AchievementId.psp_code,
     title: 'PSP Mode',
     description: 'Flash CFW.',
-    type: 'icons',
+    type: 'theme',
   },
   [AchievementId._404]: {
     id: AchievementId._404,
@@ -121,6 +124,7 @@ export const secrets: SecretMap =
     id: AchievementId.android,
     title: 'Android',
     description: "Tap tap tap.",
+    type: 'bg',
   },
   [AchievementId.missing_no]: {
     id: AchievementId.missing_no,
@@ -216,6 +220,85 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const settingName = getEnabledKey(id);
     localStorage.setItem(settingName, isEnabled ? 'true' : 'false');
 
+    // check if this is a radio group item, if it is then toggle
+    // all of the other secrets to false and force a refresh
+    if (isEnabled && isRadioGroup(id)) {
+      const otherSecrets = getRadioGroup(id);
+      otherSecrets.forEach(o => {
+        const otherName = getEnabledKey(o);
+        localStorage.setItem(otherName, 'false');
+      });
+
+      // force the refresh if we were updating a radio group
+      refresh = true;
+    }
+
+    if (refresh)
+      refreshStats();
+  };
+
+  const isRadioGroup = (id: AchievementId): boolean => {
+    const type = secrets[id].type;
+    const group = secretGroups[type as SecretGroupType];
+    return group.isRadio ?? false;
+  };
+
+  const getRadioGroup = (id: AchievementId): AchievementId[] => {
+    if (!isRadioGroup(id)) return [];
+    const type = secrets[id].type;
+    return Object.values(secrets).filter(s => s.id !== id && s.type === type).map(s => s.id);
+  };
+
+  const loadSecret = (id: AchievementId, unlocked: boolean, enabled: boolean) => {
+
+    let refresh = false;
+
+    // if this is a radio group item, we need to toggle all of the other secrets off
+    // before activating this one and then triggering a refresh
+    if (isRadioGroup(id)) {
+      const otherSecrets = getRadioGroup(id);
+      otherSecrets.forEach(o => {
+        setSecretEnabled(o, false, false);
+      });
+
+      // force the refresh if we were updating a radio group
+      refresh = true;
+    }
+
+    if (id === AchievementId.konami_code) {
+      setIsKonamiSecretUnlocked(unlocked);
+      setIsKonamiSecretActive(enabled);
+    }
+    else if (id === AchievementId.psp_code) {
+      setIsPspSecretUnlocked(unlocked);
+      setIsPspSecretActive(enabled);
+    }
+    else if (id === AchievementId.iwhbyd) {
+      setIsIwhbydSecretUnlocked(unlocked);
+      setIsIwhbydSecretActive(enabled);
+    }
+    else if (id === AchievementId._404) {
+      setIs404SecretUnlocked(unlocked);
+      setIs404SecretActive(enabled);
+    }
+    else if (id === AchievementId.oceangate) {
+      setIsOceangateSecretUnlocked(unlocked);
+      setIsOceangateSecretActive(enabled);
+    }
+    else if (id === AchievementId.android) {
+      setIsAndroidSecretUnlocked(unlocked);
+      setIsAndroidSecretActive(enabled);
+    }
+    else if (id === AchievementId.missing_no) {
+      setIsMissingNoSecretUnlocked(unlocked);
+      setIsMissingNoSecretActive(enabled);
+    }
+    else {
+      // if any enum case is missed, TypeScript flags an error here
+      const exhaustiveCheck: never = id;
+      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
+    }
+
     if (refresh)
       refreshStats();
   };
@@ -234,39 +317,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const variant: SnackbarVariant = 'lock';
     showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, variant);
 
-    if (id === AchievementId.konami_code) {
-      setIsKonamiSecretUnlocked(false);
-      setIsKonamiSecretActive(false);
-    }
-    else if (id === AchievementId.psp_code) {
-      setIsPspSecretUnlocked(false);
-      setIsPspSecretActive(false);
-    }
-    else if (id === AchievementId.iwhbyd) {
-      setIsIwhbydSecretUnlocked(false);
-      setIsIwhbydSecretActive(false);
-    }
-    else if (id === AchievementId._404) {
-      setIs404SecretUnlocked(false);
-      setIs404SecretActive(false);
-    }
-    else if (id === AchievementId.oceangate) {
-      setIsOceangateSecretUnlocked(false);
-      setIsOceangateSecretActive(false);
-    }
-    else if (id === AchievementId.android) {
-      setIsAndroidSecretUnlocked(false);
-      setIsAndroidSecretActive(false);
-    }
-    else if (id === AchievementId.missing_no) {
-      setIsMissingNoSecretUnlocked(false);
-      setIsMissingNoSecretActive(false);
-    }
-    else {
-      // if any enum case is missed, TypeScript flags an error here
-      const exhaustiveCheck: never = id;
-      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
-    }
+    loadSecret(id, false, false);
+
   }, [isKonamiSecretUnlocked, isPspSecretUnlocked, isIwhbydSecretUnlocked, isAndroidSecretUnlocked, isMissingNoSecretUnlocked, isOceangateSecretUnlocked, is404SecretUnlocked]);
 
 
@@ -285,39 +337,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
     play(SECRET_AUDIO_SRC);
 
-    if (id === AchievementId.konami_code) {
-      setIsKonamiSecretUnlocked(true);
-      setIsKonamiSecretActive(true);
-    }
-    else if (id === AchievementId.psp_code) {
-      setIsPspSecretUnlocked(true);
-      setIsPspSecretActive(true);
-    }
-    else if (id === AchievementId.iwhbyd) {
-      setIsIwhbydSecretUnlocked(true);
-      setIsIwhbydSecretActive(true);
-    }
-    else if (id === AchievementId._404) {
-      setIs404SecretUnlocked(true);
-      setIs404SecretActive(true);
-    }
-    else if (id === AchievementId.oceangate) {
-      setIsOceangateSecretUnlocked(true);
-      setIsOceangateSecretActive(true);
-    }
-    else if (id === AchievementId.android) {
-      setIsAndroidSecretUnlocked(true);
-      setIsAndroidSecretActive(true);
-    }
-    else if (id === AchievementId.missing_no) {
-      setIsMissingNoSecretUnlocked(true);
-      setIsMissingNoSecretActive(true);
-    }
-    else {
-      // if any enum case is missed, TypeScript flags an error here
-      const exhaustiveCheck: never = id;
-      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
-    }
+    loadSecret(id, true, true);
+
   }, [isKonamiSecretUnlocked, isPspSecretUnlocked, isIwhbydSecretUnlocked, isAndroidSecretUnlocked, isMissingNoSecretUnlocked, isOceangateSecretUnlocked, is404SecretUnlocked]);
 
   const toggleSecret = (id: AchievementId) => {
@@ -333,7 +354,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const action = newState ? 'Enabled' : 'Disabled';
     const variant: SnackbarVariant = newState ? 'enable' : 'disable';
 
-    showSnackbar(`Secret ${action}`, `'${id}' is now disabled.`, variant);
+    showSnackbar(`Secret ${action}`, `'${id}' is now ${newState ? 'enabled' : 'disabled'}.`, variant);
 
     // save the new setting value
     setSecretEnabled(id, newState);
@@ -402,41 +423,41 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   };
 
   // only allow one bg to be active at a time
-  useEffect(() => {
-    if (isKonamiSecretActive) {
-      setSecretEnabled(AchievementId.missing_no, false, false);
-      setSecretEnabled(AchievementId._404, false, false);
-      setSecretEnabled(AchievementId.oceangate, false, false);
-    }
-    refreshStats();
-  }, [isKonamiSecretActive]);
+  // useEffect(() => {
+  //   if (isKonamiSecretActive) {
+  //     setSecretEnabled(AchievementId.missing_no, false, false);
+  //     setSecretEnabled(AchievementId._404, false, false);
+  //     setSecretEnabled(AchievementId.oceangate, false, false);
+  //   }
+  //   refreshStats();
+  // }, [isKonamiSecretActive]);
 
-  useEffect(() => {
-    if (isOceangateSecretUnlocked) {
-      setSecretEnabled(AchievementId.konami_code, false, false);
-      setSecretEnabled(AchievementId.missing_no, false, false);
-      setSecretEnabled(AchievementId._404, false, false);
-    }
-    refreshStats();
-  }, [isOceangateSecretUnlocked]);
+  // useEffect(() => {
+  //   if (isOceangateSecretUnlocked) {
+  //     setSecretEnabled(AchievementId.konami_code, false, false);
+  //     setSecretEnabled(AchievementId.missing_no, false, false);
+  //     setSecretEnabled(AchievementId._404, false, false);
+  //   }
+  //   refreshStats();
+  // }, [isOceangateSecretUnlocked]);
 
-  useEffect(() => {
-    if (isMissingNoSecretActive) {
-      setSecretEnabled(AchievementId.konami_code, false, false);
-      setSecretEnabled(AchievementId._404, false, false);
-      setSecretEnabled(AchievementId.oceangate, false, false);
-    }
-    refreshStats();
-  }, [isMissingNoSecretActive]);
+  // useEffect(() => {
+  //   if (isMissingNoSecretActive) {
+  //     setSecretEnabled(AchievementId.konami_code, false, false);
+  //     setSecretEnabled(AchievementId._404, false, false);
+  //     setSecretEnabled(AchievementId.oceangate, false, false);
+  //   }
+  //   refreshStats();
+  // }, [isMissingNoSecretActive]);
 
-  useEffect(() => {
-    if (is404SecretActive) {
-      setSecretEnabled(AchievementId.konami_code, false, false);
-      setSecretEnabled(AchievementId.missing_no, false, false);
-      setSecretEnabled(AchievementId.oceangate, false, false);
-    }
-    refreshStats();
-  }, [is404SecretActive]);
+  // useEffect(() => {
+  //   if (is404SecretActive) {
+  //     setSecretEnabled(AchievementId.konami_code, false, false);
+  //     setSecretEnabled(AchievementId.missing_no, false, false);
+  //     setSecretEnabled(AchievementId.oceangate, false, false);
+  //   }
+  //   refreshStats();
+  // }, [is404SecretActive]);
 
   useKeySequence(KONAMI_CODE, () => {
     unlockSecret(AchievementId.konami_code);

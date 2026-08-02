@@ -207,7 +207,7 @@ export default function WebGlBackground() {
   const timeUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
 
-  // draw each animation frame.
+  // draw each animation frame
   const renderFrame = (timeMs: number) => {
     if (!contextRef.current) return;
     const context = contextRef.current;
@@ -226,7 +226,7 @@ export default function WebGlBackground() {
     requestAnimationFrame(renderFrame);
   };
 
-  // Compile shader and log errors.
+  // compile shader and log errors
   const compileShader = (source: string, type: number) => {
     if (!contextRef.current) return;
 
@@ -248,7 +248,7 @@ export default function WebGlBackground() {
     return shader;
   };
 
-  // setup shaders, buffers, and start render loop.
+  // setup shaders, buffers, and start render loop
   const initializeWebGL = () => {
     if (!contextRef.current) return;
 
@@ -273,7 +273,7 @@ export default function WebGlBackground() {
 
     context.useProgram(shaderProgram);
 
-    // Get attribute/uniform locations.
+    // get attribute/uniform locations
     const posLoc = context.getAttribLocation(shaderProgram, "aVertexPosition");
 
     const timeLocation = context.getUniformLocation(shaderProgram, "uTime");
@@ -301,7 +301,7 @@ export default function WebGlBackground() {
       }
     });
 
-    // Full-screen quad buffer.
+    // full-screen quad buffer
     const buffer = context.createBuffer();
     context.bindBuffer(context.ARRAY_BUFFER, buffer);
 

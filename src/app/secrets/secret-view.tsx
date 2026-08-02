@@ -16,29 +16,23 @@ export interface SecretViewProps
 export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
 
   const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, stats } = useSecret();
-  const [unlocked, setUnlocked] = useState(false);
-  const [enabled, setEnabled] = useState(false);
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
   const elementRef = useRef<HTMLTableCellElement | null>(null);
-
   const secret = secrets[id];
+  const [unlocked, setUnlocked] = useState(isSecretUnlocked(id));
+  const [enabled, setEnabled] = useState(isSecretEnabled(id));
 
   const toggleEnabled = useCallback(() => {
+    if (!unlocked) return;
     const newState = !enabled;
-    setSecretEnabled(id, newState);
-    setEnabled(newState);
-  }, [enabled, unlocked, stats]);
+    setSecretEnabled(id, newState, true);
+  }, [enabled, stats, unlocked]);
 
   useEffect(() => {
-
-    const isUnlocked = isSecretUnlocked(id);
-    setUnlocked(isUnlocked);
-
-    const isEnabled = isSecretEnabled(id);
-    setEnabled(isEnabled);
-
-  }, [stats, enabled, unlocked]);
+    setUnlocked(isSecretUnlocked(id));
+    setEnabled(isSecretEnabled(id));
+  }, [stats]);
 
   useEffect(() => {
 
@@ -68,9 +62,11 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
         resetTapCount();
         if (unlocked) {
           lockSecret(id);
+          setUnlocked(false);
         }
         else {
           unlockSecret(id);
+          setUnlocked(true);
         }
       }
     };
