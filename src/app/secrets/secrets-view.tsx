@@ -29,17 +29,10 @@ export default function SecretsView() {
       <div className="modal-content modal-content-secrets text-white h-full grid">
         <table className="table-auto border-collapse mb-0 w-full">
           <thead className="">
-            <tr className="content-center">
-              <th className=" text-sm md:text-lg border border-gray-400/25">
-                {/* <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
-                  aria-label="Status" /> */}
-              </th>
-              <th className="p-2 text-sm md:text-lg border border-gray-400/25 bg-gray-600/40">Name</th>
-              <th className="p-2 text-sm md:text-lg border border-gray-400/25 bg-gray-600/40">Description</th>
-              <th className="p-2 text-sm md:text-lg border border-gray-400/25 bg-gray-600/40">Enabled</th>
+            <tr className="">
             </tr>
           </thead>
-          <tbody className="bg-gray-600/40">
+          <tbody className="">
             {
               stats &&
               Array.from(Object.keys(secretGroups)).map(g => {
@@ -51,9 +44,18 @@ export default function SecretsView() {
                 return (
                   <React.Fragment key={g}>
                     <tr className="">
-                      <th className="text-lg md:text-xl py-1 lg:py-2 pl-2 text-left align-middle pointer-events-none select-none" colSpan={4}>
+                      <th className="lg:text-xl pt-1 lg:pt-3 pb-1 pl-2 text-left align-middle pointer-events-none select-none" colSpan={4}>
                         {group.title}
                       </th>
+                    </tr>
+                    <tr className="content-center bg-gray-600/40">
+                      <th className=" text-sm lg:text-lg border border-gray-400/25 bg-gray-600/40">
+                        {/* <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
+                          aria-label="Status" /> */}
+                      </th>
+                      <th className="p-0.5 border border-gray-400/25 bg-gray-600/40">Name</th>
+                      <th className="p-0.5 border border-gray-400/25 bg-gray-600/40">Description</th>
+                      <th className="p-0.5 border border-gray-400/25 bg-gray-600/40">Enabled</th>
                     </tr>
                     {
                       items && items.map(([id, stat]) => {

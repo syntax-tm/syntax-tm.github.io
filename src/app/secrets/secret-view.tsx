@@ -83,24 +83,24 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
       <tr>
         <td className={`border-b border-t border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : ''} pointer-events-none select-none justify-center items-center`}>
           <FontAwesomeIcon icon={unlocked ? faUnlockAlt : faLock}
-            className={`py-3 w-full h-full mx-3`} />
+            className={`py-1 w-full h-full mx-3`} />
         </td>
-        <td className={`border border-gray-300/25 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}
           ref={elementRef}>
           <span className="pointer-events-none select-none">
             {unlocked ? secret.title : 'Hidden'}
           </span>
         </td>
-        <td className={`border border-gray-300/25 text-wrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>
           {unlocked ? secret.description : 'Hidden'}
         </td>
-        <td className={`border border-gray-300/25 ${enabled && 'bg-green-300/50'}`}>
+        <td className={`border border-gray-300/25 ${enabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
           <div className={`grid items-center w-full h-full cursor-pointer`} onClick={toggleEnabled}>
             {
               unlocked && (
                 enabled
-                  ? <FontAwesomeIcon icon={faCheck} className="mx-auto my-0.5" />
-                  : <FontAwesomeIcon icon={faMinus} className="mx-auto my-0.5" />
+                  ? <FontAwesomeIcon icon={faCheck} className="mx-auto py-1" />
+                  : <FontAwesomeIcon icon={faMinus} className="mx-auto py-1" />
               )
             }
           </div>

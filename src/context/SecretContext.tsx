@@ -32,11 +32,20 @@ export enum AchievementId {
   _404 = "404",
   android = "ANDROID",
   missing_no = "MISSING_NO",
+  dreamcast = "DREAMCAST",
 };
 
 const pspFont = localFont({
   src: '../../public/fonts/FOT-NewRodin Pro L.otf',
   variable: '---newrodin-pro',
+  style: 'normal',
+  weight: '400',
+  preload: true,
+});
+
+const dreamcastFont = localFont({
+  src: '../../public/fonts/NiseSegaDreamcast.ttf',
+  variable: '---nise-sega-dreamcast',
   style: 'normal',
   weight: '400',
   preload: true,
@@ -106,7 +115,7 @@ export const secrets: SecretMap =
   [AchievementId.iwhbyd]: {
     id: AchievementId.iwhbyd,
     title: 'IWHBYD',
-    description: '"I Would Have Been Your Daddy"',
+    description: '"I would have been your daddy, but the dog beat me over the fence!"',
     type: 'bg',
   },
   [AchievementId.konami_code]: {
@@ -126,6 +135,12 @@ export const secrets: SecretMap =
     title: 'Oceangate',
     description: "Submersible not included.",
     type: 'bg',
+  },
+  [AchievementId.dreamcast]: {
+    id: AchievementId.dreamcast,
+    title: 'Dreamcast',
+    description: "Party like it's 9-9-99.",
+    type: 'theme',
   },
   [AchievementId.psp_code]: {
     id: AchievementId.psp_code,
@@ -154,8 +169,10 @@ export interface SecretContextType {
   isAndroidSecretActive: boolean;
   isMissingNoSecretActive: boolean;
 
-  getBackground: () => AchievementId | null;
-  isBackground: (id: AchievementId) => boolean;
+  getActiveTheme: () => AchievementId | null;
+  isThemeActive: (id?: AchievementId | null) => boolean;
+  getActiveBackground: () => AchievementId | null;
+  isBackgroundActive: (id?: AchievementId | null) => boolean;
   isSecretUnlocked: (id: AchievementId) => boolean;
   setSecretUnlocked: (id: AchievementId, isUnlocked: boolean, refresh?: boolean) => void;
   isSecretEnabled: (id: AchievementId) => boolean;
@@ -166,6 +183,7 @@ export interface SecretContextType {
   secrets: Record<string, StatDefinition>;
   secretGroups: Record<SecretGroupType, SecretGroup>;
   stats: Map<AchievementId, PlayerStat> | null;
+  dreamcastFontClass: string;
   pspFontClass: string;
 }
 
@@ -182,6 +200,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const [isOceangateSecretUnlocked, setIsOceangateSecretUnlocked] = useState(false);
   const [isAndroidSecretUnlocked, setIsAndroidSecretUnlocked] = useState(false);
   const [isMissingNoSecretUnlocked, setIsMissingNoSecretUnlocked] = useState(false);
+  const [isDreamcastSecretUnlocked, setIsDreamcastSecretUnlocked] = useState(false);
 
   // is active (preference)
   const [isKonamiSecretActive, setIsKonamiSecretActive] = useState(false);
@@ -191,6 +210,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const [isOceangateSecretActive, setIsOceangateSecretActive] = useState(false);
   const [isAndroidSecretActive, setIsAndroidSecretActive] = useState(false);
   const [isMissingNoSecretActive, setIsMissingNoSecretActive] = useState(false);
+  const [isDreamcastSecretActive, setIsDreamcastSecretActive] = useState(false);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
 
@@ -260,38 +280,41 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
     // save that it's locked and disabled now
     setSecretUnlocked(id, false);
-    setSecretEnabled(id, false);
+    setSecretEnabled(id, false, true);
 
     const secret = secrets[id];
     const variant: SnackbarVariant = 'lock';
     showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, variant);
 
-    if (id === AchievementId.konami_code) {
-      setIsKonamiSecretUnlocked(false);
-    }
-    else if (id === AchievementId.psp_code) {
-      setIsPspSecretUnlocked(false);
-    }
-    else if (id === AchievementId.iwhbyd) {
-      setIsIwhbydSecretUnlocked(false);
-    }
-    else if (id === AchievementId._404) {
-      setIs404SecretUnlocked(false);
-    }
-    else if (id === AchievementId.oceangate) {
-      setIsOceangateSecretUnlocked(false);
-    }
-    else if (id === AchievementId.android) {
-      setIsAndroidSecretUnlocked(false);
-    }
-    else if (id === AchievementId.missing_no) {
-      setIsMissingNoSecretUnlocked(false);
-    }
-    else {
-      // if any enum case is missed, TypeScript flags an error here
-      const exhaustiveCheck: never = id;
-      throw new Error(`Unhandled case: ${exhaustiveCheck}`);
-    }
+    // if (id === AchievementId.konami_code) {
+    //   setIsKonamiSecretUnlocked(false);
+    // }
+    // else if (id === AchievementId.psp_code) {
+    //   setIsPspSecretUnlocked(false);
+    // }
+    // else if (id === AchievementId.iwhbyd) {
+    //   setIsIwhbydSecretUnlocked(false);
+    // }
+    // else if (id === AchievementId._404) {
+    //   setIs404SecretUnlocked(false);
+    // }
+    // else if (id === AchievementId.oceangate) {
+    //   setIsOceangateSecretUnlocked(false);
+    // }
+    // else if (id === AchievementId.android) {
+    //   setIsAndroidSecretUnlocked(false);
+    // }
+    // else if (id === AchievementId.missing_no) {
+    //   setIsMissingNoSecretUnlocked(false);
+    // }
+    // else if (id === AchievementId.dreamcast) {
+    //   setIsDreamcastSecretUnlocked(false);
+    // }
+    // else {
+    //   // if any enum case is missed, TypeScript flags an error here
+    //   const exhaustiveCheck: never = id;
+    //   throw new Error(`Unhandled case: ${exhaustiveCheck}`);
+    // }
   };
 
   const unlockSecret = async (id: AchievementId) => {
@@ -334,21 +357,43 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     refreshStats();
   };
 
-  const getBackground = useCallback((): AchievementId | null => {
+  const getActiveTheme = useCallback((): AchievementId | null => {
     if (!stats) return null;
-    const bgSecrets = Array.from(stats).filter(([, s]) => s.type === 'bg').map(([id]) => id);
-    for (const id of bgSecrets) {
-      if (isSecretEnabled(id)) {
-        return id;
-      }
-    }
-    return null;
+    const theme = Array.from(stats)
+      .filter(([, s]) => s.type === 'theme')
+      .map(([id]) => id)
+      .filter(id => isSecretEnabled(id))
+      ?.[0];
+    return theme ?? null;
   }, [stats]);
 
-  const isBackground = useCallback((id: AchievementId): boolean => {
-    const secret = secrets[id];
-    return secret.type === 'bg';
-  }, [secrets]);
+  const isThemeActive = useCallback((id: AchievementId | null = null): boolean => {
+    if (id) {
+      return isSecretEnabled(id);
+    }
+
+    const activeTheme = getActiveTheme();
+    return activeTheme !== null;
+  }, [stats]);
+
+  const getActiveBackground = useCallback((): AchievementId | null => {
+    if (!stats) return null;
+    const bg = Array.from(stats)
+      .filter(([, s]) => s.type === 'bg')
+      .map(([id]) => id)
+      .filter(id => isSecretEnabled(id))
+      ?.[0];
+    return bg ?? null;
+  }, [stats]);
+
+  const isBackgroundActive = useCallback((id: AchievementId | null = null): boolean => {
+    if (id) {
+      return isSecretEnabled(id);
+    }
+
+    const activeBg = getActiveBackground();
+    return activeBg !== null;
+  }, [stats]);
 
   const refreshStats = () => {
     const playerStats = new Map<AchievementId, PlayerStat>();
@@ -393,6 +438,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
         else if (id === AchievementId.missing_no) {
           setIsMissingNoSecretUnlocked(isUnlocked);
           setIsMissingNoSecretActive(isEnabled);
+        }
+        else if (id === AchievementId.dreamcast) {
+          setIsDreamcastSecretUnlocked(isUnlocked);
+          setIsDreamcastSecretActive(isEnabled);
         }
       });
 
@@ -449,13 +498,22 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       void unlockSecret(AchievementId.missing_no);
     };
 
+    const handleAndroidSecretActivate = () => {
+      void unlockSecret(AchievementId.android);
+    };
+
+    const handleDreamcastSecretActivate = () => {
+      void unlockSecret(AchievementId.dreamcast);
+    };
+
     document.addEventListener("secret:konami:activate", handleSecretActivate);
     document.addEventListener("secret:psp:activate", handlePspSecretActivate);
     document.addEventListener("secret:oceangate:activate", handleOceangateSecretActivate);
     document.addEventListener("secret:404:activate", handle404SecretActivate);
     document.addEventListener("secret:iwhbyd:activate", handleIwhbydSecretActivate);
     document.addEventListener("secret:missing_no:activate", handleMissingNoSecretActivate);
-    document.addEventListener("secret:android:activate", handleMissingNoSecretActivate);
+    document.addEventListener("secret:android:activate", handleAndroidSecretActivate);
+    document.addEventListener("secret:dreamcast:activate", handleDreamcastSecretActivate);
 
     return () => {
       document.removeEventListener("secret:konami:activate", handleSecretActivate);
@@ -464,9 +522,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       document.removeEventListener("secret:404:activate", handle404SecretActivate);
       document.removeEventListener("secret:iwhbyd:activate", handleIwhbydSecretActivate);
       document.removeEventListener("secret:missing_no:activate", handleMissingNoSecretActivate);
-      document.removeEventListener("secret:android:activate", handleMissingNoSecretActivate);
+      document.removeEventListener("secret:android:activate", handleAndroidSecretActivate);
+      document.removeEventListener("secret:dreamcast:activate", handleDreamcastSecretActivate);
     };
-  }, [toggleSecret]);
+  }, []);
 
   const value = {
 
@@ -488,8 +547,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     isAndroidSecretActive,
     isMissingNoSecretActive,
 
-    getBackground,
-    isBackground,
+    getActiveTheme,
+    isThemeActive,
+    getActiveBackground,
+    isBackgroundActive,
     isSecretUnlocked,
     setSecretUnlocked,
     isSecretEnabled,
@@ -500,12 +561,22 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     secretGroups,
     secrets,
     stats,
+    dreamcastFontClass: dreamcastFont.className,
     pspFontClass: pspFont.className,
   };
 
+  let fontClass = '';
+
+  if (isPspSecretActive) {
+    fontClass = pspFont.className;
+  }
+  else if (isDreamcastSecretActive) {
+    fontClass = dreamcastFont.className;
+  }
+
   return (
     <SecretContext.Provider value={value}>
-      <div className={`${isPspSecretActive && pspFont.className}`}>
+      <div className={`${fontClass}`}>
         {children}
       </div>
     </SecretContext.Provider>

@@ -16,11 +16,14 @@ const resolveShaderKind = (secretBg: AchievementId | null): ShaderKind | null =>
     case AchievementId.konami_code:
       return 'konami_code';
     case AchievementId.android:
-      return 'dreamcast';
+      return 'android';
     case AchievementId.iwhbyd:
       return 'iwhbyd';
     case AchievementId.oceangate:
       return 'oceangate';
+    // TODO: this shader needs to be updated to match the actual dreamcast system background
+    case AchievementId.dreamcast:
+      return 'dreamcast';
     default:
       throw new Error('No secret background shader is active.');
   }
@@ -35,16 +38,12 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { getBackground } = useSecret();
+  const { getActiveBackground } = useSecret();
 
-  const secretBg = getBackground();
+  const secretBg = getActiveBackground();
   const kind = useMemo(() => resolveShaderKind(secretBg), [secretBg]);
   const vsSource = useMemo(() => getShaderSource('default') ?? null, []);
   const fsSource = useMemo(() => (kind ? getShaderSource(kind) ?? null : null), [kind]);
-
-  if (!kind || !vsSource || !fsSource) {
-    return null;
-  }
 
   const render = useCallback((time: number) => {
     const canvas = canvasRef.current;
@@ -175,6 +174,27 @@ export default function SecretBackground() {
 
     contextRef.current = gl;
 
+    // let gl: WebGLRenderingContext | null = null;
+
+    // if (contextRef.current) {
+    //   gl = contextRef.current;
+    // }
+    // else {
+    //   gl = canvas.getContext('webgl', {
+    //     alpha: false,
+    //     antialias: false,
+    //     depth: false,
+    //     stencil: false,
+    //     powerPreference: 'high-performance',
+    //     preserveDrawingBuffer: false,
+    //   });
+    //   if (!gl) {
+    //     console.error('WebGL not supported');
+    //     return;
+    //   }
+    //   contextRef.current = gl;
+    // }
+
     const handleViewportResize = () => {
       resize();
     };
@@ -194,11 +214,13 @@ export default function SecretBackground() {
         cancelAnimationFrame(frameRef.current);
       }
       if (shaderProgramRef.current) {
-        gl.deleteProgram(shaderProgramRef.current);
+        gl?.deleteProgram(shaderProgramRef.current);
       }
       if (positionBufferRef.current) {
-        gl.deleteBuffer(positionBufferRef.current);
+        gl?.deleteBuffer(positionBufferRef.current);
       }
+      // const extension = gl?.getExtension('WEBGL_lose_context');
+      // extension?.loseContext();
       contextRef.current = null;
     };
   }, [fsSource, resize, setup]);

@@ -179,6 +179,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const moveUp = useCallback(() => {
+    if (modal) return;
+
     const nextY = y - 1;
 
     play(XMB_AUDIO_SRC);
@@ -188,9 +190,11 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  }, [y, updateY]);
+  }, [y, updateY, modal]);
 
   const moveTop = useCallback(() => {
+    if (modal) return;
+
     const nextY = 0;
 
     play(XMB_AUDIO_SRC);
@@ -200,9 +204,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  }, [y, updateY]);
+  }, [y, updateY, modal]);
 
   const moveDown = useCallback(() => {
+    if (modal) return;
     if (!currentCategory) return null;
 
     play(XMB_AUDIO_SRC);
@@ -215,9 +220,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  }, [currentCategory, y, updateY]);
+  }, [currentCategory, y, updateY, modal]);
 
   const moveBottom = useCallback(() => {
+    if (modal) return;
     if (!currentCategory) return null;
 
     play(XMB_AUDIO_SRC);
@@ -229,9 +235,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(max);
 
     return positionRef.current;
-  }, [currentCategory, y, updateY]);
+  }, [currentCategory, y, updateY, modal]);
 
   const moveLeft = useCallback(() => {
+    if (modal) return;
     if (!categories) return null;
 
     play(XMB_AUDIO_SRC);
@@ -244,9 +251,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(nextX);
 
     return positionRef.current;
-  }, [x, categories, updateX]);
+  }, [x, categories, updateX, modal]);
 
   const moveFirst = useCallback(() => {
+    if (modal) return;
     if (!categories) return null;
 
     play(XMB_AUDIO_SRC);
@@ -259,9 +267,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(nextX);
 
     return positionRef.current;
-  }, [x, categories, updateX]);
+  }, [x, categories, updateX, modal]);
 
   const moveRight = useCallback(() => {
+    if (modal) return;
     if (!categories) return null;
 
     play(XMB_AUDIO_SRC);
@@ -275,10 +284,12 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(nextX);
 
     return positionRef.current;
-  }, [x, categories, updateX]);
+  }, [x, categories, updateX, modal]);
 
   const moveLast = useCallback(() => {
+    if (modal) return;
     if (!categories) return null;
+
     play(XMB_AUDIO_SRC);
 
     const max = categories.length - 1;
@@ -289,7 +300,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateX(max);
 
     return positionRef.current;
-  }, [x, categories, updateX]);
+  }, [x, categories, updateX, modal]);
 
   const actions: Map<string, KeyPressAction> = useMemo(() => {
     const map = new Map<string, KeyPressAction>();

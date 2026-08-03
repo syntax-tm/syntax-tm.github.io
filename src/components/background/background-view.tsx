@@ -1,14 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSecret } from '@context/SecretContext';
 import SecretBackground from '@components/background/secret-background';
 import WebGlBackground from '@components/background/webgl-background';
 
 export default function BackgroundView() {
   // if any background secret is active, use the secret shader; otherwise use the default WebGL background.
-  const { getBackground } = useSecret();
-  const isSecretBg = getBackground() !== null;
+  const { isBackgroundActive, stats } = useSecret();
+  const [isSecretBg, setIsSecretBg] = useState(false);
+
+  useEffect(() => {
+
+    const isActive = isBackgroundActive();
+    setIsSecretBg(isActive);
+
+  }, [stats]);
 
   return isSecretBg ? <SecretBackground /> : <WebGlBackground />;
 }
