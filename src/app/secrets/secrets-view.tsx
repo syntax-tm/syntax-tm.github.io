@@ -73,7 +73,7 @@ export default function SecretsView() {
         {
           allUnlocked && (
             <div className="h-full w-full grid">
-              <div className="align-middle grid min-h-25">
+              <div className="align-middle grid min-h-25 pointer-events-none select-none">
                 <p className="opacity-50 align-middle my-auto text-center mx-2">
                   {`Tip: You can tap on a hidden secret's name ${SECRET_TAP_MIN} times instead of unlocking them normally.`}
                 </p>

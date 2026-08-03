@@ -48,7 +48,7 @@ export function ModalClose() {
             {/* need to set the href so that the user can close modal by clicking on the buttton */}
             <Link href="/" >
               {isGamepad && (
-                <div className="text-xl items-center justify-items-center align-items-center inline-flex">
+                <div className="text-xl items-center justify-items-center align-items-center inline-flex select-none">
                   <div className="relative max-w-10">
                     <ControllerIcon icon="b" className="m-2" />
                   </div>
@@ -57,13 +57,13 @@ export function ModalClose() {
               )
               }
               {isMobile && (
-                <div className="text-xl items-center justify-items-center align-items-center inline-flex">
+                <div className="text-xl items-center justify-items-center align-items-center inline-flex select-none">
                   <FontAwesomeIcon icon={faClose} className="w-7 h-7 aspect-square inline-flex my-auto modal-action" />
                   <span className="mx-2 my-auto">close</span>
                 </div>
               )}
               {isDesktop && (
-                <div className="justify-between w-auto mt-4 text-lg hover:animate-pulse">
+                <div className="justify-between w-auto mt-4 text-lg hover:animate-pulse select-none">
                   <kbd className="px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">Esc</kbd>
                   <span className="mx-2 my-auto">close</span>
                 </div>
