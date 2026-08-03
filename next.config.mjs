@@ -46,6 +46,7 @@ const nextConfig = {
     // TODO: add missing Suspense and remove this suppression
     // missingSuspenseWithCSRBailout: false,
     viewTransition: true,
+    useTypeScriptCli: true,
   },
   env: {
     name: version.name,

@@ -25,6 +25,7 @@
     "allowSyntheticDefaultImports": true,
     "removeComments": true,
     "newLine": "lf",
+    "rootDir": "./src",
     "plugins": [
       {
         "name": "next"

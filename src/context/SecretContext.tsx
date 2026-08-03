@@ -328,7 +328,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, true);
 
     const secret = secrets[id];
-    showSnackbar(`Secret'${secret.title}' Unlocked`, `${secret.description}`, 'unlock');
+    showSnackbar(`Secret Unlocked`, `${secret.title}: ${secret.description}`, 'unlock');
 
     play(SECRET_AUDIO_SRC);
 
