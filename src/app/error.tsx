@@ -1,7 +1,6 @@
 "use client";
 
 import React, { Suspense, useEffect, useState } from "react";
-import { unstable_catchError as catchError, type ErrorInfo } from 'next/error';
 import BackgroundView from "@components/background/background-view";
 import Clock from "@components/clock/clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,10 +19,10 @@ interface StackTraceFrame {
 
 export default function ErrorPage({
   error,
-  unstable_retry,
+  reset,
 }: {
   error: Error & { digest?: string }
-  unstable_retry: () => void
+  reset: () => void
 }) {
 
   const [stackTrace, setStackTrace] = useState<StackTraceFrame[] | null>(null);
@@ -31,9 +30,7 @@ export default function ErrorPage({
   useEffect(() => {
     // log the error to an error reporting service
     console.error(error);
-  }, [error]);
 
-  useEffect(() => {
     const lines = error?.stack?.split('\n');
 
     if (!lines) return;
@@ -64,69 +61,47 @@ export default function ErrorPage({
       });
 
     setStackTrace(stack);
-  }, []);
+  }, [error]);
 
   return (
     <div className="root-container">
-      <Suspense>
-        <BackgroundView />
-        <Clock />
-      </Suspense>
-      <div className="grid content-center z-100 w-full h-full text-white">
+      <BackgroundView />
+      <Clock />
+      <div className="flex flex-col absolute left-0 top-0 z-0 w-full h-full text-white">
         {error && (
           <>
             <button
               onClick={
                 // Attempt to recover by re-fetching and re-rendering the segment
-                () => unstable_retry()
+                () => reset()
               }
               aria-label="Return to the home page">
-              <div className="flex flex-col mt-[30%]">
-                <div className="grid grid-cols-2 text-center text-lg lg:text-4xl hover:animate-pulse gap-1 lg:gap-4 px-auto">
-                  <FontAwesomeIcon icon={faBug} className="" />
-                  <div className="text-center">
+              
+            </button>
+            <div className="flex flex-col mt-[15%]">
+              <div className="grid items-center justify-center">
+                <div className="flex flex-row text-center text-6xl lg:text-8xl hover:animate-pulse gap-1 lg:gap-4 px-auto">
+                  <div className="p-3">
+                    <FontAwesomeIcon icon={faBug} className="my-auto" />
+                  </div>
+                  <div className="text-center align-middle place-content-center">
                     {error.name}
                   </div>
                 </div>
-                <hr className="w-[80%] md:w-[60%] mx-auto my-1 md:my-5 border-gray-500 opacity-50" />
-                <div className="grid text-center lg:text-2xl select-all">
-                  <p>{error.message}</p>
-                </div>
-                {stackTrace && (
-                  <div className="m-5">
-                    <hr className="w-[80%] md:w-[60%] mx-auto my-1 md:my-5 border-gray-500 opacity-50" />
-                    <div className="text-xl text-left m-2">
-                      Stacktrace:
-                    </div>
-                    <div className="grid w-full mx-auto">
-                      <table className="table-auto border border-collapse">
-                        <thead>
-                          <tr>
-                            <th className="border border-gray-400/25"> </th>
-                            <th className="border border-gray-400/25">File</th>
-                            <th className="border border-gray-400/25">Line</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {stackTrace.map((line) => {
-                            return (
-                              <tr key={line.id}>
-                                <td className="text-center opacity-50 inline-block w-8">{line.id}</td>
-                                <td className="text-left select-all overflow-clip text-ellipsis text-nowrap mx-2"
-                                  title={line.line}>
-                                  {line.file}
-                                </td>
-                                <td className="text-left select-all inline-block">{line.lineNo}</td>
-                              </tr>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
               </div>
-            </button>
+              <hr className="w-[80%] md:w-[60%] mx-auto my-1 md:my-2 border-white/75" />
+              <div className="grid text-center lg:text-xl select-all relative">
+                <p>{error.message}</p>
+              </div>
+              <hr className="w-[80%] md:w-[60%] mx-auto my-1 md:my-2 border-white/75" />
+              {error?.stack && (
+                <div className="max-w-[90%]">
+                  <div className="p-2 font-mono text-nowrap whitespace-pre overflow-y-scroll overflow-x-scroll">
+                    {error?.stack}
+                  </div>
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>

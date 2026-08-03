@@ -1,11 +1,17 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from "react";
-import { ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+
+export type StandardVoidFn = () => void;
+export type KeyboardEventFn = (e: KeyboardEvent) => void;
+export type KeyEventHandler = KeyboardEventFn | StandardVoidFn;
+
+// The type guard
+export const isKeyboardHandler = (fn: KeyEventHandler): fn is KeyboardEventFn => fn.length >= 1;
 
 export interface KeyPressAction {
     repeat: boolean;
-    onKeyPress: () => void;
+    onKeyPress: KeyEventHandler;
 }
 
 export interface KeyboardInput {
@@ -20,9 +26,21 @@ export interface KeyboardOutput {
 
 const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
+  const [pathname, setPathname] = useState('/');
 
-  const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+  useEffect(() => {
+    setPathname(window.location.pathname);
+    const handleLocationChange = () => setPathname(window.location.pathname);
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('pushstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('pushstate', handleLocationChange);
+    };
+  }, []);
+
+  const modal = pathname !== '/' && pathname !== '/boot';
 
   const isMapped = useCallback((key: string): boolean => {
     return actions.has(key.toLowerCase());
@@ -62,7 +80,18 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
 
     console.log(`keydown: ${e.key} => ${action.onKeyPress.name}()`);
 
-    action.onKeyPress();
+    const executeHandler = (
+      fn: KeyEventHandler,
+      event: KeyboardEvent,
+    ) => {
+      if (isKeyboardHandler(fn)) {
+        fn(event); // TypeScript safely knows this needs the event
+      } else {
+        (fn as StandardVoidFn)();      // TypeScript safely knows this takes zero arguments
+      }
+    };
+
+    executeHandler(action.onKeyPress, e);
 
     setKeysDown((prevState) => [...prevState, e.key]);
   }, [actions, isMapped, modal]);

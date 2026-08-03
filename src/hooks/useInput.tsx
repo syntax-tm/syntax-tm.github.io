@@ -1,54 +1,54 @@
 import { useEffect, useState } from "react";
 import { InputType } from "@app/enums";
-import { useGamepads } from "awesome-react-gamepads";
 
-const getInputType = (userAgent: NavigatorID["userAgent"]) => {
-  const [isGamepadConnected, setIsGamepadConnected] = useState(false);
-  const [inputType, setInputType] = useState<InputType>(InputType.UNKNOWN);
+const resolveInputType = (userAgent: NavigatorID["userAgent"], isGamepadConnected: boolean) => {
+  if (isGamepadConnected) {
+    return InputType.GAMEPAD;
+  }
 
-  useGamepads({
-    onConnect: () => {
-      setIsGamepadConnected(true);
-    },
-    onDisconnect: () => {
-      setIsGamepadConnected(false);
-    },
-  });
+  const isAndroid = Boolean(userAgent.match(/Android/i));
+  const isIos = Boolean(userAgent.match(/iPhone|iPad|iPod/i));
+  const isOpera = Boolean(userAgent.match(/Opera Mini/i));
+  const isIEMobile = Boolean(userAgent.match(/IEMobile/i));
+  const isMobile = isAndroid || isIos || isOpera || isIEMobile;
 
-  const getInputType = () => {
-    // gamepad
-    if (isGamepadConnected) {
-      return InputType.GAMEPAD;
-    }
+  if (isMobile) {
+    return InputType.TOUCH;
+  }
 
-    // mobile
-    const isAndroid = Boolean(userAgent.match(/Android/i));
-    const isIos = Boolean(userAgent.match(/iPhone|iPad|iPod/i));
-    const isOpera = Boolean(userAgent.match(/Opera Mini/i));
-    const isIEMobile = Boolean(userAgent.match(/IEMobile/i));
-    const isMobile = isAndroid || isIos || isOpera || isIEMobile;
-    if (isMobile) {
-      return InputType.TOUCH;
-    }
-
-    // default (desktop)
-    return InputType.DEFAULT;
-  };
-
-  useEffect(() => {
-    const type = getInputType();
-    setInputType(type);
-    return () => { };
-  }, [isGamepadConnected]);
-
-  return inputType;
+  return InputType.DEFAULT;
 };
 
 const useInput = () => {
-  useEffect(() => { }, []);
-  const userAgent =
-    typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
-  return getInputType(userAgent);
+  const [isGamepadConnected, setIsGamepadConnected] = useState(false);
+  const [inputType, setInputType] = useState<InputType>(InputType.UNKNOWN);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const updateGamepadState = () => {
+      const hasGamepad = navigator.getGamepads?.().some(Boolean) ?? false;
+      setIsGamepadConnected(hasGamepad);
+    };
+
+    updateGamepadState();
+    window.addEventListener("gamepadconnected", updateGamepadState);
+    window.addEventListener("gamepaddisconnected", updateGamepadState);
+
+    return () => {
+      window.removeEventListener("gamepadconnected", updateGamepadState);
+      window.removeEventListener("gamepaddisconnected", updateGamepadState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const userAgent = typeof navigator === "undefined" ? "SSR" : navigator.userAgent;
+    setInputType(resolveInputType(userAgent, isGamepadConnected));
+  }, [isGamepadConnected]);
+
+  return inputType;
 };
 
 export default useInput;

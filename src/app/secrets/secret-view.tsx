@@ -81,8 +81,8 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
   return (
     <React.Fragment key={id}>
       <tr>
-        <td className={`border-b border-t border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : ''} pointer-events-none select-none justify-center items-center`}>
-          <FontAwesomeIcon icon={unlocked ? faUnlockAlt : faLock}
+        <td className={`border-b border-t border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} pointer-events-none select-none justify-center items-center`}>
+          <FontAwesomeIcon icon={unlocked ? faCheckCircle : faLock}
             className={`py-1 w-full h-full mx-3`} />
         </td>
         <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}

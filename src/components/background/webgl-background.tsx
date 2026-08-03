@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useId, useRef } from 'react';
 import './background.css';
 
 // Vertex shader (passthrough).
@@ -201,14 +201,16 @@ const gradientStops = [
 
 export default function WebGlBackground() {
 
+  const canvasId = useId();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<WebGLRenderingContext | null>(null);
   const shaderProgramRef = useRef<WebGLProgram | null>(null);
   const timeUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   // draw each animation frame
-  const renderFrame = (timeMs: number) => {
+  const renderFrame = useCallback((timeMs: number) => {
     if (!contextRef.current) return;
     const context = contextRef.current;
 
@@ -223,8 +225,8 @@ export default function WebGlBackground() {
     context.uniform2f(resolutionUniformLocationRef.current, canvas.width, canvas.height);
     context.drawArrays(context.TRIANGLE_STRIP, 0, 4);
 
-    requestAnimationFrame(renderFrame);
-  };
+    animationFrameRef.current = requestAnimationFrame(renderFrame);
+  }, []);
 
   // compile shader and log errors
   const compileShader = (source: string, type: number) => {
@@ -249,7 +251,7 @@ export default function WebGlBackground() {
   };
 
   // setup shaders, buffers, and start render loop
-  const initializeWebGL = () => {
+  const initializeWebGL = useCallback(() => {
     if (!contextRef.current) return;
 
     const context = contextRef.current;
@@ -311,18 +313,16 @@ export default function WebGlBackground() {
     context.enableVertexAttribArray(posLoc);
     context.vertexAttribPointer(posLoc, 2, context.FLOAT, false, 0, 0);
 
-    requestAnimationFrame(renderFrame);
-  };
+    animationFrameRef.current = requestAnimationFrame(renderFrame);
+  }, [renderFrame]);
 
   useEffect(() => {
-    const canvas = document.getElementById("webgl-canvas") as HTMLCanvasElement | null;
+    const canvas = canvasRef.current;
 
     if (!canvas) {
       console.error("WebGL canvas not found");
       return;
     }
-
-    canvasRef.current = canvas;
 
     const context = canvas.getContext("webgl", { alpha: true, antialias: true });
     contextRef.current = context;
@@ -345,13 +345,25 @@ export default function WebGlBackground() {
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
+
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+
+      if (shaderProgramRef.current) {
+        context.deleteProgram(shaderProgramRef.current);
+        shaderProgramRef.current = null;
+      }
+
+      contextRef.current = null;
     };
 
   }, [initializeWebGL]);
 
   return (
     <>
-      <canvas id="webgl-canvas" ref={canvasRef} className="absolute left-0 top-0 w-full h-full -z-50"></canvas>
+      <canvas id={canvasId} ref={canvasRef} className="absolute left-0 top-0 w-full h-full -z-50"></canvas>
     </>
   );
 }

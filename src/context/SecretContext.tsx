@@ -1,14 +1,15 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import localFont from "next/font/local";
 import { useAudio } from '@context/AudioContext';
 import { useSnackbar } from "@context/SnackbarContext";
-import { useGamepads } from 'awesome-react-gamepads';
 import { useKeySequence } from "@hooks/useKeySequence";
 import { SnackbarVariant } from "@components/types";
 
-const SECRET_AUDIO_SRC = '/audio/startup.mp3';
+const CANCEL_AUDIO_SRC = '/audio/cancel.mp3';
+const TROPHY_AUDIO_SRC = '/audio/trophy.mp3';
+
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp",
   "ArrowDown", "ArrowDown",
@@ -33,6 +34,7 @@ export enum AchievementId {
   android = "ANDROID",
   missing_no = "MISSING_NO",
   dreamcast = "DREAMCAST",
+  dreamcast_bg = "DREAMCAST_BG",
 };
 
 const pspFont = localFont({
@@ -112,6 +114,12 @@ export const secrets: SecretMap =
     description: "Tap tap tap.",
     type: 'bg',
   },
+  [AchievementId.dreamcast_bg]: {
+    id: AchievementId.dreamcast_bg,
+    title: 'Dreamcast',
+    description: "Party like it's 9-9-99.",
+    type: 'bg',
+  },
   [AchievementId.iwhbyd]: {
     id: AchievementId.iwhbyd,
     title: 'IWHBYD',
@@ -159,6 +167,8 @@ export interface SecretContextType {
   isOceangateSecretUnlocked: boolean;
   isAndroidSecretUnlocked: boolean;
   isMissingNoSecretUnlocked: boolean;
+  isDreamcastSecretUnlocked: boolean;
+  isDreamcastBgSecretUnlocked: boolean;
 
   // active (setting)
   isKonamiSecretActive: boolean;
@@ -168,6 +178,8 @@ export interface SecretContextType {
   isOceangateSecretActive: boolean;
   isAndroidSecretActive: boolean;
   isMissingNoSecretActive: boolean;
+  isDreamcastSecretActive: boolean;
+  isDreamcastBgSecretActive: boolean;
 
   getActiveTheme: () => AchievementId | null;
   isThemeActive: (id?: AchievementId | null) => boolean;
@@ -201,6 +213,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const [isAndroidSecretUnlocked, setIsAndroidSecretUnlocked] = useState(false);
   const [isMissingNoSecretUnlocked, setIsMissingNoSecretUnlocked] = useState(false);
   const [isDreamcastSecretUnlocked, setIsDreamcastSecretUnlocked] = useState(false);
+  const [isDreamcastBgSecretUnlocked, setIsDreamcastBgSecretUnlocked] = useState(false);
 
   // is active (preference)
   const [isKonamiSecretActive, setIsKonamiSecretActive] = useState(false);
@@ -211,11 +224,12 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const [isAndroidSecretActive, setIsAndroidSecretActive] = useState(false);
   const [isMissingNoSecretActive, setIsMissingNoSecretActive] = useState(false);
   const [isDreamcastSecretActive, setIsDreamcastSecretActive] = useState(false);
+  const [isDreamcastBgSecretActive, setIsDreamcastBgSecretActive] = useState(false);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
 
-  const getUnlockedKey = (id: AchievementId) => `${id}_unlocked`;
-  const getEnabledKey = (id: AchievementId) => `${id}_enabled`;
+  const getUnlockedKey = (id: AchievementId) => `${id.toLowerCase()}_unlocked`;
+  const getEnabledKey = (id: AchievementId) => `${id.toLowerCase()}_enabled`;
 
   const isSecretUnlocked = (id: AchievementId) => {
     const settingName = getUnlockedKey(id);
@@ -283,38 +297,9 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, false, true);
 
     const secret = secrets[id];
-    const variant: SnackbarVariant = 'lock';
-    showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, variant);
+    showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, 'lock');
 
-    // if (id === AchievementId.konami_code) {
-    //   setIsKonamiSecretUnlocked(false);
-    // }
-    // else if (id === AchievementId.psp_code) {
-    //   setIsPspSecretUnlocked(false);
-    // }
-    // else if (id === AchievementId.iwhbyd) {
-    //   setIsIwhbydSecretUnlocked(false);
-    // }
-    // else if (id === AchievementId._404) {
-    //   setIs404SecretUnlocked(false);
-    // }
-    // else if (id === AchievementId.oceangate) {
-    //   setIsOceangateSecretUnlocked(false);
-    // }
-    // else if (id === AchievementId.android) {
-    //   setIsAndroidSecretUnlocked(false);
-    // }
-    // else if (id === AchievementId.missing_no) {
-    //   setIsMissingNoSecretUnlocked(false);
-    // }
-    // else if (id === AchievementId.dreamcast) {
-    //   setIsDreamcastSecretUnlocked(false);
-    // }
-    // else {
-    //   // if any enum case is missed, TypeScript flags an error here
-    //   const exhaustiveCheck: never = id;
-    //   throw new Error(`Unhandled case: ${exhaustiveCheck}`);
-    // }
+    play(CANCEL_AUDIO_SRC);
   };
 
   const unlockSecret = async (id: AchievementId) => {
@@ -328,9 +313,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretEnabled(id, true);
 
     const secret = secrets[id];
-    showSnackbar(`Secret Unlocked`, `${secret.title}: ${secret.description}`, 'unlock');
+    //showSnackbar(`Secret Unlocked`, `${secret.title}: ${secret.description}`, 'unlock');
+    showSnackbar(secret.title, secret.description, 'unlock');
 
-    play(SECRET_AUDIO_SRC);
+    play(TROPHY_AUDIO_SRC);
 
     refreshStats();
 
@@ -443,6 +429,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
           setIsDreamcastSecretUnlocked(isUnlocked);
           setIsDreamcastSecretActive(isEnabled);
         }
+        else if (id === AchievementId.dreamcast_bg) {
+          setIsDreamcastBgSecretUnlocked(isUnlocked);
+          setIsDreamcastBgSecretActive(isEnabled);
+        }
       });
 
     setStats(playerStats);
@@ -460,14 +450,21 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     unlockSecret(AchievementId.iwhbyd);
   });
 
-  useGamepads({
-    onConnect: () => {
-      unlockSecret(AchievementId.oceangate);
-    },
-    onKonamiSuccess: () => {
-      unlockSecret(AchievementId.konami_code);
-    },
-  });
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const handleGamepadConnected = () => {
+      void unlockSecret(AchievementId.oceangate);
+    };
+
+    window.addEventListener('gamepadconnected', handleGamepadConnected);
+
+    return () => {
+      window.removeEventListener('gamepadconnected', handleGamepadConnected);
+    };
+  }, [unlockSecret]);
 
   useEffect(() => {
     refreshStats();
@@ -506,6 +503,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       void unlockSecret(AchievementId.dreamcast);
     };
 
+    const handleDreamcastBgSecretActivate = () => {
+      void unlockSecret(AchievementId.dreamcast_bg);
+    };
+
     document.addEventListener("secret:konami:activate", handleSecretActivate);
     document.addEventListener("secret:psp:activate", handlePspSecretActivate);
     document.addEventListener("secret:oceangate:activate", handleOceangateSecretActivate);
@@ -514,6 +515,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     document.addEventListener("secret:missing_no:activate", handleMissingNoSecretActivate);
     document.addEventListener("secret:android:activate", handleAndroidSecretActivate);
     document.addEventListener("secret:dreamcast:activate", handleDreamcastSecretActivate);
+    document.addEventListener("secret:dreamcast_bg:activate", handleDreamcastBgSecretActivate);
 
     return () => {
       document.removeEventListener("secret:konami:activate", handleSecretActivate);
@@ -524,6 +526,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       document.removeEventListener("secret:missing_no:activate", handleMissingNoSecretActivate);
       document.removeEventListener("secret:android:activate", handleAndroidSecretActivate);
       document.removeEventListener("secret:dreamcast:activate", handleDreamcastSecretActivate);
+      document.removeEventListener("secret:dreamcast_bg:activate", handleDreamcastBgSecretActivate);
     };
   }, []);
 
@@ -537,6 +540,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     isOceangateSecretUnlocked,
     isAndroidSecretUnlocked,
     isMissingNoSecretUnlocked,
+    isDreamcastSecretUnlocked,
+    isDreamcastBgSecretUnlocked,
 
     // setting enabled
     isKonamiSecretActive,
@@ -546,6 +551,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     isOceangateSecretActive,
     isAndroidSecretActive,
     isMissingNoSecretActive,
+    isDreamcastSecretActive,
+    isDreamcastBgSecretActive,
 
     getActiveTheme,
     isThemeActive,

@@ -1,5 +1,3 @@
-"use client";
-
 export default function ModalPage() {
   // return (
   //   <div className="root-container">

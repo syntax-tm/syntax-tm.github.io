@@ -1,15 +1,16 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { useRouter, ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useWheel, { WheelInput } from "@hooks//useWheel";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
-import { useSnackbar } from "@context/SnackbarContext";
 import { useAudio } from '@context/AudioContext';
-import { useGamepads } from 'awesome-react-gamepads';
 import { Position, XmbCategory, XmbItem, XmbMenu } from "@models/menu";
 import build from "@services/menuBuilder";
+import { useGamepads } from "awesome-react-gamepads";
+import { useSnackbar } from "./SnackbarContext";
+import { useBoot } from "./BootContext";
 
 // TODO: this context will need to be all of the state from the xmbmenu class
 export interface XmbContextType {
@@ -68,8 +69,22 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const xmbMenuRef = useRef<XmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
-  const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+  const [pathname, setPathname] = useState('/');
+  const { isBootVisible } = useBoot();
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+    const handleLocationChange = () => setPathname(window.location.pathname);
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('pushstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('pushstate', handleLocationChange);
+    };
+  }, []);
+
+  const modal = (pathname !== '/' && pathname !== '/boot') || isBootVisible;
 
   if (!xmbItemRef.current) {
     xmbItemRef.current = new Map<string, XmbItem>();
@@ -170,12 +185,19 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     play(XMB_AUDIO_SRC);
 
     router.push('/');
-  }, [modal, play]);
+  }, [modal]);
 
-  const onHelp = useCallback(() => {
+  const openHelp = useCallback(() => {
     play(XMB_AUDIO_SRC);
 
     router.push('/help');
+  }, []);
+
+  const onHelp = useCallback((e: KeyboardEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    openHelp();
   }, []);
 
   const moveUp = useCallback(() => {
@@ -357,13 +379,12 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     onRightStickLeft: moveLeft,
     onRightStickRight: moveRight,
     onStart: onEnter,
-    onSelect: onHelp,
+    onSelect: openHelp,
     onLT: moveTop,
     onRT: moveBottom,
     onLB: moveFirst,
     onRB: moveLast,
   });
-
   const wheelInput: WheelInput = useMemo(() => {
     return {
       onWheelUp: moveUp,

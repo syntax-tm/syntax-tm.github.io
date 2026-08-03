@@ -9,7 +9,6 @@ import { InputType } from "@app/enums";
 import { useAudio } from "@context/AudioContext";
 import useInput from "@hooks/useInput";
 import useKeyboard from "@hooks/useKeyboard";
-import BackgroundView from "@components/background/background-view";
 import Clock from "@components/clock/clock";
 import ControllerIcon from "@components/icons/controller-icon";
 import { KeyPressAction } from "@components/types";
@@ -96,11 +95,10 @@ export function Modal({ title, children }: { title: string, children: React.Reac
 
   return (
     <div className="root-container">
-      <BackgroundView />
       <Clock />
       <Menu />
       <div className={`modal modal-${modalClass} fixed left-0 top-0 z-25 flex flex-col h-full w-full`}>
-        <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen bg-black/75 z-25 overflow-none backdrop-blur">
+        <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen z-25 overflow-none bg-stone-900/80 backdrop-blur">
           <ModalHeader title={title} />
           <div className="grid absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
             {children}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
-import { ReadonlyURLSearchParams, useSelectedLayoutSegments } from "next/navigation";
 
 export interface WheelInput {
   onWheelUp: () => void;
@@ -20,9 +19,21 @@ export interface WheelOutput {
 const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOnModal = false }: WheelInput): WheelOutput => {
 
   const shift = useRef(false);
+  const [pathname, setPathname] = useState('');
 
-  const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+  useEffect(() => {
+    setPathname(window.location.pathname);
+    const handleLocationChange = () => setPathname(window.location.pathname);
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('pushstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('pushstate', handleLocationChange);
+    };
+  }, []);
+
+  const modal = pathname !== '' && pathname !== '/' && pathname !== '/boot';
 
   const onWheel = (e: WheelEvent) => {
     const down = e.deltaY > 0;

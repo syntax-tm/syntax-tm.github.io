@@ -24,10 +24,8 @@ export default function NotFound() {
 
   return (
     <div className="root-container">
-      <Suspense>
-        <BackgroundView />
-        <Clock />
-      </Suspense>
+      <BackgroundView />
+      <Clock />
       <div className="grid content-center z-0 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
         <Link href="/" aria-label="Return to the home page">
           <div className="flex flex-row justify-center items-center text-9xl hover:animate-pulse">

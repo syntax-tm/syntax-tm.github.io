@@ -1,6 +1,5 @@
 "use client";
 
-import { useSelectedLayoutSegments } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface SwipeInput {
@@ -32,8 +31,21 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
     touchEndY.current = e.targetTouches[0].clientY; // otherwise the swipe is fired even with usual touch events
   }, [touchStartX, touchEndX, touchStartY, touchEndY]);
 
-  const segment = useSelectedLayoutSegments('modal');
-  const modal = segment.filter(s => !s.startsWith('(')).length !== 0;
+  const [pathname, setPathname] = useState('');
+
+  useEffect(() => {
+    setPathname(window.location.pathname);
+    const handleLocationChange = () => setPathname(window.location.pathname);
+
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('pushstate', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('pushstate', handleLocationChange);
+    };
+  }, []);
+
+  const modal = pathname !== '' && pathname !== '/' && pathname !== '/boot';
 
   const onTouchMove = useCallback((e: TouchEvent) => {
     //console.log(`onTouchMove: ${e}`);

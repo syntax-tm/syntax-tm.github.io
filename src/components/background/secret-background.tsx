@@ -1,38 +1,16 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useId, useMemo, useRef } from 'react';
 import { AchievementId, useSecret } from '@context/SecretContext';
 import getShaderSource, { ShaderKind } from './shaders';
 import "./secret-background.css";
-
-const resolveShaderKind = (secretBg: AchievementId | null): ShaderKind | null => {
-  if (!secretBg) return null;
-
-  switch (secretBg) {
-    case AchievementId._404:
-      return 'silent_hill';
-    case AchievementId.missing_no:
-      return 'missing_no';
-    case AchievementId.konami_code:
-      return 'konami_code';
-    case AchievementId.android:
-      return 'android';
-    case AchievementId.iwhbyd:
-      return 'iwhbyd';
-    case AchievementId.oceangate:
-      return 'oceangate';
-    // TODO: this shader needs to be updated to match the actual dreamcast system background
-    case AchievementId.dreamcast:
-      return 'dreamcast';
-    default:
-      throw new Error('No secret background shader is active.');
-  }
-};
+import "./secret-background-new.scss";
 
 const achievementShaderMap: Record<AchievementId, ShaderKind> = {
   "404": 'silent_hill',
   "ANDROID": 'android',
-  "DREAMCAST": 'dreamcast',
+  "DREAMCAST": 'unknown',
+  "DREAMCAST_BG": "unknown",
   "IWHBYD": 'iwhbyd',
   "KONAMI_CODE": 'konami_code',
   "MISSING_NO": 'missing_no',
@@ -41,6 +19,7 @@ const achievementShaderMap: Record<AchievementId, ShaderKind> = {
 };
 
 export default function SecretBackground() {
+  const canvasId = useId();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<WebGLRenderingContext | null>(null);
   const shaderProgramRef = useRef<WebGLProgram | null>(null);
@@ -190,27 +169,6 @@ export default function SecretBackground() {
 
     contextRef.current = gl;
 
-    // let gl: WebGLRenderingContext | null = null;
-
-    // if (contextRef.current) {
-    //   gl = contextRef.current;
-    // }
-    // else {
-    //   gl = canvas.getContext('webgl', {
-    //     alpha: false,
-    //     antialias: false,
-    //     depth: false,
-    //     stencil: false,
-    //     powerPreference: 'high-performance',
-    //     preserveDrawingBuffer: false,
-    //   });
-    //   if (!gl) {
-    //     console.error('WebGL not supported');
-    //     return;
-    //   }
-    //   contextRef.current = gl;
-    // }
-
     const handleViewportResize = () => {
       resize();
     };
@@ -242,13 +200,17 @@ export default function SecretBackground() {
   }, [fsSource, resize, setup]);
 
   const kindClass = kind ? kind.replace('_', '-') : '';
+  const idClass = secretBg?.toLowerCase().replace('_', '-') ?? '';
 
+  // TODO: this component should be split into two subcomponents, one for shader-based backgrounds and one for css-based backgrounds
   return (
-    <canvas
-      id="webgl-canvas"
-      ref={canvasRef}
-      className={`secret-background ${kindClass} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
-      style={{ imageRendering: 'pixelated' }}
-    />
+    kind !== "unknown"
+      ? <canvas
+        id={canvasId}
+        ref={canvasRef}
+        className={`secret-background ${idClass} ${kindClass} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
+        style={{ imageRendering: 'pixelated' }}
+      />
+      : <div className={`secret-background ${idClass} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none overflow-hidden`}></div>
   );
 }
