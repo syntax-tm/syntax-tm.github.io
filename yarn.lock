@@ -2316,7 +2316,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsparticles/engine@npm:4.3.2, @tsparticles/engine@npm:^4.3.2":
+"@tsparticles/engine@npm:4.3.2":
   version: 4.3.2
   resolution: "@tsparticles/engine@npm:4.3.2"
   checksum: 10c0/836a2640f488d9f98eea3b12d536ae11db2c1c3b26e347580d30e72b84ae7a4e443618760ba61108581a607f7c35fd5e2ed002cefb8da64e0c9e1d272ac51019
@@ -2499,19 +2499,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsparticles/nextjs@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "@tsparticles/nextjs@npm:4.3.2"
-  peerDependencies:
-    "@tsparticles/engine": 4.3.2
-    "@tsparticles/react": 4.3.2
-    next: ">=13.0.0"
-    react: ">=18.0.0"
-    react-dom: ">=18.0.0"
-  checksum: 10c0/21a852de9d355b5c3bf7618efdd74bd890fdb3698a6834c4bd05714b633b08051bf6e8ff50a8114dde4de202a45a4defdc2441f1646d06c7596ee9d14413fe28
-  languageName: node
-  linkType: hard
-
 "@tsparticles/plugin-absorbers@npm:4.3.2":
   version: 4.3.2
   resolution: "@tsparticles/plugin-absorbers@npm:4.3.2"
@@ -2621,26 +2608,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsparticles/plugin-themes@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "@tsparticles/plugin-themes@npm:4.3.2"
-  peerDependencies:
-    "@tsparticles/engine": 4.3.2
-  checksum: 10c0/7ee38fd3ca1154b35fc40ec7c3f96a8a790454aaad71ec5ddedf5a9ff8902bd285309e9e007ff27fdad9124b95a481d35c7011200b5d1b1eecc9f8c474487852
-  languageName: node
-  linkType: hard
-
-"@tsparticles/react@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "@tsparticles/react@npm:4.3.2"
-  peerDependencies:
-    "@tsparticles/engine": 4.3.2
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 10c0/4f2f53b57c056ea031d7d6e1b0b3c434172e35d16b1c7e3046f97d1ccf8f4a514014e2090b856330efb7cec852ee82c03be9fd0abe21073e1d487cae5936fd89
-  languageName: node
-  linkType: hard
-
 "@tsparticles/shape-circle@npm:4.3.2":
   version: 4.3.2
   resolution: "@tsparticles/shape-circle@npm:4.3.2"
@@ -2717,7 +2684,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsparticles/slim@npm:4.3.2, @tsparticles/slim@npm:^4.3.2":
+"@tsparticles/slim@npm:4.3.2":
   version: 4.3.2
   resolution: "@tsparticles/slim@npm:4.3.2"
   dependencies:
@@ -11372,11 +11339,6 @@ __metadata:
     "@fortawesome/react-fontawesome": "npm:^3.5.0"
     "@next/env": "npm:^16.2.12"
     "@tailwindcss/postcss": "npm:^4.3.3"
-    "@tsparticles/engine": "npm:^4.3.2"
-    "@tsparticles/nextjs": "npm:^4.3.2"
-    "@tsparticles/plugin-themes": "npm:^4.3.2"
-    "@tsparticles/react": "npm:^4.3.2"
-    "@tsparticles/slim": "npm:^4.3.2"
     "@types/node": "npm:^26.1.2"
     "@types/react": "npm:^19.2.18"
     "@types/react-dom": "npm:^19.2.4"
