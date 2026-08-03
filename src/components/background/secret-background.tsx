@@ -29,6 +29,17 @@ const resolveShaderKind = (secretBg: AchievementId | null): ShaderKind | null =>
   }
 };
 
+const achievementShaderMap: Record<AchievementId, ShaderKind> = {
+  "404": 'silent_hill',
+  "ANDROID": 'android',
+  "DREAMCAST": 'dreamcast',
+  "IWHBYD": 'iwhbyd',
+  "KONAMI_CODE": 'konami_code',
+  "MISSING_NO": 'missing_no',
+  "OCEANGATE": 'oceangate',
+  "PSP_CODE": "unknown",
+};
+
 export default function SecretBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<WebGLRenderingContext | null>(null);
@@ -41,7 +52,7 @@ export default function SecretBackground() {
   const { getActiveBackground } = useSecret();
 
   const secretBg = getActiveBackground();
-  const kind = useMemo(() => resolveShaderKind(secretBg), [secretBg]);
+  const kind = useMemo(() => secretBg && achievementShaderMap[secretBg], [secretBg]);
   const vsSource = useMemo(() => getShaderSource('default') ?? null, []);
   const fsSource = useMemo(() => (kind ? getShaderSource(kind) ?? null : null), [kind]);
 
@@ -55,7 +66,7 @@ export default function SecretBackground() {
 
     const positionLocation = positionLocationRef.current;
     const positionBuffer = positionBufferRef.current;
-    if (positionLocation === null || positionLocation === undefined || !positionBuffer) return;
+    if (positionLocation === null || positionBuffer === null) return;
 
     const seconds = time * 0.001;
 
@@ -104,6 +115,11 @@ export default function SecretBackground() {
     positionLocationRef.current = gl.getAttribLocation(program, 'position');
     resolutionUniformLocationRef.current = gl.getUniformLocation(program, 'u_resolution');
     timeUniformLocationRef.current = gl.getUniformLocation(program, 'u_time');
+
+    if (positionLocationRef.current === null) {
+      console.error('Failed to resolve shader position attribute.');
+      return;
+    }
 
     const positionBuffer = gl.createBuffer();
     if (!positionBuffer) return;

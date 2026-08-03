@@ -8,7 +8,7 @@ import re5ShaderSource from "./shaders/re5.glsl";
 import silentHillShaderSource from "./shaders/silent_hill.glsl";
 import defaultVertextSource from "./shaders/default.vert";
 
-export type ShaderKind = "android" | "iwhbyd" | "konami_code" | "missing_no" | "oceangate" | "re5" | "silent_hill" | "dreamcast" | "default";
+export type ShaderKind = "android" | "iwhbyd" | "konami_code" | "missing_no" | "oceangate" | "re5" | "silent_hill" | "dreamcast" | "default" | "unknown";
 
 export const shaderSources: Record<ShaderKind, string> = {
   "android": androidShaderSource,
@@ -20,6 +20,7 @@ export const shaderSources: Record<ShaderKind, string> = {
   "re5": re5ShaderSource,
   "silent_hill": silentHillShaderSource,
   "default": defaultVertextSource,
+  "unknown": '',
 };
 
 export default function getShaderSource(shaderName: ShaderKind): string | undefined {
