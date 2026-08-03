@@ -1,3 +1,4 @@
+export default `
 precision highp float;
 uniform vec2 u_resolution;
 uniform float u_time;
@@ -110,3 +111,4 @@ void main() {
   // Final color wash correction step
   gl_FragColor = vec4(finalColor, 1.0);
 }
+`;

@@ -1,3 +1,4 @@
+export default `
 precision highp float;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;
@@ -170,3 +171,4 @@ void main() {
 
   gl_FragColor = vec4(finalColor, 1.0);
 }
+`;

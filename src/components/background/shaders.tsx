@@ -1,12 +1,12 @@
-import androidShaderSource from "./shaders/android.glsl";
-import dreamcastShaderSource from "./shaders/dreamcast.glsl";
-import iwhbydShaderSource from "./shaders/iwhbyd.glsl";
-import konamiCodeShaderSource from "./shaders/konami_code.glsl";
-import missingNoShaderSource from "./shaders/missing_no.glsl";
-import oceangateShaderSource from "./shaders/oceangate.glsl";
-import re5ShaderSource from "./shaders/re5.glsl";
-import silentHillShaderSource from "./shaders/silent_hill.glsl";
-import defaultVertextSource from "./shaders/default.vert";
+import androidShaderSource from "./shaders/android";
+import dreamcastShaderSource from "./shaders/dreamcast";
+import iwhbydShaderSource from "./shaders/iwhbyd";
+import konamiCodeShaderSource from "./shaders/konami_code";
+import missingNoShaderSource from "./shaders/missing_no";
+import oceangateShaderSource from "./shaders/oceangate";
+import re5ShaderSource from "./shaders/re5";
+import silentHillShaderSource from "./shaders/silent_hill";
+import defaultVertextSource from "./shaders/default";
 
 export type ShaderKind = "android" | "iwhbyd" | "konami_code" | "missing_no" | "oceangate" | "re5" | "silent_hill" | "dreamcast" | "default" | "unknown";
 

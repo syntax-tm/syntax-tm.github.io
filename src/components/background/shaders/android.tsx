@@ -1,3 +1,4 @@
+export default `
 precision mediump float;
 uniform vec2 u_resolution;
 uniform float u_time;
@@ -50,7 +51,6 @@ void main() {
   vec3 neonYellow   = vec3(0.88, 0.85, 0.20) + cos(colorCycle * 1.5) * 0.10;
   vec3 digitalWhite = vec3(0.95, 0.98, 0.95); // Fixed highlight core
 
-  // 5. Hq12weasdrfwxeazwaq 1`23456RYTUTTTFD    1QQDGTHYUJ Q  e3q24re5tr6ytu21yhgtfredsw1Azeard Color Posterization and Multi-Band Zoning
   vec3 finalColor = glassLiquid;
 
   if (totalInfluence > 2.8) {
@@ -98,3 +98,4 @@ void main() {
 
   gl_FragColor = vec4(finalColor, 1.0);
 }
+`;
