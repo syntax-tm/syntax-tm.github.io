@@ -1,6 +1,6 @@
 "use client";
 
-import { ReadonlyURLSearchParams, usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const EMPTY_PATH = '';
 const ROOT_PATH = '/';
@@ -10,13 +10,13 @@ const IGNORED_PATHS = [ EMPTY_PATH, ROOT_PATH, BOOT_PATH ];
 export interface PathOutput {
   modal: boolean;
   pathname: string;
-  searchParams: ReadonlyURLSearchParams;
+  //searchParams: ReadonlyURLSearchParams;
 }
 
 const usePath = (): PathOutput => {
 
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  //const searchParams = useSearchParams();
 
   //const modal = (pathname !== ROOT_PATH && pathname !== BOOT_PATH);
   const modal = !IGNORED_PATHS.includes(pathname);
@@ -24,7 +24,7 @@ const usePath = (): PathOutput => {
   return {
     modal,
     pathname,
-    searchParams,
+    //searchParams,
   };
 };
 
