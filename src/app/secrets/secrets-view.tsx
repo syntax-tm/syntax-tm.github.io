@@ -37,7 +37,7 @@ export default function SecretsView() {
               secretGroups && stats &&
               Array.from(secretGroups.values())
                 .filter(group => {
-                  return group.items.length > 0;
+                  return group.items && group.items.length > 0;
                 })
                 .map(group => {
                   const items = Array.from(stats).filter(stat => {
@@ -60,9 +60,9 @@ export default function SecretsView() {
                         <th className="p-0.5 border border-gray-400/25">Enabled</th>
                       </tr>
                       {
-                        items && items.map(([id, stat]) => {
+                        items && items.map(([id]) => {
                           return (
-                            <SecretView key={id} id={id} stat={stat} unlockMinimum={SECRET_TAP_MIN} />
+                            <SecretView key={id} id={id} unlockMinimum={SECRET_TAP_MIN} />
                           );
                         })
                       }

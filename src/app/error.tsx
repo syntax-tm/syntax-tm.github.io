@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React from "react";
 import BackgroundView from "@components/background/background-view";
 import Clock from "@components/clock/clock";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,12 +10,12 @@ import "./not-found.css";
 
 //const Clock = dynamic(() => import('@components/clock/Clock'));
 
-interface StackTraceFrame {
-  id: number,
-  lineNo?: number,
-  file?: string,
-  line?: string,
-}
+// interface StackTraceFrame {
+//   id: number,
+//   lineNo?: number,
+//   file?: string,
+//   line?: string,
+// }
 
 export default function ErrorPage({
   error,
@@ -25,43 +25,43 @@ export default function ErrorPage({
   reset: () => void
 }) {
 
-  const [stackTrace, setStackTrace] = useState<StackTraceFrame[] | null>(null);
+  // const [stackTrace, setStackTrace] = useState<StackTraceFrame[] | null>(null);
 
-  useEffect(() => {
-    // log the error to an error reporting service
-    console.error(error);
+  // useEffect(() => {
+  //   // log the error to an error reporting service
+  //   console.error(error);
 
-    const lines = error?.stack?.split('\n');
+  //   const lines = error?.stack?.split('\n');
 
-    if (!lines) return;
+  //   if (!lines) return;
 
-    const stack: StackTraceFrame[] = lines.map(line => line.trim())
-      .filter(line => line.startsWith('at '))
-      .map((line, id) => {
-        const match = line.match(/at\s+(.+?)\s+\((.+?):(\d+):(\d+)\)/) ||
-                      line.match(/at\s+(.+?):(\d+):(\d+)/);
+  //   const stack: StackTraceFrame[] = lines.map(line => line.trim())
+  //     .filter(line => line.startsWith('at '))
+  //     .map((line, id) => {
+  //       const match = line.match(/at\s+(.+?)\s+\((.+?):(\d+):(\d+)\)/) ||
+  //                     line.match(/at\s+(.+?):(\d+):(\d+)/);
 
-        if (!match) {
-          return {
-            id,
-            line,
-          };
-        }
+  //       if (!match) {
+  //         return {
+  //           id,
+  //           line,
+  //         };
+  //       }
 
-        const [,, file, lineNum] = match;
+  //       const [,, file, lineNum] = match;
 
-        const frame: StackTraceFrame = {
-          id,
-          lineNo: parseInt(lineNum),
-          file,
-          line,
-        };
+  //       const frame: StackTraceFrame = {
+  //         id,
+  //         lineNo: parseInt(lineNum),
+  //         file,
+  //         line,
+  //       };
 
-        return frame;
-      });
+  //       return frame;
+  //     });
 
-    setStackTrace(stack);
-  }, [error]);
+  //   setStackTrace(stack);
+  // }, [error]);
 
   return (
     <div className="root-container">
@@ -76,7 +76,6 @@ export default function ErrorPage({
                 () => reset()
               }
               aria-label="Return to the home page">
-              
             </button>
             <div className="flex flex-col mt-[15%]">
               <div className="grid items-center justify-center">

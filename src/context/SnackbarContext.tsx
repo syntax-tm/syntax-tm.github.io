@@ -35,13 +35,13 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
 
   const { play } = useAudio();
 
-  const showSnackbar = async (message: string, description: string = '', variant: SnackbarVariant = "info", timeout: number = DEFAULT_TIMEOUT) => {
+  const showSnackbar = (message: string, description: string = '', variant: SnackbarVariant = "info", timeout: number = DEFAULT_TIMEOUT) => {
     if (timerRef.current) clearTimeout(timerRef.current);
 
     setSnackbar({ message, description, variant, isOpen: true });
 
     if (!isSecretVariant(variant)) {
-      play(SNACKBAR_AUDIO_SRC);
+      void play(SNACKBAR_AUDIO_SRC);
     }
 
     timerRef.current = setTimeout(() => {

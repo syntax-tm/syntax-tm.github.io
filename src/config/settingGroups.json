@@ -1,0 +1,26 @@
+[
+  {
+    "type": "BG",
+    "title": "Background"
+  },
+  {
+    "type": "BOOT",
+    "title": "Boot"
+  },
+  {
+    "type": "FILTER",
+    "title": "Filter"
+  },
+  {
+    "type": "FONT",
+    "title": "Font"
+  },
+  {
+    "type": "ICONS",
+    "title": "Icons"
+  },
+  {
+    "type": "THEME",
+    "title": "Theme"
+  }
+]

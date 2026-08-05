@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AchievementId } from "@enums";
 import BackgroundView from "@components/background/background-view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +18,7 @@ export default function NotFound() {
 
   useEffect(() => {
 
-    unlockSecret(AchievementId._404);
+    unlockSecret("_404");
 
   }, []);
 

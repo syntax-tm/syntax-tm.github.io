@@ -62,7 +62,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         }
       });
       activeSourcesRef.current = [];
-      audioContextRef.current?.close();
+      void audioContextRef.current?.close();
       audioContextRef.current = null;
     };
   }, [ensureAudioReady]);

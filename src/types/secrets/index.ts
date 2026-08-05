@@ -1,5 +1,5 @@
 export * from './constants';
-export * from './secret-group';
-export * from './secret-group-map';
 export * from './setting';
 export * from './stat-definition';
+export * from './stat-group-definition';
+export * from './stat-group-map';

@@ -57,7 +57,6 @@ export default function ControllerIcon({
   className = "",
   width = 200,
   height = 200,
-  styleProps = {},
 }: ControllerIconProps) {
   return (
     <>

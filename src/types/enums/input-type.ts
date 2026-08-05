@@ -1,6 +1,6 @@
 export enum InputType {
-  UNKNOWN = -1,
-  DEFAULT,
-  TOUCH,
-  GAMEPAD,
+  UNKNOWN = "UNKNOWN",
+  DEFAULT = "DEFAULT",
+  TOUCH   = "TOUCH",
+  GAMEPAD = "GAMEPAD",
 }

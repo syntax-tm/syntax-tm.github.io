@@ -48,18 +48,21 @@ function CopyView({ name, description, value }: CopyViewProps) {
                 setHover(true);
               }}
               onClick={(e => {
-                //if (copied) return;
-
+                // TODO: move this to an actual function
                 const el = e.target as HTMLInputElement;
                 const value = el.value;
 
-                navigator.clipboard.writeText(el.value);
+                navigator.clipboard.writeText(el.value)
+                  .then(() => {
+                    console.log(`Copied ${value} to clipboard.`);
 
-                console.log(`Copied ${value} to clipboard.`);
+                    setCopied(true);
 
-                setCopied(true);
-
-                showSnackbar(`Copied "${value}" to clipboard.`, "info");
+                    showSnackbar(`Copied "${value}" to clipboard.`, "info");
+                  })
+                  .catch((e) => {
+                    console.error(`Failed to copy text to clipboard. ${e}`);
+                  });
               })} />
             <div className="absolute justify-self-end items-center h-full content-center">
               {

@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import useMobileDetect from "@hooks/useMobileDetect";
 import { useSecret } from "@context/SecretContext";
 import { Modal } from "@components/modal/modal";
-import { AchievementId } from "@enums";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -59,7 +58,7 @@ function AboutView() {
       }, 500);
 
       if (tapCountRef.current >= SECRET_TAP_MIN) {
-        unlockSecret(AchievementId.android);
+        unlockSecret("ANDROID");
         resetTapCount();
       }
     };

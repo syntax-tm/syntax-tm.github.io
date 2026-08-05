@@ -5,8 +5,8 @@ import localFont from "next/font/local";
 import { useAudio } from '@context/AudioContext';
 import { useSnackbar } from "@context/SnackbarContext";
 import { useKeySequence } from "@hooks/useKeySequence";
-import { AchievementId, SecretGroupType } from "@enums";
-import { StatDefinition, secrets, secretGroups, Setting, SecretGroupMap } from "types/secrets";
+import { AchievementId } from "@enums";
+import { StatDefinition, secrets, secretGroups, Setting, StatGroupMap, statDefs } from "types";
 import { SnackbarVariant } from "types/snackbar";
 
 const CANCEL_AUDIO_SRC = '/audio/cancel.mp3';
@@ -72,11 +72,11 @@ export interface SecretContextType {
   setSecretUnlocked: (id: AchievementId, isUnlocked: boolean, refresh?: boolean) => void;
   isSecretEnabled: (id: AchievementId) => boolean;
   setSecretEnabled: (id: AchievementId, isEnabled: boolean, refresh?: boolean) => void;
-  lockSecret: (id: AchievementId) => Promise<void>;
-  unlockSecret: (id: AchievementId) => Promise<void>;
+  lockSecret: (id: AchievementId) => void;
+  unlockSecret: (id: AchievementId) => void;
   toggleSecret: (id: AchievementId) => void;
-  secrets: Record<string, StatDefinition>;
-  secretGroups: SecretGroupMap;
+  secrets: StatDefinition[];
+  secretGroups: StatGroupMap;
   settings: Map<AchievementId, Setting> | null;
   dreamcastFontClass: string;
   pspFontClass: string;
@@ -109,8 +109,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
 
-  const getUnlockedKey = (id: AchievementId) => `${id.toLowerCase()}_unlocked`;
-  const getEnabledKey = (id: AchievementId) => `${id.toLowerCase()}_enabled`;
+  const getUnlockedKey = (id: string) => `${id.toLowerCase()}_unlocked`;
+  const getEnabledKey = (id: string) => `${id.toLowerCase()}_enabled`;
 
   const isSecretUnlocked = (id: AchievementId) => {
     const settingName = getUnlockedKey(id);
@@ -134,6 +134,10 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     return value === 'true';
   };
 
+  const getSecret = (id: AchievementId) => {
+    return secrets.filter(s => s.id === id)[0];
+  };
+
   const setSecretEnabled = (id: AchievementId, isEnabled: boolean, refresh: boolean = true) => {
     const settingName = getEnabledKey(id);
     localStorage.setItem(settingName, isEnabled ? 'true' : 'false');
@@ -141,7 +145,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     // check if this is a radio group item, if it is then toggle
     // all of the other secrets to false and force a refresh
     if (isEnabled) {
-      const type = secrets[id].type;
+      const type = getSecret(id).type;
       const otherSecrets = Object.values(secrets).filter(s => s.id !== id && s.type === type).map(s => s.id);
       otherSecrets.forEach(o => {
         const otherName = getEnabledKey(o);
@@ -156,7 +160,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
       refreshStats();
   };
 
-  const lockSecret = async (id: AchievementId) => {
+  const lockSecret = (id: AchievementId) => {
     // check to see if it is already locked
     const isUnlocked = isSecretUnlocked(id);
     if (!isUnlocked) return;
@@ -165,13 +169,13 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretUnlocked(id, false);
     setSecretEnabled(id, false, true);
 
-    const secret = secrets[id];
+    const secret = getSecret(id);
     showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, 'lock');
 
-    play(CANCEL_AUDIO_SRC);
+    void play(CANCEL_AUDIO_SRC);
   };
 
-  const unlockSecret = async (id: AchievementId) => {
+  const unlockSecret = (id: AchievementId) => {
     // check to see if it has already been unlocked
     const isUnlocked = isSecretUnlocked(id);
     if (isUnlocked) return;
@@ -180,11 +184,11 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setSecretUnlocked(id, true);
     setSecretEnabled(id, true);
 
-    const secret = secrets[id];
+    const secret = getSecret(id);
     //showSnackbar(`Secret Unlocked`, `${secret.title}: ${secret.description}`, 'unlock');
     showSnackbar(secret.title, secret.description, 'unlock');
 
-    play(TROPHY_AUDIO_SRC);
+    void play(TROPHY_AUDIO_SRC);
 
     refreshStats();
   };
@@ -212,7 +216,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const getActiveTheme = useCallback((): AchievementId | null => {
     if (!settings) return null;
     const theme = Array.from(settings)
-      .filter(([, s]) => s.type === SecretGroupType.theme)
+      .filter(([, s]) => s.type === "THEME")
       .map(([id]) => id)
       .filter(id => isSecretEnabled(id))
       ?.[0];
@@ -231,7 +235,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const getActiveBackground = useCallback((): AchievementId | null => {
     if (!settings) return null;
     const bg = Array.from(settings)
-      .filter(([, s]) => s.type === SecretGroupType.bg)
+      .filter(([, s]) => s.type === "BG")
       .map(([id]) => id)
       .filter(id => isSecretEnabled(id))
       ?.[0];
@@ -249,68 +253,67 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
   const refreshStats = () => {
     const playerStats = new Map<AchievementId, Setting>();
-    Object.keys(AchievementId)
-      .map((achId) => {
-        const id = AchievementId[achId as keyof typeof AchievementId];
-        const isUnlocked = isSecretUnlocked(id);
-        const isEnabled = isSecretEnabled(id);
-        const playerStat: Setting = {
-          id,
-          isUnlocked,
-          stat: secrets[id],
-          isEnabled,
-          type: secrets[id].type,
-        };
-        playerStats.set(id, playerStat);
+    const ids = statDefs.map(s => s.id);
+    ids.map((id) => {
+      const isUnlocked = isSecretUnlocked(id);
+      const isEnabled = isSecretEnabled(id);
+      const playerStat: Setting = {
+        id,
+        isUnlocked,
+        stat: getSecret(id),
+        isEnabled,
+        type: getSecret(id).type,
+      };
+      playerStats.set(id, playerStat);
 
-        if (id === AchievementId.konami_code) {
-          setIsKonamiSecretUnlocked(isUnlocked);
-          setIsKonamiSecretActive(isEnabled);
-        }
-        else if (id === AchievementId.psp_code) {
-          setIsPspSecretUnlocked(isUnlocked);
-          setIsPspSecretActive(isEnabled);
-        }
-        else if (id === AchievementId.iwhbyd) {
-          setIsIwhbydSecretUnlocked(isUnlocked);
-          setIsIwhbydSecretActive(isEnabled);
-        }
-        else if (id === AchievementId._404) {
-          setIs404SecretUnlocked(isUnlocked);
-          setIs404SecretActive(isEnabled);
-        }
-        else if (id === AchievementId.oceangate) {
-          setIsOceangateSecretUnlocked(isUnlocked);
-          setIsOceangateSecretActive(isEnabled);
-        }
-        else if (id === AchievementId.android) {
-          setIsAndroidSecretUnlocked(isUnlocked);
-          setIsAndroidSecretActive(isEnabled);
-        }
-        else if (id === AchievementId.missing_no) {
-          setIsMissingNoSecretUnlocked(isUnlocked);
-          setIsMissingNoSecretActive(isEnabled);
-        }
-        else if (id === AchievementId.dreamcast) {
-          setIsDreamcastSecretUnlocked(isUnlocked);
-          setIsDreamcastSecretActive(isEnabled);
-        }
-        // TODO: add filter secrets
-      });
+      if (id === "KONAMI_CODE") {
+        setIsKonamiSecretUnlocked(isUnlocked);
+        setIsKonamiSecretActive(isEnabled);
+      }
+      else if (id === "PSP_CODE") {
+        setIsPspSecretUnlocked(isUnlocked);
+        setIsPspSecretActive(isEnabled);
+      }
+      else if (id === "IWHBYD") {
+        setIsIwhbydSecretUnlocked(isUnlocked);
+        setIsIwhbydSecretActive(isEnabled);
+      }
+      else if (id === "_404") {
+        setIs404SecretUnlocked(isUnlocked);
+        setIs404SecretActive(isEnabled);
+      }
+      else if (id === "OCEANGATE") {
+        setIsOceangateSecretUnlocked(isUnlocked);
+        setIsOceangateSecretActive(isEnabled);
+      }
+      else if (id === "ANDROID") {
+        setIsAndroidSecretUnlocked(isUnlocked);
+        setIsAndroidSecretActive(isEnabled);
+      }
+      else if (id === "MISSING_NO") {
+        setIsMissingNoSecretUnlocked(isUnlocked);
+        setIsMissingNoSecretActive(isEnabled);
+      }
+      else if (id === "DREAMCAST") {
+        setIsDreamcastSecretUnlocked(isUnlocked);
+        setIsDreamcastSecretActive(isEnabled);
+      }
+      // TODO: add filter secrets
+    });
 
     setSettings(playerStats);
   };
 
   useKeySequence(KONAMI_CODE, () => {
-    unlockSecret(AchievementId.konami_code);
+    unlockSecret("KONAMI_CODE");
   });
 
   useKeySequence(PSP, () => {
-    unlockSecret(AchievementId.psp_code);
+    unlockSecret("PSP_CODE");
   });
 
   useKeySequence(IWHBYD_CODE, () => {
-    unlockSecret(AchievementId.iwhbyd);
+    unlockSecret("IWHBYD");
   });
 
   useEffect(() => {
@@ -319,7 +322,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     }
 
     const handleGamepadConnected = () => {
-      void unlockSecret(AchievementId.oceangate);
+      void unlockSecret("OCEANGATE");
     };
 
     window.addEventListener('gamepadconnected', handleGamepadConnected);
@@ -335,35 +338,35 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const handleSecretActivate = () => {
-      void unlockSecret(AchievementId.konami_code);
+      void unlockSecret("KONAMI_CODE");
     };
 
     const handlePspSecretActivate = () => {
-      void unlockSecret(AchievementId.psp_code);
+      void unlockSecret("PSP_CODE");
     };
 
     const handleOceangateSecretActivate = () => {
-      void unlockSecret(AchievementId.oceangate);
+      void unlockSecret("OCEANGATE");
     };
 
     const handle404SecretActivate = () => {
-      void unlockSecret(AchievementId._404);
+      void unlockSecret("_404");
     };
 
     const handleIwhbydSecretActivate = () => {
-      void unlockSecret(AchievementId.iwhbyd);
+      void unlockSecret("IWHBYD");
     };
 
     const handleMissingNoSecretActivate = () => {
-      void unlockSecret(AchievementId.missing_no);
+      void unlockSecret("MISSING_NO");
     };
 
     const handleAndroidSecretActivate = () => {
-      void unlockSecret(AchievementId.android);
+      void unlockSecret("ANDROID");
     };
 
     const handleDreamcastSecretActivate = () => {
-      void unlockSecret(AchievementId.dreamcast);
+      void unlockSecret("DREAMCAST");
     };
 
     document.addEventListener("secret:konami:activate", handleSecretActivate);
@@ -421,7 +424,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     unlockSecret,
     toggleSecret,
     secretGroups,
-    secrets,
+    secrets: statDefs,
     settings,
     dreamcastFontClass: dreamcastFont.className,
     pspFontClass: pspFont.className,

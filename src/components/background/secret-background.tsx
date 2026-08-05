@@ -7,7 +7,7 @@ import { AchievementId } from "@enums";
 import "./secret-background.scss";
 
 const achievementShaderMap: Record<AchievementId, ShaderKind> = {
-  "404": 'silent_hill',
+  "_404": 'silent_hill',
   "ANDROID": 'android',
   "DREAMCAST": 'unknown',
   "IWHBYD": 'iwhbyd',

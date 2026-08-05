@@ -3,24 +3,23 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSecret } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle, faLock, faUnlock, faUnlockAlt, faCheck, faCheckCircle, faToggleOff, faToggleOn, IconDefinition, faMinus } from "@fortawesome/free-solid-svg-icons";
-import { Setting, AchievementId } from "types";
+import { faLock, faCheck, faCheckCircle, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { AchievementId } from "@enums";
 import "./secrets.css";
 
 export interface SecretViewProps
 {
   id: AchievementId;
-  stat: Setting;
   unlockMinimum: number;
 }
 
-export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
+export default function SecretView({ id, unlockMinimum }: SecretViewProps) {
 
   const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, settings: stats } = useSecret();
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
   const elementRef = useRef<HTMLTableCellElement | null>(null);
-  const secret = secrets[id];
+  const secret = secrets.filter(s => s.id === id)[0];
   const [unlocked, setUnlocked] = useState(false);
   const [enabled, setEnabled] = useState(false);
 

@@ -1,4 +1,4 @@
 export type KeyPressAction = {
     repeat: boolean;
-    onKeyPress: () => void;
+    onKeyPress: () => void | Promise<void>;
 }

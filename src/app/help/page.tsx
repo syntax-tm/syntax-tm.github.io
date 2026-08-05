@@ -1,19 +1,18 @@
 "use client";
 
-import React, { ReactElement } from "react";
+import React from "react";
 import { faA, faAngleDown, faAngleUp, faD, faH, faLeftRight, faS, faUpDown, faW } from "@fortawesome/free-solid-svg-icons";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ControllerIcon from "@components/icons/controller-icon";
 import useInput from "@hooks/useInput";
-import { InputType } from "@enums";
 import { Modal } from "@components/modal/modal";
 import "./help.css";
 
 function HelpView() {
   return (
-    <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
-      <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 max-w-[600px]">
+    <div className="modal-content content-center justify-items-center items-center mx-auto my-auto max-h-full overflow-y-scroll">
+      <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 max-w-150">
         <thead className="text-xs text-gray-400 uppercase items-center relative">
           <tr>
             <th scope="col" className="px-6 py-3 flex justify-center">
@@ -163,7 +162,7 @@ function HelpView() {
           </tr>
           <tr className="">
             <th scope="row" className="flex justify-center px-6 py-2.5 font-medium text-gray-500 whitespace-nowrap dark:text-gray-400">
-            <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">F1</kbd>
+              <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">F1</kbd>
               <span className="mx-2 my-auto">or</span>
               <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
                 <FontAwesomeIcon icon={faH} />
@@ -184,8 +183,8 @@ function HelpView() {
 function GamepadHelpView() {
   return (
     <div className="w-full h-full grid">
-      <div className="modal-content content-center justify-items-center items-center mx-auto max-h-full overflow-y-scroll my-2">
-        <table className="text-sm text-left text-gray-500 dark:text-gray-400 max-w-[600px]">
+      <div className="modal-content content-center justify-items-center items-center mx-auto my-auto max-h-full overflow-y-scroll">
+        <table className="text-sm text-left text-gray-500 dark:text-gray-400 max-w-150">
           <thead className="text-xs text-gray-400 uppercase items-center relative">
             <tr className="content-center">
               <th scope="col" className="px-6 py-3 flex justify-center">
@@ -310,7 +309,7 @@ function GamepadHelpView() {
 
 function MobileHelpView() {
   return (
-    <div className="modal-content justify-items-center items-center align-middle content-center mx-auto max-h-full overflow-y-scroll h-full my-2 grid">
+    <div className="modal-content justify-items-center items-center align-middle content-center mx-auto my-auto max-h-full overflow-y-scroll h-full grid">
       <table className="text-lg rtl:text-right text-gray-500 dark:text-gray-400 table-fixed border-separate border border-transparent border-spacing-x-1 my-auto">
         <thead className="text-gray-300">
           <tr className="text-xl">

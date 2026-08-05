@@ -27,6 +27,7 @@ const nextConfig = {
     // TODO: add missing Suspense and remove this suppression
     // missingSuspenseWithCSRBailout: false,
     viewTransition: true,
+    staticGenerationRetryCount: 3,
   },
   env: {
     name: version.name,
@@ -77,12 +78,6 @@ const nextConfig = {
         }),
       );
     }
-
-    // load shader files as raw text
-    config.module.rules.push({
-      test: /\.([gh]lsl|vert)$/,
-      type: 'asset/source', // Loads file content as a string
-    });
 
     return config;
   },

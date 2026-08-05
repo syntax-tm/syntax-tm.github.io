@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useId, useRef } from 'react';
+import React from 'react';
 import "./dreamcast.scss";
 
 const numberDots = 100;

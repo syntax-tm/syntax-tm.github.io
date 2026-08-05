@@ -91,8 +91,8 @@ export function Modal({ title, children }: { title: string, children: React.Reac
 
   return (
     <div className="root-container">
-      <Clock />
-      <Menu />
+      {/* <Clock />
+      <Menu /> */}
       <div className={`modal modal-${modalClass} fixed left-0 top-0 z-25 flex flex-col h-full w-full`}>
         <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen z-25 overflow-none bg-stone-900/80 backdrop-blur">
           <ModalHeader title={title} />

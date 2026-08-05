@@ -135,7 +135,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const onEnter = useCallback(() => {
     if (!xmbItemRef.current) return;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const key = toXmbKey(x, y);
     const item = xmbItemRef.current.get(key);
@@ -155,19 +155,19 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const onEsc = useCallback(() => {
     if (!moveDefault()) return;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
   }, [play]);
 
   const onBack = useCallback(() => {
     if (!modal) return;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     router.push('/');
   }, [modal]);
 
   const openHelp = useCallback(() => {
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     router.push('/help');
   }, []);
@@ -184,7 +184,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
     const nextY = y - 1;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     if (nextY < 0) return null;
 
@@ -198,7 +198,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
     const nextY = 0;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     if (y === nextY) return null;
 
@@ -211,7 +211,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     if (modal) return;
     if (!currentCategory) return null;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const maxY = currentCategory.items.length - 1;
 
@@ -227,7 +227,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     if (modal) return;
     if (!currentCategory) return null;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const max = currentCategory.items.length - 1;
 
@@ -242,7 +242,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     if (modal) return;
     if (!categories) return null;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const nextX = x - 1;
 
@@ -258,7 +258,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     if (modal) return;
     if (!categories) return null;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const nextX = 0;
 
@@ -274,7 +274,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     if (modal) return;
     if (!categories) return null;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const max = categories.length - 1;
     const nextX = x + 1;
@@ -291,7 +291,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     if (modal) return;
     if (!categories) return null;
 
-    play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_SRC);
 
     const max = categories.length - 1;
 
