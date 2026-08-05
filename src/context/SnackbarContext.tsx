@@ -3,8 +3,8 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { faInfoCircle, faExclamationCircle, faWarning, IconDefinition, faCheckCircle, faEgg, faLock, faUnlock, faCheck, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useAudio } from '@context/AudioContext';
-import { SnackbarVariant } from '@components/types';
+import { useAudio } from "@context/AudioContext";
+import { SnackbarVariant } from "types";
 
 const SNACKBAR_AUDIO_SRC = '/audio/snd_system_ok.wav';
 const DEFAULT_TIMEOUT = 8000;
@@ -77,8 +77,8 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
         <>
           <div className="fixed top-5 right-5 z-100 animate-fade-in-up h-auto max-w-3/5 lg:max-w-2/5"
             onClick={() => setSnackbar((prev) => ({ ...prev, isOpen: false }))}>
-            <div className={`px-2 py-2 rounded-md ${fg} ${bg} flex relative min-h-15`}>
-              <FontAwesomeIcon icon={icon} className="mr-2 my-auto w-auto lg:text-3xl z-10" />
+            <div className={`grid grid-cols-2 px-2 py-2 rounded-md ${fg} ${bg} relative min-h-15`}>
+              <FontAwesomeIcon icon={icon} className="mr-2 my-auto lg:text-3xl h-[90%] w-[90%]" />
               <div className="flex flex-col align-middle">
                 <span className="inline-block align-middle my-auto text-balance mr-2 text-[11pt] lg:text-[14pt]">{snackbar.message}</span>
                 {snackbar.description && (

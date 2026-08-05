@@ -24,6 +24,18 @@
         "action": "debugWithChrome",
         "killOnServerStop": true
       }
+    },
+    {
+      "name": "Next.js: debug full stack (turbopack)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "yarn dev:turbo",
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome",
+        "killOnServerStop": true
+      }
     }
   ]
 }

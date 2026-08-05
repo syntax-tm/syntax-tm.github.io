@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from "react";
+import usePath from "./usePath";
 
 export type StandardVoidFn = () => void;
 export type KeyboardEventFn = (e: KeyboardEvent) => void;
@@ -26,21 +27,7 @@ export interface KeyboardOutput {
 
 const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
-  const [pathname, setPathname] = useState('/');
-
-  useEffect(() => {
-    setPathname(window.location.pathname);
-    const handleLocationChange = () => setPathname(window.location.pathname);
-
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('pushstate', handleLocationChange);
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('pushstate', handleLocationChange);
-    };
-  }, []);
-
-  const modal = pathname !== '/' && pathname !== '/boot';
+  const { modal } = usePath();
 
   const isMapped = useCallback((key: string): boolean => {
     return actions.has(key.toLowerCase());

@@ -1,19 +1,17 @@
-import { XmbMenu, XmbCategory, XmbItem } from "@models/menu";
+import { XmbMenu, XmbCategory, XmbItem } from "types";
 import * as icons from '@components/icons/icons';
 
 function buildHomeCategory(): XmbCategory {
-
-  const about = XmbItem.createModal("about", "About", icons.info, '/about');
+  const about = new XmbItem("about", "About", icons.info, '/about');
   about.description = "Display the about screen";
-  about.setActive();
 
-  const help = XmbItem.createModal("help", "Help", icons.questionCircle, '/help');
+  const help = new XmbItem("help", "Help", icons.questionCircle, '/help');
   help.description = "Display the help screen";
 
   const contact = new XmbItem("contact", "Contact", icons.message, 'mailto:info@test.com');
   contact.description = 'Send a message';
 
-  const secrets = XmbItem.createModal("secrets", "Secrets", icons.egg, '/secrets');
+  const secrets = new XmbItem("secrets", "Secrets", icons.egg, '/secrets');
   secrets.description = 'View current secret progress';
 
   const items: XmbItem[] = [
@@ -22,20 +20,14 @@ function buildHomeCategory(): XmbCategory {
     contact,
     secrets,
   ];
-  const category: XmbCategory = new XmbCategory(
-    0,
-    "Home",
-    icons.home,
-    items,
-  );
 
+  const category: XmbCategory = new XmbCategory(0, "Home", icons.home, items);
   return category;
 }
 
 function buildDevCategory(): XmbCategory {
   const gh = new XmbItem("github", "GitHub", icons.github, 'https://github.com/syntax-tm');
   gh.description = 'View GitHub profile';
-  gh.setActive();
 
   const ghg = new XmbItem("github-gists", "GitHub Gists", icons.githubAlt, 'https://gist.github.com/syntax-tm');
   ghg.description = 'View GitHub Gists';
@@ -53,21 +45,17 @@ function buildDevCategory(): XmbCategory {
     gh,
     ghg,
     gl,
-    //new XmbItem("choco", "Chocolatey", icons.choco, 'https://community.chocolatey.org/profiles/syntax-tm'),
-    //new XmbItem("nuget", "Nuget.org", icons.nuget, 'https://www.nuget.org/profiles/syntax-tm'),
-    //new XmbItem("myget", "MyGet", icons.boxes, 'https://www.myget.org/users/syntax-tm'),
     dh,
     so,
   ];
-  const category: XmbCategory = new XmbCategory(1, "Dev", icons.code, items);
 
+  const category: XmbCategory = new XmbCategory(1, "Dev", icons.code, items);
   return category;
 }
 
 function buildGamingCategory(): XmbCategory {
   const src = new XmbItem("speedrun", "Speedrun.com", icons.trophy, 'https://www.speedrun.com/user/Gundwn');
   src.description = 'View Speedrun.com profile';
-  src.setActive();
 
   const yt = new XmbItem("youtube", "YouTube", icons.youtube, 'https://www.youtube.com/@Gundwn');
   yt.description = 'View YouTube channel';
@@ -80,7 +68,7 @@ function buildGamingCategory(): XmbCategory {
 
   // TODO: load the copy data from a config file
   // TODO: url encode the special characters instead of hardcoding
-  const bnet = XmbItem.createModal("bnet", "Battle.Net", icons.battleNet, "/copy?title=Battle.Net&name=BattleTag%3A&value=Gundwn%2311586");
+  const bnet = new XmbItem("bnet", "Battle.Net", icons.battleNet, "/copy?title=Battle.Net&name=BattleTag%3A&value=Gundwn%2311586");
   bnet.description = 'View Battle.Net profile';
 
   const ep = new XmbItem("exophase", "Exophase", icons.exophase, 'https://www.exophase.com/user/Gundwn/');
@@ -100,16 +88,15 @@ function buildGamingCategory(): XmbCategory {
     bnet,
     ep,
     ta,
-    //ttv,
   ];
-  const category: XmbCategory = new XmbCategory(2, "Gaming", icons.games, items);
 
+  const category: XmbCategory = new XmbCategory(2, "Gaming", icons.games, items);
   return category;
 }
 
 function buildSocialCategory(): XmbCategory {
   const discord = new XmbItem("discord", "Discord", icons.discord, 'https://discordapp.com/users/266438959230353409');
-  discord.setActive();
+  discord.description = 'View Discord profile';
 
   const yt = new XmbItem("youtube", "YouTube", icons.youtube, 'https://www.youtube.com/@Gundwn');
   yt.description = 'View YouTube channel';
@@ -134,21 +121,17 @@ function buildSocialCategory(): XmbCategory {
     yt,
     fb,
     ig,
-    //x,
-    //XmbItem.create("snapchat", "Snapchat", icons.snapchat, () => { alert(''); }),
     spotify,
     stats,
-    //new XmbItem("telegram", "Telegram", icons.telegram, 'https://t.me/Gundwn')
   ];
-  const category: XmbCategory = new XmbCategory(3, "Social", icons.user, items);
 
+  const category: XmbCategory = new XmbCategory(3, "Social", icons.user, items);
   return category;
 }
 
 function buildSettingsCategory(): XmbCategory {
   const viewSource = new XmbItem("viewSource", "Source", icons.git, 'https://github.com/syntax-tm/syntax-tm.github.io');
   viewSource.description = 'View this project on GitHub';
-  viewSource.setActive();
 
   const builds = new XmbItem("builds", "Builds", icons.githubActions, 'https://github.com/syntax-tm/syntax-tm.github.io/actions');
   builds.description = 'View latest builds on GitHub';
@@ -169,13 +152,8 @@ function buildSettingsCategory(): XmbCategory {
     nextJs,
     fa,
   ];
-  const category: XmbCategory = new XmbCategory(
-    4,
-    "Settings",
-    icons.settings,
-    items,
-  );
 
+  const category: XmbCategory = new XmbCategory(4, "Settings", icons.settings, items);
   return category;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { MenuCategory } from "./xmb-menu-category";
 import { useXmb } from "@context/XmbContext";
 import "./xmb.scss";

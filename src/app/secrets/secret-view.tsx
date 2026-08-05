@@ -1,21 +1,22 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSecret, PlayerStat, AchievementId } from "@context/SecretContext";
+import { useSecret } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle, faLock, faUnlock, faUnlockAlt, faCheck, faCheckCircle, faToggleOff, faToggleOn, IconDefinition, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { Setting, AchievementId } from "types";
 import "./secrets.css";
 
 export interface SecretViewProps
 {
   id: AchievementId;
-  stat: PlayerStat;
+  stat: Setting;
   unlockMinimum: number;
 }
 
 export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
 
-  const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, stats } = useSecret();
+  const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, settings: stats } = useSecret();
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
   const elementRef = useRef<HTMLTableCellElement | null>(null);

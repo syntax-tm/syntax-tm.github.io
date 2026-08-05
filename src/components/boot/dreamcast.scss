@@ -1,0 +1,217 @@
+$ntsc-color: #f25100;
+$pal-color: #3877c3;
+
+@font-face {
+  font-family: "Basilea";
+  src: url("https://db.onlinewebfonts.com/t/715ac8af67f8bf877e0dc77d0f893a57.ttf")
+    format("truetype");
+}
+
+.tv {
+  user-select: none;
+  font-family: Basilea;
+  font-size: 45px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+// #region:checked ~ .tv {
+//   --color: #3877c3;
+// }
+
+// #power:not(:checked) ~ .tv * {
+//   animation: unset;
+// }
+
+.tv {
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  display: flex;
+}
+
+.screen {
+  border-radius: 15px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 480px;
+  height: 360px;
+}
+
+.spiral-container {
+  position: relative;
+  height: 112px;
+  margin-bottom: -10px;
+}
+
+.spiral {
+  fill: var(--color);
+  width: 127px;
+  height: 112px;
+}
+
+.spiral-dot {
+  opacity: 0;
+  animation: spiral-dot 1s cubic-bezier(0.81, 0.27, 1, 1) forwards;
+  offset-path: var(--path-spiral-dot);
+}
+
+.spiral-mask {
+  offset-path: var(--path-spiral-mask);
+  offset-distance: 100%;
+  background-color: white;
+  animation: spiral-mask cubic-bezier(0.81, 0.27, 1, 1) forwards;
+}
+
+.spiral-dot {
+  animation-delay: 5.39s;
+}
+
+.spiral-mask {
+  animation-delay: 5.35s;
+}
+
+.letter-container {
+  display: flex;
+  overflow: hidden;
+  height: 55px;
+}
+
+.trademark {
+  font-family: arial;
+  font-weight: bold;
+  font-size: 9px;
+  margin-left: 1px;
+}
+
+.letter {
+  margin-top: 55px;
+  animation: letter-bounce linear forwards;
+}
+
+.dot,
+.spiral-mask {
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--color) 13%,
+    rgba(255, 255, 255, 0) 73%
+  );
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  offset-distance: 100%;
+}
+
+.spiral-mask {
+  background: white;
+}
+
+.bounce-dot {
+  opacity: 0;
+  animation: bounce-dot 4.5s 0.9s var(--parabola);
+  offset-path: var(--path-bounce-dot);
+}
+
+@keyframes spiral-mask {
+  100% {
+    offset-distance: 0;
+  }
+}
+
+@keyframes spiral-dot {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes letter-bounce {
+  0% {
+    margin-top: 55px;
+    transform: scaleY(1.25);
+  }
+  25% {
+    margin-top: 10px;
+    transform: scaleY(1);
+  }
+  50% {
+    margin-top: 0px;
+    transform: scaleY(1.25);
+  }
+  80% {
+    margin-top: 20px;
+    transform: scaleY(0.7);
+  }
+  100% {
+    margin-top: 10px;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes bounce-dot {
+  0% {
+    animation-timing-function: ease-in;
+  }
+  5% {
+    opacity: 1;
+  }
+  17.4% {
+    offset-distance: 77.1%;
+  }
+  28.6% {
+    offset-distance: 66.3%;
+  }
+  37.7% {
+    offset-distance: 57%;
+  }
+  45.4% {
+    offset-distance: 49.6%;
+  }
+  53.1% {
+    offset-distance: 43.1%;
+  }
+  58.7% {
+    offset-distance: 37.6%;
+  }
+  64.3% {
+    offset-distance: 33.1%;
+  }
+  69.2% {
+    offset-distance: 29.2%;
+  }
+  74.1% {
+    offset-distance: 25.7%;
+    animation-timing-function: cubic-bezier(0.49, 0.9, 0.65, 0.35);
+  }
+  100% {
+    offset-distance: 0%;
+    opacity: 1;
+  }
+}
+
+:root {
+  --color: $ntsc-color;
+  --parabola: cubic-bezier(0.2, 0.6, 0.86, 0.5);
+  --path-bounce-dot: path(
+    "M233.5 171.3l1.8-10.8 2-11 2.1-12 2.5-11 2.6-10 3.2-8.5 2.9-7.6 3.3-7 3.4-5.2 2.9-4.2 3.1-3.8 3.3-3 3.6-2.8 3.2-2 3.4-1.4 3.1-.8 3-.5h3.1l3.2.5 3.6 1 4 1.5 5.3 3.5 5.3 4.9 6 7.7 6.5 9.8 5.2 12 5 13.6 3.6 14.1 2.5 14.8 2.7 14.4 2.2 14.9 1.3 14.7 1 14.8 1.2 15.6.7 14.3-.7 1-2.6-8.2-5-6.5-6-.6-5.1 5.8-5.5 11-2-1.4-1.4-10.7-5.9-6.6-6 1-3.5 6-3.6 11.8-2.9-2.3-.6-11.7-3.9-6.1-5.8-2-4.9 3.7-3.1 8.2-1.6 10.6-1.8.2-2.5-12-3.1-7.4-5.7-5.6-6 .6-5 5-4.1 10.1-3.3 10.9-2.5 2.2-1.8-11.7-2.5-11-2.6-7.6-5.6-4.4-6.2.2-3.3 4.8-2.7 7-2.4 9.6-2.6 10.6-1.4.8-.8-12.5-.7-9.7-1-9.6-1.2-6.9-4.4-3-4.7 2.4-2.7 6.3-1.5 8.1-1.9 10-1.6 11.2-2.1 4.7-1-11-.8-10.6-.7-7.6-.8-8.3-1.4-7.7-1.5-6.8-4.6-3.6-3.8 2.2-1.7 8.6-1.8 10-2.1 11.2-1.4 11.6-2 9-.3-4.5-.4-6.9-.4-7.2-.7-8.8-.5-8.4-.9-8-.9-6.6-2.7-6.8-5.4-4.7-4 2.4-2.5 8.2-1 9.5-1 9-1 10-.6 11.3-.7 12.7-.5 1.8-2.7-14.5-2.5-11.4-2.8-12.9-2.7-11.7-3.7-11.5L122 174l-4.2-11.9-4.3-11.4-5-11.4L103 128l-5.4-11.5-5.6-10.9-6-11.2-5.7-9.6-6.8-10.6-6-9-6.5-8.7-7-8.8-7.6-7.9-7.7-7-8-6.8-6-4.6-8.7-6.4L6 8.7"
+  );
+  --path-spiral-dot: path(
+    "M297 184.8l-5.5-44.2-20.4-27.8-47.8-8-31.4 19.2-11 33.2 6.8 30.6 23.2 19.6L237 211l23.6-11 12-20-1.6-24-11.2-20.8-19.3-9-20.5 2.2-14.2 14.8-5 15.8 3 17.8 12.6 11 15.6 2 13-5 7.2-11-.6-12.6-5.6-10-8-4.6-7-1.2-8.4 2.4-4.2 12.2 4.2 9 9.4 3.4"
+  );
+  --path-spiral-mask: path(
+    "M124.8 74.9l-1.2-15.2-5.9-20-3.2-5.3-4.4-7.6-6.8-8.4-10-7.3L78.7 6 63.5 4l-11.6.6L40.5 8l-11.2 6.2-10 7.7-6.5 8.5-6.1 13.3-2 14.6L6.3 70l4.4 12.8L17 93.1l10.8 8.8 13.7 4.1 10.8 1.8 11.8-.6 9.5-2.5 10.2-5.4 7.3-5.8 5.4-7.2 3.2-8.1v-9.1l-2.3-14.7-4.8-12.8-7.4-8-10.3-6-10.4-2.4h-10L46.5 28l-7.2 4-5.7 5.7-4.4 6-3.4 8.1V60l1.2 7.3 2.6 7.7 4 5.8 6.4 4.2 7.8 2.4h8.6l6.8-1.4 6.3-2.6 5.7-4.3 2.9-6 .5-7.7-1.2-7.3-3-6-5-4-5.4-2.3-7-1.2L51 46l-4.4 4.5-2.4 6.1 1 6.1 4.9 4.8 7.2 1 6.8-1"
+  );
+}

@@ -1,5 +1,5 @@
 import androidShaderSource from "./shaders/android";
-import dreamcastShaderSource from "./shaders/dreamcast";
+// import dreamcastShaderSource from "./shaders/dreamcast";
 import iwhbydShaderSource from "./shaders/iwhbyd";
 import konamiCodeShaderSource from "./shaders/konami_code";
 import missingNoShaderSource from "./shaders/missing_no";
@@ -12,7 +12,7 @@ export type ShaderKind = "android" | "iwhbyd" | "konami_code" | "missing_no" | "
 
 export const shaderSources: Record<ShaderKind, string | null> = {
   "android": androidShaderSource,
-  "dreamcast": dreamcastShaderSource,
+  "dreamcast": null,
   "dreamcast_bg": null,
   "iwhbyd": iwhbydShaderSource,
   "konami_code": konamiCodeShaderSource,

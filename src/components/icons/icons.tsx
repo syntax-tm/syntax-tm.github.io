@@ -2,14 +2,12 @@
 // TODO: add findIconDefinition to load fa icons by name once config is moved to json
 // https://docs.fontawesome.com/web/use-with/react/use-with#typescript
 
-/* eslint-disable @next/next/no-img-element */
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCode,
   faCog,
   faTrophy,
   faAward,
-  faMusic,
   faC,
   faMedal,
   faInfoCircle,
@@ -27,8 +25,6 @@ import {
   faBoxesPacking,
   faCodeFork,
   faShare,
-  faInfo,
-  faCircleInfo,
   faQuestion,
   faQuestionCircle,
   faEgg,
@@ -63,7 +59,6 @@ import homeIcon from "public/image/xmb/home.png";
 import displayIcon from "public/image/xmb/display.png";
 import gamesIcon from "public/image/xmb/games.png";
 import gow3Icon from "public/image/xmb/gow3.png";
-//import infoIcon from "public/image/xmb/info.png";
 import musicIcon from "public/image/xmb/music.png";
 import photoIcon from "public/image/xmb/photo.png";
 import primeIcon from "public/image/xmb/prime.png";
@@ -79,8 +74,6 @@ import chocoIcon from "public/image/xmb/choco.png";
 import nugetIcon from "public/image/xmb/nuget.png";
 import halo3generalBwIcon from "public/image/halo_3_general_bw.png";
 import pspBatteryIcon from "public/image/psp_full_battery.png";
-import ghActionsIcon from "public/svg/githubactions.svg";
-//import statsFmIcon from "public/svg/statsfm.svg";
 
 const xmbIconClassName = "xmb-icon object-contain justify-self-center w-full h-full overflow-visible";
 
@@ -132,14 +125,12 @@ export const award: ReactElement = (
 export const message: ReactElement = (
   <FontAwesomeIcon icon={faMessage} className={`${xmbIconClassName} overflow-auto`} />
 );
-// export const music: ReactElement = <FontAwesomeIcon icon={faMusic} className='xmb-icon object-contain justify-self-center w-full h-full' />
 export const c: ReactElement = (
   <FontAwesomeIcon icon={faC} className={xmbIconClassName} />
 );
 export const medal: ReactElement = (
   <FontAwesomeIcon icon={faMedal} className={xmbIconClassName} />
 );
-//xport const info: ReactElement = <FontAwesomeIcon icon={faInfoCircle} className='xmb-icon object-contain justify-self-center w-full h-full' />
 export const computer: ReactElement = (
   <FontAwesomeIcon icon={faComputer} className={xmbIconClassName} />
 );
@@ -158,7 +149,6 @@ export const laptop: ReactElement = (
 export const desktop: ReactElement = (
   <FontAwesomeIcon icon={faDesktop} className={xmbIconClassName} />
 );
-// export const video: ReactElement = <FontAwesomeIcon icon={faVideo} className='xmb-icon object-contain justify-self-center w-full h-full' />
 export const disease: ReactElement = (
   <FontAwesomeIcon icon={faDisease} className={xmbIconClassName} />
 );
@@ -302,7 +292,7 @@ export const nextJs: ReactElement = (
 );
 export const githubActions: ReactElement = (
   <svg width="800px" height="800px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" className={xmbIconClassName}>
-    <path 
+    <path
       d="M10.984 13.836a.5.5 0 0 1-.353-.146l-.745-.743a.5.5 0 1 1 .706-.708l.392.391 1.181-1.18a.5.5 0 0 1 .708.707l-1.535 1.533a.504.504 0 0 1-.354.146zm9.353-.147l1.534-1.532a.5.5 0 0 0-.707-.707l-1.181 1.18-.392-.391a.5.5 0 1 0-.706.708l.746.743a.497.497 0 0 0 .706-.001zM4.527 7.452l2.557-1.585A1 1 0 0 0 7.09 4.17L4.533 2.56A1 1 0 0 0 3 3.406v3.196a1.001 1.001 0 0 0 1.527.85zm2.03-2.436L4 6.602V3.406l2.557 1.61zM24 12.5c0 1.93-1.57 3.5-3.5 3.5a3.503 3.503 0 0 1-3.46-3h-2.08a3.503 3.503 0 0 1-3.46 3 3.502 3.502 0 0 1-3.46-3h-.558c-.972 0-1.85-.399-2.482-1.042V17c0 1.654 1.346 3 3 3h.04c.244-1.693 1.7-3 3.46-3 1.93 0 3.5 1.57 3.5 3.5S13.43 24 11.5 24a3.502 3.502 0 0 1-3.46-3H8c-2.206 0-4-1.794-4-4V9.899A5.008 5.008 0 0 1 0 5c0-2.757 2.243-5 5-5s5 2.243 5 5a5.005 5.005 0 0 1-4.952 4.998A2.482 2.482 0 0 0 7.482 12h.558c.244-1.693 1.7-3 3.46-3a3.502 3.502 0 0 1 3.46 3h2.08a3.503 3.503 0 0 1 3.46-3c1.93 0 3.5 1.57 3.5 3.5zm-15 8c0 1.378 1.122 2.5 2.5 2.5s2.5-1.122 2.5-2.5-1.122-2.5-2.5-2.5S9 19.122 9 20.5zM5 9c2.206 0 4-1.794 4-4S7.206 1 5 1 1 2.794 1 5s1.794 4 4 4zm9 3.5c0-1.378-1.122-2.5-2.5-2.5S9 11.122 9 12.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5zm9 0c0-1.378-1.122-2.5-2.5-2.5S18 11.122 18 12.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5zm-13 8a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zm2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zm12 0c0 1.93-1.57 3.5-3.5 3.5a3.503 3.503 0 0 1-3.46-3.002c-.007.001-.013.005-.021.005l-.506.017h-.017a.5.5 0 0 1-.016-.999l.506-.017c.018-.002.035.006.052.007A3.503 3.503 0 0 1 20.5 17c1.93 0 3.5 1.57 3.5 3.5zm-1 0c0-1.378-1.122-2.5-2.5-2.5S18 19.122 18 20.5s1.122 2.5 2.5 2.5 2.5-1.122 2.5-2.5z" />
   </svg>
 );

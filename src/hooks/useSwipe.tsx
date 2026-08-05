@@ -1,6 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import usePath from "./usePath";
+
+const MIN_SWIPE_DISTANCE = 50;
 
 export interface SwipeInput {
   onSwipedUp: () => void;
@@ -21,61 +24,35 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
   const touchEndX = useRef(0);
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
-
-  const minSwipeDistance = 50;
+  const { modal } = usePath();
 
   const onTouchStart = useCallback((e: TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
     touchEndX.current = e.targetTouches[0].clientX; // otherwise the swipe is fired even with usual touch events
     touchStartY.current = e.targetTouches[0].clientY;
     touchEndY.current = e.targetTouches[0].clientY; // otherwise the swipe is fired even with usual touch events
-  }, [touchStartX, touchEndX, touchStartY, touchEndY]);
-
-  const [pathname, setPathname] = useState('');
-
-  useEffect(() => {
-    setPathname(window.location.pathname);
-    const handleLocationChange = () => setPathname(window.location.pathname);
-
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('pushstate', handleLocationChange);
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('pushstate', handleLocationChange);
-    };
   }, []);
 
-  const modal = pathname !== '' && pathname !== '/' && pathname !== '/boot';
-
   const onTouchMove = useCallback((e: TouchEvent) => {
-    //console.log(`onTouchMove: ${e}`);
     touchEndX.current = e.targetTouches[0].clientX;
     touchEndY.current = e.targetTouches[0].clientY;
   }, []);
 
   const onTouchEnd = useCallback(() => {
-    //console.log('onTouchEnd');
 
     if (!touchStartX || !touchEndX) return;
     if (!touchStartY || !touchEndY) return;
 
     const distanceX = touchStartX.current - touchEndX.current;
-    let isLeftSwipe = distanceX > minSwipeDistance;
-    let isRightSwipe = distanceX < -minSwipeDistance;
+    let isLeftSwipe = distanceX > MIN_SWIPE_DISTANCE;
+    let isRightSwipe = distanceX < -MIN_SWIPE_DISTANCE;
 
     const distanceY = touchStartY.current - touchEndY.current;
-    let isUpSwipe = distanceY > minSwipeDistance;
-    let isDownSwipe = distanceY < -minSwipeDistance;
+    let isUpSwipe = distanceY > MIN_SWIPE_DISTANCE;
+    let isDownSwipe = distanceY < -MIN_SWIPE_DISTANCE;
 
     const isLR = isLeftSwipe || isRightSwipe;
     const isUD = isUpSwipe || isDownSwipe;
-
-    //console.log(`x: ${touchStartX.current}, ${touchEndX.current}`);
-    //console.log(`y: ${touchStartY.current}, ${touchEndY.current}`);
-    //console.log(`distance: ${distanceX}, ${distanceY}`);
-
-    //console.log(`isLR: ${isLR}`);
-    //console.log(`isUD: ${isUD}`);
 
     // if this is both left/right and top/bottom, use the one
     // with the greater distance
@@ -101,10 +78,10 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
     if (isRightSwipe) {
       input.onSwipedRight();
     }
-  }, [input, modal]);
+  }, [input]);
 
   useEffect(() => {
-    if (modal !== input.enabledOnModal) return;
+    if (modal && !input.enabledOnModal) return;
     document.body.addEventListener('touchstart', onTouchStart);
     document.body.addEventListener('touchend', onTouchEnd);
     document.body.addEventListener('touchmove', onTouchMove);
@@ -113,7 +90,7 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
       document.body.removeEventListener('touchend', onTouchEnd);
       document.body.removeEventListener('touchmove', onTouchMove);
     };
-  }, [modal, input.enabledOnModal, onTouchStart, onTouchEnd, onTouchMove]);
+  }, [modal, input, onTouchStart, onTouchEnd, onTouchMove]);
 
   return {
     onTouchStart,

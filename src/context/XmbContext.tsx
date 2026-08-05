@@ -1,16 +1,16 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import useWheel, { WheelInput } from "@hooks//useWheel";
+import useWheel, { WheelInput } from "@hooks/useWheel";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
+import usePath from "@hooks/usePath";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
 import { useAudio } from '@context/AudioContext';
-import { Position, XmbCategory, XmbItem, XmbMenu } from "@models/menu";
+import { Position, XmbCategory, XmbItem, XmbMenu } from "types";
 import build from "@services/menuBuilder";
 import { useGamepads } from "awesome-react-gamepads";
 import { useSnackbar } from "./SnackbarContext";
-import { useBoot } from "./BootContext";
 
 // TODO: this context will need to be all of the state from the xmbmenu class
 export interface XmbContextType {
@@ -69,22 +69,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const xmbMenuRef = useRef<XmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
-  const [pathname, setPathname] = useState('/');
-  const { isBootVisible } = useBoot();
-
-  useEffect(() => {
-    setPathname(window.location.pathname);
-    const handleLocationChange = () => setPathname(window.location.pathname);
-
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('pushstate', handleLocationChange);
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('pushstate', handleLocationChange);
-    };
-  }, []);
-
-  const modal = (pathname !== '/' && pathname !== '/boot') || isBootVisible;
+  const { modal } = usePath();
 
   if (!xmbItemRef.current) {
     xmbItemRef.current = new Map<string, XmbItem>();
@@ -135,20 +120,14 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   }, [categories, updateY]);
 
   const openItem = useCallback((item: XmbItem) => {
-    if (item.modal) {
-      router.push(item.modal);
+    if (!item.link) return;
+
+    if (item.link.startsWith('/')) {
+      router.push(item.link);
       return;
     }
 
-    if (item.link) {
-      openInNewTab(item.link);
-      return;
-    }
-
-    if (item.onClick) {
-      item.onClick();
-      return;
-    }
+    openInNewTab(item.link);
 
     console.warn(`No action for ${item.title} in ${item.category}`);
   }, []);

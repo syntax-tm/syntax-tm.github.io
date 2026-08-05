@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { InputType } from "@app/enums";
+import { InputType } from "@enums";
 
 const resolveInputType = (userAgent: NavigatorID["userAgent"], isGamepadConnected: boolean) => {
   if (isGamepadConnected) {
@@ -24,9 +24,7 @@ const useInput = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.UNKNOWN);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    if (typeof window === "undefined") return;
 
     const updateGamepadState = () => {
       const hasGamepad = navigator.getGamepads?.().some(Boolean) ?? false;
@@ -34,6 +32,7 @@ const useInput = () => {
     };
 
     updateGamepadState();
+
     window.addEventListener("gamepadconnected", updateGamepadState);
     window.addEventListener("gamepaddisconnected", updateGamepadState);
 
@@ -48,7 +47,12 @@ const useInput = () => {
     setInputType(resolveInputType(userAgent, isGamepadConnected));
   }, [isGamepadConnected]);
 
-  return inputType;
+  return {
+    inputType,
+    isGamepad: inputType === InputType.GAMEPAD,
+    isMobile: inputType === InputType.TOUCH,
+    isDesktop: inputType === InputType.DEFAULT,
+  };
 };
 
 export default useInput;

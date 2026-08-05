@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef } from "react";
 import useMobileDetect from "@hooks/useMobileDetect";
-import { AchievementId, useSecret } from "@context/SecretContext";
+import { useSecret } from "@context/SecretContext";
 import { Modal } from "@components/modal/modal";
+import { AchievementId } from "@enums";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;

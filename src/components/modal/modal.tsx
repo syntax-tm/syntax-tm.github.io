@@ -5,13 +5,12 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import { InputType } from "@app/enums";
 import { useAudio } from "@context/AudioContext";
 import useInput from "@hooks/useInput";
 import useKeyboard from "@hooks/useKeyboard";
 import Clock from "@components/clock/clock";
 import ControllerIcon from "@components/icons/controller-icon";
-import { KeyPressAction } from "@components/types";
+import { KeyPressAction } from "types";
 import Menu from "@components/xmb-menu/xmb-menu";
 import "./modal.css";
 
@@ -19,10 +18,7 @@ const AUDIO_SRC = '/audio/nav.mp3';
 
 export function ModalClose() {
   const router = useRouter();
-  const inputType = useInput();
-  const isGamepad = inputType === InputType.GAMEPAD;
-  const isMobile = inputType === InputType.TOUCH;
-  const isDesktop = inputType === InputType.DEFAULT;
+  const { isGamepad, isMobile, isDesktop } = useInput();
 
   const { play } = useAudio();
 

@@ -13,16 +13,10 @@ const clockFont = Google_Sans({
   weight: ["400", "500", "600"],
   preload: true,
   subsets: ['latin'],
-  adjustFontFallback: false,
+  fallback: ['Segoe UI', 'sans'],
 });
 
-// const clockFont = Roboto({
-//   preload: true,
-//   subsets: ['latin'],
-// });
-
 export default function Clock() {
-  //const [time, setTime] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
   const [day, setDay] = useState<string | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -33,7 +27,7 @@ export default function Clock() {
   const shownRef = useRef<NodeJS.Timeout | null>(null);
   const isLoadingRef = useRef(true);
 
-  const { isPspSecretActive, pspFontClass } = useSecret();
+  const { isPspSecretActive, isDreamcastSecretActive, pspFontClass } = useSecret();
 
   const refreshTime = useCallback(() => {
     const date = new Date();
@@ -86,16 +80,25 @@ export default function Clock() {
 
   return (
     <>
+      <div>
+        {isDreamcastSecretActive && (
+          <>
+            <div className="dreamcast-label fixed left-[6%] top-[5%] lg:top-[4%] text-black font-bold text-3xl lg:text-6xl">
+              <span>Dreamcast</span>
+            </div>
+          </>
+        )}
+      </div>
       <div className={`${ !isPspSecretActive ? 'clock' : 'psp-clock' } ${!isLoadingRef.current && 'boot-fade-in'} rounded-sm absolute p-2 select-none pointer-events-none tabular-nums`}>
         <div className={`clock-container ${loaded ? 'flex' : 'hidden'} ${isPspSecretActive ? pspFontClass : clockFont.className} tracking-normal align-middle flex flex-nowrap items-center ${isPspSecretActive && '-mt-1'}`}>
           <div className="flex flex-nowrap gap-0 items-center mx-2">
             <span>{month}</span>
-            <span className="font-light mx-0.5 text-[14px]">/</span>
+            <span className="font-light mx-1 text-[14px]">/</span>
             <span>{day}</span>
           </div>
           <div className="flex flex-nowrap gap-0 items-center mx-2">
             <span>{hour}</span>
-            <span className="mx-[1.5px] w-1">{showColon ? ':' : ''}</span>
+            <span className="w-5 text-center">{showColon ? ':' : ''}</span>
             <span>{minute}</span>
           </div>
           <span>{meridiem}</span>

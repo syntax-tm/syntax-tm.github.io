@@ -6,7 +6,7 @@ import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ControllerIcon from "@components/icons/controller-icon";
 import useInput from "@hooks/useInput";
-import { InputType } from "@app/enums";
+import { InputType } from "@enums";
 import { Modal } from "@components/modal/modal";
 import "./help.css";
 
@@ -357,16 +357,12 @@ function MobileHelpView() {
 };
 
 export default function HelpPage() {
-  const inputType = useInput();
-
-  const isDefault = inputType === InputType.DEFAULT;
-  const isGamepad = inputType === InputType.GAMEPAD;
-  const isMobile = inputType === InputType.TOUCH;
+  const { isDesktop, isGamepad, isMobile } = useInput();
 
   return (
     <Modal title="Help">
       <div className="w-full">
-        { isDefault && <HelpView /> }
+        { isDesktop && <HelpView /> }
         { isGamepad && <GamepadHelpView /> }
         { isMobile && <MobileHelpView /> }
       </div>

@@ -1,12 +1,13 @@
 "use client";
 
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { AchievementId } from "@enums";
 import BackgroundView from "@components/background/background-view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
-import { AchievementId, useSecret } from "@context/SecretContext";
+import { useSecret } from "@context/SecretContext";
 import sh404 from "public/image/404.png";
 import Clock from "@components/clock/clock";
 import "./not-found.css";

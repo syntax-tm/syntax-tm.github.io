@@ -1,21 +1,25 @@
 'use client';
 
 import React, { useCallback, useEffect, useId, useMemo, useRef } from 'react';
-import { AchievementId, useSecret } from '@context/SecretContext';
+import { useSecret } from '@context/SecretContext';
 import getShaderSource, { ShaderKind } from './shaders';
-import "./secret-background.css";
-import "./secret-background-new.scss";
+import { AchievementId } from "@enums";
+import "./secret-background.scss";
 
 const achievementShaderMap: Record<AchievementId, ShaderKind> = {
   "404": 'silent_hill',
   "ANDROID": 'android',
   "DREAMCAST": 'unknown',
-  "DREAMCAST_BG": "unknown",
   "IWHBYD": 'iwhbyd',
   "KONAMI_CODE": 'konami_code',
   "MISSING_NO": 'missing_no',
   "OCEANGATE": 'oceangate',
   "PSP_CODE": "unknown",
+  "BW_FILTER": "unknown",
+  "HUE_ROTATE_FILTER": "unknown",
+  "INVERT_FILTER": "unknown",
+  "SEPIA_FILTER": "unknown",
+  "SATURATE_FILTER": "unknown",
 };
 
 export default function SecretBackground() {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { MouseEventHandler } from "react";
-import { XmbItem } from "@models/menu";
+import { XmbItem } from "types/xmb";
 import { useXmb } from "@context/XmbContext";
 import Link from "next/link";
 import "./xmb.scss";

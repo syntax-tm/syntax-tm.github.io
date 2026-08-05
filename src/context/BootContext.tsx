@@ -3,6 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import usePath from "@hooks/usePath";
 
 interface BootContextType {
   isBootVisible: boolean;
@@ -20,22 +21,7 @@ const BOOT_FADE_OUT_MS = 600;
 export function BootProvider({ children }: { children: React.ReactNode }) {
   const [isBootVisible, setIsBootVisible] = useState(true);
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
-
-  const [pathname, setPathname] = useState('/');
-
-  useEffect(() => {
-    setPathname(window.location.pathname);
-    const handleLocationChange = () => setPathname(window.location.pathname);
-
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('pushstate', handleLocationChange);
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('pushstate', handleLocationChange);
-    };
-  }, []);
-
-  const modal = pathname !== '/' && pathname !== '/boot';
+  const { modal } = usePath();
 
   const showBootScreen = useCallback(() => {
     setIsBootVisible(true);

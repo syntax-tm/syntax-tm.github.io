@@ -7,7 +7,7 @@ import WebGlBackground from '@components/background/webgl-background';
 
 export default function BackgroundView() {
   // if any background secret is active, use the secret shader; otherwise use the default WebGL background.
-  const { isBackgroundActive, stats } = useSecret();
+  const { isBackgroundActive, settings } = useSecret();
   const [isSecretBg, setIsSecretBg] = useState(false);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function BackgroundView() {
     const isActive = isBackgroundActive();
     setIsSecretBg(isActive);
 
-  }, [stats]);
+  }, [settings]);
 
   return isSecretBg ? <SecretBackground /> : <WebGlBackground />;
 }

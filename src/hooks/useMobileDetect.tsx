@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { DeviceType } from "@app/enums";
+import { DeviceType } from "@enums";
 
 const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
   const isAndroid = () => Boolean(userAgent.match(/Android/i));
