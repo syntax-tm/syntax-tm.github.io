@@ -9367,6 +9367,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss-scss@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "postcss-scss@npm:4.0.9"
+  peerDependencies:
+    postcss: ^8.4.29
+  checksum: 10c0/f917ecfd4b9113a6648e966a41f027ff7e14238393914978d44596e227a50f084667dc8818742348dc7d8b20130b30d4259aca1d4db86754a9c141202ae03714
+  languageName: node
+  linkType: hard
+
 "postcss-selector-parser@npm:^7.0.0":
   version: 7.1.4
   resolution: "postcss-selector-parser@npm:7.1.4"
@@ -11204,6 +11213,7 @@ __metadata:
     postcss: "npm:^8.5.25"
     postcss-import: "npm:^16.1.1"
     postcss-loader: "npm:^8.2.1"
+    postcss-scss: "npm:^4.0.9"
     prettier: "npm:^3.9.6"
     react: "npm:19.2.8"
     react-dom: "npm:19.2.8"
@@ -11224,6 +11234,7 @@ __metadata:
     webpack-cli: "npm:^7.2.2"
     webpack-dev-server: "npm:^6.0.0"
     webpack-shell-plugin-next: "npm:^2.3.3"
+    zustand: "npm:^5.0.14"
   languageName: unknown
   linkType: soft
 
@@ -12468,5 +12479,26 @@ __metadata:
   version: 4.4.3
   resolution: "zod@npm:4.4.3"
   checksum: 10c0/7ea31b558e88f9faf44f31dd185e2e1cbf51fed3081787fb96cc2534749b50c0acfc6da7f0922a7353ed092dd358c7d50c28ea96c94d04af64191bd33152eca3
+  languageName: node
+  linkType: hard
+
+"zustand@npm:^5.0.14":
+  version: 5.0.14
+  resolution: "zustand@npm:5.0.14"
+  peerDependencies:
+    "@types/react": ">=18.0.0"
+    immer: ">=9.0.6"
+    react: ">=18.0.0"
+    use-sync-external-store: ">=1.2.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    immer:
+      optional: true
+    react:
+      optional: true
+    use-sync-external-store:
+      optional: true
+  checksum: 10c0/89de0c8119f1e0861b2f896a0b4df0d67994a373ecee02628d4e7b97cee1885207f646917d3ede395c3a5083316d48846855cfbc84aced7cd23a6db3238930a8
   languageName: node
   linkType: hard

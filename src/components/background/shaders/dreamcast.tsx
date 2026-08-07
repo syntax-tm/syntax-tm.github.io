@@ -1,4 +1,4 @@
-export default `
+export const dreamcastShaderSource = `
 uniform vec2 u_resolution;
 varying vec2 vUv;
 

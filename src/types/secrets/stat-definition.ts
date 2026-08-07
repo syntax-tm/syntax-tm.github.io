@@ -5,6 +5,8 @@ export interface StatDefinition {
   title: string;
   description?: string;
   type: SecretGroupType;
+  isLocked?: boolean;
+  isEnabled?: boolean;
   // TODO: add a hint indicating how this can be unlocked
 }
 

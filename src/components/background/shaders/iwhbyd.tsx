@@ -1,4 +1,4 @@
-export default `
+export const iwhbydShaderSource = `
 precision highp float;
 uniform vec2 u_resolution;
 uniform vec2 u_mouse;

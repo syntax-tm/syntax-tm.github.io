@@ -3,78 +3,104 @@
     "id": "_404",
     "title": "404",
     "description": "There was a page here, but it's gone now.",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "ANDROID",
     "title": "Android",
     "description": "Tap tap tap.",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "DREAMCAST",
     "title": "Dreamcast",
     "description": "Party like it's 9-9-99.",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "IWHBYD",
     "title": "IWHBYD",
     "description": "I would have been your daddy, but the dog beat me over the fence!",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "KONAMI_CODE",
     "title": "Konami Code",
     "description": "Entered the Konami Code.",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "MISSING_NO",
     "title": "MissingNo.",
     "description": "<Memory Corrupted>",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "OCEANGATE",
     "title": "Oceangate",
     "description": "Submersible not included.",
-    "type": "BG"
+    "type": "BG",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "PSP_CODE",
     "title": "PSP Mode",
     "description": "Flash CFW.",
-    "type": "THEME"
+    "type": "THEME",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "BW_FILTER",
     "title": "Black & White",
     "description": "",
-    "type": "FILTER"
+    "type": "FILTER",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "SEPIA_FILTER",
     "title": "Sepia",
     "description": "",
-    "type": "FILTER"
+    "type": "FILTER",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "HUE_ROTATE_FILTER",
     "title": "Hue Rotate",
     "description": "",
-    "type": "FILTER"
+    "type": "FILTER",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "SATURATE_FILTER",
     "title": "Saturate",
     "description": "",
-    "type": "FILTER"
+    "type": "FILTER",
+    "isLocked": true,
+    "isEnabled": false
   },
   {
     "id": "INVERT_FILTER",
     "title": "Invert",
     "description": "",
-    "type": "FILTER"
+    "type": "FILTER",
+    "isLocked": true,
+    "isEnabled": false
   }
 ]

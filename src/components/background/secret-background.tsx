@@ -2,25 +2,9 @@
 
 import React, { useCallback, useEffect, useId, useMemo, useRef } from 'react';
 import { useSecret } from '@context/SecretContext';
-import getShaderSource, { ShaderKind } from './shaders';
-import { AchievementId } from "@enums";
+import getShaderSource, { DEFAULT_SHADER_SORUCE } from './shaders';
 import "./secret-background.scss";
-
-const achievementShaderMap: Record<AchievementId, ShaderKind> = {
-  "_404": 'silent_hill',
-  "ANDROID": 'android',
-  "DREAMCAST": 'unknown',
-  "IWHBYD": 'iwhbyd',
-  "KONAMI_CODE": 'konami_code',
-  "MISSING_NO": 'missing_no',
-  "OCEANGATE": 'oceangate',
-  "PSP_CODE": "unknown",
-  "BW_FILTER": "unknown",
-  "HUE_ROTATE_FILTER": "unknown",
-  "INVERT_FILTER": "unknown",
-  "SEPIA_FILTER": "unknown",
-  "SATURATE_FILTER": "unknown",
-};
+import { useTheme } from '@context/ThemeContext';
 
 export default function SecretBackground() {
   const canvasId = useId();
@@ -32,12 +16,11 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { getActiveBackground } = useSecret();
+  const { currentSecret } = useSecret();
+  const { currentTheme } = useTheme();
 
-  const secretBg = getActiveBackground();
-  const kind = useMemo(() => secretBg && achievementShaderMap[secretBg], [secretBg]);
-  const vsSource = useMemo(() => getShaderSource('default') ?? null, []);
-  const fsSource = useMemo(() => (kind ? getShaderSource(kind) ?? null : null), [kind]);
+  const vsSource = useMemo(() => DEFAULT_SHADER_SORUCE, []);
+  const fsSource = useMemo(() => (currentSecret ? getShaderSource(currentSecret) ?? null : null), [currentSecret]);
 
   const render = useCallback((time: number) => {
     const canvas = canvasRef.current;
@@ -203,18 +186,12 @@ export default function SecretBackground() {
     };
   }, [fsSource, resize, setup]);
 
-  const kindClass = kind ? kind.replace('_', '-') : '';
-  const idClass = secretBg?.toLowerCase().replace('_', '-') ?? '';
-
-  // TODO: this component should be split into two subcomponents, one for shader-based backgrounds and one for css-based backgrounds
   return (
-    kind !== "unknown"
-      ? <canvas
-        id={canvasId}
-        ref={canvasRef}
-        className={`secret-background ${idClass} ${kindClass} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
-        style={{ imageRendering: 'pixelated' }}
-      />
-      : <div className={`secret-background ${idClass} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none overflow-hidden`}></div>
+    <canvas
+      id={canvasId}
+      ref={canvasRef}
+      className={`background secret-bg secret-background ${currentTheme?.className} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
+      style={{ imageRendering: 'pixelated' }}
+    />
   );
 }

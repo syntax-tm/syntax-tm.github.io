@@ -47,6 +47,8 @@ export const openInNewTab = (url: string) => {
 const defPos: Position = { x: 0, y: 0 } as const;
 
 const XMB_AUDIO_SRC = "/audio/nav.mp3";
+const XMB_AUDIO_ENTER_SRC = "/audio/ps3/ok_enter.mp3";
+const XMB_AUDIO_CANCEL_SRC = "/audio/ps3/ok_cancel.mp3";
 
 const cache: Record<number, number> = {};
 
@@ -122,6 +124,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const openItem = useCallback((item: XmbItem) => {
     if (!item.link) return;
 
+    void play(XMB_AUDIO_ENTER_SRC);
+
     if (item.link.startsWith('/')) {
       router.push(item.link);
       return;
@@ -129,7 +133,6 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
     openInNewTab(item.link);
 
-    console.warn(`No action for ${item.title} in ${item.category}`);
   }, []);
 
   const onEnter = useCallback(() => {
@@ -155,19 +158,19 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const onEsc = useCallback(() => {
     if (!moveDefault()) return;
 
-    void play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_CANCEL_SRC);
   }, [play]);
 
   const onBack = useCallback(() => {
     if (!modal) return;
 
-    void play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_CANCEL_SRC);
 
     router.push('/');
   }, [modal]);
 
   const openHelp = useCallback(() => {
-    void play(XMB_AUDIO_SRC);
+    void play(XMB_AUDIO_ENTER_SRC);
 
     router.push('/help');
   }, []);

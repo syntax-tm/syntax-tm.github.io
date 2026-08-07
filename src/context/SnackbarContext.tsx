@@ -5,28 +5,23 @@ import { faInfoCircle, faExclamationCircle, faWarning, IconDefinition, faCheckCi
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAudio } from "@context/AudioContext";
 import { SnackbarVariant } from "types";
+import "@styles/components/snackbar.scss";
 
 const SNACKBAR_AUDIO_SRC = '/audio/snd_system_ok.wav';
-const DEFAULT_TIMEOUT = 8000;
-const DARK_TEXT_COLOR = 'text-zinc-800';
+const DEFAULT_TIMEOUT = 800000;
 
 interface SnackbarContextType {
-  showSnackbar: (message: string, description?: string, variant?: SnackbarVariant) => void;
+  showSnackbar: (message: string, description?: string, variant?: SnackbarVariant, audioSrc?: string | null) => void;
 }
-
-const SECRET_VARIANTS: SnackbarVariant[] = ['secret', 'lock', 'unlock', 'enable', 'disable'];
-
-const isSecretVariant = (variant: SnackbarVariant) => {
-  return SECRET_VARIANTS.find(v => v === variant);
-};
 
 const SnackbarContext = createContext<SnackbarContextType | undefined>(undefined);
 
 export const SnackbarProvider = ({ children }: { children: React.ReactNode }) => {
-  const [snackbar, setSnackbar] = useState<{ message: string, description: string; variant: SnackbarVariant; isOpen: boolean }>({
+  const [snackbar, setSnackbar] = useState<{ message: string, description: string; variant: SnackbarVariant, audioSrc: string | null; isOpen: boolean }>({
     message: "",
     description: "",
     variant: "info",
+    audioSrc: SNACKBAR_AUDIO_SRC,
     isOpen: false,
   });
 
@@ -35,13 +30,13 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
 
   const { play } = useAudio();
 
-  const showSnackbar = (message: string, description: string = '', variant: SnackbarVariant = "info", timeout: number = DEFAULT_TIMEOUT) => {
+  const showSnackbar = (message: string, description: string = '', variant: SnackbarVariant = "info", audioSrc: string | null = SNACKBAR_AUDIO_SRC, timeout: number = DEFAULT_TIMEOUT) => {
     if (timerRef.current) clearTimeout(timerRef.current);
 
-    setSnackbar({ message, description, variant, isOpen: true });
+    setSnackbar({ message, description, variant, audioSrc, isOpen: true });
 
-    if (!isSecretVariant(variant)) {
-      void play(SNACKBAR_AUDIO_SRC);
+    if (audioSrc) {
+      void play(audioSrc);
     }
 
     timerRef.current = setTimeout(() => {
@@ -56,35 +51,33 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
   }, []);
 
   let icon: IconDefinition;
-  let bg: string;
-  let fg: string = 'text-white';
 
-  if (snackbar.variant === "info") { icon = faInfoCircle; bg = 'bg-blue-300'; }
-  else if (snackbar.variant === "error") { icon = faExclamationCircle; bg = 'bg-red-300'; }
-  else if (snackbar.variant === "warn") { icon = faWarning; bg = 'bg-yellow-300'; fg = DARK_TEXT_COLOR; }
-  else if (snackbar.variant === "success") { icon = faCheckCircle; bg = 'bg-green-300'; fg = DARK_TEXT_COLOR; }
-  else if (snackbar.variant === "secret") { icon = faEgg; bg = 'bg-blue-500'; }
-  else if (snackbar.variant === "lock") { icon = faLock; bg = 'bg-yellow-300'; fg = DARK_TEXT_COLOR; }
-  else if (snackbar.variant === "unlock") { icon = faUnlock; bg = 'bg-blue-500'; }
-  else if (snackbar.variant === "enable") { icon = faCheck; bg = 'bg-green-300'; }
-  else if (snackbar.variant === "disable") { icon = faMinus; bg = 'bg-gray-200'; fg = DARK_TEXT_COLOR; }
-  else { icon = faInfoCircle; bg = 'bg-blue-400'; }
+  if (snackbar.variant === "info") { icon = faInfoCircle; }
+  else if (snackbar.variant === "error") { icon = faExclamationCircle; }
+  else if (snackbar.variant === "warn") { icon = faWarning; }
+  else if (snackbar.variant === "success") { icon = faCheckCircle; }
+  else if (snackbar.variant === "secret") { icon = faEgg; }
+  else if (snackbar.variant === "lock") { icon = faLock; }
+  else if (snackbar.variant === "unlock") { icon = faUnlock; }
+  else if (snackbar.variant === "enable") { icon = faCheck; }
+  else if (snackbar.variant === "disable") { icon = faMinus; }
+  else { icon = faInfoCircle; }
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar }}>
       {children}
       {snackbar.isOpen && (
         <>
-          <div className="fixed top-5 right-5 z-100 animate-fade-in-up h-auto max-w-3/5 lg:max-w-2/5"
+          <div className={`snackbar snackbar-${snackbar.variant} fixed top-5 right-5 z-100 animate-fade-in-up h-auto max-w-3/5 lg:max-w-2/5`}
             onClick={() => setSnackbar((prev) => ({ ...prev, isOpen: false }))}>
-            <div className={`grid grid-cols-2 px-2 py-2 rounded-md ${fg} ${bg} relative min-h-15`}>
-              <FontAwesomeIcon icon={icon} className="mr-2 my-auto lg:text-3xl h-[90%] w-[90%]" />
-              <div className="flex flex-col align-middle">
-                <span className="inline-block align-middle my-auto text-balance mr-2 text-[11pt] lg:text-[14pt]">{snackbar.message}</span>
+            <div className={`snackbar-${snackbar.variant} flex my-auto pl-3 mr-4 rounded-md relative min-h-15 w-auto`}>
+              <FontAwesomeIcon icon={icon} className="icon snackbar-icon mr-2 my-auto lg:text-3xl" />
+              <div className="snackbar-text-container flex flex-col align-middle p-2">
+                <span className="snackbar-title inline-block align-middle my-auto text-balance mr-2 text-[11pt] lg:text-[16pt]">{snackbar.message}</span>
                 {snackbar.description && (
                   <>
                     {/* <hr className={`my-1 opacity-70 ${fg === 'text-zinc-800' && 'border-black/80'}`} /> */}
-                    <span className="text-[9pt] lg:text-[10pt] inline-block align-middle my-auto text-wrap mr-2">{snackbar.description}</span>
+                    <span className="snackbar-content text-[9pt] lg:text-[12pt] inline-block align-middle my-auto text-wrap mr-2">{snackbar.description}</span>
                   </>
                 )}
               </div>

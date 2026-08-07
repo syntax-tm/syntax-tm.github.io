@@ -1,0 +1,43 @@
+@use 'sass:list';
+@use "sass:map";
+
+$variants: success, error, warn, info, lock, unlock, enable, disable;
+
+$variant-fg-colors: (
+  "success": #171717,
+  "error": #171717,
+  "warn": #171717,
+  "info": white,
+  "lock": #171717,
+  "unlock": white,
+  "enable": white,
+  "disable": #171717
+);
+
+$variant-bg-colors: (
+  "success": #80e5a5,
+  "error": #b86262,
+  "warn": #dac273,
+  "info": #325a9b,
+  "lock": #a1a1aa,
+  "unlock": #494543,
+  "enable": #494543,
+  "disable": #a1a1aa
+);
+
+:root {
+  @each $variant, $value in $variant-fg-colors {
+    --#{$variant}-color: #{$value};
+  }
+  @each $variant, $value in $variant-bg-colors {
+    --#{$variant}-color-bg: #{$value};
+  }
+}
+
+@each $variant in $variants {
+
+  .snackbar-#{$variant} {
+    color: var(--#{$variant}-color);
+    background-color: var(--#{$variant}-color-bg);
+  }
+}

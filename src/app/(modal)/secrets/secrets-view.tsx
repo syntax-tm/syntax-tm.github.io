@@ -9,20 +9,20 @@ const SECRET_TAP_MIN = 3;
 
 export default function SecretsView() {
 
-  const { settings: stats, secretGroups } = useSecret();
+  const { settings, secretGroups } = useSecret();
   const [allUnlocked, setAllUnlocked] = useState(false);
 
   useEffect(() => {
 
-    if (!stats) return;
+    if (!settings) return;
 
-    const lockedCount = Array.from(stats).filter(([, stat]) => {
-      return !stat.isUnlocked;
+    const lockedCount = settings.filter(s => {
+      return !s.isUnlocked;
     }).length;
 
     setAllUnlocked(lockedCount !== 0);
 
-  }, [stats]);
+  }, [settings]);
 
   return (
     <>
@@ -34,15 +34,16 @@ export default function SecretsView() {
           </thead>
           <tbody className="">
             {
-              secretGroups && stats &&
-              Array.from(secretGroups.values())
-                .filter(group => {
-                  return group.items && group.items.length > 0;
-                })
+              secretGroups && settings &&
+              secretGroups
+                // .filter(group => {
+                //   return group.items && group.items.length > 0;
+                // })
                 .map(group => {
-                  const items = Array.from(stats).filter(stat => {
-                    return stat[1].stat.type === group.type;
+                  const items = settings.filter(s => {
+                    return s.type === group.type;
                   });
+                  if (!items || items.length === 0) return null;
                   return (
                     <React.Fragment key={group.type}>
                       <tr className="bg-stone-900/90">
@@ -50,19 +51,25 @@ export default function SecretsView() {
                           {group?.title}
                         </th>
                       </tr>
-                      <tr className="content-center bg-stone-900/90 text-sm">
+                      <tr className="content-center bg-stone-900/90 text-xs lg:text-lg">
                         <th className="border border-gray-400/25">
                           {/* <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
                             aria-label="Status" /> */}
                         </th>
-                        <th className="p-0.5 border border-gray-400/25">Name</th>
-                        <th className="p-0.5 border border-gray-400/25">Description</th>
-                        <th className="p-0.5 border border-gray-400/25">Enabled</th>
+                        <th className="p-2 border border-gray-400/25 font-semibold">
+                          <span className="">Name</span>
+                        </th>
+                        <th className="p-2 border border-gray-400/25 font-semibold">
+                          <span className="">Description</span>
+                        </th>
+                        <th className="p-2 border border-gray-400/25 font-semibold">
+                          <span className="">Enabled</span>
+                        </th>
                       </tr>
                       {
-                        items && items.map(([id]) => {
+                        items && items.map(i => {
                           return (
-                            <SecretView key={id} id={id} unlockMinimum={SECRET_TAP_MIN} />
+                            <SecretView key={i.id} id={i.id} stat={i.stat} unlockMinimum={SECRET_TAP_MIN} />
                           );
                         })
                       }

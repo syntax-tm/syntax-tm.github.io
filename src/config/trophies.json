@@ -1,0 +1,27 @@
+[
+  {
+    "id": 0,
+    "title": "bronze",
+    "image": "image/trophy/bronze.png"
+  },
+  {
+    "id": 1,
+    "title": "silver",
+    "image": "image/trophy/silver.png"
+  },
+  {
+    "id": 2,
+    "title": "gold",
+    "image": "image/trophy/gold.png"
+  },
+  {
+    "id": 3,
+    "title": "platinum",
+    "image": "image/trophy/platinum.png"
+  },
+  {
+    "id": 4,
+    "title": "platinum_new",
+    "image": "image/trophy/platinum_new.png"
+  }
+]

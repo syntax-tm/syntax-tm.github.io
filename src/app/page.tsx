@@ -12,12 +12,8 @@ export default function Home() {
   return (
     <div className="root-container">
       <BackgroundView />
-      {!isBootVisible && !isBootTransitioningOut && (
-        <>
-          <Clock />
-          <Menu />
-        </>
-      )}
+      <Clock />
+      <Menu />
     </div>
   );
 }

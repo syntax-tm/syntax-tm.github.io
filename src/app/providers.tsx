@@ -6,21 +6,27 @@ import { AudioProvider } from "@context/AudioContext";
 import { BootProvider } from "@context/BootContext";
 import { SnackbarProvider } from "@context/SnackbarContext";
 import { SecretProvider } from "@context/SecretContext";
+import { ThemeProvider } from "@context/ThemeContext";
 import { XmbProvider } from "@context/XmbContext";
+import { SettingsStoreProvider } from "@providers/settings-store-provider";
 
 export default function Providers({ children }: ({ children: React.ReactNode })) {
   return (
     <>
       <AudioProvider>
-        <BootProvider>
-          <SnackbarProvider>
+        <SnackbarProvider>
+          <SettingsStoreProvider>
             <SecretProvider>
-              <XmbProvider>
-                {children}
-              </XmbProvider>
+              <ThemeProvider>
+                <BootProvider>
+                  <XmbProvider>
+                    {children}
+                  </XmbProvider>
+                </BootProvider>
+              </ThemeProvider>
             </SecretProvider>
-          </SnackbarProvider>
-        </BootProvider>
+          </SettingsStoreProvider>
+        </SnackbarProvider>
       </AudioProvider>
     </>
   );

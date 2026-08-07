@@ -1,9 +1,8 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import usePath from "@hooks/usePath";
+import { useTheme } from "./ThemeContext";
 
 interface BootContextType {
   isBootVisible: boolean;
@@ -14,14 +13,16 @@ interface BootContextType {
 
 const BootContext = createContext<BootContextType | undefined>(undefined);
 
-// these need to match the values in styles\animations.css
-const BOOT_DURATION_MS = 4400;
-const BOOT_FADE_OUT_MS = 600;
-
 export function BootProvider({ children }: { children: React.ReactNode }) {
+  const bootShownRef = useRef(false);
   const [isBootVisible, setIsBootVisible] = useState(true);
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
   const { modal } = usePath();
+  const { boot } = useTheme();
+
+  if (modal) {
+    bootShownRef.current = true;
+  }
 
   const showBootScreen = useCallback(() => {
     setIsBootVisible(true);
@@ -33,19 +34,29 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
     setIsBootVisible(false);
   }, []);
 
+  // disables boot screen on any modal (to allow directly linking to them without the boot animation)
   useEffect(() => {
-    if (!isBootVisible) {
-      return;
-    }
+    if (modal)
+      bootShownRef.current = true;
+  }, [modal]);
+
+  useEffect(() => {
+    if (!isBootVisible) return;
+    if (!boot) return;
+
+    const bootDuration = boot.bootDuration;
+    //const fadeInDuration = boot.bootFadeInDuration ?? 0;
+    const fadeOutDuration = boot.bootFadeOutDuration ?? 0;
 
     const fadeOutTimer = window.setTimeout(() => {
       setIsBootTransitioningOut(true);
-    }, BOOT_DURATION_MS - BOOT_FADE_OUT_MS);
+    }, boot.bootDuration - fadeOutDuration);
 
     const hideTimer = window.setTimeout(() => {
       setIsBootVisible(false);
       setIsBootTransitioningOut(false);
-    }, BOOT_DURATION_MS);
+      bootShownRef.current = true;
+    }, bootDuration);
 
     return () => {
       window.clearTimeout(fadeOutTimer);
@@ -63,24 +74,14 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
     [isBootVisible, isBootTransitioningOut, showBootScreen, hideBootScreen],
   );
 
-  const shouldShowOverlay = (isBootVisible || isBootTransitioningOut) && !modal;
+  const hasBoot = boot ?? false;
+  const previouslyShown = bootShownRef.current === true;
+  const shouldShowOverlay = hasBoot && !previouslyShown && (isBootVisible || isBootTransitioningOut);
 
   return <BootContext.Provider value={value}>
     {children}
     {shouldShowOverlay && (
-      <div className="boot-screen right-0">
-        <div className="boot-content slide-in-out flex flex-col">
-          <div className="fixed">
-
-          </div>
-          <div className="relative grid">
-            <div className="text-3xl select-none">
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-4" />
-              Loading
-            </div>
-          </div>
-        </div>
-      </div>
+      boot?.element
     )}
   </BootContext.Provider>;
 }

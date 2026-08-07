@@ -19,14 +19,12 @@ export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
   const handleClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
-    if (isActive) {
-      openItem(item);
-      return;
-    }
-
+    // move the selection to this item
     updateY(index);
-  };
 
+    // open the item
+    openItem(item);
+  };
 
   return (
     <>

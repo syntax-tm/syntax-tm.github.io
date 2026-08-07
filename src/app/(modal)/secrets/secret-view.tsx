@@ -5,33 +5,33 @@ import { useSecret } from "@context/SecretContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faCheck, faCheckCircle, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { AchievementId } from "@enums";
+import { StatDefinition } from "types";
 import "./secrets.css";
 
 export interface SecretViewProps
 {
   id: AchievementId;
   unlockMinimum: number;
+  stat: StatDefinition;
 }
 
-export default function SecretView({ id, unlockMinimum }: SecretViewProps) {
+export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
 
-  const { secrets, setSecretEnabled, isSecretUnlocked, isSecretEnabled, lockSecret, unlockSecret, settings: stats } = useSecret();
+  const { settings, toggle, getSetting, lock, unlock } = useSecret();
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
   const elementRef = useRef<HTMLTableCellElement | null>(null);
-  const secret = secrets.filter(s => s.id === id)[0];
-  const [unlocked, setUnlocked] = useState(false);
-  const [enabled, setEnabled] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const setting = getSetting(id);
+  setIsUnlocked(setting.isUnlocked);
+  setIsEnabled(setting.isEnabled);
 
   const toggleEnabled = useCallback(() => {
-    const newState = !enabled;
-    setSecretEnabled(id, newState, true);
-  }, [enabled, stats]);
-
-  useEffect(() => {
-    setUnlocked(isSecretUnlocked(id));
-    setEnabled(isSecretEnabled(id));
-  }, [stats]);
+    if (!settings) return;
+    toggle(id);
+  }, [settings]);
 
   useEffect(() => {
 
@@ -59,11 +59,11 @@ export default function SecretView({ id, unlockMinimum }: SecretViewProps) {
 
       if (unlockCountRef.current >= unlockMinimum) {
         resetTapCount();
-        if (unlocked) {
-          lockSecret(id);
+        if (isUnlocked) {
+          lock(id);
         }
         else {
-          unlockSecret(id);
+          unlock(id);
         }
       }
     };
@@ -76,29 +76,29 @@ export default function SecretView({ id, unlockMinimum }: SecretViewProps) {
       elementRef.current?.removeEventListener("click", handleTouchEnd);
       resetTapCount();
     };
-  }, [unlocked]);
+  }, [isUnlocked]);
 
   return (
     <React.Fragment key={id}>
       <tr>
-        <td className={`border-b border-t border-gray-400/25 text-center ${unlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} pointer-events-none select-none justify-center items-center`}>
-          <FontAwesomeIcon icon={unlocked ? faCheckCircle : faLock}
+        <td className={`border-b border-t border-gray-400/25 text-center ${isUnlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} pointer-events-none select-none justify-center items-center`}>
+          <FontAwesomeIcon icon={isUnlocked ? faCheckCircle : faLock}
             className={`py-1 w-full h-full mx-3`} />
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'}`}
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}
           ref={elementRef}>
           <span className="pointer-events-none select-none">
-            {unlocked ? secret.title : 'Hidden'}
+            {isUnlocked ? stat.title : 'Hidden'}
           </span>
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!unlocked && 'text-gray-400'} pointer-events-none select-none`}>
-          {unlocked ? secret.description : 'Hidden'}
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'} pointer-events-none select-none`}>
+          {isUnlocked ? stat.description : 'Hidden'}
         </td>
-        <td className={`border border-gray-300/25 ${enabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
+        <td className={`border border-gray-300/25 ${isEnabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
           <div className={`grid items-center w-full h-full cursor-pointer`} onClick={toggleEnabled}>
             {
-              unlocked && (
-                enabled
+              isUnlocked && (
+                isEnabled
                   ? <FontAwesomeIcon icon={faCheck} className="mx-auto py-1" />
                   : <FontAwesomeIcon icon={faMinus} className="mx-auto py-1" />
               )

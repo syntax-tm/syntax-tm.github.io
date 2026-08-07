@@ -7,19 +7,20 @@ import { useBoot } from '@context/BootContext';
 
 export default function BootPage() {
   const router = useRouter();
-  const { showBootScreen } = useBoot();
+  const { showBootScreen, hideBootScreen } = useBoot();
 
   useEffect(() => {
     showBootScreen();
 
     const timer = window.setTimeout(() => {
+      hideBootScreen();
       router.replace("/");
     }, 5000);
 
     return () => {
       window.clearTimeout(timer);
     };
-  }, [router, showBootScreen]);
+  }, [router, showBootScreen, hideBootScreen]);
 
   return (
     <div className="root-container relative min-h-screen overflow-hidden pointer-events-auto opacity-100">
