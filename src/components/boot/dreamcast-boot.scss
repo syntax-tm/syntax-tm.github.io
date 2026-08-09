@@ -7,6 +7,39 @@ $pal-color: #3877c3;
     format("truetype");
 }
 
+.dreamcast-boot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  padding: 10%;
+}
+
+#letters, .letters {
+  fill: black;
+}
+
+#spiral {
+  stroke: #cf3311;
+}
+
+.pal #spiral {
+  stroke: #3b76c2;
+}
+
+/* defaults to the NTSC color */
+#bouncing-ball, .dreamcast-ball {
+  stroke: #cf3311;
+  fill: #cf3311;
+}
+/* add the .pal class to the svg to trigger the pal region logo */
+.pal #bouncing-ball, .pal .dreamcast-ball {
+  stroke: #3b76c2;
+  fill: #3b76c2;
+}
+
 .tv {
   user-select: none;
   font-family: Basilea;
@@ -16,15 +49,13 @@ $pal-color: #3877c3;
   width: 100%;
   height: 100vh;
   display: flex;
+
+  svg {
+    color: $ntsc-color;
+    stroke-color: $ntsc-color;
+    fill: $ntsc-color;
+  }
 }
-
-// #region:checked ~ .tv {
-//   --color: #3877c3;
-// }
-
-// #power:not(:checked) ~ .tv * {
-//   animation: unset;
-// }
 
 .tv {
   transform: translate(-50%, -50%);

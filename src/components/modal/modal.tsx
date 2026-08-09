@@ -13,6 +13,7 @@ import ControllerIcon from "@components/icons/controller-icon";
 import { KeyPressAction } from "types";
 import Menu from "@components/xmb-menu/xmb-menu";
 import "./modal.css";
+import BackgroundView from "@components/background/background-view";
 
 const AUDIO_SRC = '/audio/nav.mp3';
 
@@ -90,17 +91,13 @@ export function Modal({ title, children }: { title: string, children: React.Reac
   const modalClass = title.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <div className="root-container">
-      {/* <Clock />
-      <Menu /> */}
-      <div className={`modal modal-${modalClass} fixed left-0 top-0 z-25 flex flex-col h-full w-full`}>
-        <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen z-25 overflow-none bg-stone-900/80 backdrop-blur">
-          <ModalHeader title={title} />
-          <div className="grid absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
-            {children}
-          </div>
-          <ModalClose />
+    <div className={`modal modal-${modalClass} fixed left-0 top-0 z-25 flex flex-col h-full w-full`}>
+      <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen z-25 overflow-none backdrop-blur-xl bg-stone-900/70">
+        <ModalHeader title={title} />
+        <div className="grid absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
+          {children}
         </div>
+        <ModalClose />
       </div>
     </div>
   );

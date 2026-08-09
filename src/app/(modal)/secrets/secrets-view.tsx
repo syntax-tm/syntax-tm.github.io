@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import SecretView from "./secret-view";
 import "./secrets.css";
 
-const SECRET_TAP_MIN = 3;
+const SECRET_TAP_MIN = 5;
 
 export default function SecretsView() {
 
@@ -16,7 +16,7 @@ export default function SecretsView() {
 
     if (!settings) return;
 
-    const lockedCount = settings.filter(s => {
+    const lockedCount = Array.from(settings.values()).filter((s) => {
       return !s.isUnlocked;
     }).length;
 
@@ -40,7 +40,7 @@ export default function SecretsView() {
                 //   return group.items && group.items.length > 0;
                 // })
                 .map(group => {
-                  const items = settings.filter(s => {
+                  const items = Array.from(settings.values()).filter(s => {
                     return s.type === group.type;
                   });
                   if (!items || items.length === 0) return null;

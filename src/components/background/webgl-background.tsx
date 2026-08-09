@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useCallback, useEffect, useId, useRef } from 'react';
-import './background.css';
 
-// Vertex shader (passthrough).
+// vertex shader (passthrough).
 const vertexShaderSource = `
 attribute vec2 aVertexPosition;
 void main() {
@@ -11,7 +10,7 @@ void main() {
 }
 `;
 
-// Fragment shader (animated wave effect + gradient).
+// fragment shader (animated wave effect + gradient).
 const fragmentShaderSource = `
 precision highp float;
 

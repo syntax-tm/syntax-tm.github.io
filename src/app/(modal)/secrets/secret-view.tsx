@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useSecret } from "@context/SecretContext";
+import React, { useEffect, useRef, useState } from "react";
+import { useShallow } from 'zustand/react/shallow';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faCheck, faCheckCircle, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { AchievementId } from "@enums";
 import { StatDefinition } from "types";
+import { useSettingsStore } from "@providers/settings-store-provider";
 import "./secrets.css";
+import { useSecret } from "@context";
 
 export interface SecretViewProps
 {
@@ -17,21 +19,25 @@ export interface SecretViewProps
 
 export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
 
-  const { settings, toggle, getSetting, lock, unlock } = useSecret();
+  const { settings, setUnlocked, setEnabled } = useSettingsStore(
+    useShallow((state) => state),
+  );
+
+  const { lock, unlock } = useSecret();
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
-  const elementRef = useRef<HTMLTableCellElement | null>(null);
+  const elementRef = useRef<HTMLTableRowElement | null>(null);
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const setting = getSetting(id);
-  setIsUnlocked(setting.isUnlocked);
-  setIsEnabled(setting.isEnabled);
+  // useEffect(() => {
+  //   const setting = settings.get(id);
 
-  const toggleEnabled = useCallback(() => {
-    if (!settings) return;
-    toggle(id);
-  }, [settings]);
+  //   if (setting) {
+  //     setIsUnlocked(setting.isUnlocked);
+  //     setIsEnabled(setting.isEnabled);
+  //   }
+  // }, [settings]);
 
   useEffect(() => {
 
@@ -61,9 +67,13 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
         resetTapCount();
         if (isUnlocked) {
           lock(id);
+          setIsUnlocked(false);
+          setIsEnabled(false);
         }
         else {
           unlock(id);
+          setIsUnlocked(true);
+          setIsEnabled(true);
         }
       }
     };
@@ -76,26 +86,27 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
       elementRef.current?.removeEventListener("click", handleTouchEnd);
       resetTapCount();
     };
-  }, [isUnlocked]);
+  }, [isUnlocked, lock, unlock, settings]);
 
   return (
     <React.Fragment key={id}>
-      <tr>
-        <td className={`border-b border-t border-gray-400/25 text-center ${isUnlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} pointer-events-none select-none justify-center items-center`}>
+      <tr ref={elementRef}>
+        <td className={`border-b border-t border-gray-400/25 text-center ${isUnlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} select-none justify-center items-center`}>
           <FontAwesomeIcon icon={isUnlocked ? faCheckCircle : faLock}
             className={`py-1 w-full h-full mx-3`} />
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}
-          ref={elementRef}>
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}>
           <span className="pointer-events-none select-none">
             {isUnlocked ? stat.title : 'Hidden'}
           </span>
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'} pointer-events-none select-none`}>
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'} select-none`}>
           {isUnlocked ? stat.description : 'Hidden'}
         </td>
         <td className={`border border-gray-300/25 ${isEnabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
-          <div className={`grid items-center w-full h-full cursor-pointer`} onClick={toggleEnabled}>
+          <div className={`grid items-center w-full h-full cursor-pointer`} onClick={() => {
+            setEnabled(id, !isEnabled);
+          }}>
             {
               isUnlocked && (
                 isEnabled

@@ -1,19 +1,20 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Google_Sans } from "next/font/google";
+import pspBatteryIcon from "public/image/psp_full_battery.png";
+import Image from "next/image";
 import "./clock.scss";
+import localFont from "next/font/local";
 
-const clockFont = Google_Sans({
-  weight: ["400", "500", "600"],
+const pspFont = localFont({
+  src: '../../../public/fonts/FOT-NewRodin Pro L.otf',
+  variable: '---newrodin-pro',
+  style: 'normal',
+  weight: '400',
   preload: true,
-  subsets: ['latin'],
-  fallback: ['Segoe UI', 'sans'],
 });
 
-export default function Clock() {
+export default function PspClock() {
   const [loaded, setLoaded] = useState(false);
   const [day, setDay] = useState<string | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -75,9 +76,9 @@ export default function Clock() {
 
   return (
     <React.Fragment>
-      <div className={`text-lg xl:text-2xl ${clockFont.className}`}>
-        <div className={`clock boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
-          <div className={`clock-container ${loaded ? 'flex' : 'hidden'} tracking-normal align-middle flex flex-nowrap items-center`}>
+      <div className={`text-lg xl:text-2xl ${pspFont.className}`}>
+        <div className={`psp-clock boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
+          <div className={`clock-container ${loaded ? 'flex' : 'hidden'} tracking-normal align-middle flex flex-nowrap items-center -mt-1`}>
             <div className="flex flex-nowrap gap-0 items-center mx-2">
               <span>{month}</span>
               <span className="font-light mx-1 text-[14px]">/</span>
@@ -89,7 +90,9 @@ export default function Clock() {
               <span>{minute}</span>
             </div>
             <span>{meridiem}</span>
-            <FontAwesomeIcon icon={faClock} className="mx-3" alignmentBaseline="middle" />
+            <div className="mx-3 object-scale-down h-8 my-auto">
+              <Image src={pspBatteryIcon} alt="psp battery" className="clock-icon" width={20} height={20} title="100%" />
+            </div>
           </div>
         </div>
       </div>

@@ -5,7 +5,9 @@ import { faInfoCircle, faExclamationCircle, faWarning, IconDefinition, faCheckCi
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAudio } from "@context/AudioContext";
 import { SnackbarVariant } from "types";
+import PlatinumTrophy from "image/trophy/platinum.png";
 import "@styles/components/snackbar.scss";
+import Image from "next/image";
 
 const SNACKBAR_AUDIO_SRC = '/audio/snd_system_ok.wav';
 const DEFAULT_TIMEOUT = 800000;
@@ -50,28 +52,36 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
     };
   }, []);
 
-  let icon: IconDefinition;
+  let icon: React.ReactNode;
 
-  if (snackbar.variant === "info") { icon = faInfoCircle; }
-  else if (snackbar.variant === "error") { icon = faExclamationCircle; }
-  else if (snackbar.variant === "warn") { icon = faWarning; }
-  else if (snackbar.variant === "success") { icon = faCheckCircle; }
-  else if (snackbar.variant === "secret") { icon = faEgg; }
-  else if (snackbar.variant === "lock") { icon = faLock; }
-  else if (snackbar.variant === "unlock") { icon = faUnlock; }
-  else if (snackbar.variant === "enable") { icon = faCheck; }
-  else if (snackbar.variant === "disable") { icon = faMinus; }
-  else { icon = faInfoCircle; }
+  if (snackbar.variant === "unlock") {
+    icon = <Image src={PlatinumTrophy} alt="Platinum Trophy" className="icon snackbar-icon mr-2 my-auto lg:text-3xl" />;
+  }
+  else {
+    let kind: IconDefinition;
+    if (snackbar.variant === "info") { kind = faInfoCircle; }
+    else if (snackbar.variant === "error") { kind = faExclamationCircle; }
+    else if (snackbar.variant === "warn") { kind = faWarning; }
+    else if (snackbar.variant === "success") { kind = faCheckCircle; }
+    else if (snackbar.variant === "secret") { kind = faEgg; }
+    else if (snackbar.variant === "lock") { kind = faLock; }
+    else if (snackbar.variant === "enable") { kind = faCheck; }
+    else if (snackbar.variant === "disable") { kind = faMinus; }
+    else { kind = faInfoCircle; }
+
+    icon = <FontAwesomeIcon icon={kind} className="icon snackbar-icon mr-2 my-auto lg:text-3xl" />;
+  }
+
 
   return (
     <SnackbarContext.Provider value={{ showSnackbar }}>
       {children}
       {snackbar.isOpen && (
         <>
-          <div className={`snackbar snackbar-${snackbar.variant} fixed top-5 right-5 z-100 animate-fade-in-up h-auto max-w-3/5 lg:max-w-2/5`}
+          <div className={`snackbar snackbar-${snackbar.variant} fixed top-5 right-5 z-100 animate-fade-in-up h-auto max-w-3/5 lg:max-w-2/5 min-w-[250px] lg:min-w-[300px]`}
             onClick={() => setSnackbar((prev) => ({ ...prev, isOpen: false }))}>
             <div className={`snackbar-${snackbar.variant} flex my-auto pl-3 mr-4 rounded-md relative min-h-15 w-auto`}>
-              <FontAwesomeIcon icon={icon} className="icon snackbar-icon mr-2 my-auto lg:text-3xl" />
+              {icon}
               <div className="snackbar-text-container flex flex-col align-middle p-2">
                 <span className="snackbar-title inline-block align-middle my-auto text-balance mr-2 text-[11pt] lg:text-[16pt]">{snackbar.message}</span>
                 {snackbar.description && (

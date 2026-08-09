@@ -1,6 +1,5 @@
 import React from "react";
 import type { Metadata, Viewport } from 'next';
-import { Inter } from "next/font/google";
 import Link from "next/link";
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -26,8 +25,6 @@ export const metadata: Metadata = {
   },
 };
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-
 // width=device-width, initial-scale=1.0, maximum-scale=1.0,
 // user-scalable=no, interactive-widget=resizes-content
 export const viewport: Viewport = {
@@ -48,7 +45,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body id="body" className={`${inter.className} text-white`}>
+      <body id="body" className={`text-white`}>
         <Providers>
           {children}
           {modal}

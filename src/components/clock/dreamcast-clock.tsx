@@ -1,19 +1,18 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Google_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./clock.scss";
 
-const clockFont = Google_Sans({
-  weight: ["400", "500", "600"],
+const dreamcastFont = localFont({
+  src: '../../../public/fonts/NiseSegaDreamcast.ttf',
+  variable: '---nise-sega-dreamcast',
+  style: 'normal',
+  weight: '400',
   preload: true,
-  subsets: ['latin'],
-  fallback: ['Segoe UI', 'sans'],
 });
 
-export default function Clock() {
+export default function DreamcastClock() {
   const [loaded, setLoaded] = useState(false);
   const [day, setDay] = useState<string | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -75,8 +74,11 @@ export default function Clock() {
 
   return (
     <React.Fragment>
-      <div className={`text-lg xl:text-2xl ${clockFont.className}`}>
-        <div className={`clock boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
+      <div className={`text-lg xl:text-2xl ${dreamcastFont.className} bg-white`}>
+        <div className="dreamcast-label-container absolute left-0 top-[2%] text-xl xl:text-2xl">
+          <span className="dreamcast-label text-black -z-10 absolute">Dreamcast</span>
+        </div>
+        <div className={`dreamcast-clock rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
           <div className={`clock-container ${loaded ? 'flex' : 'hidden'} tracking-normal align-middle flex flex-nowrap items-center`}>
             <div className="flex flex-nowrap gap-0 items-center mx-2">
               <span>{month}</span>
@@ -89,7 +91,6 @@ export default function Clock() {
               <span>{minute}</span>
             </div>
             <span>{meridiem}</span>
-            <FontAwesomeIcon icon={faClock} className="mx-3" alignmentBaseline="middle" />
           </div>
         </div>
       </div>

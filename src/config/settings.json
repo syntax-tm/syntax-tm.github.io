@@ -5,7 +5,12 @@
     "description": "There was a page here, but it's gone now.",
     "type": "BG",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "secret-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "ANDROID",
@@ -13,15 +18,29 @@
     "description": "Tap tap tap.",
     "type": "BG",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "secret-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "DREAMCAST",
     "title": "Dreamcast",
     "description": "Party like it's 9-9-99.",
-    "type": "BG",
+    "type": "THEME",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "dreamcast-background",
+      "boot": {
+        "component": "dreamcast-boot",
+        "bootDuration": 9000,
+        "bootFadeOutDuration": 2000
+      },
+      "clock": "dreamcast-clock"
+    }
   },
   {
     "id": "IWHBYD",
@@ -29,7 +48,12 @@
     "description": "I would have been your daddy, but the dog beat me over the fence!",
     "type": "BG",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "secret-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "KONAMI_CODE",
@@ -37,7 +61,12 @@
     "description": "Entered the Konami Code.",
     "type": "BG",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "secret-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "MISSING_NO",
@@ -45,7 +74,12 @@
     "description": "<Memory Corrupted>",
     "type": "BG",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "secret-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "OCEANGATE",
@@ -53,7 +87,12 @@
     "description": "Submersible not included.",
     "type": "BG",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "secret-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "PSP_CODE",
@@ -61,7 +100,12 @@
     "description": "Flash CFW.",
     "type": "THEME",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "webgl-background",
+      "boot": "boot",
+      "clock": "psp-clock"
+    }
   },
   {
     "id": "BW_FILTER",
@@ -69,7 +113,12 @@
     "description": "",
     "type": "FILTER",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "webgl-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "SEPIA_FILTER",
@@ -77,7 +126,12 @@
     "description": "",
     "type": "FILTER",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "webgl-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "HUE_ROTATE_FILTER",
@@ -85,7 +139,12 @@
     "description": "",
     "type": "FILTER",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "webgl-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "SATURATE_FILTER",
@@ -93,7 +152,12 @@
     "description": "",
     "type": "FILTER",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "webgl-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   },
   {
     "id": "INVERT_FILTER",
@@ -101,6 +165,11 @@
     "description": "",
     "type": "FILTER",
     "isLocked": true,
-    "isEnabled": false
+    "isEnabled": false,
+    "theme": {
+      "background": "webgl-background",
+      "boot": "boot",
+      "clock": "clock"
+    }
   }
 ]

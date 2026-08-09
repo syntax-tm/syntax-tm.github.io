@@ -27,6 +27,27 @@
   animation: bootFadeIn 2s ease-in-out forwards;
 }
 
+.boot-fade-out {
+  opacity: 0;
+  animation: bootFadeOut 2s ease-in-out 7s forwards;
+}
+
+.boot-fade-in-out {
+  opacity: 0;
+  animation:
+    bootFadeIn 2s ease-in-out 0s forwards,
+    bootFadeOut 2s ease-in-out 7s forwards;
+}
+
+@keyframes bootFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes bootFadeIn {
   from {
     opacity: 0;

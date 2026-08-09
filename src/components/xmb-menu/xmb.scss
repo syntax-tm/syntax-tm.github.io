@@ -28,7 +28,6 @@ $margin-top-inactive: 15;
     width: $size;
     height: $size;
     margin: $margin;
-    filter: drop-shadow(0 0 0.25rem black);
     z-index: 1;
     color: white;
 }
@@ -52,12 +51,6 @@ $margin-top-inactive: 15;
   overscroll-behavior: none;
   width: 100%;
   height: 100%;
-}
-
-.xmb-root {
-  .xmb-inactive-items {
-    height: 30%;
-  }
 }
 
 .xmb-root {
@@ -139,6 +132,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 
 .xmb-main {
 
+  filter: drop-shadow(0 0 0.25rem black);
   /*
   ##Device = Desktops
   ##Screen = 1281px to higher resolution desktops
@@ -270,7 +264,6 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
   //  height: 80px;
   //}
 }
-
 @media only screen and (max-width: 640px) {
   .xmb-item.active > .xmb-item-name {
     left: 0;
@@ -306,26 +299,47 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 }
 @keyframes glow {
   from {
-    text-shadow: 0 0 1px #ffffff38, 0 0 8px #7070703d;
+    text-shadow: 0 0 1px #33333338, 0 0 3px #7070703d;
   }
   to {
-    text-shadow: 0 0 3px #ffffff38, 0 0 8px #7070703d;
+    text-shadow: 0 0 4px #33333338, 0 0 7px #7070703d;
   }
 }
 
-.xmb-category.active .xmb-category-header {
-  animation: svg-shadow 1.5s ease-in-out infinite alternate;
-  scale: 1.05;
+.xmb-main {
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;      /* Older IE/Edge */
+  .active {
+    animation: svg-shadow 1.5s ease-in-out infinite alternate;
+
+    .xmb-icon {
+      scale: 1.05;
+    }
+
+  }
+}
+
+.xmb-category.active {
+  .xmb-category-header {
+    scale: 1.05;
+  }
+  .xmb-item.active {
+    .xmb-icon {
+      scale: 1.10;
+    }
+  }
 }
 
 @keyframes svg-shadow {
   from {
-    filter: drop-shadow( 0 0 1px #ffffff5b) drop-shadow( 0 0 15px #7070703d) drop-shadow( 0 0 20px #27272734);
+    filter: drop-shadow( 0 0 1px #33333338) drop-shadow( 0 0 2px #7070703d) ;
   }
 
   to {
 
-    filter: drop-shadow( 0 0 3px #ffffff5b) drop-shadow( 0 0 15px #7070703d) drop-shadow( 0 0 20px #27272734);
+    filter: drop-shadow( 0 0 1px #33333310) drop-shadow( 0 0 2px #70707010) ;
   }
 }
 

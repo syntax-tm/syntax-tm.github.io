@@ -26,8 +26,7 @@ const nextConfig = {
   experimental: {
     // TODO: add missing Suspense and remove this suppression
     // missingSuspenseWithCSRBailout: false,
-    viewTransition: true,
-    staticGenerationRetryCount: 3,
+    // staticGenerationRetryCount: 3,
   },
   env: {
     name: version.name,

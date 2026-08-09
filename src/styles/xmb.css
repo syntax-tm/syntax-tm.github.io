@@ -2,7 +2,7 @@
 @media only screen and (max-width: 640px) {
 
   .xmb-icon {
-    filter: drop-shadow(0 0 0.25rem black);
+    /* filter: drop-shadow(0 0 0.25rem black); */
     color: white;
     fill: white;
     width: 60px;
@@ -12,7 +12,7 @@
 
 @media only screen and (min-width: 641px) {
   .xmb-icon {
-    filter: drop-shadow(0 0 0.25rem black);
+    /* filter: drop-shadow(0 0 0.25rem black); */
     color: white;
     fill: white;
     width: 80px;

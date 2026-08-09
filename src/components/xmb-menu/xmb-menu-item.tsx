@@ -34,6 +34,7 @@ export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
         href={item.link || ""}
         data-index={index}
         data-active={isActive}
+        data-off={index < y}
         onClick={handleClick}
         target={item.link && "_blank" || undefined}>
         <div className="grid grid-cols-1 overflow-visible relative">

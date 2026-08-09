@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { BootConfig, ThemeConfig  } from "@components/theme/theme";
 import { useSecret } from "./SecretContext";
 import { FontConfig } from "types";

@@ -10,7 +10,7 @@ export default function Menu() {
   const { menu, x } = useXmb();
 
   return (
-    <div className='xmb-menu fixed w-full h-full' data-x={x} style={{ '--x': x } as React.CSSProperties}>
+    <div className='xmb-menu absolute left-0 top-0 w-full h-full' data-x={x} style={{ '--x': x } as React.CSSProperties}>
       <main id="menu" className="">
         <section className="xmb-main w-max flex mr-0 ml-35 md:ml-67.5">
           {

@@ -13,7 +13,7 @@ export default function BackgroundView() {
   const background = currentTheme?.background ?? DEFAULT_BACKGROUND;
 
   return (
-    <div className="background-container">
+    <div className={`background-container -z-100`}>
       {background}
     </div>
   );
