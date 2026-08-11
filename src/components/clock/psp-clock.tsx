@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import pspBatteryIcon from "public/image/psp_full_battery.png";
 import Image from "next/image";
-import "./clock.scss";
 import localFont from "next/font/local";
+import "./clock.scss";
 
 const pspFont = localFont({
   src: '../../../public/fonts/FOT-NewRodin Pro L.otf',

@@ -5,6 +5,7 @@ import { useSecret } from '@context/SecretContext';
 import getShaderSource, { DEFAULT_SHADER_SORUCE } from './shaders';
 import "./secret-background.scss";
 import { useTheme } from '@context/ThemeContext';
+import { useSettings } from '@stores';
 
 export default function SecretBackground() {
   const canvasId = useId();
@@ -16,11 +17,11 @@ export default function SecretBackground() {
   const resolutionUniformLocationRef = useRef<WebGLUniformLocation | null>(null);
   const positionBufferRef = useRef<WebGLBuffer | null>(null);
   const frameRef = useRef<number | null>(null);
-  const { currentSecret } = useSecret();
+  const { id } = useSettings((state) => state);
   const { currentTheme } = useTheme();
 
   const vsSource = useMemo(() => DEFAULT_SHADER_SORUCE, []);
-  const fsSource = useMemo(() => (currentSecret ? getShaderSource(currentSecret) ?? null : null), [currentSecret]);
+  const fsSource = useMemo(() => (id ? getShaderSource(id) ?? null : null), [id]);
 
   const render = useCallback((time: number) => {
     const canvas = canvasRef.current;

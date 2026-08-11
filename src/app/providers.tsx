@@ -8,14 +8,14 @@ import { SnackbarProvider } from "@context/SnackbarContext";
 import { SecretProvider } from "@context/SecretContext";
 import { ThemeProvider } from "@context/ThemeContext";
 import { XmbProvider } from "@context/XmbContext";
-import { SettingsStoreProvider } from "@providers/settings-store-provider";
+import { SettingStoresProvider } from "@stores/setting-store";
 
 export default function Providers({ children }: ({ children: React.ReactNode })) {
   return (
     <>
       <AudioProvider>
         <SnackbarProvider>
-          <SettingsStoreProvider>
+          <SettingStoresProvider>
             <SecretProvider>
               <ThemeProvider>
                 <BootProvider>
@@ -25,7 +25,7 @@ export default function Providers({ children }: ({ children: React.ReactNode }))
                 </BootProvider>
               </ThemeProvider>
             </SecretProvider>
-          </SettingsStoreProvider>
+          </SettingStoresProvider>
         </SnackbarProvider>
       </AudioProvider>
     </>

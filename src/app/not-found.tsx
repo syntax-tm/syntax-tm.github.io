@@ -6,19 +6,19 @@ import Link from "next/link";
 import BackgroundView from "@components/background/background-view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
-import { useSecret } from "@context/SecretContext";
 import sh404 from "public/image/404.png";
 import Clock from "@components/clock/clock";
+import { useSettingStore } from "@stores/setting-store";
 import "./not-found.css";
 import "@styles/global.scss";
 
 export default function NotFound() {
 
-  const { unlockSecret } = useSecret();
+  const { unlock } = useSettingStore('_404', (state) => state);
 
   useEffect(() => {
 
-    unlockSecret("_404");
+    unlock();
 
   }, []);
 

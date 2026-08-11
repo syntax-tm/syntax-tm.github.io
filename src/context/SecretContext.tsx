@@ -1,17 +1,10 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect } from "react";
-import { useShallow } from 'zustand/react/shallow'
-import { useSnackbar } from "@context/SnackbarContext";
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
-import { StatDefinition, secrets, Setting, secretGroups, StatGroupDefinition } from "types";
-import { SnackbarVariant } from "types/snackbar";
-import { useSettingsStore } from "@providers/settings-store-provider";
-
-const CANCEL_AUDIO_SRC = '/audio/cancel.mp3';
-const TROPHY_AUDIO_SRC = '/audio/trophy.mp3';
-const TOGGLE_AUDIO_SRC = '/audio/confirm.mp3';
+import { secrets, secretGroups, ThemeChangeEventDetail } from "types";
+import { SettingStore, useSettingStore } from "@stores/setting-store";
 
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp",
@@ -29,113 +22,44 @@ const IWHBYD_CODE = [
 ];
 
 export interface SecretContextType {
-  currentSetting: Setting | undefined;
-  currentSecret: AchievementId | undefined;
-  getSetting: (id: AchievementId) => Setting | undefined;
-  getSecret: (id: AchievementId) => StatDefinition | undefined;
-  setUnlocked: (id: AchievementId, isUnlocked: boolean) => void;
-  lock: (id: AchievementId) => void;
-  unlock: (id: AchievementId) => void;
-  setEnabled: (id: AchievementId, isEnabled: boolean) => void;
-  enable: (id: AchievementId) => void;
-  disable: (id: AchievementId) => void;
-  toggle: (id: AchievementId) => void;
-  secrets: StatDefinition[];
-  secretGroups: StatGroupDefinition[];
-  settings: Map<AchievementId, Setting>;
+  _404Store: SettingStore;
+  androidStore: SettingStore;
+  dreamcastStore: SettingStore;
+  iwhbydStore: SettingStore;
+  konamiCodeStore: SettingStore;
+  missingNoStore: SettingStore;
+  oceangateStore: SettingStore;
+  pspCodeStore: SettingStore;
 }
-
-// const useSettings = create<Map<AchievementId, Setting>>()(
-//   persist(
-//     (set, get) => ({
-//       settings: ,
-//       enable: (id: AchievementId) => set((s) => ({  })),
-//     }),
-//     {
-//       name: "settings",
-//       storage: createJSONStorage(() => localStorage),
-//     },
-//   ),
-// );
-
 
 const SecretContext = createContext<SecretContextType | undefined>(undefined);
 
 export function SecretProvider({ children }: { children: React.ReactNode }) {
 
-  const { settings, setEnabled, setUnlocked, currentSetting } = useSettingsStore(
-    useShallow((state) => state),
-  );
-
-  const { showSnackbar } = useSnackbar();
-
-  const currentSecret = currentSetting?.id;
-  const currentSecretType = currentSetting?.type;
-
-  const getSetting = useCallback((id: AchievementId) => {
-    return settings.get(id);
-  }, [settings]);
+  const _404Store = useSettingStore("_404", (state) => state);
+  const androidStore = useSettingStore("ANDROID", (state) => state);
+  const dreamcastStore = useSettingStore("DREAMCAST", (state) => state);
+  const iwhbydStore = useSettingStore("IWHBYD", (state) => state);
+  const konamiCodeStore = useSettingStore("KONAMI_CODE", (state) => state);
+  const missingNoStore = useSettingStore("MISSING_NO", (state) => state);
+  const oceangateStore = useSettingStore("OCEANGATE", (state) => state);
+  const pspCodeStore = useSettingStore("PSP_CODE", (state) => state);
 
   const getSecret = useCallback((id: AchievementId) => {
     const results = secrets.filter(s => s.id === id);
     return results[0];
   }, [secrets]);
 
-  const enable = useCallback((id: AchievementId) => {
-    setEnabled(id, true);
-  }, [settings]);
-
-  const disable = useCallback((id: AchievementId) => {
-    setEnabled(id, false);
-  }, [settings]);
-
-  const lock = useCallback((id: AchievementId) => {
-    const setting = settings.get(id);
-    if (!setting) return;
-    if (!setting.isUnlocked) return;
-
-    setUnlocked(id, false);
-
-    const secret = setting.stat;
-    showSnackbar(`Secret Locked`, `'${secret.title}' is now locked.`, 'lock', CANCEL_AUDIO_SRC);
-  }, [settings, setUnlocked]);
-
-  const unlock = useCallback((id: AchievementId) => {
-    const setting = settings.get(id);
-    if (!setting) return;
-    if (setting.isUnlocked) return;
-
-    setUnlocked(id, true);
-
-    const secret = setting.stat;
-    showSnackbar(secret.title, secret.description, 'unlock', TROPHY_AUDIO_SRC);
-  }, [settings, setEnabled]);
-
-  const toggle = useCallback((id: AchievementId) => {
-    const setting = settings.get(id);
-    if (!setting) return;
-
-    const isEnabled = setting.isEnabled;
-    const newState = !isEnabled;
-
-    setEnabled(id, newState);
-
-    const action = newState ? 'Enabled' : 'Disabled';
-    const variant: SnackbarVariant = newState ? 'enable' : 'disable';
-
-    showSnackbar(`Secret ${action}`, `'${id}' is now ${newState ? 'enabled' : 'disabled'}.`, variant, TOGGLE_AUDIO_SRC);
-  }, [settings, setEnabled]);
-
   useKeySequence(KONAMI_CODE, () => {
-    unlock("KONAMI_CODE");
+    konamiCodeStore.unlock();
   });
 
   useKeySequence(PSP, () => {
-    unlock("PSP_CODE");
+    pspCodeStore.unlock();
   });
 
   useKeySequence(IWHBYD_CODE, () => {
-    unlock("IWHBYD");
+    iwhbydStore.unlock();
   });
 
   useEffect(() => {
@@ -144,7 +68,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     }
 
     const handleGamepadConnected = () => {
-      void unlock("OCEANGATE");
+      oceangateStore.unlock();
     };
 
     window.addEventListener('gamepadconnected', handleGamepadConnected);
@@ -152,24 +76,20 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     return () => {
       window.removeEventListener('gamepadconnected', handleGamepadConnected);
     };
-  }, [unlock]);
+  }, [oceangateStore]);
 
   const value = {
-    currentSetting,
-    currentSecret,
-    getSetting,
     getSecret,
-    currentSecretType,
-    setEnabled,
-    enable,
-    disable,
-    toggle,
-    setUnlocked,
-    lock,
-    unlock,
     secrets,
     secretGroups,
-    settings,
+    _404Store,
+    androidStore,
+    dreamcastStore,
+    iwhbydStore,
+    konamiCodeStore,
+    missingNoStore,
+    oceangateStore,
+    pspCodeStore,
   };
 
   return (

@@ -14,13 +14,15 @@ export const ACHIEVEMENT_MAPPING: Record<AchievementId, SecretClass> = {
   KONAMI_CODE: "secret-konami-code",
   MISSING_NO: "secret-missing-no",
   OCEANGATE: "secret-oceangate",
-  BW_FILTER: "secret-bw-filter",
-  SEPIA_FILTER: "secret-sepia-filter",
-  HUE_ROTATE_FILTER: "secret-hue-rotate-filter",
-  INVERT_FILTER: "secret-invert-filter",
-  SATURATE_FILTER: "secret-saturate-filter",
+  // BW_FILTER: "secret-bw-filter",
+  // SEPIA_FILTER: "secret-sepia-filter",
+  // HUE_ROTATE_FILTER: "secret-hue-rotate-filter",
+  // INVERT_FILTER: "secret-invert-filter",
+  // SATURATE_FILTER: "secret-saturate-filter",
   DREAMCAST: "secret-dreamcast",
   PSP_CODE: "secret-psp-code",
+  CURRENT: "secret-current",
+  UNKNOWN: "secret-unknown",
 } as const;
 
 export function getSecretClass(id: AchievementId): SecretClass {

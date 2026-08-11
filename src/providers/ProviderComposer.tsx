@@ -6,11 +6,13 @@ export const ProviderComposer = ({
   providers,
   children,
 }: {
-  providers: ProviderEntry[];
+  providers: React.ReactNode[];
   children: React.ReactNode;
 }) => {
   return providers.reduceRight<React.ReactNode>((nestedChildren, ProviderItem) => {
     // standard component fallback
-    return <ProviderItem>{nestedChildren}</ProviderItem>;
+    return <>
+      {ProviderItem}
+    </>;
   }, children);
 };

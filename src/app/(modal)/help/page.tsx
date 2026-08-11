@@ -325,7 +325,7 @@ function MobileHelpView() {
           <tr className="">
             <th scope="row" className="px-3 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400 text-right">
               <span className="mr-2 my-auto">Swipe</span>
-              <FontAwesomeIcon icon={faUpDown} className="ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
+              <FontAwesomeIcon icon={faUpDown} className="my-auto ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
             </th>
             <td className="px-3 py-2.5">
               Move up/down
@@ -334,7 +334,7 @@ function MobileHelpView() {
           <tr className="">
             <th scope="row" className="px-3 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400 text-right">
               <span className="mr-2 my-auto">Swipe</span>
-              <FontAwesomeIcon icon={faLeftRight} className="ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
+              <FontAwesomeIcon icon={faLeftRight} className="my-auto ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
             </th>
             <td className="px-3 py-2.5">
               Move left/right
@@ -343,7 +343,7 @@ function MobileHelpView() {
           <tr className="">
             <th scope="row" className="px-3 py-4 text-gray-500 whitespace-nowrap dark:text-gray-400 text-right">
               <span className="mr-2 my-auto">Tap</span>
-              <FontAwesomeIcon icon={faHandPointer} className="ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
+              <FontAwesomeIcon icon={faHandPointer} className="my-auto ms-1 h-[1.3em] w-[1.3em] align-middle text-gray-400" />
             </th>
             <td className="px-3 py-2.5">
               Open selected item

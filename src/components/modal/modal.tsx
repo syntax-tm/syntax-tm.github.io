@@ -8,12 +8,9 @@ import { useRouter } from "next/navigation";
 import { useAudio } from "@context/AudioContext";
 import useInput from "@hooks/useInput";
 import useKeyboard from "@hooks/useKeyboard";
-import Clock from "@components/clock/clock";
 import ControllerIcon from "@components/icons/controller-icon";
 import { KeyPressAction } from "types";
-import Menu from "@components/xmb-menu/xmb-menu";
 import "./modal.css";
-import BackgroundView from "@components/background/background-view";
 
 const AUDIO_SRC = '/audio/nav.mp3';
 

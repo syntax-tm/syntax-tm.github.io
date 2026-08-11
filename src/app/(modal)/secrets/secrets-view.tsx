@@ -3,26 +3,28 @@
 import { useSecret } from "@context/SecretContext";
 import React, { useEffect, useState } from "react";
 import SecretView from "./secret-view";
+import { achievements, secretGroups, secrets } from "types";
 import "./secrets.css";
 
 const SECRET_TAP_MIN = 5;
 
 export default function SecretsView() {
 
-  const { settings, secretGroups } = useSecret();
+
   const [allUnlocked, setAllUnlocked] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (!settings) return;
+  //   if (!settings) return;
 
-    const lockedCount = Array.from(settings.values()).filter((s) => {
-      return !s.isUnlocked;
-    }).length;
+  //   const lockedCount = Object.values(settings).filter((s) => {
+  //     if (!s) return true;
+  //     return !s.isUnlocked;
+  //   }).length;
 
-    setAllUnlocked(lockedCount !== 0);
+  //   setAllUnlocked(lockedCount !== 0);
 
-  }, [settings]);
+  // }, [settings]);
 
   return (
     <>
@@ -34,13 +36,14 @@ export default function SecretsView() {
           </thead>
           <tbody className="">
             {
-              secretGroups && settings &&
+              secretGroups && achievements &&
               secretGroups
                 // .filter(group => {
                 //   return group.items && group.items.length > 0;
                 // })
                 .map(group => {
-                  const items = Array.from(settings.values()).filter(s => {
+                  const items = secrets.filter(s => {
+                    if (!s) return false;
                     return s.type === group.type;
                   });
                   if (!items || items.length === 0) return null;
@@ -68,8 +71,9 @@ export default function SecretsView() {
                       </tr>
                       {
                         items && items.map(i => {
+                          if (!i) return;
                           return (
-                            <SecretView key={i.id} id={i.id} stat={i.stat} unlockMinimum={SECRET_TAP_MIN} />
+                            <SecretView key={i.id} id={i.id} stat={i} unlockMinimum={SECRET_TAP_MIN} />
                           );
                         })
                       }

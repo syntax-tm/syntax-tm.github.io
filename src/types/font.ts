@@ -2,15 +2,13 @@ import { AchievementId } from '@enums';
 import type { NextFont, NextFontWithVariable } from 'next/dist/compiled/@next/font';
 import localFont from "next/font/local";
 
-const PSP_FONT_VARIABLE = '---newrodin-pro';
-const DREAMCAST_FONT_VARIABLE = '---nise-sega-dreamcast';
-
 export const pspFont: NextFontWithVariable = localFont({
   src: '../../public/fonts/FOT-NewRodin Pro L.otf',
   variable: '---newrodin-pro',
   style: 'normal',
   weight: '400',
   preload: true,
+  fallback: ["Segoe UI Variable Text"],
 });
 
 export const dreamcastFont: NextFontWithVariable = localFont({
@@ -19,6 +17,7 @@ export const dreamcastFont: NextFontWithVariable = localFont({
   style: 'normal',
   weight: '400',
   preload: true,
+  fallback: ["Segoe UI Variable Text"],
 });
 
 export interface FontConfig {
@@ -27,6 +26,6 @@ export interface FontConfig {
 }
 
 export const fontMap = new Map<AchievementId, FontConfig>([
-  ["PSP_CODE", { font: pspFont, className: PSP_FONT_VARIABLE }],
-  ["DREAMCAST", { font: dreamcastFont, className: DREAMCAST_FONT_VARIABLE }],
+  ["PSP_CODE", { font: pspFont, className: pspFont.className }],
+  ["DREAMCAST", { font: dreamcastFont, className: dreamcastFont.className }],
 ]);

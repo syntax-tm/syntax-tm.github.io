@@ -1,4 +1,5 @@
 export * from './enums/';
+export * from './events';
 export * from './font';
 export type * from './key-press-action';
 export * from './position';

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef } from "react";
 import useMobileDetect from "@hooks/useMobileDetect";
-import { useSecret } from "@context/SecretContext";
 import { Modal } from "@components/modal/modal";
+import { useSettingStore } from "@stores";
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -32,7 +32,7 @@ function AboutView() {
   const mobileDetect = useMobileDetect();
   const tapCountRef = useRef(0);
   const tapTimerRef = useRef<number | null>(null);
-  const { unlock } = useSecret();
+  const { unlock } = useSettingStore("ANDROID", (state) => state);
 
   useEffect(() => {
     if (!mobileDetect.isMobile()) return;
@@ -58,7 +58,7 @@ function AboutView() {
       }, 500);
 
       if (tapCountRef.current >= SECRET_TAP_MIN) {
-        unlock("ANDROID");
+        unlock();
         resetTapCount();
       }
     };

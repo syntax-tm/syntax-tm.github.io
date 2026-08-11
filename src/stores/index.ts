@@ -1,1 +1,1 @@
-export * from './settings-store';
+export * from './setting-store';

@@ -11,6 +11,7 @@ const DreamcastBootContent = (props?: SVGProps<SVGSVGElement>) => (
       cx={39.775}
       cy={-120.87}
       r={20}
+      opacity="0"
       stroke="#cf3311"
       fill="#cf3311"
       strokeWidth={1}
@@ -18,11 +19,10 @@ const DreamcastBootContent = (props?: SVGProps<SVGSVGElement>) => (
       <animate
         fill="freeze"
         attributeName="opacity"
-        begin="5.39s"
-        dur="0s"
-        from={1}
-        to={0}
-        keyTimes="0; 1"
+        values="0; 1; 1; 0"
+        keyTimes="0; 0.01; 0.99; 1"
+        begin="0.9s"
+        dur="4.5s"
       />
       <animateMotion
         begin="0.9s"
@@ -93,12 +93,12 @@ export default function DreamcastBoot() {
 
   useEffect(() => {
     void play(DREAMCAST_BOOT_AUDIO_SRC);
-  });
+  }, []);
 
   return (
     <>
       <div className="boot-container dreamcast-boot z-100 absolute left-0 top-0 w-full h-full grid">
-        <DreamcastBootContent className="w-full h-full m-10 max-h-[700px]" />
+        <DreamcastBootContent className="w-full h-full my-auto mx-auto max-h-[700px] overflow-clip" />
       </div>
     </>
   );

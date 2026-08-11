@@ -1,14 +1,18 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { useShallow } from 'zustand/react/shallow';
+import React, { useCallback, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faCheck, faCheckCircle, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { AchievementId } from "@enums";
-import { StatDefinition } from "types";
-import { useSettingsStore } from "@providers/settings-store-provider";
+import { SnackbarVariant, StatDefinition } from "types";
+// import { useSettingsStore } from "@providers/settings-store-provider";
+import { useSnackbar } from "@context";
+import { useSettingStore } from "@stores/setting-store";
 import "./secrets.css";
-import { useSecret } from "@context";
+
+const CANCEL_AUDIO_SRC = '/audio/cancel.mp3';
+const TROPHY_AUDIO_SRC = '/audio/trophy.mp3';
+const TOGGLE_AUDIO_SRC = '/audio/confirm.mp3';
 
 export interface SecretViewProps
 {
@@ -19,25 +23,11 @@ export interface SecretViewProps
 
 export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
 
-  const { settings, setUnlocked, setEnabled } = useSettingsStore(
-    useShallow((state) => state),
-  );
-
-  const { lock, unlock } = useSecret();
+  const { isUnlocked, isEnabled, lock, unlock, toggle } = useSettingStore(id, (state) => state);
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
   const elementRef = useRef<HTMLTableRowElement | null>(null);
-  const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isEnabled, setIsEnabled] = useState(false);
-
-  // useEffect(() => {
-  //   const setting = settings.get(id);
-
-  //   if (setting) {
-  //     setIsUnlocked(setting.isUnlocked);
-  //     setIsEnabled(setting.isEnabled);
-  //   }
-  // }, [settings]);
+  const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
 
@@ -65,16 +55,23 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
 
       if (unlockCountRef.current >= unlockMinimum) {
         resetTapCount();
+
+        let title, description;
+        const variant: SnackbarVariant = isUnlocked ? 'lock' : 'unlock';
+        const audioSrc = isUnlocked ? CANCEL_AUDIO_SRC : TROPHY_AUDIO_SRC;
+
         if (isUnlocked) {
-          lock(id);
-          setIsUnlocked(false);
-          setIsEnabled(false);
+          lock();
+          title = 'Secret Locked';
+          description = `'${stat.title}' is now locked.`;
         }
         else {
-          unlock(id);
-          setIsUnlocked(true);
-          setIsEnabled(true);
+          unlock();
+          title = stat.title;
+          description = stat.description;
         }
+
+        showSnackbar(title, description, variant, audioSrc);
       }
     };
 
@@ -86,7 +83,25 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
       elementRef.current?.removeEventListener("click", handleTouchEnd);
       resetTapCount();
     };
-  }, [isUnlocked, lock, unlock, settings]);
+  }, [isUnlocked, lock, unlock]);
+
+  const onToggle = useCallback(() => {
+    const newState = !isEnabled;
+
+    toggle();
+
+    const event = new CustomEvent("themeChange", {
+      detail: {
+        id: newState ? id : null,
+      },
+    });
+    window.dispatchEvent(event);
+
+    const action = newState ? 'Enabled' : 'Disabled';
+    const variant: SnackbarVariant = newState ? 'enable' : 'disable';
+
+    showSnackbar(`Secret ${action}`, `'${id}' is now ${newState ? 'enabled' : 'disabled'}.`, variant, TOGGLE_AUDIO_SRC);
+  }, [isEnabled, toggle]);
 
   return (
     <React.Fragment key={id}>
@@ -103,10 +118,8 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
         <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'} select-none`}>
           {isUnlocked ? stat.description : 'Hidden'}
         </td>
-        <td className={`border border-gray-300/25 ${isEnabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
-          <div className={`grid items-center w-full h-full cursor-pointer`} onClick={() => {
-            setEnabled(id, !isEnabled);
-          }}>
+        <td className={`border border-gray-300/25 ${isUnlocked && isEnabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
+          <div className={`grid items-center w-full h-full cursor-pointer`} onClick={onToggle}>
             {
               isUnlocked && (
                 isEnabled
