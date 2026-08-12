@@ -7,10 +7,10 @@ import BackgroundView from "@components/background/background-view";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import sh404 from "public/image/404.png";
-import Clock from "@components/clock/clock";
+import ClockView from "@components/clock/clock-view";
 import { useSettingStore } from "@stores/setting-store";
-import "./not-found.css";
 import "@styles/global.scss";
+import "./not-found.css";
 
 export default function NotFound() {
 
@@ -25,7 +25,7 @@ export default function NotFound() {
   return (
     <div className="root-container">
       <BackgroundView />
-      <Clock />
+      <ClockView />
       <div className="grid content-center z-0 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
         <Link href="/" aria-label="Return to the home page">
           <div className="flex flex-row justify-center items-center text-9xl hover:animate-pulse">

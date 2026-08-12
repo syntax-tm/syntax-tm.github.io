@@ -8,7 +8,7 @@ import { SnackbarVariant, StatDefinition } from "types";
 // import { useSettingsStore } from "@providers/settings-store-provider";
 import { useSnackbar } from "@context";
 import { useSettingStore } from "@stores/setting-store";
-import "./secrets.css";
+import "./secrets.scss";
 
 const CANCEL_AUDIO_SRC = '/audio/cancel.mp3';
 const TROPHY_AUDIO_SRC = '/audio/trophy.mp3';
@@ -17,17 +17,21 @@ const TOGGLE_AUDIO_SRC = '/audio/confirm.mp3';
 export interface SecretViewProps
 {
   id: AchievementId;
+  index: number;
+  activeCell: [number, number];
+  setActiveCell: ([x, y]: [x: number, y: number]) => void;
   unlockMinimum: number;
   stat: StatDefinition;
 }
 
-export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps) {
+export default function SecretView({ id, index, activeCell, setActiveCell, stat, unlockMinimum }: SecretViewProps) {
 
   const { isUnlocked, isEnabled, lock, unlock, toggle } = useSettingStore(id, (state) => state);
   const unlockCountRef = useRef(0);
   const unlockTimerRef = useRef<number | null>(null);
   const elementRef = useRef<HTMLTableRowElement | null>(null);
   const { showSnackbar } = useSnackbar();
+  const [x, y] = activeCell;
 
   useEffect(() => {
 
@@ -105,21 +109,27 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
 
   return (
     <React.Fragment key={id}>
-      <tr ref={elementRef}>
-        <td className={`border-b border-t border-gray-400/25 text-center ${isUnlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} select-none justify-center items-center`}>
+      <tr ref={elementRef} data-row={index} className={`${x === index ? 'active' : ''}`}>
+        <td className={`border-b border-t border-gray-400/25 text-center ${isUnlocked ? 'bg-green-300/50' : 'bg-gray-600/40'} justify-center items-center`}
+          data-row={index} data-col={0} tabIndex={x === index ? 0 : -1}
+          onFocusCapture={() => setActiveCell([index, 0])}>
           <FontAwesomeIcon icon={isUnlocked ? faCheckCircle : faLock}
             className={`py-1 w-full h-full mx-3`} />
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}>
-          <span className="pointer-events-none select-none">
-            {isUnlocked ? stat.title : 'Hidden'}
-          </span>
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}
+          data-row={index} data-col={1} tabIndex={x === index ? 1 : -1}
+          onFocusCapture={() => setActiveCell([index, 1])}>
+          {isUnlocked ? stat.title : 'Hidden'}
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'} select-none`}>
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-wrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}
+          data-row={index} data-col={2} tabIndex={x === index ? 2 : -1}
+          onFocusCapture={() => setActiveCell([index, 2])}>
           {isUnlocked ? stat.description : 'Hidden'}
         </td>
-        <td className={`border border-gray-300/25 ${isUnlocked && isEnabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}>
-          <div className={`grid items-center w-full h-full cursor-pointer`} onClick={onToggle}>
+        <td className={`border border-gray-300/25 ${isUnlocked && isEnabled ? 'bg-green-300/50' : 'bg-gray-600/40'}`}
+          data-row={index} data-col={3} tabIndex={x === index ? 3 : -1}
+          onFocusCapture={() => setActiveCell([index, 3])}>
+          <button className={`items-center w-full h-full cursor-pointer`} onClick={onToggle}>
             {
               isUnlocked && (
                 isEnabled
@@ -127,7 +137,7 @@ export default function SecretView({ id, stat, unlockMinimum }: SecretViewProps)
                   : <FontAwesomeIcon icon={faMinus} className="mx-auto py-1" />
               )
             }
-          </div>
+          </button>
         </td>
       </tr>
     </React.Fragment>

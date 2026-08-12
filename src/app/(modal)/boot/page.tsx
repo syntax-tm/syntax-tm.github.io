@@ -2,29 +2,34 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import BackgroundView from "@components/background/background-view";
 import { useBoot } from '@context/BootContext';
+import { useTheme } from "@context";
 
 export default function BootPage() {
   const router = useRouter();
-  const { showBootScreen, hideBootScreen } = useBoot();
+  const { currentTheme, boot } = useTheme();
+  const { isBootVisible, showBootScreen, hideBootScreen } = useBoot();
 
   useEffect(() => {
-    showBootScreen();
-
     const timer = window.setTimeout(() => {
       hideBootScreen();
       router.replace("/");
-    }, 5000);
+    }, boot?.bootDuration ?? 5000);
 
     return () => {
       window.clearTimeout(timer);
     };
-  }, [router, showBootScreen, hideBootScreen]);
+  }, [router, boot, currentTheme]);
+
+  useEffect(() => {
+    if (!isBootVisible) {
+      router.replace("/");
+    }
+  }, [isBootVisible]);
 
   return (
     <div className="root-container relative min-h-screen overflow-hidden pointer-events-auto opacity-100">
-      <BackgroundView />
+      { boot?.element }
     </div>
   );
 }

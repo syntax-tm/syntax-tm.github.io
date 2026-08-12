@@ -1,35 +1,113 @@
 "use client";
 
-import { useSecret } from "@context/SecretContext";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SecretView from "./secret-view";
 import { achievements, secretGroups, secrets } from "types";
-import "./secrets.css";
+import "./secrets.scss";
 
 const SECRET_TAP_MIN = 5;
 
 export default function SecretsView() {
 
+  const tableRef = useRef<HTMLTableElement | null>(null);
+  const [activeCell, setActiveCell] = useState<[number, number]>([0, 0]);
+  //const [allUnlocked, setAllUnlocked] = useState(false);
+  const allUnlocked = false;
 
-  const [allUnlocked, setAllUnlocked] = useState(false);
+  const totalRows = secrets.length;
+  const totalCols = 4;
 
-  // useEffect(() => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTableElement>) => {
+    const [row, col] = activeCell;
 
-  //   if (!settings) return;
+    console.log(`[${row}, ${col}] -> ${e.key}`);
 
-  //   const lockedCount = Object.values(settings).filter((s) => {
-  //     if (!s) return true;
-  //     return !s.isUnlocked;
-  //   }).length;
+    switch (e.key) {
+      case "ArrowUp":
+      case "W":
+        e.preventDefault();
+        e.stopPropagation();
+        if (row > 0) setActiveCell([row - 1, col]);
+        else setActiveCell([totalRows - 1, col]);
+        break;
+      case "ArrowDown":
+      case "S":
+        e.preventDefault();
+        e.stopPropagation();
+        if (row < totalRows - 1) setActiveCell([row + 1, col]);
+        else setActiveCell([0, col]);
+        break;
+      case "ArrowLeft":
+      case "A":
+        e.preventDefault();
+        e.stopPropagation();
+        if (col > 0) setActiveCell([row, col - 1]);
+        else setActiveCell([row, totalCols - 1]);
+        break;
+      case "ArrowRight":
+      case "D":
+        e.preventDefault();
+        e.stopPropagation();
+        if (col < totalCols - 1) setActiveCell([row, col + 1]);
+        else setActiveCell([row, 0]);
+        break;
+      case "Home":
+        e.preventDefault();
+        e.stopPropagation();
+        setActiveCell([row, 0]);
+        break;
+      case "End":
+        e.preventDefault();
+        e.stopPropagation();
+        setActiveCell([row, totalCols - 1]);
+        break;
+      case "Tab":
+        e.preventDefault();
+        e.stopPropagation();
+        const isShift = e.shiftKey;
+        if (isShift) {
+          if (col <= 0) { setActiveCell([row, totalCols - 1]); }
+          else { setActiveCell([row, col - 1]); }
+          return;
+        }
+        if (col >= totalCols - 1) setActiveCell([row, 0]);
+        else setActiveCell([row, col + 1]);
+      default:
+        break;
+    }
+  };
 
-  //   setAllUnlocked(lockedCount !== 0);
+  useEffect(() => {
+    if (!tableRef.current) return;
+    const cellElement = tableRef.current.querySelector(
+      `[data-row="${activeCell[0]}"][data-col="${activeCell[1]}"]`,
+    ) as HTMLTableCellElement;
 
-  // }, [settings]);
+    if (cellElement) {
+      const validChild = cellElement.firstChild as HTMLElement;
+
+      if (validChild && validChild.nodeType === Node.ELEMENT_NODE) {
+        console.log(`${validChild.nodeName} focusing`);
+        validChild.focus();
+        return;
+      }
+      cellElement.focus();
+    }
+  }, [activeCell]);
+
+  // const setActiveRow = useCallback((x: number) => {
+  //   if (!tableRef.current) return;
+  //   const tr = tableRef.current.querySelector(`tr[data-row="${x}"]`) as HTMLTableRowElement;
+  //   tr?.focus();
+  // }, []);
+
+  let rowIndex = 0;
 
   return (
     <>
       <div className="modal-content modal-content-secrets text-white h-full grid">
-        <table className="table-auto border-collapse mb-0 w-full">
+        <table className="secrets-table table-auto border-collapse mb-0 w-full" ref={tableRef}
+          onKeyDown={handleKeyDown}>
           <thead className="">
             <tr className="">
             </tr>
@@ -70,10 +148,10 @@ export default function SecretsView() {
                         </th>
                       </tr>
                       {
-                        items && items.map(i => {
+                        items && items.map((i) => {
                           if (!i) return;
                           return (
-                            <SecretView key={i.id} id={i.id} stat={i} unlockMinimum={SECRET_TAP_MIN} />
+                            <SecretView key={i.id} id={i.id} index={rowIndex++} stat={i} activeCell={activeCell} setActiveCell={setActiveCell} unlockMinimum={SECRET_TAP_MIN} />
                           );
                         })
                       }

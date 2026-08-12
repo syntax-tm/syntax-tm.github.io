@@ -22,9 +22,13 @@ const tzName = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
   .formatToParts(d)
   .find(part => part.type === 'timeZoneName')?.value ?? 'Unknown';
 
-const shell = os.platform() === 'win32';
-const { stdout = '' } = spawnSync('yarn', ['info', 'next', '--name-only'], {
-  shell,
+// const shell = os.platform() === 'win32';
+// const { stdout = '' } = spawnSync('yarn', ['info', 'next', '--name-only'], {
+//   shell,
+//   encoding: 'utf8',
+// });
+
+const { stdout = '' } = spawnSync('yarn', ['info next --name-only'], {
   encoding: 'utf8',
 });
 

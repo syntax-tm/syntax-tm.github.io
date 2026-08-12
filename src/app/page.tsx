@@ -18,12 +18,12 @@ export default function Home() {
 
   return (
     <div className={`root-container ${themeClassName} ${fontClassName}`}>
-      <BackgroundView />
       {
         isBootVisible
           ? bootView
           :
           <>
+            <BackgroundView />
             {clock}
             <Menu />
           </>

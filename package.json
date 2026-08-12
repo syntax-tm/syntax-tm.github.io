@@ -13,8 +13,7 @@
     "build:dev": "next build --webpack",
     "build:prod": "next build --webpack",
     "watch": "webpack --watch",
-    "serve": "webpack serve",
-    "prebuild": "node ./scripts/prebuild.mjs"
+    "serve": "webpack serve"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.3.1",
@@ -23,6 +22,8 @@
     "@fortawesome/free-solid-svg-icons": "^7.3.1",
     "@fortawesome/react-fontawesome": "^3.5.0",
     "@next/env": "^16.3.0",
+    "@react-three/drei": "^10.7.8",
+    "@react-three/fiber": "^9.7.0",
     "@uidotdev/usehooks": "^2.4.1",
     "awesome-react-gamepads": "^1.0.1",
     "framer-motion": "^12.43.0",
@@ -31,6 +32,7 @@
     "react-dom": "19.2.8",
     "react-navigation-controller": "^3.1.1",
     "sharp": "^0.35.3",
+    "three": "^0.185.1",
     "tsparticles": "^4.3.2",
     "use-sound": "^5.0.0",
     "zustand": "^5.0.14"
@@ -41,6 +43,7 @@
     "@types/node": "^26.1.2",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "@types/three": "^0",
     "@typescript-eslint/eslint-plugin": "^8.66.0",
     "@typescript-eslint/parser": "^8.66.0",
     "@webpack-cli/generators": "^3.0.7",

@@ -1,0 +1,15 @@
+{
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "editor.trimAutoWhitespace": true,
+    "editor.indentSize": 2,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  }
+}

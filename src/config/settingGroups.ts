@@ -1,26 +1,26 @@
-[
+export default [
   {
     "type": "BG",
-    "title": "Background"
+    "title": "Background",
   },
   {
     "type": "BOOT",
-    "title": "Boot"
+    "title": "Boot",
   },
   {
     "type": "FILTER",
-    "title": "Filter"
+    "title": "Filter",
   },
   {
     "type": "FONT",
-    "title": "Font"
+    "title": "Font",
   },
   {
     "type": "ICONS",
-    "title": "Icons"
+    "title": "Icons",
   },
   {
     "type": "THEME",
-    "title": "Theme"
-  }
-]
+    "title": "Theme",
+  },
+];

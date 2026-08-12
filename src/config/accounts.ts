@@ -1,0 +1,8 @@
+export default {
+  battleNet: {
+    id: "Gundwn#11586",
+  },
+  steam: {
+    id: "gundwn",
+  },
+};

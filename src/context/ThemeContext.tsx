@@ -1,10 +1,84 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { BootConfig, ThemeConfig  } from "@components/theme/theme";
-import { AchievementId, FontConfig, ThemeChangeEventDetail } from "types";
-import { getTheme } from "@components/theme/theme";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { AchievementId, DEFAULT_FONT, FontConfig, fontMap, secrets, StatDefinition, ThemeChangeEventDetail } from "types";
 import { useSettings, useSettingStore } from "@stores";
+import { getSecretClass, SecretClass } from "@enums/secret-class";
+import componentMap from "@components/component-map/component-map";
+
+export interface ThemeConfig {
+  id: AchievementId;
+  className: SecretClass;
+  background: React.ReactNode;
+  boot: BootConfig;
+  clock: React.ReactNode;
+  font?: FontConfig;
+}
+
+export interface BootConfig {
+  element: React.ReactNode;
+  bootDuration: number;
+  bootFadeInDuration?: number;
+  bootFadeOutDuration?: number;
+}
+
+const DEFAULT_BACKGROUND = 'webgl-background';
+const DEFAULT_CLOCK = 'clock';
+const DEFAULT_BOOT = 'boot';
+const DEFAULT_BOOT_DURATION = 5000;
+const DEFAULT_BOOT_FADE_OUT = 600;
+
+function createTheme(stat: StatDefinition): ThemeConfig {
+
+  const id = stat.id;
+  const bg = stat.theme?.background ?? DEFAULT_BACKGROUND;
+  const background = componentMap.get(bg);
+  const ck = stat.theme?.clock ?? DEFAULT_CLOCK;
+  const clock = componentMap.get(ck);
+
+  let bootComponent;
+  let bootDuration = DEFAULT_BOOT_DURATION;
+  let bootFadeInDuration = 0;
+  let bootFadeOutDuration = DEFAULT_BOOT_FADE_OUT;
+
+  if (stat.theme) {
+    if (typeof stat.theme.boot === "string") {
+      bootComponent = componentMap.get(stat.theme.boot);
+    }
+    else if (typeof stat.theme.boot === "undefined") {
+      bootComponent = componentMap.get(DEFAULT_BOOT);
+    }
+    else {
+      const bootComponentName = stat.theme.boot.component;
+      bootComponent = componentMap.get(bootComponentName);
+      bootDuration = stat.theme.boot.bootDuration ?? DEFAULT_BOOT_DURATION;
+      bootFadeInDuration = stat.theme.boot.bootFadeInDuration ?? 0;
+      bootFadeOutDuration = stat.theme.boot.bootFadeOutDuration ?? DEFAULT_BOOT_FADE_OUT;
+    }
+  }
+  else {
+    bootComponent = componentMap.get(DEFAULT_BOOT);
+    bootDuration = DEFAULT_BOOT_DURATION;
+    bootFadeOutDuration = DEFAULT_BOOT_FADE_OUT;
+  }
+
+  const boot: BootConfig = {
+    element: bootComponent,
+    bootDuration,
+    bootFadeInDuration,
+    bootFadeOutDuration,
+  };
+  const font = fontMap.get(id) ?? DEFAULT_FONT;
+
+  return {
+    id,
+    className: getSecretClass(id),
+    background,
+    boot,
+    clock,
+    font,
+  };
+}
 
 interface ThemeContextType {
   isThemeApplied: boolean;
@@ -21,6 +95,27 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [currentTheme, setCurrentTheme] = useState<ThemeConfig | undefined>(undefined);
   const [currentSetting, setCurrentSetting] = useState<AchievementId | null>(null);
   const { id, update } = useSettings((state) => state);
+  const [themes, setThemes] = useState<Map<AchievementId, ThemeConfig> | null>(null);
+
+  const getTheme = useCallback((id: AchievementId): ThemeConfig | undefined => {
+    if (!themes) return undefined;
+    return themes.get(id);
+  }, [themes]);
+
+  useEffect(() => {
+    if (themes) return;
+
+    const t = new Map<AchievementId, ThemeConfig>();
+
+    secrets.forEach((s) => {
+      const id = s.id;
+      const theme = createTheme(s);
+
+      t.set(id, theme);
+    });
+
+    setThemes(t);
+  }, []);
 
   useEffect(() => {
     const theme = id ? getTheme(id) : undefined;
@@ -47,17 +142,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return () => {
       window.removeEventListener('themeChange', handleThemeChanged);
     };
-
   }, [id]);
 
-  const value = {
-    isThemeApplied: currentTheme != null,
-    currentTheme: currentTheme ?? null,
-    font: currentTheme?.font ?? null,
-    boot: currentTheme?.boot ?? null,
-    clock: currentTheme?.clock,
-    className: currentTheme?.className ?? null,
-  };
+  const value = useMemo(() => {
+    return {
+      isThemeApplied: currentTheme != null,
+      currentTheme: currentTheme ?? null,
+      font: currentTheme?.font ?? null,
+      boot: currentTheme?.boot ?? null,
+      clock: currentTheme?.clock,
+      className: currentTheme?.className ?? null,
+    };
+  }, [currentTheme]);
 
   return (
     <ThemeContext.Provider value={value}>

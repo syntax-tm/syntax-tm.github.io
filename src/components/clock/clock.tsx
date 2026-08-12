@@ -3,15 +3,8 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Google_Sans } from "next/font/google";
 import "./clock.scss";
-
-const clockFont = Google_Sans({
-  weight: ["400", "500", "600"],
-  preload: true,
-  subsets: ['latin'],
-  fallback: ['Segoe UI', 'sans'],
-});
+import { useTheme } from "@context";
 
 export default function Clock() {
   const [loaded, setLoaded] = useState(false);
@@ -23,6 +16,7 @@ export default function Clock() {
   const [showColon, setShowColon] = useState(false);
   const shownRef = useRef<NodeJS.Timeout | null>(null);
   const isLoadingRef = useRef(true);
+  const { font } = useTheme();
 
   const refreshTime = useCallback(() => {
     const date = new Date();
@@ -75,7 +69,7 @@ export default function Clock() {
 
   return (
     <React.Fragment>
-      <div className={`text-lg xl:text-2xl ${clockFont.className}`}>
+      <div className={`text-lg xl:text-2xl ${font?.className}`}>
         <div className={`clock boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
           <div className={`clock-container ${loaded ? 'flex' : 'hidden'} tracking-normal align-middle flex flex-nowrap items-center`}>
             <div className="flex flex-nowrap gap-0 items-center mx-2">

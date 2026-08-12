@@ -8,6 +8,7 @@ export interface StatDefinition {
   type: SecretGroupType;
   isLocked?: boolean;
   isEnabled?: boolean;
+  trophy: number;
   theme?: StatThemeConfig;
   // TODO: add a hint indicating how this can be unlocked
 }

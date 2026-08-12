@@ -24,9 +24,6 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
   if (modal)
     bootShownRef.current = true;
 
-  const bootDuration = boot?.bootDuration ?? 5000;
-  const fadeOutDuration = boot?.bootFadeOutDuration ?? 0;
-
   const showBootScreen = useCallback(() => {
     setIsBootVisible(true);
     setIsBootTransitioningOut(false);
@@ -39,6 +36,10 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (!isBootVisible) return;
+
+    const bootDuration = boot?.bootDuration ?? 5000;
+    const fadeOutDuration = boot?.bootFadeOutDuration ?? 0;
+
     //if (!boot) return;
 
     const fadeOutTimer = window.setTimeout(() => {

@@ -122,7 +122,6 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
           setIsPlaying(false);
         }
       };
-
       source.start(0);
       activeSourcesRef.current.push(source);
       setCurrentTrack(src);

@@ -3,7 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect } from "react";
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
-import { secrets, secretGroups, ThemeChangeEventDetail } from "types";
+import { secrets, secretGroups } from "types";
 import { SettingStore, useSettingStore } from "@stores/setting-store";
 
 const KONAMI_CODE = [
@@ -30,6 +30,7 @@ export interface SecretContextType {
   missingNoStore: SettingStore;
   oceangateStore: SettingStore;
   pspCodeStore: SettingStore;
+  ps2Store: SettingStore;
 }
 
 const SecretContext = createContext<SecretContextType | undefined>(undefined);
@@ -44,6 +45,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const missingNoStore = useSettingStore("MISSING_NO", (state) => state);
   const oceangateStore = useSettingStore("OCEANGATE", (state) => state);
   const pspCodeStore = useSettingStore("PSP_CODE", (state) => state);
+  const ps2Store = useSettingStore("PS2", (state) => state);
 
   const getSecret = useCallback((id: AchievementId) => {
     const results = secrets.filter(s => s.id === id);
@@ -90,6 +92,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     missingNoStore,
     oceangateStore,
     pspCodeStore,
+    ps2Store,
   };
 
   return (

@@ -4,4 +4,5 @@ export * from './useKeySequence';
 export * from './useMobileDetect';
 export * from './usePath';
 export * from './useSwipe';
+export * from './useTable';
 export * from './useWheel';
