@@ -13,7 +13,8 @@
     "build:dev": "next build --webpack",
     "build:prod": "next build --webpack",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "prebuild": "node ./scripts/prebuild.mjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.3.1",

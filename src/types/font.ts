@@ -93,5 +93,5 @@ export const fontMap = new Map<AchievementId, FontConfig>([
   ["OCEANGATE", DEFAULT_FONT],
   ["MISSING_NO", DEFAULT_FONT],
   ["ANDROID", DEFAULT_FONT],
-  ["PS2", ps2BiosFont],
+  ["PS2", { font: ps2BiosFont, className: ps2BiosFont.className }],
 ]);
