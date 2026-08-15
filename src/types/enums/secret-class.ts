@@ -23,6 +23,7 @@ export const ACHIEVEMENT_MAPPING: Record<AchievementId, SecretClass> = {
   PSP_CODE: "secret-psp-code",
   CURRENT: "secret-current",
   UNKNOWN: "secret-unknown",
+  PS2: "secret-ps2",
 } as const;
 
 export function getSecretClass(id: AchievementId): SecretClass {
