@@ -14,13 +14,18 @@ export default function Home() {
   const themeClassName = currentTheme ? currentTheme.className : 'default-theme';
   const fontClassName = font ? font.className : 'default-font';
   const clock = currentTheme?.clock;
+  const bootBg = boot?.showBackground ? <BackgroundView /> : null;
   const bootView = boot?.element ?? <Boot />;
 
   return (
     <div className={`root-container ${themeClassName} ${fontClassName}`}>
       {
         isBootVisible
-          ? bootView
+          ?
+          <>
+            {bootBg}
+            {bootView}
+          </>
           :
           <>
             <BackgroundView />

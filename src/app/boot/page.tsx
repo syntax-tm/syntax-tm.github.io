@@ -11,17 +11,6 @@ export default function BootPage() {
   const { isBootVisible, showBootScreen, hideBootScreen } = useBoot();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      hideBootScreen();
-      router.replace("/");
-    }, boot?.bootDuration ?? 5000);
-
-    return () => {
-      window.clearTimeout(timer);
-    };
-  }, [router, boot, currentTheme]);
-
-  useEffect(() => {
     if (!isBootVisible) {
       router.replace("/");
     }

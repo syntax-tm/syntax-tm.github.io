@@ -3,4 +3,5 @@ export interface StatThemeBootConfig {
   bootDuration?: number;
   bootFadeInDuration?: number;
   bootFadeOutDuration?: number;
+  showBackground?: boolean;
 }

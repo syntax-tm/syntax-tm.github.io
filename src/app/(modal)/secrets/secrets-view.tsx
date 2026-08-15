@@ -119,6 +119,9 @@ export default function SecretsView() {
                 // .filter(group => {
                 //   return group.items && group.items.length > 0;
                 // })
+                .filter(group => {
+                  return group.type !== "META";
+                })
                 .map(group => {
                   const items = secrets.filter(s => {
                     if (!s) return false;

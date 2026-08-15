@@ -20,6 +20,7 @@ export interface BootConfig {
   bootDuration: number;
   bootFadeInDuration?: number;
   bootFadeOutDuration?: number;
+  showBackground: boolean;
 }
 
 const DEFAULT_BACKGROUND = 'webgl-background';
@@ -40,6 +41,7 @@ function createTheme(stat: StatDefinition): ThemeConfig {
   let bootDuration = DEFAULT_BOOT_DURATION;
   let bootFadeInDuration = 0;
   let bootFadeOutDuration = DEFAULT_BOOT_FADE_OUT;
+  let showBackground = false;
 
   if (stat.theme) {
     if (typeof stat.theme.boot === "string") {
@@ -54,6 +56,7 @@ function createTheme(stat: StatDefinition): ThemeConfig {
       bootDuration = stat.theme.boot.bootDuration ?? DEFAULT_BOOT_DURATION;
       bootFadeInDuration = stat.theme.boot.bootFadeInDuration ?? 0;
       bootFadeOutDuration = stat.theme.boot.bootFadeOutDuration ?? DEFAULT_BOOT_FADE_OUT;
+      showBackground = stat.theme.boot.showBackground ?? false;
     }
   }
   else {
@@ -67,6 +70,7 @@ function createTheme(stat: StatDefinition): ThemeConfig {
     bootDuration,
     bootFadeInDuration,
     bootFadeOutDuration,
+    showBackground: showBackground ?? false,
   };
   const font = fontMap.get(id) ?? DEFAULT_FONT;
 
@@ -92,13 +96,14 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeConfig | undefined>(undefined);
+  const [currentTheme, setCurrentTheme] = useState<ThemeConfig | undefined>();
   const [currentSetting, setCurrentSetting] = useState<AchievementId | null>(null);
   const { id, update } = useSettings((state) => state);
   const [themes, setThemes] = useState<Map<AchievementId, ThemeConfig> | null>(null);
 
-  const getTheme = useCallback((id: AchievementId): ThemeConfig | undefined => {
+  const getTheme = useCallback((id: AchievementId | undefined): ThemeConfig | undefined => {
     if (!themes) return undefined;
+    if (!id) return themes.get('UNKNOWN');
     return themes.get(id);
   }, [themes]);
 
@@ -118,10 +123,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const theme = id ? getTheme(id) : undefined;
+    const theme = getTheme(id || undefined);
     setCurrentTheme(theme);
     setCurrentSetting(id);
-  }, [id]);
+  }, [id, themes]);
 
   useEffect(() => {
 
@@ -146,7 +151,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(() => {
     return {
-      isThemeApplied: currentTheme != null,
+      isThemeApplied: currentTheme != undefined,
       currentTheme: currentTheme ?? null,
       font: currentTheme?.font ?? null,
       boot: currentTheme?.boot ?? null,

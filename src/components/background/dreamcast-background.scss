@@ -167,17 +167,17 @@
     filter: blur(30px);
   }
 
-  .swirl-1 {
-    animation: drift 5s ease-in-out infinite alternate;
-  }
+    .swirl-1 {
+      animation: drift 14s ease-in-out infinite alternate;
+    }
 
-  .swirl-2 {
-    animation: drift-reverse 10s ease-in-out infinite alternate;
-  }
+    .swirl-2 {
+      animation: drift-reverse 18s ease-in-out infinite alternate;
+    }
 
-  .center-glow {
-    animation: pulse 2s ease-in-out infinite alternate;
-  }
+    .center-glow {
+      animation: pulse 9s ease-in-out infinite alternate;
+    }
 
   @keyframes drift {
     from {
@@ -207,7 +207,7 @@
 
     to {
       opacity: 1;
-      transform: translate(-50%, -50%) scale(1.20);
+      transform: translate(-50%, -50%) scale(1.08);
     }
   }
 

@@ -642,7 +642,7 @@ const getFragment = (type: FragmentType) => {
 export function WebGLOrbs2() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const clockRef = useRef(new THREE.Clock());
+  const timerRef = useRef(new THREE.Timer());
 
   useEffect(() => {
     const container = containerRef.current;
@@ -741,7 +741,8 @@ export function WebGLOrbs2() {
     };
 
     const animate = () => {
-      const elapsed = clockRef.current.getElapsedTime();
+      timerRef.current.update();
+      const elapsed = timerRef.current.getElapsed();
 
       materialA.uniforms.iTime.value = elapsed;
       mesh.material = materialA;

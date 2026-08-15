@@ -21,12 +21,49 @@ export const dreamcastFont: NextFontWithVariable = localFont({
   fallback: ["Segoe UI Variable Text"],
 });
 
-export const ps2Font = Play({
-  weight: ["400", "700"],
+export const ps2Font: NextFontWithVariable = localFont({
+  src: [
+    {
+      path: '../../public/fonts/Emotion Engine.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Emotion Engine Italic.otf',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../../public/fonts/Emotion Engine Bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/Emotion Engine Bold Italic.otf',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+  variable: '---emotional-engine',
+  style: 'normal',
+  weight: '400',
   preload: true,
-  subsets: ['latin'],
-  fallback: ['Segoe UI', 'sans'],
-  adjustFontFallback: false,
+  fallback: ["Segoe UI Variable Text"],
+});
+
+export const ps2BiosFont: NextFontWithVariable = localFont({
+  src: [
+    {
+      path: '../../public/fonts/ps2-bios-font.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '---ps2-bios-font',
+  style: 'normal',
+  weight: '400',
+  preload: true,
+  fallback: ["Segoe UI Variable Text"],
 });
 
 export const DEFAULT_NEXT_FONT = Google_Sans({
@@ -55,5 +92,6 @@ export const fontMap = new Map<AchievementId, FontConfig>([
   ["KONAMI_CODE", DEFAULT_FONT],
   ["OCEANGATE", DEFAULT_FONT],
   ["MISSING_NO", DEFAULT_FONT],
-  ["ANDROID", ps2Font],
+  ["ANDROID", DEFAULT_FONT],
+  ["PS2", ps2BiosFont],
 ]);

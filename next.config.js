@@ -56,6 +56,13 @@ const nextConfig = {
   },
   /** @param {import('webpack').Configuration} config */
   webpack: (config, { dev, isServer, totalPages, dir, nextRuntime, buildId }) => {
+
+    // allows importing svgs as data URLs
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack', 'url-loader']
+    });
+
     if (isServer && !dev) {
       return config;
     }

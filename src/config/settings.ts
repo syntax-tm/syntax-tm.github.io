@@ -2,6 +2,25 @@ import { StatDefinition } from "types";
 
 export const stats: StatDefinition[] = [
   {
+    id: "UNKNOWN",
+    title: "",
+    description: "",
+    type: "META",
+    isLocked: true,
+    isEnabled: false,
+    trophy: 1, // silver
+    theme: {
+      background: "webgl-background",
+      boot: {
+        component: "boot",
+        bootDuration: 5000,
+        bootFadeOutDuration: 250,
+        showBackground: true,
+      },
+      clock: "clock",
+    },
+  },
+  {
     id: "_404",
     title: "404",
     description: "There was a page here, but it's gone now.",
@@ -59,8 +78,8 @@ export const stats: StatDefinition[] = [
       background: "ps2-background",
       boot: {
         component: "ps2-boot",
-        bootDuration: 10000,
-        bootFadeOutDuration: 2000,
+        bootDuration: 12000,
+        bootFadeOutDuration: 250,
       },
       clock: "clock",
     },
@@ -113,7 +132,12 @@ export const stats: StatDefinition[] = [
         open: '',
       },
       background: "secret-background",
-      boot: "boot",
+      boot: {
+        component: "boot",
+        bootDuration: 5000,
+        bootFadeOutDuration: 250,
+        showBackground: true,
+      },
       clock: "clock",
     },
   },
@@ -145,7 +169,12 @@ export const stats: StatDefinition[] = [
     trophy: 0, // bronze
     theme: {
       background: "secret-background",
-      boot: "boot",
+      boot: {
+        component: "boot",
+        bootDuration: 5000,
+        bootFadeOutDuration: 250,
+        showBackground: true,
+      },
       clock: "clock",
     },
   },
@@ -176,8 +205,13 @@ export const stats: StatDefinition[] = [
     isEnabled: false,
     trophy: 3, // platinum
     theme: {
-      background: "webgl-background",
-      boot: "boot",
+      background: "psp-background",
+      boot: {
+        component: "boot",
+        bootDuration: 5000,
+        bootFadeOutDuration: 250,
+        showBackground: true,
+      },
       clock: "psp-clock",
     },
   },

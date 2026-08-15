@@ -23,4 +23,8 @@ export default [
     "type": "THEME",
     "title": "Theme",
   },
+  {
+    "type": "META",
+    "title": "Meta",
+  },
 ];

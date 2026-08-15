@@ -29,6 +29,9 @@ export default function Ps2Boot() {
                 <span className="ps2-boot-is-small">®</span>&nbsp;2
               </p>
             </div>
+            <div className="ps2-boot-bg">
+              
+            </div>
             <div className="ps2-boot-inner">
               <div className="ps2-boot-inner-bg" />
               <div className="ps2-boot-particles">

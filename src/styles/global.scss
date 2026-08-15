@@ -54,11 +54,11 @@ html, body {
 
 /* hide borders on everything except the clock */
 /* TODO: change this to only hide the borders on the xmb menu divs */
-// *:not(.clock, .clock-container, hr, input, table, tr, th, td, thead, tbody) {
-//     outline: none !important;
-//     border: none !important;
-//     -webkit-tap-highlight-color: transparent !important;
-// }
+*:not(.clock, .clock-container, hr, input, table, tr, th, td, thead, tbody) {
+    outline: none !important;
+    border: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
 
 /* Firefox */
 * {

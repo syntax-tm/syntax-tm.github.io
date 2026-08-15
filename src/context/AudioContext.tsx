@@ -106,7 +106,17 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     const context = audioContextRef.current;
     if (!context) return;
 
+    const start = performance.now();
+
     await ensureAudioReady();
+
+    const end = performance.now();
+    const elapsed = end - start;
+    const offset = Math.floor(elapsed / 1000);
+
+    if (offset > 0) {
+      console.log(`Call to ${typeof audioContextRef.current} play('${src}') while not ready resulted in an offset of ${offset}s`);
+    }
 
     try {
       const buffer = await getBuffer(src);
@@ -122,7 +132,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
           setIsPlaying(false);
         }
       };
-      source.start(0);
+      source.start(0, offset);
       activeSourcesRef.current.push(source);
       setCurrentTrack(src);
       setIsPlaying(true);

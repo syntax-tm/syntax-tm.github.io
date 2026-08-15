@@ -20,7 +20,7 @@ export default function DreamcastBackground({ style }: { style?: CSSProperties }
           )
         }
         {/* <div className={`background secret-background dreamcast-bg absolute top-0 left-0 w-full h-full -z-100 pointer-events-none overflow-hidden`}></div> */}
-        <div className="background absolute left-0 top-0 h-[90%] -z-100">
+        <div className="dreamcast-background absolute left-0 top-0 h-[90%] -z-100">
           <div className="atmosphere"></div>
           <div className="swirl swirl-1"></div>
           <div className="swirl swirl-2"></div>
