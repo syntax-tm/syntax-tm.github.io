@@ -6,7 +6,7 @@ import { ClockView } from "@components/clock/";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import "@styles/global.scss";
-import "./not-found.css";
+import "./not-found.scss";
 
 //const Clock = dynamic(() => import('@components/clock/Clock'));
 
