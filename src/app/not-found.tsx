@@ -10,7 +10,7 @@ import { ClockView } from "@components/clock/clock-view";
 import { useSettingStore } from "@stores/setting-store";
 import sh404 from "public/image/404.png";
 import "@styles/global.scss";
-import "./not-found.css";
+import "./not-found.scss";
 
 export default function NotFound() {
 
