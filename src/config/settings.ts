@@ -207,7 +207,7 @@ export const stats: StatDefinition[] = [
     theme: {
       background: "psp-background",
       boot: {
-        component: "boot",
+        component: "psp-boot",
         bootDuration: 5000,
         bootFadeOutDuration: 250,
         showBackground: true,
@@ -217,4 +217,4 @@ export const stats: StatDefinition[] = [
   },
 ];
 
-export default stats;
+export { stats as default };

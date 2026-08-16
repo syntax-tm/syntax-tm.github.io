@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import BackgroundView from "@components/background/background-view";
-import Clock from "@components/clock/clock";
+import { BackgroundView } from "@components/background/background-view";
+import { ClockView } from "@components/clock/";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
 import "@styles/global.scss";
@@ -66,7 +66,7 @@ export default function ErrorPage({
   return (
     <div className="root-container">
       <BackgroundView />
-      <Clock />
+      <ClockView />
       <div className="flex flex-col absolute left-0 top-0 z-0 w-full h-full text-white">
         {error && (
           <>

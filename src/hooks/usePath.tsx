@@ -28,4 +28,4 @@ const usePath = (): PathOutput => {
   };
 };
 
-export default usePath;
+export { usePath as default };

@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./clock.scss";
 import { useTheme } from "@context";
+import "./clock.scss";
 
-export default function Clock() {
+export function Clock() {
   const [loaded, setLoaded] = useState(false);
   const [day, setDay] = useState<string | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -90,3 +90,5 @@ export default function Clock() {
     </React.Fragment>
   );
 }
+
+export { Clock as default };

@@ -2,7 +2,7 @@ import React, { CSSProperties, useMemo } from "react";
 import { useBoot } from "@context";
 import "./dreamcast-background.scss";
 
-export default function DreamcastBackground({ style }: { style?: CSSProperties }) {
+export function DreamcastBackground({ style }: { style?: CSSProperties }) {
 
   const { isBootVisible, isBootTransitioningOut } = useBoot();
 
@@ -30,3 +30,5 @@ export default function DreamcastBackground({ style }: { style?: CSSProperties }
     </>
   );
 }
+
+export { DreamcastBackground as default };

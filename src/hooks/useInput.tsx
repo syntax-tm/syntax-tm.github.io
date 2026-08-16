@@ -55,4 +55,4 @@ const useInput = () => {
   };
 };
 
-export default useInput;
+export { useInput as default };

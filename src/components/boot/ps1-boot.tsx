@@ -4,12 +4,11 @@ import Ps1LogoImage from "image/ps1.png";
 import Image from "next/image";
 import "./ps1-boot.scss";
 
-export default function Ps1Boot() {
+export function Ps1Boot() {
 
   const PS1_BOOT_AUDIO_SRC = 'audio/ps1/boot.mp3';
 
   const { isBootVisible } = useBoot();
-  const { boot } = useTheme();
   const { play } = useAudio();
 
   useEffect(() => {
@@ -55,3 +54,5 @@ export default function Ps1Boot() {
     </>
   );
 }
+
+export { Ps1Boot as default };

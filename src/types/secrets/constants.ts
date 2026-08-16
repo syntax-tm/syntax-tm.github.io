@@ -7,7 +7,7 @@ import settingDefinitions from "@config/settings";
 import settingGroupDefinitions from "@config/settingGroups";
 import trophyDefinitions from "@config/trophies";
 
-export const secrets = settingDefinitions as StatDefinition[];
+export const secrets = settingDefinitions;
 export const secretGroups = settingGroupDefinitions as StatGroupDefinition[];
 export const trophies = trophyDefinitions as TrophyDefinition[];
 

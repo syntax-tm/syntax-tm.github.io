@@ -4,7 +4,7 @@ import React from "react";
 import { useTheme } from "@context";
 import "./clock.scss";
 
-export default function ClockView() {
+export function ClockView() {
   const { currentTheme } = useTheme();
 
   const clock = currentTheme?.clock;
@@ -15,3 +15,5 @@ export default function ClockView() {
     </React.Fragment>
   );
 }
+
+export { ClockView as default };

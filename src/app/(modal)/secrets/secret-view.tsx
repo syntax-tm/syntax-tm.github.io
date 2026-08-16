@@ -104,7 +104,7 @@ export default function SecretView({ id, index, activeCell, setActiveCell, stat,
     const action = newState ? 'Enabled' : 'Disabled';
     const variant: SnackbarVariant = newState ? 'enable' : 'disable';
 
-    showSnackbar(`Secret ${action}`, `'${id}' is now ${newState ? 'enabled' : 'disabled'}.`, variant, TOGGLE_AUDIO_SRC);
+    showSnackbar(`Secret ${action}`, `'${stat.title}' is now ${newState ? 'enabled' : 'disabled'}.`, variant, TOGGLE_AUDIO_SRC);
   }, [isEnabled, toggle]);
 
   return (

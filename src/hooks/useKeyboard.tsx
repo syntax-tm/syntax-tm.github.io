@@ -101,4 +101,4 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
   };
 };
 
-export default useKeyboard;
+export { useKeyboard as default };

@@ -34,4 +34,4 @@ const useMobileDetect = () => {
   return getMobileDetect(userAgent);
 };
 
-export default useMobileDetect;
+export { useMobileDetect as default };

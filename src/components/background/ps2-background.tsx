@@ -793,10 +793,12 @@ export function WebGLOrbs2() {
   return <div ref={containerRef} className="absolute inset-0" />;
 }
 
-export default function PS2Background() {
+export function PS2Background() {
   return (
     <div id="canvas-container" className="absolute inset-0 overflow-hidden">
       <WebGLOrbs2 />
     </div>
   );
 }
+
+export { PS2Background as default };

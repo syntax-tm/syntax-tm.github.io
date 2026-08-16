@@ -59,3 +59,5 @@ export const MenuCategory = ({ index, category }: MenuCategoryProps) => {
     </>
   );
 };
+
+export { MenuCategory as default };

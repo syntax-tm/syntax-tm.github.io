@@ -13,4 +13,4 @@ export interface StatDefinition {
   // TODO: add a hint indicating how this can be unlocked
 }
 
-export default StatDefinition;
+export { StatDefinition as default };

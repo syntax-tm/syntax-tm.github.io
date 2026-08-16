@@ -1,4 +1,4 @@
-export default interface StatThemeAudioConfig {
+export interface StatThemeAudioConfig {
   cursor: string;
   ok: string;
   cancel: string;

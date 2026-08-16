@@ -5,7 +5,7 @@ import { MenuCategory } from "./xmb-menu-category";
 import { useXmb } from "@context/XmbContext";
 import "./xmb.scss";
 
-export default function Menu() {
+export function Menu() {
 
   const { menu, x } = useXmb();
 
@@ -28,3 +28,5 @@ export default function Menu() {
     </div>
   );
 };
+
+export { Menu as default };

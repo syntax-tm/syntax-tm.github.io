@@ -6,7 +6,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useBoot, useTheme } from '@context';
 import "@styles/components/boot.scss";
 
-export default function Boot() {
+export function Boot() {
 
   const { isBootVisible } = useBoot();
   const { boot } = useTheme();
@@ -31,3 +31,5 @@ export default function Boot() {
     )
   );
 }
+
+export { Boot as default };

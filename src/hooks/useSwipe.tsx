@@ -99,4 +99,4 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
   };
 };
 
-export default useSwipe;
+export { useSwipe as default };

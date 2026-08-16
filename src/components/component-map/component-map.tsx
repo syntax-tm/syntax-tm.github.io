@@ -7,8 +7,10 @@ import SecretBackground from "@components/background/secret-background";
 import WebGlBackground from "@components/background/webgl-background";
 import Boot from "@components/boot/boot";
 import DreamcastBoot from "@components/boot/dreamcast-boot";
+import BootView from "@components/boot/boot-view";
 import Ps1Boot from "@components/boot/ps1-boot";
 import Ps2Boot from "@components/boot/ps2-boot";
+import PspBoot from "@components/boot/psp-boot";
 import ClockView from "@components/clock/clock-view";
 import Clock from "@components/clock/clock";
 import PspClock from "@components/clock/psp-clock";
@@ -24,8 +26,10 @@ const componentMap = new Map<string, React.ReactNode>([
   ['webgl-background', <WebGlBackground />],
   ['boot', <Boot />],
   ['dreamcast-boot', <DreamcastBoot />],
+  ['boot-view', <BootView />],
   ['ps1-boot', <Ps1Boot />],
   ['ps2-boot', <Ps2Boot />],
+  ['psp-boot', <PspBoot />],
   ['clock-view', <ClockView />],
   ['clock', <Clock />],
   ['psp-clock', <PspClock />],
@@ -33,4 +37,4 @@ const componentMap = new Map<string, React.ReactNode>([
   ['loading', <LoadingView />],
 ]);
 
-export default componentMap;
+export { componentMap as default };

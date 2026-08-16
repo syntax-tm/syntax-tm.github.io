@@ -69,4 +69,4 @@ const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOn
   }, [modal, enabledOnModal]);
 };
 
-export default useWheel;
+export { useWheel as default };

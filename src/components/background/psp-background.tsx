@@ -5,7 +5,7 @@ import PspBackgroundImage from "svg/psp-background.svg";
 import Image from 'next/image';
 import './psp-background.scss';
 
-export default function PspBackground() {
+export function PspBackground() {
 
   return (
     <div className={`background psp-background absolute top-0 left-0 overflow-hidden h-dvh -z-50`}>
@@ -13,3 +13,5 @@ export default function PspBackground() {
     </div>
   );
 };
+
+export { PspBackground as default };

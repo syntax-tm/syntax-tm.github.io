@@ -1,18 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import localFont from "next/font/local";
+import { useTheme } from "@context";
 import "./clock.scss";
 
-const dreamcastFont = localFont({
-  src: '../../../public/fonts/NiseSegaDreamcast.ttf',
-  variable: '---nise-sega-dreamcast',
-  style: 'normal',
-  weight: '400',
-  preload: true,
-});
-
-export default function DreamcastClock() {
+export function DreamcastClock() {
   const [loaded, setLoaded] = useState(false);
   const [day, setDay] = useState<string | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -22,6 +14,7 @@ export default function DreamcastClock() {
   const [showColon, setShowColon] = useState(false);
   const shownRef = useRef<NodeJS.Timeout | null>(null);
   const isLoadingRef = useRef(true);
+  const { font } = useTheme();
 
   const refreshTime = useCallback(() => {
     const date = new Date();
@@ -74,7 +67,7 @@ export default function DreamcastClock() {
 
   return (
     <React.Fragment>
-      <div className={`text-lg xl:text-2xl ${dreamcastFont.className} bg-white`}>
+      <div className={`text-lg xl:text-2xl ${font?.className} bg-white`}>
         <div className="dreamcast-label-container absolute left-0 top-[2%] text-xl xl:text-2xl">
           <span className="dreamcast-label text-black -z-10 absolute">Dreamcast</span>
         </div>
@@ -97,3 +90,5 @@ export default function DreamcastClock() {
     </React.Fragment>
   );
 }
+
+export { DreamcastClock as default };

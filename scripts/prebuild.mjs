@@ -28,11 +28,11 @@ const tzName = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
 //   encoding: 'utf8',
 // });
 
-const { stdout = '' } = spawnSync('yarn', ['info next --name-only'], {
+const { stdout = '' } = spawnSync('npx', ['next -v'], {
   encoding: 'utf8',
 });
 
-const versionRegex = /:(?<version>[\d.]+)/;
+const versionRegex = /Next\.js\s+(?<version>[v\d.]+)/;
 const match = versionRegex.exec(stdout);
 const nextJsVersion = match?.groups?.version ?? 'Unknown';
 

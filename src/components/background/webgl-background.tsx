@@ -128,7 +128,7 @@ const gradientStops = [
   { offset: 1.0, color: [0.463, 0.788, 0.588] as [number, number, number] },
 ];
 
-export default function WebGlBackground() {
+export function WebGlBackground() {
 
   const canvasId = useId();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -294,3 +294,5 @@ export default function WebGlBackground() {
     </>
   );
 }
+
+export { WebGlBackground as default };

@@ -195,4 +195,4 @@
 //   };
 // };
 
-// export default useTable;
+// export { useTable as default };

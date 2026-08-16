@@ -7,7 +7,7 @@ import "./secret-background.scss";
 import { useTheme } from '@context/ThemeContext';
 import { useSettings } from '@stores';
 
-export default function SecretBackground() {
+export function SecretBackground() {
   const canvasId = useId();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const contextRef = useRef<WebGLRenderingContext | null>(null);
@@ -196,3 +196,5 @@ export default function SecretBackground() {
     />
   );
 }
+
+export { SecretBackground as default };

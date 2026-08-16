@@ -3,18 +3,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import pspBatteryIcon from "public/image/psp_full_battery.png";
 import Image from "next/image";
-import localFont from "next/font/local";
+import { useTheme } from "@context";
 import "./clock.scss";
 
-const pspFont = localFont({
-  src: '../../../public/fonts/FOT-NewRodin Pro L.otf',
-  variable: '---newrodin-pro',
-  style: 'normal',
-  weight: '400',
-  preload: true,
-});
-
-export default function PspClock() {
+export function PspClock() {
   const [loaded, setLoaded] = useState(false);
   const [day, setDay] = useState<string | null>(null);
   const [month, setMonth] = useState<string | null>(null);
@@ -24,6 +16,7 @@ export default function PspClock() {
   const [showColon, setShowColon] = useState(false);
   const shownRef = useRef<NodeJS.Timeout | null>(null);
   const isLoadingRef = useRef(true);
+  const { font } = useTheme();
 
   const refreshTime = useCallback(() => {
     const date = new Date();
@@ -76,7 +69,7 @@ export default function PspClock() {
 
   return (
     <React.Fragment>
-      <div className={`text-lg xl:text-2xl ${pspFont.className}`}>
+      <div className={`text-lg xl:text-2xl ${font?.className}`}>
         <div className={`psp-clock boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
           <div className={`clock-container ${loaded ? 'flex' : 'hidden'} tracking-normal align-middle flex flex-nowrap items-center -mt-1`}>
             <div className="flex flex-nowrap gap-0 items-center mx-2">
@@ -99,3 +92,5 @@ export default function PspClock() {
     </React.Fragment>
   );
 }
+
+export { PspClock as default };

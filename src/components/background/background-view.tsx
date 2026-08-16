@@ -6,7 +6,7 @@ import { useTheme } from '@context/ThemeContext';
 
 const DEFAULT_BACKGROUND = <WebGlBackground />;
 
-export default function BackgroundView() {
+export function BackgroundView() {
   // if any background secret is active, use the secret shader; otherwise use the default WebGL background.
   const { currentTheme } = useTheme();
 
@@ -18,3 +18,5 @@ export default function BackgroundView() {
     </div>
   );
 }
+
+export { BackgroundView as default };

@@ -12,7 +12,7 @@ export class Setting {
     this.stat = stat;
     this.id = stat.id;
     this.type = stat.type;
-    this.isUnlocked = false;
-    this.isEnabled = false;
+    this.isUnlocked = !stat.isLocked;
+    this.isEnabled = stat.isEnabled ?? false;
   }
 }

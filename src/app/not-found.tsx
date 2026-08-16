@@ -3,12 +3,12 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import BackgroundView from "@components/background/background-view";
+import { BackgroundView } from "@components/background/";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBug } from "@fortawesome/free-solid-svg-icons";
-import sh404 from "public/image/404.png";
-import ClockView from "@components/clock/clock-view";
+import { ClockView } from "@components/clock/clock-view";
 import { useSettingStore } from "@stores/setting-store";
+import sh404 from "public/image/404.png";
 import "@styles/global.scss";
 import "./not-found.css";
 

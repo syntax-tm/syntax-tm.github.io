@@ -99,3 +99,5 @@ export function Modal({ title, children }: { title: string, children: React.Reac
     </div>
   );
 }
+
+export { Modal as default };

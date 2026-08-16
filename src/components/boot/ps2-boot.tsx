@@ -2,14 +2,21 @@ import { useAudio } from "@context";
 import React, { useEffect } from "react";
 import "./ps2-boot.scss";
 
-export default function Ps2Boot() {
+const PS2_BOOT_AUDIO_SRC = 'audio/ps2/boot.mp3';
+const PS2_BOOT_LOGO_AUDIO_SRC = 'audio/ps2/open.mp3';
 
-  const PS2_BOOT_AUDIO_SRC = 'audio/ps2/boot.mp3';
+export function Ps2Boot() {
 
   const { play } = useAudio();
 
   useEffect(() => {
     void play(PS2_BOOT_AUDIO_SRC);
+
+    // 10.88
+
+    window.setTimeout(() => {
+      void play(PS2_BOOT_LOGO_AUDIO_SRC);
+    }, 10500);
   }, []);
 
   const boxCount = 112;
@@ -29,9 +36,7 @@ export default function Ps2Boot() {
                 <span className="ps2-boot-is-small">®</span>&nbsp;2
               </p>
             </div>
-            <div className="ps2-boot-bg">
-              
-            </div>
+            <div className="ps2-boot-bg" />
             <div className="ps2-boot-inner">
               <div className="ps2-boot-inner-bg" />
               <div className="ps2-boot-particles">
@@ -62,3 +67,5 @@ export default function Ps2Boot() {
     </>
   );
 }
+
+export { Ps2Boot as default };

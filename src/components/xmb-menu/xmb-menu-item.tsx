@@ -58,3 +58,5 @@ export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
     </>
   );
 };
+
+export { MenuItem as default };
