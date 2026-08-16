@@ -32,7 +32,7 @@ const { stdout = '' } = spawnSync('npx', ['next -v'], {
   encoding: 'utf8',
 });
 
-const versionRegex = /Next\.js\s+(?<version>[v\d.]+)/;
+const versionRegex = /\s+(?<version>[v\d\.]+)/i;
 const match = versionRegex.exec(stdout);
 const nextJsVersion = match?.groups?.version ?? 'Unknown';
 

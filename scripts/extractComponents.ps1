@@ -16,9 +16,9 @@ function Get-ComponentName
     $results = [System.Collections.ArrayList]::new()
 
     $patterns = @(
-        "export default function (\w+)\s*\(",
         "export const (\w+)\s*=",
-        "export function (\w+)\s*"
+        "export function (\w+)\s*",
+        "export default function (\w+)\s*\("
     )
 
     $content = Get-Content $FullName -Raw
@@ -34,6 +34,10 @@ function Get-ComponentName
                 if ($name -match "^(get|set)") { continue }
                 # component names are always TitleCase, so ignore everything else
                 if ($name -cmatch '^[a-z]') { continue }
+
+                # avoids reimporting previous items
+                $previousImports = $results | Select-Object -ExpandProperty name
+                if ($previousImports -contains $name) { continue }
 
                 $export = [PSCustomObject]@{
                     name = $result.Groups[1].Value

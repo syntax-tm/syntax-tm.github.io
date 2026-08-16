@@ -3,29 +3,29 @@ precision mediump float;
 uniform vec2 u_resolution;
 uniform float u_time;
 
-// Retro 8-bit Pseudorandom Hash
+// retro 8-bit pseudorandom hash
 float rand(vec2 co) {
   return fract(sin(dot(co.xy, vec2(12.9898, 78.233))) * 43758.5453);
 }
 
 void main() {
-  // 1. Dynamic Pixel Block Scale Modulation
-  // Pixel block size waves smoothly between 2.0 (crisper) and 12.0 (ultra-blocky retro)
+  // 1. dynamic pixel block scale modulation
+  // pixel block size waves smoothly between 2.0 (crisper) and 12.0 (ultra-blocky retro)
   float timeScaleFactor = u_time * 0.15;
   float pixelSize = 7.0 + sin(timeScaleFactor) * 5.0;
 
-  // Apply downscaled coordinate snapping
+  // apply downscaled coordinate snapping
   vec2 pixelCoord = floor(gl_FragCoord.xy / pixelSize) * pixelSize;
   vec2 uv = pixelCoord / u_resolution.xy;
   vec2 centeredUV = (pixelCoord - 0.5 * u_resolution.xy) / u_resolution.y;
 
-  // 2. Slow Time Stepping (Choppy ~15 FPS render loop look)
+  // 2. slow time stepping (choppy ~15 fps render loop look)
   float steppedTime = floor((u_time * 0.4) * 30.0) * (1.0 / 30.0);
 
-  // 3. Floating Lava Blob Simulation via Metaballs (8 Blobs)
+  // 3. floating lava blob simulation via metaballs (8 blobs)
   float totalInfluence = 0.0;
-  totalInfluence += 0.18 / (centeredUV.y + 0.65); // Bottom fluid tank
-  totalInfluence += 0.08 / (0.65 - centeredUV.y); // Top fluid tank
+  totalInfluence += 0.18 / (centeredUV.y + 0.65); // bottom fluid tank
+  totalInfluence += 0.08 / (0.65 - centeredUV.y); // top fluid tank
 
   for (int i = 1; i <= 8; i++) {
     float index = float(i);
@@ -38,18 +38,18 @@ void main() {
     totalInfluence += (radius * radius) / (dist * dist);
   }
 
-  // 4. Color Swapping Spectrum Rotation Logic
-  // Subtle cyclical offsets to shift palette colors globally over time
+  // 4. color swapping spectrum rotation logic
+  // subtle cyclical offsets to shift palette colors globally over time
   float colorCycle = u_time * 0.08;
 
-  vec3 glassLiquid  = vec3(0.04, 0.05, 0.08); // Fixed base fluid container color
+  vec3 glassliquid  = vec3(0.04, 0.05, 0.08); // fixed base fluid container color
 
-  // Base vibrant cyber colors transformed continuously via sine offsets
+  // base vibrant cyber colors transformed continuously via sine offsets
   vec3 androidGreen = vec3(0.24, 0.73, 0.42) + sin(colorCycle) * 0.15;
   vec3 electricCyan = vec3(0.15, 0.65, 0.85) + cos(colorCycle * 1.2) * 0.15;
   vec3 hotMagenta   = vec3(0.85, 0.15, 0.55) + sin(colorCycle * 0.8) * 0.20;
   vec3 neonYellow   = vec3(0.88, 0.85, 0.20) + cos(colorCycle * 1.5) * 0.10;
-  vec3 digitalWhite = vec3(0.95, 0.98, 0.95); // Fixed highlight core
+  vec3 digitalWhite = vec3(0.95, 0.98, 0.95); // fixed highlight core
 
   vec3 finalColor = glassLiquid;
 
@@ -65,7 +65,7 @@ void main() {
     finalColor = androidGreen;
   }
 
-  // 6. PS1 4x4 Ordered Bayer Matrix Dithering (Adapts cleanly to dynamic resolutions)
+  // 6. ps1 4x4 ordered bayer matrix dithering (adapts cleanly to dynamic resolutions)
   float ditherPatternX = mod(pixelCoord.x / pixelSize, 4.0);
   float ditherPatternY = mod(pixelCoord.y / pixelSize, 4.0);
   float ditherThreshold = 0.0;
@@ -92,9 +92,9 @@ void main() {
     if (ditherPatternX == 3.0) ditherThreshold = 0.3125;
   }
 
-  // Heavy cross-hatch retro texture blending
+  // heavy cross-hatch retro texture blending
   finalColor += (ditherThreshold - 0.5) * 0.16;
-  finalColor = floor(finalColor * 5.0) / 5.0; // Hard clamp color depth bits
+  finalColor = floor(finalColor * 5.0) / 5.0; // hard clamp color depth bits
 
   gl_FragColor = vec4(finalColor, 1.0);
 }

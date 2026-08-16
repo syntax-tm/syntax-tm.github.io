@@ -21,7 +21,7 @@ float noise(vec2 st) {
 }
 
 void main() {
-  // 1. core PS1 Silent Hill Color Palette (industrial, grime-tinted grays)
+  // 1. core ps1 silent hill color palette (industrial, grime-tinted grays)
   vec3 fogDark  = vec3(0.18, 0.18, 0.19); // deep, oppressive background fog
   vec3 fogLight = vec3(0.42, 0.41, 0.40); // ash-choked daylight sky fog
   vec3 ashColor = vec3(0.55, 0.55, 0.53); // drifting burnt flakes
@@ -33,25 +33,25 @@ void main() {
 
   // 3. procedural fog simulation (layered rolling noise)
   vec2 fogUV = uv * 3.0;
-  fogUV.y -= u_time * 0.05; // Slow upward/forward drifting motion
-  fogUV.x += sin(u_time * 0.1 + uv.y) * 0.2; // Eerie swaying swing
+  fogUV.y -= u_time * 0.05; // slow upward/forward drifting motion
+  fogUV.x += sin(u_time * 0.1 + uv.y) * 0.2; // eerie swaying swing
 
   float fogDensity = noise(fogUV) * 0.6 + noise(fogUV * 2.5 + u_time * 0.02) * 0.4;
   vec3 finalFog = mix(fogDark, fogLight, fogDensity);
 
-  // 4. PS1 Ordering Dither Matrix Simulation (4x4 retro posterization grid)
+  // 4. ps1 ordering dither matrix simulation (4x4 retro posterization grid)
   float ditherPattern = mod(pixelCoord.x / pixelSize, 4.0);
   float ditherPatternY = mod(pixelCoord.y / pixelSize, 4.0);
   float ditherThreshold = (ditherPattern * 4.0 + ditherPatternY) / 16.0;
 
-  // Crunch the fog colors into dithered gradients
+  // crunch the fog colors into dithered gradients
   finalFog += (ditherThreshold - 0.5) * 0.07;
-  finalFog = floor(finalFog * 8.0) / 8.0; // Hard clamp to 15-bit color space emulation
+  finalFog = floor(finalFog * 8.0) / 8.0; // hard clamp to 15-bit color space emulation
 
-  // 5. Slowly Falling Ash Layer
+  // 5. slowly falling ash layer
   vec2 ashUV = pixelCoord;
-  ashUV.y += u_time * 45.0; // Drifts downwards continuously
-  ashUV.x += sin(u_time * 0.5 + pixelCoord.y * 0.02) * 15.0; // Sideways wind swaying
+  ashUV.y += u_time * 45.0; // drifts downwards continuously
+  ashUV.x += sin(u_time * 0.5 + pixelCoord.y * 0.02) * 15.0; // sideways wind swaying
 
   // slice screen into tiny discrete particle cell structures
   vec2 ashGrid = floor(ashUV / 16.0);
@@ -67,7 +67,7 @@ void main() {
     }
   }
 
-  // 6. Blend Ash over Fog
+  // 6. blend ash over fog
   vec3 finalColor = mix(finalFog, ashColor, ashParticle * 0.7);
 
   gl_FragColor = vec4(finalColor, 1.0);

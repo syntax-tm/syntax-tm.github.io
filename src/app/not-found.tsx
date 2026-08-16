@@ -23,7 +23,7 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="root-container">
+    <div className="root-container not-found">
       <BackgroundView />
       <ClockView />
       <div className="grid content-center z-0 overflow-hidden absolute left-0 top-0 w-full h-screen text-white">
