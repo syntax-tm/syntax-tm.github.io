@@ -4,4 +4,4 @@ export type SnackbarItem = {
   icon?: React.ReactNode;
 }
 
-export { SnackbarItem as default };
+export { type SnackbarItem as default };

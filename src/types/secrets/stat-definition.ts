@@ -1,5 +1,6 @@
 import { AchievementId, SecretGroupType } from "@enums";
 import { StatThemeConfig } from "./stat-theme-config";
+import { IXmbMenu } from "types/xmb";
 
 export interface StatDefinition {
   id: AchievementId;
@@ -10,7 +11,9 @@ export interface StatDefinition {
   isEnabled?: boolean;
   trophy: number;
   theme?: StatThemeConfig;
+  menu?: IXmbMenu;
+  password?: string;
   // TODO: add a hint indicating how this can be unlocked
 }
 
-export { StatDefinition as default };
+export { type StatDefinition as default };

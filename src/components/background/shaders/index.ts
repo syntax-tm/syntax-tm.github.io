@@ -1,4 +1,5 @@
 export * from './android';
+export * from './brix';
 export * from './default';
 export * from './dreamcast';
 export * from './iwhbyd';

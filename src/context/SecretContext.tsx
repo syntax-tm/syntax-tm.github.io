@@ -1,10 +1,10 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
-import { secrets, secretGroups } from "types";
-import { SettingStore, useSettingStore } from "@stores/setting-store";
+import { secrets, secretGroups, StatDefinition } from "types";
+import { SettingStore, useSettings, useSettingStore } from "@stores/setting-store";
 
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp",
@@ -31,6 +31,9 @@ export interface SecretContextType {
   oceangateStore: SettingStore;
   pspCodeStore: SettingStore;
   ps2Store: SettingStore;
+  brixStore: SettingStore;
+  getSecret: (id: AchievementId | null) => StatDefinition | null;
+  currentSecret: StatDefinition | null;
 }
 
 const SecretContext = createContext<SecretContextType | undefined>(undefined);
@@ -46,11 +49,20 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const oceangateStore = useSettingStore("OCEANGATE", (state) => state);
   const pspCodeStore = useSettingStore("PSP_CODE", (state) => state);
   const ps2Store = useSettingStore("PS2", (state) => state);
+  const brixStore = useSettingStore("BRIX", (state) => state);
+  const [currentSecret, setCurrentSecret] = useState<StatDefinition | null>(null);
+  const { id } = useSettings((state) => state);
 
-  const getSecret = useCallback((id: AchievementId) => {
+  const getSecret = useCallback((id: AchievementId | null) => {
+    if (!id) return null;
     const results = secrets.filter(s => s.id === id);
     return results[0];
   }, [secrets]);
+
+  useEffect(() => {
+    const secret = getSecret(id);
+    setCurrentSecret(secret);
+  }, [id, getSecret]);
 
   useKeySequence(KONAMI_CODE, () => {
     konamiCodeStore.unlock();
@@ -82,6 +94,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
   const value = {
     getSecret,
+    currentSecret,
     secrets,
     secretGroups,
     _404Store,
@@ -93,6 +106,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     oceangateStore,
     pspCodeStore,
     ps2Store,
+    brixStore,
   };
 
   return (

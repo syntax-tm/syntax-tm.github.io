@@ -8,7 +8,7 @@ kbd > svg {
   width: 12px !important;
 }
 
-.modal-action {
+.modal-action:hover {
   -webkit-animation: glow 1s ease-in-out infinite alternate;
           animation: glow 1s ease-in-out infinite alternate;
 }

@@ -1,5 +1,3 @@
-import { StatDefinition } from "./stat-definition";
-import { StatGroupDefinition } from "./stat-group-definition";
 import { TrophyDefinition } from "./trophy-definition";
 import { getDefaultSettings } from "./util";
 import { AchievementId } from "@enums";
@@ -8,7 +6,7 @@ import settingGroupDefinitions from "@config/settingGroups";
 import trophyDefinitions from "@config/trophies";
 
 export const secrets = settingDefinitions;
-export const secretGroups = settingGroupDefinitions as StatGroupDefinition[];
+export const secretGroups = settingGroupDefinitions;
 export const trophies = trophyDefinitions as TrophyDefinition[];
 
 export const defaultSettings = getDefaultSettings(secrets);
@@ -25,5 +23,6 @@ export const achievements = new Set<AchievementId>(
     "PSP_CODE",
     "PS2",
     "_404",
+    "BRIX",
   ],
 );

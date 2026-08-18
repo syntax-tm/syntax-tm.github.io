@@ -47,6 +47,7 @@ NEXT_PUBLIC_TZ_SHORT="${tzName}"
 NEXT_PUBLIC_NODE_VERSION="${process.version}"
 NEXT_PUBLIC_NEXTJS_VERSION="${nextJsVersion}"
 NEXT_PUBLIC_NEXTJS_VERSION_PROCESS="${process.nextJsVersion ?? 'Unknown'}"
+NEXT_PUBLIC_KEY="${process.env.NEXT_PUBLIC_KEY}"
 `;
 
 console.log('.env file contents:');

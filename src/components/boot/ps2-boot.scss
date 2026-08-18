@@ -9,7 +9,6 @@
 }
 
 $duration: 16s;
-//$duration: 0s;
 
 $grey: #616a92;
 $dark: #323641;
@@ -22,6 +21,13 @@ $cube-inner-shadow: inset 0 0 1vw rgba(cyan, 0.07);
 
 .ps2-boot {
   interactivity: inert;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+
   .ps2-boot-screen {
     width: 100%;
     padding-top: 75%;
@@ -32,178 +38,174 @@ $cube-inner-shadow: inset 0 0 1vw rgba(cyan, 0.07);
     overflow: visible;
     animation: content $duration infinite;
     font-family: "Play", sans-serif;
-  }
-}
 
-.ps2-boot-inner {
+    .ps2-boot-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100vw;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      padding: 1%;
+      padding-top: 10%;
+      transform-style: preserve-3d;
+      //transform: rotate(-20deg);
+      animation: enter $duration cubic-bezier(1, 0, 0.4, 1) infinite;
 
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100vw;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  padding: 1%;
-  padding-top: 10%;
-  transform-style: preserve-3d;
-  //transform: rotate(-20deg);
-  animation: enter $duration cubic-bezier(1, 0, 0.4, 1) infinite;
+      .ps2-boot-inner-bg {
+        background-image: url(https://res.cloudinary.com/dhpaysqxb/image/upload/v1568580561/nebula_prju57.png);
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        transform: translateZ(-30vw) scale(1.4);
+        opacity: 0.8;
+      }
 
-  .ps2-boot-inner-bg {
-    background-image: url(https://res.cloudinary.com/dhpaysqxb/image/upload/v1568580561/nebula_prju57.png);
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    transform: translateZ(-30vw) scale(1.4);
-    opacity: 0.8;
-  }
+      .ps2-boot-box-container {
+        width: calc(100% / 14);
+        padding: 1%;
+        position: relative;
+        z-index: 100;
+        transform-style: preserve-3d;
+      }
 
-  .ps2-boot-box-container {
-    width: calc(100% / 14);
-    padding: 1%;
-    position: relative;
-    z-index: 100;
-    transform-style: preserve-3d;
-  }
+      .ps2-boot-box {
+        width: 100%;
+        padding-top: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+      }
 
-  .ps2-boot-box {
-    width: 100%;
-    padding-top: 100%;
-    position: relative;
-    transform-style: preserve-3d;
-  }
+      @for $i from 1 through 112 {
+        .ps2-boot-box-container:nth-child(#{$i}) .ps2-boot-box {
+          transform: translateZ(math.random(20)-20 + vw);
+          background-color: rgba(
+            color.adjust($light, $lightness: math.random(55) * 1%),
+            0.95
+          );
+          @if list.index($hidden-boot-boxes, $i) {
+            visibility: hidden;
+          }
+        }
+      }
 
-  @for $i from 1 through 112 {
-    .ps2-boot-box-container:nth-child(#{$i}) .ps2-boot-box {
-      transform: translateZ(math.random(20)-20 + vw);
-      background-color: rgba(
-        color.adjust($light, $lightness: math.random(55) * 1%),
-        0.95
-      );
-      @if list.index($hidden-boot-boxes, $i) {
-        visibility: hidden;
+      // @each $box in $hidden-boot-boxes {
+      //   .ps2-boot-box-container:nth-child(#{$box}) .ps2-boot-box {
+      //     visibility: hidden;
+      //   }
+      // }
+
+      .ps2-boot-box .ps2-boot-top,
+      .ps2-boot-box .ps2-boot-bottom,
+      .ps2-boot-box .ps2-boot-left,
+      .ps2-boot-box .ps2-boot-right {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .ps2-boot-box .ps2-boot-top {
+        background: linear-gradient(
+          to top,
+          rgba(color.adjust($grey, $lightness: 20%), 0.9),
+          rgba(0, 0, 0, 0)
+        );
+        bottom: 100%;
+        left: 0;
+        height: $depth;
+        transform-origin: 100% 100%;
+        transform: rotateX(90deg);
+        box-shadow: $cube-inner-shadow;
+        //opacity: 0;
+      }
+      .ps2-boot-box .ps2-boot-bottom {
+        background: linear-gradient(
+          to bottom,
+          rgba(color.adjust($grey, $lightness: 2%), 0.9),
+          rgba(0, 0, 0, 0)
+        );
+        top: 100%;
+        left: 0;
+        height: $depth;
+        transform-origin: 0% 0%;
+        transform: rotateX(-90deg);
+        box-shadow: $cube-inner-shadow;
+      }
+      .ps2-boot-box .ps2-boot-left {
+        background: linear-gradient(
+          to left,
+          rgba(color.adjust($grey, $lightness: 10%), 0.9),
+          rgba(0, 0, 0, 0)
+        );
+        top: 0;
+        right: 100%;
+        width: $depth;
+        transform-origin: 100% 100%;
+        transform: rotateY(-90deg);
+        box-shadow: $cube-inner-shadow;
+      }
+      .ps2-boot-box .ps2-boot-right {
+        background: linear-gradient(
+          to right,
+          rgba(color.adjust($grey, $lightness: 10%), 0.9),
+          rgba(0, 0, 0, 0)
+        );
+        top: 0;
+        left: 100%;
+        width: $depth;
+        transform-origin: 0% 0%;
+        transform: rotateY(90deg);
+        box-shadow: $cube-inner-shadow;
       }
     }
-  }
 
-  // @each $box in $hidden-boot-boxes {
-  //   .ps2-boot-box-container:nth-child(#{$box}) .ps2-boot-box {
-  //     visibility: hidden;
-  //   }
-  // }
+    .ps2-boot-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100vw;
+      opacity: 1;
+      z-index: 1;
+      animation: hide 0.5s ease-in-out 7s forwards;
+    }
 
-  .ps2-boot-box .ps2-boot-top,
-  .ps2-boot-box .ps2-boot-bottom,
-  .ps2-boot-box .ps2-boot-left,
-  .ps2-boot-box .ps2-boot-right {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-
-  .ps2-boot-box .ps2-boot-top {
-    background: linear-gradient(
-      to top,
-      rgba(color.adjust($grey, $lightness: 20%), 0.9),
-      rgba(0, 0, 0, 0)
-    );
-    bottom: 100%;
-    left: 0;
-    height: $depth;
-    transform-origin: 100% 100%;
-    transform: rotateX(90deg);
-    box-shadow: $cube-inner-shadow;
-    //opacity: 0;
-  }
-  .ps2-boot-box .ps2-boot-bottom {
-    background: linear-gradient(
-      to bottom,
-      rgba(color.adjust($grey, $lightness: 2%), 0.9),
-      rgba(0, 0, 0, 0)
-    );
-    top: 100%;
-    left: 0;
-    height: $depth;
-    transform-origin: 0% 0%;
-    transform: rotateX(-90deg);
-    box-shadow: $cube-inner-shadow;
-    //opacity: 0;
-  }
-  .ps2-boot-box .ps2-boot-left {
-    background: linear-gradient(
-      to left,
-      rgba(color.adjust($grey, $lightness: 10%), 0.9),
-      rgba(0, 0, 0, 0)
-    );
-    top: 0;
-    right: 100%;
-    width: $depth;
-    transform-origin: 100% 100%;
-    transform: rotateY(-90deg);
-    box-shadow: $cube-inner-shadow;
-    //opacity: 0;
-  }
-  .ps2-boot-box .ps2-boot-right {
-    background: linear-gradient(
-      to right,
-      rgba(color.adjust($grey, $lightness: 10%), 0.9),
-      rgba(0, 0, 0, 0)
-    );
-    top: 0;
-    left: 100%;
-    width: $depth;
-    transform-origin: 0% 0%;
-    transform: rotateY(90deg);
-    box-shadow: $cube-inner-shadow;
-    //opacity: 0;
-  }
-}
-
-.ps2-boot-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100vw;
-  opacity: 1;
-  z-index: 1;
-  animation: hide 0.5s ease-in-out 7s forwards;
-}
-
-.ps2-boot-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  color: white;
-  background: transparent;
-  z-index: 1;
-  animation: content $duration infinite;
-  .ps2-boot-branding,
-  .ps2-boot-copyright {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .ps2-boot-copyright {
-    font-size: 1.5rem;
-    text-shadow: black 0px 0px 3px;
-    opacity: 0;
-    animation: copyright $duration linear infinite;
-  }
-  .ps2-boot-branding {
-    font-size: 3rem;
-    opacity: 0;
-    animation: branding $duration cubic-bezier(0, 0.74, 0.46, 1) infinite;
+    .ps2-boot-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      color: white;
+      background: transparent;
+      z-index: 1;
+      animation: content $duration infinite;
+      .ps2-boot-branding,
+      .ps2-boot-copyright {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .ps2-boot-copyright {
+        font-size: 2.5rem;
+        text-shadow: black 0px 0px 3px;
+        opacity: 0;
+        animation: copyright $duration linear infinite;
+      }
+      .ps2-boot-branding {
+        font-size: 5rem;
+        opacity: 0;
+        animation: branding $duration cubic-bezier(0, 0.74, 0.46, 1) infinite;
+      }
+    }
   }
 }
 
@@ -254,18 +256,6 @@ $cube-inner-shadow: inset 0 0 1vw rgba(cyan, 0.07);
     background-color: black;
   }
 }
-
-// @keyframes content {
-//   0% {
-//     background-color: black;
-//   }
-//   5%, 43% {
-//     background: transparent;
-//   }
-//   48%, 100% {
-//     background-color: black;
-//   }
-// }
 
 @keyframes branding {
   0%,
@@ -318,7 +308,6 @@ $cube-inner-shadow: inset 0 0 1vw rgba(cyan, 0.07);
   animation: particle-2 div($duration, 2) cubic-bezier(0, 0.74, 0.46, 1)
     infinite;
 }
-
 .ps2-boot-particles span:nth-child(3) {
   left: 15;
   top: 75%;

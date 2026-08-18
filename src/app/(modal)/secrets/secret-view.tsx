@@ -36,6 +36,8 @@ export default function SecretView({ id, index, activeCell, setActiveCell, stat,
   useEffect(() => {
 
     if (!elementRef.current) return;
+    // don't allow this one to be unlocked this way
+    if (stat.type === "BRIX") return;
 
     const resetTapCount = () => {
       unlockCountRef.current = 0;

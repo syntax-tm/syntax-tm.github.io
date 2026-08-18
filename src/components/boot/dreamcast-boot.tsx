@@ -78,8 +78,8 @@ export function DreamcastBoot() {
 
   return (
     <>
-      <div className="boot-container dreamcast-boot z-100 absolute left-0 top-0 w-full h-full grid">
-        <DreamcastBootContent className="w-full h-full my-auto mx-auto max-h-[700px] overflow-clip" />
+      <div className="boot-container dreamcast-boot z-100 absolute left-0 top-0 w-full h-full grid bg-white">
+        <DreamcastBootContent className="w-full h-full my-auto mx-auto max-h-175 overflow-clip" />
       </div>
     </>
   );

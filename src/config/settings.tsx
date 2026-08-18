@@ -1,4 +1,41 @@
-import { StatDefinition } from "types";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { faE, faEye, faHeart, faI, faL, faO, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import build from "@services/menuBuilder";
+import { IXmbCategory, IXmbItem, StatDefinition, XmbCategory, XmbItem, XmbMenu } from "types";
+
+const defaultMenu = build();
+
+const createIcon = (icon: IconProp, cssClasses?: string) => {
+  return <FontAwesomeIcon icon={icon} className={`xmb-icon ${cssClasses}`} />;
+};
+
+const buildBrixMenu = () => {
+  const brixIcon = createIcon(faHeart, 'text-red-400');
+
+  const items: IXmbItem[] = [
+    new XmbItem('i', '', createIcon(faI)),
+    new XmbItem('l', '', createIcon(faL, 'text-red-400')),
+    new XmbItem('o', '', createIcon(faO, 'text-red-400')),
+    new XmbItem('v', '', createIcon(faV, 'text-red-400')),
+    new XmbItem('e', '', createIcon(faE, 'text-red-400')),
+    new XmbItem('y', '', createIcon(faY)),
+    new XmbItem('o2', '', createIcon(faO)),
+    new XmbItem('y2', '', createIcon(faU)),
+  ];
+
+  const specialCategory: IXmbCategory = new XmbCategory(0, 'Hello', brixIcon, items);
+
+  const origItems: IXmbCategory[] = defaultMenu.items.map(i => {
+    return { ...i, index: i.index + 1 };
+  });
+
+  const categories: IXmbCategory[] = [specialCategory, ...origItems];
+
+  const brixMenu = new XmbMenu(categories);
+
+  return brixMenu;
+};
 
 export const stats: StatDefinition[] = [
   {
@@ -213,6 +250,28 @@ export const stats: StatDefinition[] = [
         showBackground: true,
       },
       clock: "psp-clock",
+    },
+  },
+  // BRIX
+  {
+    id: "BRIX",
+    title: "<3",
+    description: "I love you.",
+    type: "BRIX",
+    isLocked: true,
+    isEnabled: false,
+    trophy: 3, // platinum
+    menu: buildBrixMenu(),
+    password: '01-01-2025',
+    theme: {
+      background: "brix-background",
+      boot: {
+        component: "brix-boot",
+        bootDuration: 8000,
+        bootFadeOutDuration: 250,
+        showBackground: true,
+      },
+      clock: "clock",
     },
   },
 ];

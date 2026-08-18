@@ -15,6 +15,7 @@ interface MenuItemProps {
 export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
   const { x, y, openItem, updateY } = useXmb();
   const isActive = x === catIndex && y === index;
+  const isDisabled = !item.isEnabled || !item.link;
 
   const handleClick: MouseEventHandler = (e) => {
     e.preventDefault();
@@ -30,13 +31,14 @@ export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
     <>
       <Link
         id={item.id}
-        className={`relative xmb-item flex justify-self-center select-none ${isActive ? "active" : "inactive"} ${!index && "first"}`}
+        className={`relative xmb-item flex justify-self-center select-none ${isDisabled && 'disabled'} ${isActive ? "active" : "inactive"} ${!index && "first"}`}
         href={item.link || ""}
         data-index={index}
         data-active={isActive}
         data-off={index < y}
         onClick={handleClick}
-        target={item.link && "_blank" || undefined}>
+        target={item.link && "_blank" || undefined}
+        aria-disabled={isDisabled}>
         <div className="grid grid-cols-1 overflow-visible relative">
           <div className="overflow-visible justify-items-center">
             {item.icon}

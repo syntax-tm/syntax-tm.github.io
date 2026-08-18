@@ -75,6 +75,13 @@
 
 ## Building
 
+### Requirements
+
+```sh
+yarn dlx shadcn@latest init -t next
+yarn shadcn@latest init
+```
+
 ```sh
 yarn next build
 ```

@@ -24,6 +24,7 @@ export const ACHIEVEMENT_MAPPING: Record<AchievementId, SecretClass> = {
   CURRENT: "secret-current",
   UNKNOWN: "secret-unknown",
   PS2: "secret-ps2",
+  BRIX: "secret-brix",
 } as const;
 
 export function getSecretClass(id: AchievementId): SecretClass {

@@ -1,29 +1,29 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import useWheel, { WheelInput } from "@hooks/useWheel";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import usePath from "@hooks/usePath";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
 import { useAudio } from '@context/AudioContext';
-import { Position, XmbCategory, XmbItem, XmbMenu } from "types";
+import { IXmbMenu, Position, IXmbCategory, IXmbItem, XmbMenu } from "types";
 import build from "@services/menuBuilder";
 import { useGamepads } from "awesome-react-gamepads";
 import { useSnackbar } from "./SnackbarContext";
+import { useSecret } from "@context";
 
-// TODO: this context will need to be all of the state from the xmbmenu class
 export interface XmbContextType {
   menu: XmbMenu | null;
-  currentCategory: XmbCategory | null;
-  currentItem: XmbItem | null;
-  currentItems: XmbItem[] | null;
+  currentCategory: IXmbCategory | null;
+  currentItem: IXmbItem | null;
+  currentItems: IXmbItem[] | null;
   x: number;
   y: number;
   updateX: (newX: number) => void;
   updateY: (newY: number) => void;
   openInNewTab: (url: string) => void;
-  openItem: (item: XmbItem) => void;
+  openItem: (item: IXmbItem) => void;
   toXmbKey: (x: number, y: number) => string;
 }
 
@@ -31,9 +31,9 @@ export interface XmbState {
   x: number;
   y: number;
   position: Position;
-  currentItem: XmbItem | null;
-  currentItems: XmbItem[] | null;
-  currentCategory: XmbCategory | null;
+  currentItem: IXmbItem | null;
+  currentItems: IXmbItem[] | null;
+  currentCategory: IXmbCategory | null;
 }
 
 export const toXmbKey = (x: number, y: number) => {
@@ -57,29 +57,25 @@ const XmbContext = createContext<XmbContextType | undefined>(undefined);
 export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const router = useRouter();
-  //const [xmbState, setXmbState] = useState<XmbState | null>(null);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  //const [position, setPositon] = useState<Position>({} as Position);
   const positionRef = useRef<Position>({} as Position);
-  const xmbItemRef = useRef<Map<string, XmbItem> | null>(null);
-  const [categories, setCategories] = useState<XmbCategory[] | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<XmbCategory | null>(null);
-  const [currentItem, setCurrentItem] = useState<XmbItem | null>(null);
-  const [currentItems, setCurrentItems] = useState<XmbItem[] | null>(null);
-  //const [modal, setModal] = useState<string | null>(null);
-  const xmbMenuRef = useRef<XmbMenu | null>(null);
+  const xmbItemRef = useRef<Map<string, IXmbItem> | null>(null);
+  const [categories, setCategories] = useState<IXmbCategory[] | null>(null);
+  const [currentCategory, setCurrentCategory] = useState<IXmbCategory | null>(null);
+  const [currentItem, setCurrentItem] = useState<IXmbItem | null>(null);
+  const [currentItems, setCurrentItems] = useState<IXmbItem[] | null>(null);
+  const xmbMenuRef = useRef<IXmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
   const { modal } = usePath();
+  const { currentSecret } = useSecret();
 
-  if (!xmbItemRef.current) {
-    xmbItemRef.current = new Map<string, XmbItem>();
-  }
+  useEffect(() => {
+    xmbItemRef.current = new Map<string, IXmbItem>();
 
-  // only build the menu once
-  if (!xmbMenuRef.current) {
-    const menu = build();
+    const menu = currentSecret?.menu ?? build();
+
     xmbMenuRef.current = menu;
     setCategories(menu.items);
     const cat = menu.items[0];
@@ -96,7 +92,33 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
         xmbItemRef.current.set(toXmbKey(i, j), item);
       }
     }
-  }
+  }, [currentSecret]);
+
+  // if (!xmbItemRef.current) {
+  //   xmbItemRef.current = new Map<string, IXmbItem>();
+  // }
+
+  // // only build the menu once
+  // if (!xmbMenuRef.current) {
+  //   const menu = currentSecret?.menu ?? build();
+
+  //   xmbMenuRef.current = menu;
+  //   setCategories(menu.items);
+  //   const cat = menu.items[0];
+  //   setCurrentCategory(cat);
+  //   setCurrentItems(cat.items);
+  //   if (cat.items[0])
+  //     setCurrentItem(cat.items[0]);
+
+  //   // save the item ref to find items by key directly
+  //   for (let i = 0; i < menu.items.length; i++) {
+  //     const cat = menu.items[i];
+  //     for (let j = 0; j < cat.items.length; j++) {
+  //       const item = cat.items[j];
+  //       xmbItemRef.current.set(toXmbKey(i, j), item);
+  //     }
+  //   }
+  // }
 
   // udpates the selected item (y)
   const updateY = useCallback((newY: number) => {
@@ -121,8 +143,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(prevY);
   }, [categories, updateY]);
 
-  const openItem = useCallback((item: XmbItem) => {
+  const openItem = useCallback((item: IXmbItem) => {
     if (!item.link) return;
+    if (!item.isEnabled) return;
 
     void play(XMB_AUDIO_ENTER_SRC);
 
@@ -132,13 +155,12 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     }
 
     openInNewTab(item.link);
-
   }, []);
 
   const onEnter = useCallback(() => {
     if (!xmbItemRef.current) return;
 
-    void play(XMB_AUDIO_SRC);
+    //void play(XMB_AUDIO_SRC);
 
     const key = toXmbKey(x, y);
     const item = xmbItemRef.current.get(key);

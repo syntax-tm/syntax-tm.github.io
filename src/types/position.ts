@@ -21,4 +21,4 @@ export class XmbPosition implements Position {
   }
 }
 
-export { Position as default };
+export { type Position as default };

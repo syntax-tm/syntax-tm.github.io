@@ -7,4 +7,4 @@ export type TSnackbarProps = Omit<SnackbarItem, 'key'> & {
   variant: SnackbarVariant;
 }
 
-export { TSnackbarProps as default };
+export { type TSnackbarProps as default };

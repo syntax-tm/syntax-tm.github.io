@@ -52,16 +52,32 @@ const nextConfig = {
       '*.vert': {
         type: 'raw',
       },
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
     },
   },
   /** @param {import('webpack').Configuration} config */
   webpack: (config, { dev, isServer, totalPages, dir, nextRuntime, buildId }) => {
 
     // allows importing svgs as data URLs
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: ['@svgr/webpack', 'url-loader']
-    });
+    config.module.rules.push(
+      {
+        test: /\.svg$/i,
+        type: 'asset',
+        resourceQuery: /url/, // *.svg?url
+      }
+    );
+
+    config.module.rules.push(
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        use: ['@svgr/webpack'],
+      },
+    );
 
     if (isServer && !dev) {
       return config;

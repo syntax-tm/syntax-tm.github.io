@@ -1,11 +1,16 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { StoreApi, ExtractState } from "zustand";
+import { StorageValue } from "zustand/middleware";
 import SecretView from "./secret-view";
-import { achievements, secretGroups, secrets } from "types";
+import { AchievementId, achievements, secretGroups, secrets, Setting, StatGroupDefinition } from "types";
 import "./secrets.scss";
+import { SettingState } from "@stores";
 
 const SECRET_TAP_MIN = 5;
+
+
 
 export default function SecretsView() {
 
@@ -16,6 +21,30 @@ export default function SecretsView() {
 
   const totalRows = secrets.length;
   const totalCols = 4;
+
+  const isUnlocked = (id: AchievementId) => {
+    if (typeof localStorage === "undefined") return;
+    const settingJson = localStorage.getItem(id);
+    try
+    {
+      const state = JSON.parse(settingJson ?? '{}') as StorageValue<SettingState>;
+      return state.state.isUnlocked;
+    }
+    catch
+    {
+      return false;
+    }
+  };
+
+  const showGroupTitle = (group: StatGroupDefinition) => {
+    const items = secrets.filter(s => s.type === group.type);
+    if (!items) return false;
+    if (!group.isHidden) return true;
+    items.forEach(i => {
+      if (isUnlocked(i.id)) return true;
+    });
+    return false;
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTableElement>) => {
     const [row, col] = activeCell;
@@ -128,11 +157,15 @@ export default function SecretsView() {
                     return s.type === group.type;
                   });
                   if (!items || items.length === 0) return null;
+
+                  const showTitle = showGroupTitle(group);
+                  const title = showTitle ? group.title : 'Hidden';
+
                   return (
                     <React.Fragment key={group.type}>
                       <tr className="bg-stone-900/90">
-                        <th className="pt-1 lg:pt-3 pb-1 pl-3 text-left align-middle pointer-events-none select-none" colSpan={4}>
-                          {group?.title}
+                        <th className={`pt-1 lg:pt-3 pb-1 pl-3 text-left align-middle pointer-events-none select-none ${showTitle || 'text-white/50'}`} colSpan={4}>
+                          {title}
                         </th>
                       </tr>
                       <tr className="content-center bg-stone-900/90 text-xs lg:text-lg">

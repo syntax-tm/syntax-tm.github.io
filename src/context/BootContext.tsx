@@ -2,7 +2,7 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import usePath from "@hooks/usePath";
-import { useTheme } from "@context";
+import { useAudio, useTheme } from "@context";
 
 interface BootContextType {
   isBootVisible: boolean;
@@ -19,6 +19,7 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
   const { modal } = usePath();
   const { boot } = useTheme();
+  const { pause } = useAudio();
 
   // disables boot screen on any modal (to allow directly linking to them without the boot animation)
   if (modal)
@@ -32,7 +33,9 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
   const hideBootScreen = useCallback(() => {
     setIsBootTransitioningOut(false);
     setIsBootVisible(false);
-  }, []);
+    pause();
+    bootShownRef.current = true;
+  }, [pause]);
 
   useEffect(() => {
     if (!isBootVisible) return;

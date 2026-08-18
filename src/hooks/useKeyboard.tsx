@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import usePath from "./usePath";
+import { useActiveElement } from "./useActiveElement";
 
 export type StandardVoidFn = () => void;
 export type KeyboardEventFn = (e: KeyboardEvent) => void;
@@ -28,6 +29,7 @@ export interface KeyboardOutput {
 const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
   const { modal } = usePath();
+  const { isInput } = useActiveElement();
 
   const isMapped = useCallback((key: string): boolean => {
     return actions.has(key.toLowerCase());
@@ -52,9 +54,6 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
     if (!isMapped(e.key)) return;
 
     if (modal && !enabledOnModal) return;
-
-    //e.stopPropagation();
-    //e.preventDefault();
 
     // key is mapped, so retrieve the KeyPressAction
     const action = actions.get(e.key.toLowerCase());
@@ -81,7 +80,7 @@ const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): Keyboa
     executeHandler(action.onKeyPress, e);
 
     setKeysDown((prevState) => [...prevState, e.key]);
-  }, [actions, isMapped, modal]);
+  }, [actions, isMapped, modal, isInput]);
 
   useEffect(() => {
     if (modal && !enabledOnModal) return;

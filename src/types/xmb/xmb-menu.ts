@@ -1,6 +1,6 @@
-import { XmbCategory } from "./xmb-category";
+import { IXmbCategory, XmbCategory } from "./xmb-category";
 
-interface IXmbMenu {
+export interface IXmbMenu {
   [index: number]: XmbCategory;
 
   items: XmbCategory[];
@@ -10,7 +10,7 @@ export class XmbMenu implements IXmbMenu {
   [index: number]: XmbCategory;
   items: XmbCategory[];
 
-  constructor(items: XmbCategory[]) {
+  constructor(items: IXmbCategory[]) {
     this.items = items;
   }
 }

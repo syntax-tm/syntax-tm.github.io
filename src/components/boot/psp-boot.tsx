@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import { useAudio, useBoot, useTheme } from '@context';
-import PspBootImage from 'svg/psp_boot.svg';
 import Image from 'next/image';
 import "./psp-boot.scss";
 
@@ -22,7 +21,7 @@ export function PspBoot() {
     (
       <React.Fragment>
         <div className="boot-psp">
-          <Image src={PspBootImage} alt="psp boot" className='psp-boot-image h-full w-full z-100 absolute left-0 top-0' loading='eager' />
+          <Image src={'svg/psp_boot.svg'} alt="psp boot" className='psp-boot-image h-full w-full z-100 absolute left-0 top-0' loading='eager' />
         </div>
       </React.Fragment>
     )

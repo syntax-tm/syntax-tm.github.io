@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
-import { XmbItem } from "./xmb-item";
+import { IXmbItem } from "./xmb-item";
 
-interface IXmbCategory {
+export interface IXmbCategory {
   index: number;
   title: string;
   icon: ReactElement;
-  items: XmbItem[];
+  items: IXmbItem[];
   itemCount: number;
 }
 
@@ -13,10 +13,10 @@ export class XmbCategory implements IXmbCategory {
   index: number;
   title: string;
   icon: ReactElement;
-  items: XmbItem[];
+  items: IXmbItem[];
   itemCount: number = 0;
 
-  constructor(index: number, title: string, icon: ReactElement, items: XmbItem[]) {
+  constructor(index: number, title: string, icon: ReactElement, items: IXmbItem[]) {
     this.index = index;
     this.title = title;
     this.icon = icon;

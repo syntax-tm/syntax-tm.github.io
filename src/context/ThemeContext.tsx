@@ -2,9 +2,10 @@
 
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AchievementId, DEFAULT_FONT, FontConfig, fontMap, secrets, StatDefinition, ThemeChangeEventDetail } from "types";
-import { useSettings, useSettingStore } from "@stores";
+import { useSettings } from "@stores";
 import { getSecretClass, SecretClass } from "@enums/secret-class";
 import componentMap from "@components/component-map/component-map";
+import { useSecret } from "./SecretContext";
 
 export interface ThemeConfig {
   id: AchievementId;

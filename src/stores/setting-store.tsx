@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 import { AchievementId } from '@enums';
 import { createContext } from 'react';
 
-type SettingState = {
+export type SettingState = {
   id: AchievementId,
   isUnlocked: boolean,
   isEnabled: boolean,
@@ -186,6 +186,18 @@ export const useSettings = <U,>(
   }
 
   return useStore(context.currentState, selector);
+};
+
+export const useSettingStores = () => {
+  const context = useContext(SettingStoresContext);
+
+  if (context === undefined) {
+    throw new Error('useSettingStores must be used within a SettingStoresProvider');
+  }
+
+  return {
+    stores: context.stores,
+  };
 };
 
 export const useSettingStore = <U,>(

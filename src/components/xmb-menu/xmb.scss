@@ -343,17 +343,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
   }
 }
 
-// p {
-//   text-shadow: 2px 2px 5px black;
-//   display: block;
-//   color: #eee;
-// }
-
-  // .xmb-icon {
-  //   width: 90px;
-  //   height: 90px;
-  //   margin: 5px 5px;
-  //   filter: drop-shadow(0 0 0.25rem black);
-  //   z-index: -2;
-  //   color: white;
-  // }
+.xmb-item.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
