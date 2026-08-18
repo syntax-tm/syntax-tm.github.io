@@ -6,9 +6,7 @@ import { useRouter } from "next/navigation";
 import { SnackbarVariant, StatDefinition } from "types";
 import { useSnackbar } from "@context";
 import stats from "@config/settings";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { useSettingStores } from "@stores";
-import { useActiveElement } from "@hooks/useActiveElement";
 
 const CANCEL_AUDIO_SRC = '/audio/cancel.mp3';
 const TROPHY_AUDIO_SRC = '/audio/trophy.mp3';

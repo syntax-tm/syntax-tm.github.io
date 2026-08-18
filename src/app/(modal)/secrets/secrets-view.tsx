@@ -1,22 +1,18 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { StoreApi, ExtractState } from "zustand";
 import { StorageValue } from "zustand/middleware";
 import SecretView from "./secret-view";
-import { AchievementId, achievements, secretGroups, secrets, Setting, StatGroupDefinition } from "types";
+import { AchievementId, achievements, secretGroups, secrets, StatGroupDefinition } from "types";
 import "./secrets.scss";
 import { SettingState } from "@stores";
 
 const SECRET_TAP_MIN = 5;
 
-
-
 export default function SecretsView() {
 
   const tableRef = useRef<HTMLTableElement | null>(null);
   const [activeCell, setActiveCell] = useState<[number, number]>([0, 0]);
-  //const [allUnlocked, setAllUnlocked] = useState(false);
   const allUnlocked = false;
 
   const totalRows = secrets.length;
@@ -40,10 +36,14 @@ export default function SecretsView() {
     const items = secrets.filter(s => s.type === group.type);
     if (!items) return false;
     if (!group.isHidden) return true;
-    items.forEach(i => {
-      if (isUnlocked(i.id)) return true;
+    const result = items.find(i => {
+      const id = i.id;
+      const unlocked = isUnlocked(id);
+      if (unlocked) {
+        return true;
+      }
     });
-    return false;
+    return !!result;
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTableElement>) => {

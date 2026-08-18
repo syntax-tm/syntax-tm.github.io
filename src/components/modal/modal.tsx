@@ -11,7 +11,6 @@ import useKeyboard from "@hooks/useKeyboard";
 import ControllerIcon, { ControllerButton } from "@components/icons/controller-icon";
 import { KeyPressAction } from "types";
 import "./modal.css";
-import { useActiveElement } from "@hooks/useActiveElement";
 
 const AUDIO_SRC = '/audio/nav.mp3';
 
@@ -86,7 +85,7 @@ export function ModalClose({ menuButton }: { menuButton?: ModalMenuButton }) {
                       <Link href={menuButton.url ?? ''} onClick={onMenuItemClick}
                         className=""
                         ref={menuButtonRef}>
-                        <div className="items-center justify-items-center align-items-center inline-flex select-none my-auto">
+                        <div className="text-xl items-center justify-items-center align-items-center inline-flex select-none my-auto">
                           <div className="relative max-w-10">
                             <ControllerIcon icon={menuButton.controllerIcon} className="m-2" />
                           </div>
@@ -119,7 +118,7 @@ export function ModalClose({ menuButton }: { menuButton?: ModalMenuButton }) {
                       <Link href={menuButton.url ?? ''} onClick={menuButton.action}
                         className=""
                         ref={menuButtonRef}>
-                        <div className="items-center justify-items-center align-items-center inline-flex select-none my-auto">
+                        <div className="text-xl items-center justify-items-center align-items-center inline-flex select-none my-auto">
                           <FontAwesomeIcon icon={menuButton.mobileIcon} className="w-7 h-7 aspect-square inline-flex my-auto max-w-10" />
                           <span className="mx-2 my-auto">{menuButton.title}</span>
                         </div>
@@ -148,7 +147,7 @@ export function ModalClose({ menuButton }: { menuButton?: ModalMenuButton }) {
                       <Link href={menuButton.url ?? ''} onClick={menuButton.action}
                         className=""
                         ref={menuButtonRef}>
-                        <div className="items-center justify-items-center align-items-center inline-flex select-none my-auto">
+                        <div className="text-lg items-center justify-items-center align-items-center inline-flex select-none my-auto">
                           <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">
                             {menuButton.key.toUpperCase()}
                           </kbd>
@@ -161,8 +160,10 @@ export function ModalClose({ menuButton }: { menuButton?: ModalMenuButton }) {
                 <div className="modal-action grid text-white text-center object-center my-auto">
                   {/* need to set the href so that the user can close modal by clicking on the buttton */}
                   <Link href="/" >
-                    <div className="justify-between align-items-center text-lg hover:animate-pulse select-none my-auto">
-                      <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">Esc</kbd>
+                    <div className="text-lg items-center justify-items-center align-items-center inline-flex select-none my-auto">
+                      <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25 flex">
+                        <span className="my-auto inline-block align-middle">Esc</span>
+                      </kbd>
                       <span className="mx-2 my-auto">close</span>
                     </div>
                   </Link>

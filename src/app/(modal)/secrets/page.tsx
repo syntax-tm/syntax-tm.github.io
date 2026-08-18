@@ -3,7 +3,7 @@
 import React from "react";
 import { Modal, ModalMenuButton } from "@components/modal/modal";
 import SecretsView from "./secrets-view";
-import { faHandPointer } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import "./secrets.scss";
 
 export default function SecretsPage() {
@@ -14,7 +14,7 @@ export default function SecretsPage() {
     description: '',
     url: '/secrets/input',
     controllerIcon: 'b',
-    mobileIcon: faHandPointer,
+    mobileIcon: faPenToSquare,
   };
 
   return (
