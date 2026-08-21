@@ -1,8 +1,9 @@
-export * from './enums/';
+export * from './enums/index';
 export * from './events';
 export * from './font';
 export type * from './key-press-action';
 export * from './position';
-export * from './secrets/';
-export * from './snackbar/';
-export * from './xmb/';
+export * from './secrets/index';
+export * from './snackbar/index';
+export * from './xmb/index';
+export type * from './xmb/index';

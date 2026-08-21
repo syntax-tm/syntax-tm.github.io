@@ -24,5 +24,6 @@ export const achievements = new Set<AchievementId>(
     "PS2",
     "_404",
     "BRIX",
+    "WII",
   ],
 );

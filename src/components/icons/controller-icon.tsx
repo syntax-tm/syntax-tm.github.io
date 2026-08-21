@@ -66,6 +66,7 @@ export default function ControllerIcon({
         className={className}
         width={width}
         height={height}
+        loading="eager"
       />
     </>
   );

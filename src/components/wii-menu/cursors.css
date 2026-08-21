@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@layer base {
+  /* *, *::before, *::after {
+    cursor: url('cursors/wii/default.png'), default !important;
+  } */
+  /* *, *::before, *::after {
+    cursor: url('cursors/wii/default.png'), default !important;
+  } */
+  /* *, *::before, *::after {
+    cursor: url("/cursors/wii/default.png"), auto !important;
+  }
+  .cursor-auto, .cursor-auto::before, .cursor-auto::after {
+    cursor: url("/cursors/wii/default.png"), auto !important;
+  }
+  .cursor-default, .cursor-default::before, .cursor-default::after {
+    cursor: url("/cursors/wii/default.png"), default !important;
+  }
+  .cursor-pointer, .cursor-pointer::before, .cursor-pointer::after {
+    cursor: url("/cursors/wii/link_select.png"), pointer !important;
+  }
+  .cursor-wait, .cursor-wait::before, .cursor-wait::after {
+    cursor: url("/cursors/wii/busy.png"), wait !important;
+  }
+  .cursor-text, .cursor-text::before, .cursor-text::after {
+    cursor: url("/cursors/wii/text_select.png"), text !important;
+  }
+  .cursor-move, .cursor-move::before, .cursor-move::after {
+    cursor: url("/cursors/wii/move.png"), move !important;
+  }
+  .cursor-help, .cursor-help::before, .cursor-help::after {
+    cursor: url("/cursors/wii/help_select.png"), help !important;
+  }
+  .cursor-not-allowed, .cursor-not-allowed::before, .cursor-not-allowed::after {
+    cursor: url("/cursors/wii/unavailable.png"), not-allowed !important;
+  }
+  .cursor-none, .cursor-none::before, .cursor-none::after {
+    cursor: none !important;
+  }
+  .cursor-context-menu, .cursor-context-menu::before, .cursor-context-menu::after {
+    cursor: url("/cursors/wii/working_in_background.png"), context-menu !important;
+  }
+  .cursor-progress, .cursor-progress::before, .cursor-progress::after {
+    cursor: url("/cursors/wii/busy.png"), progress !important;
+  }
+  .cursor-cell, .cursor-cell::before, .cursor-cell::after {
+    cursor: cell !important;
+  }
+  .cursor-crosshair, .cursor-crosshair::before, .cursor-crosshair::after {
+    cursor: url("/cursors/wii/precision_select.png"), crosshair !important;
+  }
+  .cursor-vertical-text, .cursor-vertical-text::before, .cursor-vertical-text::after {
+    cursor: url("/cursors/wii/text_select.png"), vertical-text !important;
+  }
+  .cursor-alias, .cursor-alias::before, .cursor-alias::after {
+    cursor: alias !important;
+  }
+  .cursor-copy, .cursor-copy::before, .cursor-copy::after {
+    cursor: copy !important;
+  }
+  .cursor-no-drop, .cursor-no-drop::before, .cursor-no-drop::after {
+    cursor: url("/cursors/wii/unavailable.png"), no-drop !important;
+  }
+  .cursor-grab, .cursor-grab::before, .cursor-grab::after {
+    cursor: url("/cursors/wii/cursor_grab.png"), grab !important;
+  }
+  .cursor-grabbing, .cursor-grabbing::before, .cursor-grabbing::after {
+    cursor: url("/cursors/wii/cursor_grab.png"), grabbing !important;
+  }
+  .cursor-all-scroll, .cursor-all-scroll::before, .cursor-all-scroll::after {
+    cursor: url("/cursors/wii/move.png"), all-scroll !important;
+  }
+  .cursor-col-resize, .cursor-col-resize::before, .cursor-col-resize::after {
+    cursor: url("/cursors/wii/horizontal_resize.png"), col-resize !important;
+  }
+  .cursor-row-resize, .cursor-row-resize::before, .cursor-row-resize::after {
+    cursor: url("/cursors/wii/vertical_resize.png"), row-resize !important;
+  }
+  .cursor-n-resize, .cursor-n-resize::before, .cursor-n-resize::after {
+    cursor: url("/cursors/wii/vertical_resize.png"), n-resize !important;
+  }
+  .cursor-e-resize, .cursor-e-resize::before, .cursor-e-resize::after {
+    cursor: url("/cursors/wii/horizontal_resize.png"), e-resize !important;
+  }
+  .cursor-s-resize, .cursor-s-resize::before, .cursor-s-resize::after {
+    cursor: url("/cursors/wii/vertical_resize.png"), s-resize !important;
+  }
+  .cursor-w-resize, .cursor-w-resize::before, .cursor-w-resize::after {
+    cursor: url("/cursors/wii/horizontal_resize.png"), w-resize !important;
+  }
+  .cursor-ne-resize, .cursor-ne-resize::before, .cursor-ne-resize::after {
+    cursor: url("/cursors/wii/diagonal_resize_2.png"), ne-resize !important;
+  }
+  .cursor-nw-resize, .cursor-nw-resize::before, .cursor-nw-resize::after {
+    cursor: url("/cursors/wii/diagonal_resize_1.png"), nw-resize !important;
+  }
+  .cursor-se-resize, .cursor-se-resize::before, .cursor-se-resize::after {
+    cursor: url("/cursors/wii/diagonal_resize_1.png"), se-resize !important;
+  }
+  .cursor-sw-resize, .cursor-sw-resize::before, .cursor-sw-resize::after {
+    cursor: url("/cursors/wii/diagonal_resize_2.png"), sw-resize !important;
+  }
+  .cursor-ew-resize, .cursor-ew-resize::before, .cursor-ew-resize::after {
+    cursor: url("/cursors/wii/horizontal_resize.png"), ew-resize !important;
+  }
+  .cursor-ns-resize, .cursor-ns-resize::before, .cursor-ns-resize::after {
+    cursor: url("/cursors/wii/vertical_resize.png"), ns-resize !important;
+  }
+  .cursor-nesw-resize, .cursor-nesw-resize::before, .cursor-nesw-resize::after {
+    cursor: url("/cursors/wii/move.png"), nesw-resize !important;
+  }
+  .cursor-nwse-resize, .cursor-nwse-resize::before, .cursor-nwse-resize::after {
+    cursor: url("/cursors/wii/move.png"), nwse-resize !important;
+  }
+  .cursor-zoom-in, .cursor-zoom-in::before, .cursor-zoom-in::after {
+    cursor: url("/cursors/wii/zoom_in.png"), zoom-in !important;
+  }
+  .cursor-zoom-out, .cursor-zoom-out::before, .cursor-zoom-out::after {
+    cursor: url("/cursors/wii/zoom_out.png"), zoom-out !important;
+  } */
+
+}
+
+:root, .wii-menu, .wii-boot {
+  --cursor-wii-auto: url(/cursors/wii/default.png);
+  --cursor-wii-default: url(/cursors/wii/default.png);
+  --cursor-wii-pointer: url(/cursors/wii/link_select.png);
+  --cursor-wii-wait: url(/cursors/wii/busy.png);
+  --cursor-wii-text: url(/cursors/wii/text_select.png);
+  --cursor-wii-move: url(/cursors/wii/move.png);
+  --cursor-wii-help: url(/cursors/wii/help_select.png);
+  --cursor-wii-not-allowed: url(/cursors/wii/unavailable.png);
+  --cursor-wii-none: none;
+  --cursor-wii-context-menu: url(/cursors/wii/working_in_background.png);
+  --cursor-wii-progress: url(/cursors/wii/busy.png);
+  --cursor-wii-cell: cell;
+  --cursor-wii-crosshair: url(/cursors/wii/precision_select.png);
+  --cursor-wii-vertical-text: url(/cursors/wii/text_select.png);
+  --cursor-wii-alias: alias;
+  --cursor-wii-copy: copy;
+  --cursor-wii-no-drop: url(/cursors/wii/unavailable.png);
+  --cursor-wii-grab: url(/cursors/wii/wii_cursor_grab.png);
+  --cursor-wii-grabbing: url(/cursors/wii/wii_cursor_grab.png);
+  --cursor-wii-all-scroll: url(/cursors/wii/move.png);
+  --cursor-wii-col-resize: url(/cursors/wii/horizontal_resize.png);
+  --cursor-wii-row-resize: url(/cursors/wii/vertical_resize.png);
+  --cursor-wii-n-resize: url(/cursors/wii/vertical_resize.png);
+  --cursor-wii-e-resize: url(/cursors/wii/horizontal_resize.png);
+  --cursor-wii-s-resize: url(/cursors/wii/vertical_resize.png);
+  --cursor-wii-w-resize: url(/cursors/wii/horizontal_resize.png);
+  --cursor-wii-ne-resize: url(/cursors/wii/diagonal_resize_2.png);
+  --cursor-wii-nw-resize: url(/cursors/wii/diagonal_resize_1.png);
+  --cursor-wii-se-resize: url(/cursors/wii/diagonal_resize_1.png);
+  --cursor-wii-sw-resize: url(/cursors/wii/diagonal_resize_2.png);
+  --cursor-wii-ew-resize: url(/cursors/wii/horizontal_resize.png);
+  --cursor-wii-ns-resize: url(/cursors/wii/vertical_resize.png);
+  --cursor-wii-nesw-resize: url(/cursors/wii/move.png);
+  --cursor-wii-nwse-resize: url(/cursors/wii/move.png);
+  --cursor-wii-zoom-in: url(/cursors/wii/zoom_in.png);
+  --cursor-wii-zoom-out: url(/cursors/wii/zoom_out.png);
+}

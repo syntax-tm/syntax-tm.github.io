@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<svg
+   viewBox="0 0 1280 720"
+   version="1.1"
+   id="svg1"
+   overflow="hidden"
+   preserveAspectRatio="none"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="statusBarGradient">
+      <stop
+         style="stop-color:#c0ced9;stop-opacity:1;"
+         offset="0"
+         id="stop17" />
+      <stop
+         style="stop-color:#b3d2e2;stop-opacity:1;"
+         offset="1"
+         id="stop18" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#statusBarGradient"
+       id="statusBarGradient2"
+       x1="205"
+       y1="786.5"
+       x2="205"
+       y2="496.5"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(4.4137931,0,0,0.90147783,-264.82759,53.20197)" />
+  </defs>
+  <g
+     id="statusBarLayer">
+    <path
+       id="statusBar"
+       style="fill:url(#statusBarGradient2);stroke:#79dae5;stroke-width:3;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M -20,540 V 740 H 1300 V 540 h -200 c -108,0 -108,60 -216,60 H 396 C 288,600 288,540 180,540 Z" />
+  </g>
+</svg>

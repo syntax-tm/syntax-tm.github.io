@@ -55,7 +55,7 @@ export const SnackbarProvider = ({ children }: { children: React.ReactNode }) =>
   let icon: React.ReactNode;
 
   if (snackbar.variant === "unlock") {
-    icon = <Image src={PlatinumTrophy} alt="Platinum Trophy" className="icon snackbar-icon mr-2 my-auto lg:text-3xl" />;
+    icon = <Image src={PlatinumTrophy} width={24} height={24} alt="Platinum Trophy" className="icon snackbar-icon mr-2 my-auto lg:text-3xl" />;
   }
   else {
     let kind: IconDefinition;

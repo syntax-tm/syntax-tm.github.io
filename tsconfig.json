@@ -83,11 +83,23 @@
       "types/*": [
         "./src/types/*"
       ],
+      "utils": [
+        "./src/utils/"
+      ],
+      "utils/*": [
+        "./src/utils/*"
+      ],
       // "@/*": [
       //   "./src/*"
       // ],
       "public/*": [
         "./public/*"
+      ],
+      "@cursors/*": [
+        "./public/cursors/*"
+      ],
+      "@ico/*": [
+        "./public/ico/*"
       ],
       "image/*": [
         "./public/image/*"

@@ -1,0 +1,90 @@
+@use './cursors.css';
+
+.app {
+  width: auto;
+  height: 100vh;
+  background-color: black;
+  display: block;
+  aspect-ratio: 4 / 3;
+}
+
+.main-menu {
+  margin: 0;
+  transition: transform 900ms, opacity 400ms, background-color 900ms, visibility 900ms;
+  opacity: 1;
+  visibility: visible;
+  //background-image: url(/public/image/wii/bg-pattern.png);
+  background: repeating-linear-gradient(360deg, #e5e5e5, #e5e5e5 0.25svh, #f5f5f5 0.5svh, #f5f5f5 0.5svh);
+  //background-color: lightgrey;
+  width: 100vw;
+  height: 100vh;
+}
+
+.black {
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999999;
+  top: 100vh;
+  opacity: 0;
+  transition: opacity 300ms;
+  position: absolute;
+}
+
+.channel {
+
+}
+
+.wii-clock {
+  color: #9B9B9B;
+  font-size: 15pt;
+}
+
+.wii-menu {
+  cursor: url('/cursor/')
+}
+
+.wii-clock-container {
+  transform: translateY(-10px);
+}
+
+// .wii-clock-meridiem {
+//   transform: translateY(-10px);
+// }
+
+.wii-calendar-container {
+  color: #7A7B7B;
+}
+
+.wii-menu-page-button:hover {
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+          animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    scale: 1;
+    filter: drop-shadow( 0 0 1px #ffffffd8) drop-shadow( 0 0 4px #ffffff7a) drop-shadow(0 0 8px #ffffff54);
+  }
+
+  to {
+    scale: 1.2;
+    filter: drop-shadow( 0 0 5px #ffffff) drop-shadow( 0 0 10px #ffffff7a) drop-shadow(0 0 15px #ffffff54);
+  }
+}
+
+
+// .wii-menu-item {
+//   animation: moveLeftAndDisappear 0.5s ease-in forwards;
+// }
+
+// @keyframes moveLeftAndDisappear {
+//   0% {
+//     opacity: 1;
+//     transform: translateX(0);
+//   }
+//   100% {
+//     opacity: 0;
+//     transform: translateX(-100px); /* Adjust distance as needed */
+//   }
+// }

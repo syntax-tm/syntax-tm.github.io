@@ -20,8 +20,8 @@ export function PspBoot() {
   return isBootVisible && boot && (
     (
       <React.Fragment>
-        <div className="boot-psp">
-          <Image src={'svg/psp_boot.svg'} alt="psp boot" className='psp-boot-image h-full w-full z-100 absolute left-0 top-0' loading='eager' />
+        <div className="boot-psp relative">
+          <Image src={'svg/psp_boot.svg'} alt="psp boot" fill className='psp-boot-image h-full w-full z-100 absolute left-0 top-0' style={{ objectFit: 'cover' }} loading='eager' />
         </div>
       </React.Fragment>
     )

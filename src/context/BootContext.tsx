@@ -4,28 +4,37 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import usePath from "@hooks/usePath";
 import { useAudio, useTheme } from "@context";
 
+const DEFAULT_BOOT_DURATION = 5000;
+const DEFAULT_IS_INDEFINITE = false;
+
 interface BootContextType {
   isBootVisible: boolean;
   isBootTransitioningOut: boolean;
+  isIndefinite: boolean;
   showBootScreen: () => void;
   hideBootScreen: () => void;
+  pauseBoot: () => void;
 }
 
 const BootContext = createContext<BootContextType | undefined>(undefined);
 
 export function BootProvider({ children }: { children: React.ReactNode }) {
   const bootShownRef = useRef(false);
+  const fadeOutTimerRef = useRef(0);
+  const hideTimerRef = useRef(0);
   const [isBootVisible, setIsBootVisible] = useState(true);
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
   const { modal } = usePath();
   const { boot } = useTheme();
   const { pause } = useAudio();
+  const [isIndefinite, setIsIndefinite] = useState(DEFAULT_IS_INDEFINITE);
 
   // disables boot screen on any modal (to allow directly linking to them without the boot animation)
   if (modal)
     bootShownRef.current = true;
 
   const showBootScreen = useCallback(() => {
+    bootShownRef.current = false;
     setIsBootVisible(true);
     setIsBootTransitioningOut(false);
   }, []);
@@ -37,26 +46,40 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
     bootShownRef.current = true;
   }, [pause]);
 
+  const pauseBoot = useCallback(() => {
+    console.log(``);
+
+    setIsIndefinite(true);
+  }, []);
+
   useEffect(() => {
     if (!isBootVisible) return;
 
-    const bootDuration = boot?.bootDuration ?? 5000;
+    const bootDuration = boot?.bootDuration ?? DEFAULT_BOOT_DURATION;
     const fadeOutDuration = boot?.bootFadeOutDuration ?? 0;
+    const indefinite = bootDuration <= 0;
 
-    //if (!boot) return;
+    setIsIndefinite(indefinite);
 
-    const fadeOutTimer = window.setTimeout(() => {
+    // allow indefinite boot (requires call to hideBootScreen())
+    if (indefinite) {
+      return;
+    }
+
+    fadeOutTimerRef.current = window.setTimeout(() => {
       setIsBootTransitioningOut(true);
     }, bootDuration - fadeOutDuration);
 
-    const hideTimer = window.setTimeout(() => {
+    hideTimerRef.current = window.setTimeout(() => {
       hideBootScreen();
       bootShownRef.current = true;
     }, bootDuration);
 
     return () => {
-      window.clearTimeout(fadeOutTimer);
-      window.clearTimeout(hideTimer);
+      if (fadeOutTimerRef.current)
+        window.clearTimeout(fadeOutTimerRef.current);
+      if (hideTimerRef.current)
+        window.clearTimeout(hideTimerRef.current);
     };
   }, [isBootVisible, boot]);
 
@@ -64,8 +87,10 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
     return {
       isBootVisible,
       isBootTransitioningOut,
+      isIndefinite,
       showBootScreen,
       hideBootScreen,
+      pauseBoot,
     };
   }, [isBootVisible, isBootTransitioningOut]);
 

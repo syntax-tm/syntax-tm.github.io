@@ -1,15 +1,7 @@
 import { ReactElement } from "react";
-import { IXmbItem } from "./xmb-item";
+import { IXmbCategory, ICategory, IXmbItem } from "./interfaces";
 
-export interface IXmbCategory {
-  index: number;
-  title: string;
-  icon: ReactElement;
-  items: IXmbItem[];
-  itemCount: number;
-}
-
-export class XmbCategory implements IXmbCategory {
+export class XmbCategory implements IXmbCategory, ICategory {
   index: number;
   title: string;
   icon: ReactElement;
@@ -24,3 +16,5 @@ export class XmbCategory implements IXmbCategory {
     this.itemCount = this.items.length;
   }
 }
+
+export { XmbCategory as default };

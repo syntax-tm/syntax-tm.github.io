@@ -4,9 +4,7 @@ import React from "react";
 import { Modal, ModalMenuButton } from "@components/modal/modal";
 import SecretInput from "./secret-input";
 import { useRouter } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackspace, faHandPointer } from "@fortawesome/free-solid-svg-icons";
-import ControllerIcon from "@components/icons/controller-icon";
+import { faHandPointer } from "@fortawesome/free-solid-svg-icons";
 
 export default function SecretsPage() {
 

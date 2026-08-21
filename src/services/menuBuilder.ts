@@ -1,4 +1,4 @@
-import { XmbMenu, XmbCategory, XmbItem } from "types";
+import { XmbMenu, XmbCategory, XmbItem } from "types/xmb/";
 import * as icons from '@components/icons/icons';
 
 function buildHomeCategory(): XmbCategory {

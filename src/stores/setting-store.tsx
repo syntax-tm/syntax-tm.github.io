@@ -3,6 +3,7 @@ import { createStore, useStore } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { AchievementId } from '@enums';
 import { createContext } from 'react';
+import CaseInsensitiveMap from 'utils/case-insensitive-map';
 
 export type SettingState = {
   id: AchievementId,
@@ -85,7 +86,7 @@ export const createSettingStoreFactory = (
 };
 
 interface settingStoresContextType {
-  stores: Map<AchievementId, ReturnType<typeof createSettingStore>> | undefined;
+  stores: CaseInsensitiveMap<ReturnType<typeof createSettingStore>> | undefined;
   current: AchievementId | null;
   currentState: ReturnType<typeof createCurrentSettingStore>;
 }
@@ -96,7 +97,7 @@ const SettingStoresContext = createContext<settingStoresContextType | undefined>
 
 export function SettingStoresProvider({ children }: { children: React.ReactNode }) {
   const [stores] = useState(
-    () => new Map<AchievementId, ReturnType<typeof createSettingStore>>(),
+    () => new CaseInsensitiveMap<ReturnType<typeof createSettingStore>>(),
   );
   const [currentState] = useState(
     () => createCurrentSettingStore(),

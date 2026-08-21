@@ -2,7 +2,8 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faE, faEye, faHeart, faI, faL, faO, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import build from "@services/menuBuilder";
-import { IXmbCategory, IXmbItem, StatDefinition, XmbCategory, XmbItem, XmbMenu } from "types";
+import { StatDefinition } from "types/secrets";
+import { XmbCategory, XmbItem, XmbMenu } from "types/xmb/index";
 
 const defaultMenu = build();
 
@@ -13,7 +14,7 @@ const createIcon = (icon: IconProp, cssClasses?: string) => {
 const buildBrixMenu = () => {
   const brixIcon = createIcon(faHeart, 'text-red-400');
 
-  const items: IXmbItem[] = [
+  const items: XmbItem[] = [
     new XmbItem('i', '', createIcon(faI)),
     new XmbItem('l', '', createIcon(faL, 'text-red-400')),
     new XmbItem('o', '', createIcon(faO, 'text-red-400')),
@@ -24,13 +25,13 @@ const buildBrixMenu = () => {
     new XmbItem('y2', '', createIcon(faU)),
   ];
 
-  const specialCategory: IXmbCategory = new XmbCategory(0, 'Hello', brixIcon, items);
+  const specialCategory: XmbCategory = new XmbCategory(0, 'Hello', brixIcon, items);
 
-  const origItems: IXmbCategory[] = defaultMenu.items.map(i => {
+  const origItems: XmbCategory[] = defaultMenu.items.map(i => {
     return { ...i, index: i.index + 1 };
   });
 
-  const categories: IXmbCategory[] = [specialCategory, ...origItems];
+  const categories: XmbCategory[] = [specialCategory, ...origItems];
 
   const brixMenu = new XmbMenu(categories);
 
@@ -270,6 +271,26 @@ export const stats: StatDefinition[] = [
         bootDuration: 8000,
         bootFadeOutDuration: 250,
         showBackground: true,
+      },
+      clock: "clock",
+    },
+  },
+  // WII
+  {
+    id: "WII",
+    title: "Wii",
+    description: "Allow adequate room around you during game play.",
+    type: "THEME",
+    isLocked: true,
+    isEnabled: false,
+    trophy: 3, // platinum
+    menu: buildBrixMenu(),
+    password: 'wii',
+    theme: {
+      background: "wii-background",
+      boot: {
+        component: "wii-boot",
+        bootDuration: -1,
       },
       clock: "clock",
     },

@@ -1,17 +1,7 @@
 import { ReactElement } from "react";
+import { IXmbItem, IMenuItem } from "./interfaces";
 
-export interface IXmbItem {
-  id: string;
-  title: string;
-  link?: string | null;
-  type: string;
-  icon: ReactElement | null;
-  description?: string | null;
-  category?: string;
-  isEnabled: boolean;
-}
-
-export class XmbItem implements IXmbItem {
+export class XmbItem implements IXmbItem, IMenuItem {
   id: string;
   title: string;
   link?: string | null = '';
@@ -30,3 +20,5 @@ export class XmbItem implements IXmbItem {
     this.isEnabled = isEnabled ?? true;
   }
 }
+
+export { XmbItem as default };

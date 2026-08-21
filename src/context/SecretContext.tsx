@@ -3,8 +3,9 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
-import { secrets, secretGroups, StatDefinition } from "types";
-import { SettingStore, useSettings, useSettingStore } from "@stores/setting-store";
+import { secrets, secretGroups, StatDefinition, achievements } from "types";
+import { SettingStore, useSettings, useSettingStore, useSettingStores } from "@stores/setting-store";
+import { usePathname, useSelectedLayoutSegments } from "next/navigation";
 
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp",
@@ -32,6 +33,7 @@ export interface SecretContextType {
   pspCodeStore: SettingStore;
   ps2Store: SettingStore;
   brixStore: SettingStore;
+  wiiStore: SettingStore;
   getSecret: (id: AchievementId | null) => StatDefinition | null;
   currentSecret: StatDefinition | null;
 }
@@ -40,6 +42,8 @@ const SecretContext = createContext<SecretContextType | undefined>(undefined);
 
 export function SecretProvider({ children }: { children: React.ReactNode }) {
 
+  const segments = useSelectedLayoutSegments();
+  const { stores } = useSettingStores();
   const _404Store = useSettingStore("_404", (state) => state);
   const androidStore = useSettingStore("ANDROID", (state) => state);
   const dreamcastStore = useSettingStore("DREAMCAST", (state) => state);
@@ -50,6 +54,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const pspCodeStore = useSettingStore("PSP_CODE", (state) => state);
   const ps2Store = useSettingStore("PS2", (state) => state);
   const brixStore = useSettingStore("BRIX", (state) => state);
+  const wiiStore = useSettingStore("WII", (state) => state);
   const [currentSecret, setCurrentSecret] = useState<StatDefinition | null>(null);
   const { id } = useSettings((state) => state);
 
@@ -63,6 +68,25 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const secret = getSecret(id);
     setCurrentSecret(secret);
   }, [id, getSecret]);
+
+  useEffect(() => {
+
+    if (!segments || segments.length === 0) return;
+
+    const rootSegment = segments[0];
+
+    // try to find the matching secret for this route
+    const rootSegmentSecret = secrets.find(s => s.id.toLowerCase() === rootSegment);
+    if (!rootSegmentSecret) return;
+
+    if (!stores) return;
+
+    const store = stores.get(rootSegmentSecret.id);
+
+    store?.getState().unlock();
+    store?.getState().enable();
+
+  }, [segments, stores, secrets]);
 
   useKeySequence(KONAMI_CODE, () => {
     konamiCodeStore.unlock();
@@ -107,6 +131,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     pspCodeStore,
     ps2Store,
     brixStore,
+    wiiStore,
   };
 
   return (

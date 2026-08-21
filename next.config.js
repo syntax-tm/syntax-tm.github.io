@@ -61,6 +61,12 @@ const nextConfig = {
   /** @param {import('webpack').Configuration} config */
   webpack: (config, { dev, isServer, totalPages, dir, nextRuntime, buildId }) => {
 
+    if (dev) {
+      config.devtool = 'inline-source-map';
+      config.resolve.extensions = ['.ts', '.tsx', '.js', '.jsx', '.json'];
+      config.output.sourceMapFilename = "[name].js.map";
+    }
+
     // allows importing svgs as data URLs
     config.module.rules.push(
       {
