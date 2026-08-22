@@ -14,7 +14,7 @@ import { useSnackbar } from "./SnackbarContext";
 import { useSecret } from "@context";
 
 export interface XmbContextType {
-  menu: XmbMenu | null;
+  menu: IXmbMenu | null;
   currentCategory: IXmbCategory | null;
   currentItem: IXmbItem | null;
   currentItems: IXmbItem[] | null;

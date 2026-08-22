@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import XmbCategory from "./xmb-category";
 
 export interface IMenuItem {
   id: string;
@@ -7,19 +8,21 @@ export interface IMenuItem {
   type: string;
   icon: ReactElement | null;
   description?: string | null;
-  category?: string;
+  isEnabled: boolean;
+  isHidden: boolean;
+  category: ICategory | null;
 }
 
 export interface IXmbItem extends IMenuItem {
-  isEnabled: boolean;
+  category: IXmbCategory | null;
 }
 
 export interface ICategory {
   index: number;
   title: string;
   icon: ReactElement;
-  items: IXmbItem[];
   itemCount: number;
+  items: IMenuItem[];
 }
 
 export interface IXmbCategory extends ICategory {

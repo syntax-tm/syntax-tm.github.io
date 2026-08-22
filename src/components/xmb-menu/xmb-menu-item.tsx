@@ -1,7 +1,7 @@
 "use client";
 
 import React, { MouseEventHandler } from "react";
-import { XmbItem } from "types/xmb";
+import { IXmbItem } from "types/xmb";
 import { useXmb } from "@context/XmbContext";
 import Link from "next/link";
 import "./xmb.scss";
@@ -9,7 +9,7 @@ import "./xmb.scss";
 interface MenuItemProps {
   catIndex: number;
   index: number;
-  item: XmbItem;
+  item: IXmbItem;
 }
 
 export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
@@ -31,7 +31,7 @@ export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
     <>
       <Link
         id={item.id}
-        className={`relative xmb-item flex justify-self-center select-none ${isDisabled && 'disabled'} ${isActive ? "active" : "inactive"} ${!index && "first"}`}
+        className={`relative xmb-item flex justify-self-center select-none ${item.isHidden ? 'opacity-0' : ''} ${isDisabled && 'disabled'} ${isActive ? 'active' : 'inactive'} ${!index && 'first'}`}
         href={item.link || ""}
         data-index={index}
         data-active={isActive}

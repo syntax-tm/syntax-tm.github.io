@@ -1,9 +1,9 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faE, faEye, faHeart, faI, faL, faO, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
+import { faE, faHeart, faI, faL, faO, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import build from "@services/menuBuilder";
 import { StatDefinition } from "types/secrets";
-import { XmbCategory, XmbItem, XmbMenu } from "types/xmb/index";
+import { IXmbCategory, XmbCategory, XmbItem, XmbMenu } from "types/xmb/index";
 
 const defaultMenu = build();
 
@@ -16,22 +16,25 @@ const buildBrixMenu = () => {
 
   const items: XmbItem[] = [
     new XmbItem('i', '', createIcon(faI)),
+    new XmbItem('blank-1', '', createIcon(faI), '/', '', false, true),
     new XmbItem('l', '', createIcon(faL, 'text-red-400')),
     new XmbItem('o', '', createIcon(faO, 'text-red-400')),
     new XmbItem('v', '', createIcon(faV, 'text-red-400')),
     new XmbItem('e', '', createIcon(faE, 'text-red-400')),
+    new XmbItem('blank-2', '', createIcon(faI), '/', '', false, true),
     new XmbItem('y', '', createIcon(faY)),
     new XmbItem('o2', '', createIcon(faO)),
-    new XmbItem('y2', '', createIcon(faU)),
+    new XmbItem('u', '', createIcon(faU)),
   ];
 
   const specialCategory: XmbCategory = new XmbCategory(0, 'Hello', brixIcon, items);
 
-  const origItems: XmbCategory[] = defaultMenu.items.map(i => {
-    return { ...i, index: i.index + 1 };
+  const origItems: IXmbCategory[] = defaultMenu.items.map(i => {
+    i.index = i.index + 1;
+    return i;
   });
 
-  const categories: XmbCategory[] = [specialCategory, ...origItems];
+  const categories: IXmbCategory[] = [specialCategory, ...origItems];
 
   const brixMenu = new XmbMenu(categories);
 

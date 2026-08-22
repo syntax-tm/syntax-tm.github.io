@@ -1,14 +1,14 @@
 "use client";
 
 import React, { MouseEventHandler } from "react";
-import { XmbCategory } from "types/xmb";
+import { IXmbCategory } from "types/xmb";
 import { useXmb } from "@context/XmbContext";
 import { MenuItem } from "./xmb-menu-item";
 import "./xmb.scss";
 
 interface MenuCategoryProps {
   index: number;
-  category: XmbCategory;
+  category: IXmbCategory;
 }
 
 export const MenuCategory = ({ index, category }: MenuCategoryProps) => {
