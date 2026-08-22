@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useBoot, useSecret, useTheme } from "@context";
-import { BootView } from "@components/boot";
-import { BackgroundView } from "@components/background";
+import { BrixBoot } from "@components/boot";
+import { BrixBackground } from "@components/background";
 import { Menu } from "@components/xmb-menu";
 import { useRouter } from "next/navigation";
 
@@ -14,14 +14,15 @@ export function BrixPage() {
 
   useEffect(() => {
 
+    if (!brixStore) return;
     if (!brixStore.isUnlocked) {
       brixStore.unlock();
     }
 
     brixStore.enable();
-    router.replace("/");
+    router.push("/");
 
-  }, []);
+  }, [brixStore]);
 
   const { isBootVisible } = useBoot();
   const { currentTheme, font } = useTheme();
@@ -35,12 +36,10 @@ export function BrixPage() {
       {
         isBootVisible
           ?
-          <>
-            <BootView />
-          </>
+          <BrixBoot />
           :
           <>
-            <BackgroundView />
+            <BrixBackground />
             {clock}
             <Menu />
           </>
