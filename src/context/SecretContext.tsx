@@ -3,9 +3,9 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
-import { secrets, secretGroups, StatDefinition, achievements } from "types";
+import { secrets, secretGroups, StatDefinition } from "types";
 import { SettingStore, useSettings, useSettingStore, useSettingStores } from "@stores/setting-store";
-import { usePathname, useSelectedLayoutSegments } from "next/navigation";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp",
@@ -36,6 +36,7 @@ export interface SecretContextType {
   wiiStore: SettingStore;
   getSecret: (id: AchievementId | null) => StatDefinition | null;
   currentSecret: StatDefinition | null;
+  currentSetting: AchievementId | null;
 }
 
 const SecretContext = createContext<SecretContextType | undefined>(undefined);
@@ -132,6 +133,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     ps2Store,
     brixStore,
     wiiStore,
+    currentSetting: id,
   };
 
   return (

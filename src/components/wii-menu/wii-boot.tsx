@@ -32,20 +32,22 @@ export function WiiBoot() {
       completeBoot();
     };
 
-    document.addEventListener('click', onUserInput);
-    document.addEventListener('mousedown', onUserInput);
-    document.addEventListener('mouseup', onUserInput);
-    document.addEventListener('pointerdown', onUserInput);
-    document.addEventListener('pointerup', onUserInput);
+    // document.addEventListener('click', onUserInput);
+    // document.addEventListener('mousedown', onUserInput);
+    // document.addEventListener('mouseup', onUserInput);
+    // document.addEventListener('pointerdown', onUserInput);
+    // document.addEventListener('pointerup', onUserInput);
+    document.addEventListener('dblclick', onUserInput);
     document.addEventListener('touchstart', onUserInput);
     document.addEventListener('touchend', onUserInput);
 
     return () => {
-      document.removeEventListener('click', onUserInput);
-      document.removeEventListener('mousedown', onUserInput);
-      document.removeEventListener('mouseup', onUserInput);
-      document.removeEventListener('pointerdown', onUserInput);
-      document.removeEventListener('pointerup', onUserInput);
+      // document.removeEventListener('click', onUserInput);
+      // document.removeEventListener('mousedown', onUserInput);
+      // document.removeEventListener('mouseup', onUserInput);
+      // document.removeEventListener('pointerdown', onUserInput);
+      // document.removeEventListener('pointerup', onUserInput);
+      document.removeEventListener('dblclick', onUserInput);
       document.removeEventListener('touchstart', onUserInput);
       document.removeEventListener('touchend', onUserInput);
     };
@@ -72,8 +74,8 @@ export function WiiBoot() {
             </div>
             <div className="wii-boot-instructions flex flex-row place-content-center object-scale-down relative">
               <span className="">Press</span>
-              <div className="relative w-[5vh] h-full scale-150">
-                <Image src={'svg/wii/a.svg'} fill className="" alt="a" />
+              <div className="relative h-full aspect-square mx-5">
+                <Image src={'svg/wii/a.svg'} fill className="scale-130 align-middle object-cover self-center mt-1" alt="a" />
               </div>
               <span className="">to continue.</span>
             </div>

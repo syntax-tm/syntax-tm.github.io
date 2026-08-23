@@ -7107,6 +7107,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fireworks-js@npm:^2.10.8":
+  version: 2.10.8
+  resolution: "fireworks-js@npm:2.10.8"
+  checksum: 10c0/58c2536fe89d448d809491fb1803fdcb9cb66e12c9e93dcdf8516ef2da04a663d6c1439a83cf65e4881da2fa12b28908432a83e30faf4f02724e1697a1317f0e
+  languageName: node
+  linkType: hard
+
 "first-chunk-stream@npm:^2.0.0":
   version: 2.0.0
   resolution: "first-chunk-stream@npm:2.0.0"
@@ -12687,6 +12694,7 @@ __metadata:
     eslint: "npm:^10.8.1"
     eslint-config-next: "npm:^16.3.1"
     eslint-plugin-react: "npm:^7.37.5"
+    fireworks-js: "npm:^2.10.8"
     framer-motion: "npm:^12.43.0"
     globals: "npm:^17.11.0"
     html-webpack-plugin: "npm:^5.6.8"

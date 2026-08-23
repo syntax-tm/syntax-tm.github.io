@@ -1,6 +1,6 @@
 .wii-boot-instructions {
   opacity: 0;
-  animation: flashing 1.2s ease-in 3s both infinite;
+  animation: flashing 1.4s ease-in-out 3s both infinite;
 }
 
 @keyframes flashing {

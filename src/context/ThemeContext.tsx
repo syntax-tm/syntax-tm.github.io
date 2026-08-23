@@ -97,20 +97,10 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeConfig | undefined>();
+
   const [currentSetting, setCurrentSetting] = useState<AchievementId | null>(null);
   const { id, update } = useSettings((state) => state);
-  const [themes, setThemes] = useState<Map<AchievementId, ThemeConfig> | null>(null);
-
-  const getTheme = useCallback((id: AchievementId | undefined): ThemeConfig | undefined => {
-    if (!themes) return undefined;
-    if (!id) return themes.get('UNKNOWN');
-    return themes.get(id);
-  }, [themes]);
-
-  useEffect(() => {
-    if (themes) return;
-
+  const [themes] = useState<Map<AchievementId, ThemeConfig> | null>(() => {
     const t = new Map<AchievementId, ThemeConfig>();
 
     secrets.forEach((s) => {
@@ -120,8 +110,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       t.set(id, theme);
     });
 
-    setThemes(t);
-  }, []);
+    return t;
+  });
+
+  const getTheme = (id: AchievementId | undefined | null): ThemeConfig | undefined => {
+    if (!themes) return undefined;
+    if (!id) return themes.get('UNKNOWN');
+    return themes.get(id);
+  };
+
+  const [currentTheme, setCurrentTheme] = useState<ThemeConfig | undefined>(() => {
+    return getTheme(id);
+  });
 
   useEffect(() => {
     const theme = getTheme(id || undefined);
@@ -159,7 +159,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       clock: currentTheme?.clock,
       className: currentTheme?.className ?? null,
     };
-  }, [currentTheme]);
+  }, [currentTheme, id]);
 
   return (
     <ThemeContext.Provider value={value}>

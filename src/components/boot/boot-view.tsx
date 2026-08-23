@@ -14,7 +14,7 @@ export function BootView() {
     ['enter', { repeat: false, onKeyPress: hideBootScreen }],
   ]);
 
-  const {  } = useKeyboard({
+  useKeyboard({
     actions: actions,
     enabledOnModal: false,
   });

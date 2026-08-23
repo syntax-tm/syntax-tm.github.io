@@ -3,6 +3,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import usePath from "@hooks/usePath";
 import { useAudio, useTheme } from "@context";
+// import { logJson } from "utils/console";
 
 const DEFAULT_BOOT_DURATION = 5000;
 const DEFAULT_IS_INDEFINITE = false;
@@ -25,9 +26,11 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
   const [isBootVisible, setIsBootVisible] = useState(true);
   const [isBootTransitioningOut, setIsBootTransitioningOut] = useState(false);
   const { modal } = usePath();
-  const { boot } = useTheme();
+  const { currentTheme, boot } = useTheme();
   const { pause } = useAudio();
   const [isIndefinite, setIsIndefinite] = useState(DEFAULT_IS_INDEFINITE);
+
+  // logJson(currentTheme);
 
   // disables boot screen on any modal (to allow directly linking to them without the boot animation)
   if (modal)
@@ -43,7 +46,6 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
     setIsBootTransitioningOut(false);
     setIsBootVisible(false);
     pause();
-    bootShownRef.current = true;
   }, [pause]);
 
   const pauseBoot = useCallback(() => {
@@ -81,7 +83,7 @@ export function BootProvider({ children }: { children: React.ReactNode }) {
       if (hideTimerRef.current)
         window.clearTimeout(hideTimerRef.current);
     };
-  }, [isBootVisible, boot]);
+  }, [isBootVisible, currentTheme, boot]);
 
   const value: BootContextType = useMemo(() => {
     return {

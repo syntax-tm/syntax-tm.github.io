@@ -1,31 +1,30 @@
 'use client';
 
 import { useEffect } from "react";
-import { useBoot, useSecret, useTheme } from "@context";
-import { BrixBoot } from "@components/boot";
-import { BrixBackground } from "@components/background";
+import { useBoot, useTheme } from "@context";
+import { BootView, BrixBoot } from "@components/boot";
+import { BackgroundView, BrixBackground } from "@components/background";
 import { Menu } from "@components/xmb-menu";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import { useSettingStore } from "@stores";
 
 export function BrixPage() {
 
-  const { brixStore } = useSecret();
-  const router = useRouter();
-
-  useEffect(() => {
-
-    if (!brixStore) return;
-    if (!brixStore.isUnlocked) {
-      brixStore.unlock();
-    }
-
-    brixStore.enable();
-    router.push("/");
-
-  }, [brixStore]);
+  const { isUnlocked, unlock, enable } = useSettingStore("BRIX", (state) => state);
+  //const router = useRouter();
 
   const { isBootVisible } = useBoot();
   const { currentTheme, font } = useTheme();
+
+  useEffect(() => {
+
+    if (!isUnlocked) {
+      unlock();
+    }
+
+    enable();
+
+  }, [isUnlocked]);
 
   const themeClassName = currentTheme ? currentTheme.className : 'default-theme';
   const fontClassName = font ? font.className : 'default-font';

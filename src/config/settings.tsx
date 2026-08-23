@@ -259,7 +259,7 @@ export const stats: StatDefinition[] = [
   // BRIX
   {
     id: "BRIX",
-    title: "<3",
+    title: "\u2764",
     description: "I love you.",
     type: "BRIX",
     isLocked: true,

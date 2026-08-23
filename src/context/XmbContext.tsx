@@ -41,6 +41,7 @@ export const toXmbKey = (x: number, y: number) => {
 };
 
 export const openInNewTab = (url: string) => {
+  if (!window) return;
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 
@@ -94,42 +95,27 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     }
   }, [currentSecret]);
 
-  // if (!xmbItemRef.current) {
-  //   xmbItemRef.current = new Map<string, IXmbItem>();
-  // }
-
-  // // only build the menu once
-  // if (!xmbMenuRef.current) {
-  //   const menu = currentSecret?.menu ?? build();
-
-  //   xmbMenuRef.current = menu;
-  //   setCategories(menu.items);
-  //   const cat = menu.items[0];
-  //   setCurrentCategory(cat);
-  //   setCurrentItems(cat.items);
-  //   if (cat.items[0])
-  //     setCurrentItem(cat.items[0]);
-
-  //   // save the item ref to find items by key directly
-  //   for (let i = 0; i < menu.items.length; i++) {
-  //     const cat = menu.items[i];
-  //     for (let j = 0; j < cat.items.length; j++) {
-  //       const item = cat.items[j];
-  //       xmbItemRef.current.set(toXmbKey(i, j), item);
-  //     }
-  //   }
-  // }
-
   // udpates the selected item (y)
   const updateY = useCallback((newY: number) => {
+    const delta = newY - y;
+    // TODO: this only supports skipping past 1 disabled or hidden item
+    const change = delta < 0
+      ? Math.max(delta, -1)
+      : Math.min(delta, 1);
+    if (!currentCategory) return;
     // update cache
     cache[positionRef.current.x] = newY;
-    positionRef.current = { ...positionRef.current, y: newY };
-    if (!currentCategory) return;
     const item = currentCategory.items[newY];
+    // HACK: fix this, this should never return undefined but is when the category changes too quickly
+    if (!item) return;
+    if (item.isHidden) {
+      updateY(newY + change);
+      return;
+    }
+    positionRef.current = { ...positionRef.current, y: newY };
     setCurrentItem(item);
     setY(newY);
-  }, [currentCategory]);
+  }, [currentCategory, y]);
 
   // udpates both the category (x) and restores the previous selected item (y)
   const updateX = useCallback((newX: number, loadCache: boolean = true) => {
@@ -145,6 +131,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const openItem = useCallback((item: IXmbItem) => {
     if (!item.link) return;
+    if (item.isHidden) return;
     if (!item.isEnabled) return;
 
     void play(XMB_AUDIO_ENTER_SRC);

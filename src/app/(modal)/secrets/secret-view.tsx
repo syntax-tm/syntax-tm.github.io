@@ -118,7 +118,7 @@ export default function SecretView({ id, index, activeCell, setActiveCell, stat,
           <FontAwesomeIcon icon={isUnlocked ? faCheckCircle : faLock}
             className={`py-1 w-full h-full mx-3`} />
         </td>
-        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg px-2 ${!isUnlocked && 'text-gray-400'}`}
+        <td className={`border border-gray-300/25 bg-gray-600/40 text-ellipsis text-nowrap text-xs md:text-lg text-center px-2 ${!isUnlocked && 'text-gray-400'}`}
           data-row={index} data-col={1} tabIndex={x === index ? 1 : -1}
           onFocusCapture={() => setActiveCell([index, 1])}>
           {isUnlocked ? stat.title : 'Hidden'}
