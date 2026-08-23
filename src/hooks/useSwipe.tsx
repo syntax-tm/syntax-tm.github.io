@@ -6,10 +6,10 @@ import usePath from "./usePath";
 const MIN_SWIPE_DISTANCE = 50;
 
 export interface SwipeInput {
-  onSwipedUp: () => void;
-  onSwipedDown: () => void;
-  onSwipedLeft: () => void;
-  onSwipedRight: () => void;
+  onSwipedUp?: () => void;
+  onSwipedDown?: () => void;
+  onSwipedLeft?: () => void;
+  onSwipedRight?: () => void;
   enabledOnModal: boolean;
 }
 
@@ -66,16 +66,16 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
       }
     }
 
-    if (isUpSwipe) {
+    if (isUpSwipe && input.onSwipedUp) {
       input.onSwipedUp();
     }
-    if (isDownSwipe) {
+    if (isDownSwipe && input.onSwipedDown) {
       input.onSwipedDown();
     }
-    if (isLeftSwipe) {
+    if (isLeftSwipe && input.onSwipedLeft) {
       input.onSwipedLeft();
     }
-    if (isRightSwipe) {
+    if (isRightSwipe && input.onSwipedRight) {
       input.onSwipedRight();
     }
   }, [input]);

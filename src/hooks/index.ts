@@ -1,6 +1,7 @@
 export * from './useInput';
 export * from './useKeyboard';
 export * from './useKeySequence';
+export * from './useLayoutNavigation';
 export * from './useMobileDetect';
 export * from './usePath';
 export * from './useSwipe';
