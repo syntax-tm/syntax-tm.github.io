@@ -6,7 +6,7 @@ import { BootView, BrixBoot } from "@components/boot";
 import { BackgroundView, BrixBackground } from "@components/background";
 import { Menu } from "@components/xmb-menu";
 // import { useRouter } from "next/navigation";
-import { useSettingStore } from "@stores";
+//import { useSettingStore } from "@stores";
 
 export function BrixPage() {
 

@@ -85,7 +85,6 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     const store = stores.get(rootSegmentSecret.id);
 
     store?.getState().unlock();
-    store?.getState().enable();
 
     update(rootSegmentSecret.id);
 
