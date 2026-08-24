@@ -8,7 +8,7 @@ import { useDoubleTap } from "@hooks";
 import { useBoot } from "@context";
 import "./brix-boot.scss";
 
-export function BrixBootNew() {
+export function BrixBoot() {
 
   const ref = useRef<FireworksHandlers>(null);
   const { hideBootScreen } = useBoot();
@@ -86,4 +86,4 @@ export function BrixBootNew() {
   );
 }
 
-export { BrixBootNew as default };
+export { BrixBoot as default };

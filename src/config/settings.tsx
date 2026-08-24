@@ -1,6 +1,6 @@
 import { spotify } from "@components/icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faE, faEllipsis, faHeart, faI, faL, faO, faQuestion, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faHeart, faI, faL, faO, faV, faE, faU, faY } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import build from "@services/menuBuilder";
 import Image from "next/image";
