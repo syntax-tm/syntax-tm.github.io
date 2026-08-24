@@ -20,7 +20,7 @@ export const ACHIEVEMENT_MAPPING: Record<AchievementId, SecretClass> = {
   // INVERT_FILTER: "secret-invert-filter",
   // SATURATE_FILTER: "secret-saturate-filter",
   DREAMCAST: "secret-dreamcast",
-  PSP_CODE: "secret-psp-code",
+  PSP: "secret-psp",
   CURRENT: "secret-current",
   UNKNOWN: "secret-unknown",
   PS2: "secret-ps2",

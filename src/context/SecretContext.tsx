@@ -52,7 +52,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const konamiCodeStore = useSettingStore("KONAMI_CODE", (state) => state);
   const missingNoStore = useSettingStore("MISSING_NO", (state) => state);
   const oceangateStore = useSettingStore("OCEANGATE", (state) => state);
-  const pspCodeStore = useSettingStore("PSP_CODE", (state) => state);
+  const pspCodeStore = useSettingStore("PSP", (state) => state);
   const ps2Store = useSettingStore("PS2", (state) => state);
   const brixStore = useSettingStore("BRIX", (state) => state);
   const wiiStore = useSettingStore("WII", (state) => state);

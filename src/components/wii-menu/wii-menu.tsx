@@ -16,10 +16,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faCaretLeft, faCaretRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const defaultFont = localFont({
-  src: '../../../public/fonts/bitstream-versa-sans-mono.ttf',
+  src: '../../../public/fonts/BitstreamVeraSansMono-Bold.woff2',
   preload: true,
   weight: '400',
-  variable: '---font-bitstream-versa-sans-mono',
+  variable: '--font-bitstream-versa-sans-mono',
 });
 
 export interface WiiMenuItemProps {

@@ -4,42 +4,42 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import localFont from "next/font/local";
 
 const clockDigitFont = localFont({
-  src: '../../../public/fonts/E1234-G3KXD.ttf',
+  src: '../../../public/fonts/E1234-Regular.woff2',
   preload: true,
   weight: '400',
-  variable: '---font-e1234',
+  variable: '--font-e1234',
 });
 
 const defaultFont = localFont({
   src: [
     {
-      path: '../../../public/fonts/BauhausRegular.ttf',
+      path: '../../../public/fonts/Bauhaus-Regular.woff2',
       style: 'normal',
       weight: '400',
     },
     {
-      path: '../../../public/fonts/BauhausBold.ttf',
+      path: '../../../public/fonts/Bauhaus-Bold.woff2',
       style: 'normal',
       weight: '700',
     },
   ],
   preload: true,
-  variable: '---bauhaus-font',
+  variable: '--font-bauhaus',
 });
 
 const calendarFont = localFont({
-  src: '../../../public/fonts/FOT-RodinNTLG Pro DB.otf',
+  src: '../../../public/fonts/RodinNTLGPro-DB-AlphaNum.woff2',
   preload: true,
   weight: '400',
-  variable: '---font-rodin-ntlg-pro',
+  variable: '--font-rodin-ntlg-pro',
 });
 
 
 // const defaultFont = localFont({
-//   src: '../../../public/fonts/bitstream-versa-sans-mono.ttf',
+//   src: '../../../public/fonts/BitstreamVeraSansMono-Bold.woff2',
 //   preload: true,
 //   weight: '400',
-//   variable: '---font-bitstream-versa-sans-mono',
+//   variable: '--font-bitstream-vera-sans-mono',
 // });
 
 export function WiiClock() {

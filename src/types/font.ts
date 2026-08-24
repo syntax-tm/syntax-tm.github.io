@@ -1,40 +1,40 @@
 import { AchievementId } from '@enums';
 import type { NextFont, NextFontWithVariable } from 'next/dist/compiled/@next/font';
-import { Google_Sans, Play, DotGothic16, Silkscreen, Oooh_Baby, Mansalva, Sue_Ellen_Francisco, Press_Start_2P, Redacted_Script, VT323, Slackside_One } from 'next/font/google';
+import { Google_Sans, Mansalva } from 'next/font/google';
 import localFont from "next/font/local";
 
 export const pspFont: NextFontWithVariable = localFont({
-  src: '../../public/fonts/FOT-NewRodin Pro L.otf',
-  variable: '---newrodin-pro',
+  src: '../../public/fonts/NewRodinPro-L-AlphaNum.woff2',
+  variable: '--font-newrodin-pro-l',
   style: 'normal',
   weight: '400',
   preload: true,
-  fallback: ["Segoe UI Variable Text"],
+  fallback: ["Segoe UI Variable Text", "Segoe UI"],
 });
 
 export const dreamcastFont: NextFontWithVariable = localFont({
-  src: '../../public/fonts/NiseSegaDreamcast.ttf',
-  variable: '---nise-sega-dreamcast',
+  src: '../../public/fonts/Dreamcast.woff2',
+  variable: '--font-nise-sega-dreamcast',
   style: 'normal',
   weight: '400',
   preload: true,
-  fallback: ["Segoe UI Variable Text"],
+  fallback: ["Segoe UI Variable Text", "Segoe UI"],
 });
 
 export const exocetFont: NextFontWithVariable = localFont({
   src: [
     {
-      path: '../../public/fonts/films.EXL_____.ttf',
+      path: '../../public/fonts/ExocetLight.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/films.EXH_____.ttf',
-      weight: '700',
+      path: '../../public/fonts/ExocetHeavy.woff2',
+      weight: '900',
       style: 'normal',
     },
   ],
-  variable: '---exocet-light',
+  variable: '--font-exocet',
   style: 'normal',
   weight: '400',
   preload: true,
@@ -44,27 +44,27 @@ export const exocetFont: NextFontWithVariable = localFont({
 export const ps2Font: NextFontWithVariable = localFont({
   src: [
     {
-      path: '../../public/fonts/Emotion Engine.otf',
+      path: '../../public/fonts/EmotionEngine.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/Emotion Engine Italic.otf',
+      path: '../../public/fonts/EmotionEngine-Italic.woff2',
       weight: '400',
       style: 'italic',
     },
     {
-      path: '../../public/fonts/Emotion Engine Bold.otf',
+      path: '../../public/fonts/EmotionEngine-Bold.woff2',
       weight: '700',
       style: 'normal',
     },
     {
-      path: '../../public/fonts/Emotion Engine Bold Italic.otf',
+      path: '../../public/fonts/EmotionEngine-BoldItalic.woff2',
       weight: '700',
       style: 'italic',
     },
   ],
-  variable: '---emotional-engine',
+  variable: '--font-emotional-engine',
   style: 'normal',
   weight: '400',
   preload: true,
@@ -74,12 +74,12 @@ export const ps2Font: NextFontWithVariable = localFont({
 export const ps2BiosFont: NextFontWithVariable = localFont({
   src: [
     {
-      path: '../../public/fonts/ps2-bios-font.ttf',
+      path: '../../public/fonts/ps2-bios-font.woff',
       weight: '400',
       style: 'normal',
     },
   ],
-  variable: '---ps2-bios-font',
+  variable: '--font-ps2-bios',
   style: 'normal',
   weight: '400',
   preload: true,
@@ -100,6 +100,7 @@ export const DEFAULT_NEXT_FONT = Google_Sans({
   preload: true,
   subsets: ['latin'],
   fallback: ['Segoe UI', 'sans'],
+  variable: '--font-google-sans',
   adjustFontFallback: false,
 });
 
@@ -113,6 +114,7 @@ export const BRIX_FONT = Mansalva({
   weight: '400',
   preload: true,
   fallback: ['Brush Script MT', 'cursive'],
+  variable: '--font-brush-script-mt',
   subsets: ['latin'],
 });
 
@@ -127,7 +129,7 @@ export const DEFAULT_FONT: FontConfig = {
 };
 
 export const fontMap = new Map<AchievementId, FontConfig>([
-  ["PSP_CODE", { font: pspFont, className: pspFont.className }],
+  ["PSP", { font: pspFont, className: pspFont.className }],
   ["DREAMCAST", { font: dreamcastFont, className: dreamcastFont.className }],
   ["_404", DEFAULT_FONT],
   ["IWHBYD", DEFAULT_FONT],

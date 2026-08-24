@@ -389,10 +389,10 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const swipeInput: SwipeInput = useMemo(() => {
     return {
-      onSwipedDown: moveUp,
-      onSwipedUp: moveDown,
-      onSwipedRight: moveLeft,
-      onSwipedLeft: moveRight,
+      onSwipeDown: moveUp,
+      onSwipeUp: moveDown,
+      onSwipeRight: moveLeft,
+      onSwipeLeft: moveRight,
       enabledOnModal: false,
     };
   }, [moveUp, moveDown, moveLeft, moveRight]);

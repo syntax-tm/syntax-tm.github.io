@@ -20,7 +20,7 @@ export const achievements = new Set<AchievementId>(
     "KONAMI_CODE",
     "MISSING_NO",
     "OCEANGATE",
-    "PSP_CODE",
+    "PSP",
     "PS2",
     "_404",
     "BRIX",

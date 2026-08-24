@@ -6,39 +6,57 @@ import usePath from "./usePath";
 const MIN_SWIPE_DISTANCE = 50;
 
 export interface SwipeInput {
-  onSwipedUp?: () => void;
-  onSwipedDown?: () => void;
-  onSwipedLeft?: () => void;
-  onSwipedRight?: () => void;
+  minDistance: number;
+  onSwipeUp?: () => void;
+  onSwipeDown?: () => void;
+  onSwipeLeft?: () => void;
+  onSwipeRight?: () => void;
   enabledOnModal: boolean;
 }
 
-interface SwipeOutput {
-  onTouchStart: (e: TouchEvent) => void;
-  onTouchMove: (e: TouchEvent) => void;
-  onTouchEnd: () => void;
-}
-
-const useSwipe = (input: SwipeInput): SwipeOutput => {
+const useSwipe = ({ minDistance = MIN_SWIPE_DISTANCE, onSwipeUp, onSwipeDown, onSwipeLeft, onSwipeRight, enabledOnModal }: SwipeInput) => {
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const touchStartY = useRef(0);
   const touchEndY = useRef(0);
   const { modal } = usePath();
 
+  const reset = useCallback(() => {
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+    touchStartY.current = 0;
+    touchEndY.current = 0;
+  }, []);
+
   const onTouchStart = useCallback((e: TouchEvent) => {
+    // ignore multiple touches (pinch zoom, etc.)
+    if (e.touches.length > 1) {
+      reset();
+      return;
+    }
     touchStartX.current = e.targetTouches[0].clientX;
     touchEndX.current = e.targetTouches[0].clientX; // otherwise the swipe is fired even with usual touch events
     touchStartY.current = e.targetTouches[0].clientY;
     touchEndY.current = e.targetTouches[0].clientY; // otherwise the swipe is fired even with usual touch events
-  }, []);
+  }, [reset]);
 
   const onTouchMove = useCallback((e: TouchEvent) => {
+    // ignore multiple touches (pinch zoom, etc.)
+    if (e.touches.length > 1) {
+      reset();
+      return;
+    }
+
     touchEndX.current = e.targetTouches[0].clientX;
     touchEndY.current = e.targetTouches[0].clientY;
-  }, []);
+  }, [reset]);
 
-  const onTouchEnd = useCallback(() => {
+  const onTouchEnd = useCallback((e: TouchEvent) => {
+    // ignore multiple touches (pinch zoom, etc.)
+    if (e.touches.length > 1) {
+      reset();
+      return;
+    }
 
     if (!touchStartX || !touchEndX) return;
     if (!touchStartY || !touchEndY) return;
@@ -66,22 +84,23 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
       }
     }
 
-    if (isUpSwipe && input.onSwipedUp) {
-      input.onSwipedUp();
+    // only invoke the specified function if it's been set
+    if (isUpSwipe) {
+      onSwipeUp?.();
     }
-    if (isDownSwipe && input.onSwipedDown) {
-      input.onSwipedDown();
+    else if (isDownSwipe) {
+      onSwipeDown?.();
     }
-    if (isLeftSwipe && input.onSwipedLeft) {
-      input.onSwipedLeft();
+    else if (isLeftSwipe) {
+      onSwipeLeft?.();
     }
-    if (isRightSwipe && input.onSwipedRight) {
-      input.onSwipedRight();
+    else if (isRightSwipe) {
+      onSwipeRight?.();
     }
-  }, [input]);
+  }, [reset, onSwipeUp, onSwipeDown, onSwipeLeft, onSwipeRight, minDistance]);
 
   useEffect(() => {
-    if (modal && !input.enabledOnModal) return;
+    if (modal && !enabledOnModal) return;
     document.body.addEventListener('touchstart', onTouchStart);
     document.body.addEventListener('touchend', onTouchEnd);
     document.body.addEventListener('touchmove', onTouchMove);
@@ -90,13 +109,7 @@ const useSwipe = (input: SwipeInput): SwipeOutput => {
       document.body.removeEventListener('touchend', onTouchEnd);
       document.body.removeEventListener('touchmove', onTouchMove);
     };
-  }, [modal, input, onTouchStart, onTouchEnd, onTouchMove]);
-
-  return {
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
-  };
+  }, [modal, enabledOnModal, onTouchStart, onTouchEnd, onTouchMove]);
 };
 
 export { useSwipe as default };

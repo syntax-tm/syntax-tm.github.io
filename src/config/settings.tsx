@@ -42,6 +42,7 @@ const buildBrixMenu = () => {
 };
 
 export const stats: StatDefinition[] = [
+  // UNKNOWN
   {
     id: "UNKNOWN",
     title: "",
@@ -61,6 +62,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // 404
   {
     id: "_404",
     title: "404",
@@ -79,6 +81,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // ANDROID
   {
     id: "ANDROID",
     title: "Android",
@@ -97,6 +100,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // PS2
   {
     id: "PS2",
     title: "PlayStation 2",
@@ -125,6 +129,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // DREAMCAST
   {
     id: "DREAMCAST",
     title: "Dreamcast",
@@ -153,6 +158,7 @@ export const stats: StatDefinition[] = [
       clock: "dreamcast-clock",
     },
   },
+  // IWHBYD
   {
     id: "IWHBYD",
     title: "IWHBYD",
@@ -182,6 +188,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // KONAMI CODE
   {
     id: "KONAMI_CODE",
     title: "Konami Code",
@@ -200,6 +207,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // MISSING NO
   {
     id: "MISSING_NO",
     title: "MissingNo.",
@@ -219,6 +227,7 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // OCEANGATE
   {
     id: "OCEANGATE",
     title: "Oceangate",
@@ -237,9 +246,10 @@ export const stats: StatDefinition[] = [
       clock: "clock",
     },
   },
+  // PSP
   {
-    id: "PSP_CODE",
-    title: "PSP Mode",
+    id: "PSP",
+    title: "PSP",
     description: "Flash CFW.",
     type: "THEME",
     isLocked: true,
