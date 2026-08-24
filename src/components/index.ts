@@ -2,6 +2,7 @@ export * from "./background/";
 export * from "./boot/";
 export * from "./component-map/";
 export * from "./clock/";
+export * from "./font/";
 export * from "./icons/";
 export * from "./loading/";
 export * from "./modal/";

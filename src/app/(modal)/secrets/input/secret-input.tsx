@@ -1,7 +1,7 @@
 "use client";
 
 import React, { ChangeEvent, useCallback, useEffect, useEffectEvent, useRef, useState } from "react";
-import { SECRET_INPUT_FONT } from "types/font";
+import { SECRET_INPUT_FONT } from "@components/font/font";
 import { useRouter } from "next/navigation";
 import { SnackbarVariant, StatDefinition } from "types";
 import { useSnackbar } from "@context";

@@ -53,7 +53,8 @@ const XMB_AUDIO_SRC = "/audio/nav.mp3";
 const XMB_AUDIO_ENTER_SRC = "/audio/ps3/ok_enter.mp3";
 const XMB_AUDIO_CANCEL_SRC = "/audio/ps3/ok_cancel.mp3";
 
-const cache: Record<number, number> = {};
+// TODO: create a store for the menu position cache
+const cache: Record<string, number> = {};
 
 const XmbContext = createContext<XmbContextType | undefined>(undefined);
 
@@ -106,7 +107,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
       : Math.min(delta, 1);
     if (!currentCategory) return;
     // update cache
-    cache[positionRef.current.x] = newY;
+    cache[currentCategory.title] = newY;
     const item = currentCategory.items[newY];
     // HACK: fix this, this should never return undefined but is when the category changes too quickly
     if (!item) return;
@@ -121,7 +122,8 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   // udpates both the category (x) and restores the previous selected item (y)
   const updateX = useCallback((newX: number, loadCache: boolean = true) => {
-    const prevY = loadCache ? (cache[newX] ?? 0) : 0;
+    if (!categories) return;
+    const prevY = loadCache ? (cache[categories[newX].title] ?? 0) : 0;
     setX(newX);
     positionRef.current = { x: newX, y: prevY };
     if (!categories) return;

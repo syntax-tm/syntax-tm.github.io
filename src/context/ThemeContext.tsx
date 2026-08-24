@@ -1,11 +1,11 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { AchievementId, DEFAULT_FONT, FontConfig, fontMap, secrets, StatDefinition, ThemeChangeEventDetail } from "types";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { AchievementId, secrets, StatDefinition, ThemeChangeEventDetail } from "types";
 import { useSettings } from "@stores";
 import { getSecretClass, SecretClass } from "@enums/secret-class";
 import componentMap from "@components/component-map/component-map";
-import { useSecret } from "./SecretContext";
+import { DEFAULT_FONT, FontConfig, fontMap } from "@components/font/font";
 
 export interface ThemeConfig {
   id: AchievementId;

@@ -13,10 +13,10 @@ import WiiHomeLayoutImage from "svg/wii_home_layout_final.svg";
 import './cursors.css';
 import './wii.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faCaretLeft, faCaretRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 const defaultFont = localFont({
-  src: '../../../public/fonts/BitstreamVeraSansMono-Bold.woff2',
+  src: './fonts/BitstreamVeraSansMono-Bold.woff2',
   preload: true,
   weight: '400',
   variable: '--font-bitstream-versa-sans-mono',
@@ -225,10 +225,8 @@ export function WiiMenu() {
               </div>
             </div>
           </div>
-          <div className="wii-status-bar absolute bottom-0 left-0 h-[26%] w-full grid">
-            <div className="grid grid-rows-1 w-full h-full">
-              <WiiClock />
-            </div>
+          <div className="wii-status-bar absolute bottom-0 left-0 h-[30%] w-full grid">
+            <WiiClock />
           </div>
         </div>
       </div>

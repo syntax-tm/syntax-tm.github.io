@@ -109,9 +109,6 @@
       ],
       "audio/*": [
         "./public/audio/*"
-      ],
-      "fonts/*": [
-        "./public/fonts/*"
       ]
     }
   },

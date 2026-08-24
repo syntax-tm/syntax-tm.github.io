@@ -4,21 +4,21 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import localFont from "next/font/local";
 
 const clockDigitFont = localFont({
-  src: '../../../public/fonts/E1234-Regular.woff2',
+  src: './fonts/Digital-7Mono.woff2',
   preload: true,
   weight: '400',
-  variable: '--font-e1234',
+  variable: '--font-digital-7-mono',
 });
 
 const defaultFont = localFont({
   src: [
     {
-      path: '../../../public/fonts/Bauhaus-Regular.woff2',
+      path: './fonts/Bauhaus-Regular.woff2',
       style: 'normal',
       weight: '400',
     },
     {
-      path: '../../../public/fonts/Bauhaus-Bold.woff2',
+      path: './fonts/Bauhaus-Bold.woff2',
       style: 'normal',
       weight: '700',
     },
@@ -28,19 +28,11 @@ const defaultFont = localFont({
 });
 
 const calendarFont = localFont({
-  src: '../../../public/fonts/RodinNTLGPro-DB-AlphaNum.woff2',
+  src: './fonts/RodinNTLGPro-DB-AlphaNum.woff2',
   preload: true,
   weight: '400',
   variable: '--font-rodin-ntlg-pro',
 });
-
-
-// const defaultFont = localFont({
-//   src: '../../../public/fonts/BitstreamVeraSansMono-Bold.woff2',
-//   preload: true,
-//   weight: '400',
-//   variable: '--font-bitstream-vera-sans-mono',
-// });
 
 export function WiiClock() {
   const [loaded, setLoaded] = useState(false);
@@ -72,7 +64,7 @@ export function WiiClock() {
     const date = new Date();
     const pad = (num: number, padWith: string = '0') => String(num).padStart(2, padWith);
 
-    const mm = pad(date.getMonth() + 1, ' '); // Months are 0-indexed
+    const mm = pad(date.getMonth() + 1, ' '); // months are 0-indexed
     setMonth(mm);
 
     const dd = pad(date.getDate());
@@ -118,12 +110,14 @@ export function WiiClock() {
   return (
     <React.Fragment>
       <div className={`wii-clock boot-fade-in ${clockDigitFont?.className} h-full w-full relative grid select-none pointer-events-none`}>
-        <div className="w-full h-full">
-          <div className={`wii-clock-container flex text-[clamp(1rem,4vw,5rem)] mb-1`}>
+        <div className="w-full h-full bottom-0 left-0 grid grid-rows-2 absolute">
+          <div className={`wii-clock-container flex text-[clamp(5rem,6vw,10rem)]`}>
             <span className="w-30 text-right flex-10">{hour}</span>
             <span className={`${ showColon || 'opacity-0' } flex-none`}>:</span>
-            <span className="w-30 text-left flex-10">{minute}</span>
-            <span className={`wii-clock-meridiem text-base xl:text-3xl ${defaultFont.className} font-bold fixed top-[78%] right-[33%]`}>{meridiem}</span>
+            <div className="w-30 text-left flex-10 relative">
+              <span>{minute}</span>
+              <span className={`wii-clock-meridiem text-base xl:text-3xl ${defaultFont.className} font-bold align-text-middle ml-10 absolute left-1/3 bottom-1/7`}>{meridiem}</span>
+            </div>
           </div>
           <div className={`wii-calendar-container align-middle my-auto grid text-[clamp(1rem,4.5vw,12rem)] ${calendarFont.className} text-center`}>
             <div className="flex align-middle justify-center">
