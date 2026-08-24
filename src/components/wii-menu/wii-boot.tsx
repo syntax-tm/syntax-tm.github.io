@@ -10,9 +10,9 @@ import ControllerIcon from "@components/icons/controller-icon";
 import "./wii-boot.scss";
 import "./cursors.css";
 
-export function WiiBoot() {
+const WII_MENU_START_AUDIO_SRC = 'audio/wii/menu_select_start.mp3';
 
-  const WII_MENU_START_AUDIO_SRC = 'audio/wii/menu_select_start.mp3';
+export function WiiBoot() {
 
   const { isBootVisible, hideBootScreen } = useBoot();
   const { play } = useAudio();

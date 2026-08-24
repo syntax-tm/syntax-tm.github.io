@@ -57,7 +57,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const brixStore = useSettingStore("BRIX", (state) => state);
   const wiiStore = useSettingStore("WII", (state) => state);
   const [currentSecret, setCurrentSecret] = useState<StatDefinition | null>(null);
-  const { id } = useSettings((state) => state);
+  const { id, update } = useSettings((state) => state);
 
   const getSecret = useCallback((id: AchievementId | null) => {
     if (!id) return null;
@@ -87,7 +87,9 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     store?.getState().unlock();
     store?.getState().enable();
 
-  }, [segments, stores, secrets]);
+    update(rootSegmentSecret.id);
+
+  }, [segments, stores, secrets, update]);
 
   useKeySequence(KONAMI_CODE, () => {
     konamiCodeStore.unlock();

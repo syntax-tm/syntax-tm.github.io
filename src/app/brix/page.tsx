@@ -35,10 +35,10 @@ export function BrixPage() {
       {
         isBootVisible
           ?
-          <BrixBoot />
+          <BootView />
           :
           <>
-            <BrixBackground />
+            <BackgroundView />
             {clock}
             <Menu />
           </>
