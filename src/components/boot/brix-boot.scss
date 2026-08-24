@@ -8,14 +8,14 @@
 
 .brix-boot-fireworks {
   z-index: 100;
-  animation: keyframes-fireworks 9.5s ease-in-out 0.5s 1 normal both;
+  animation: keyframes-fireworks 10s ease-in-out 0s 1 normal both;
 }
 
 @keyframes keyframes-fireworks {
   0% {
     opacity: 0;
   }
-  20%, 75% {
+  10%, 90% {
     opacity: 1;
   }
   100% {
@@ -27,7 +27,7 @@
   0% {
     opacity: 0;
   }
-  10%, 80% {
+  5%, 95% {
     opacity: 1;
   }
   100% {
