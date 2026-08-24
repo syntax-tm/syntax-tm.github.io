@@ -7,7 +7,6 @@ import { BackgroundView, BrixBackground } from "@components/background";
 import { Menu } from "@components/xmb-menu";
 // import { useRouter } from "next/navigation";
 import { useSettingStore } from "@stores";
-import BrixBootNew from "@components/boot/brix-boot";
 
 export function BrixPage() {
 
@@ -25,7 +24,7 @@ export function BrixPage() {
 
     enable();
 
-  }, [isUnlocked]);
+  }, [isUnlocked, unlock, enable]);
 
   const themeClassName = currentTheme ? currentTheme.className : 'default-theme';
   const fontClassName = font ? font.className : 'default-font';
@@ -36,7 +35,7 @@ export function BrixPage() {
       {
         isBootVisible
           ?
-          <BrixBootNew />
+          <BrixBoot />
           :
           <>
             <BrixBackground />
