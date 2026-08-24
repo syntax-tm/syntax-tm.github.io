@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 
-export function useActiveElement() {
+export const useActiveElement = () => {
 
   // initialize with the current active element, safe for SSR environments
   const [activeElement, setActiveElement] = useState<HTMLElement | null>(() =>
@@ -37,4 +37,6 @@ export function useActiveElement() {
     activeElement,
     isInput,
   };
-}
+};
+
+export { useActiveElement as default };

@@ -11,7 +11,7 @@ export interface WheelInput {
   enabledOnModal: boolean | undefined;
 }
 
-const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOnModal = false }: WheelInput) => {
+export const useWheel = ({ onWheelUp, onWheelDown, onWheelLeft, onWheelRight, enabledOnModal = false }: WheelInput) => {
 
   const shift = useRef(false);
   const { modal } = usePath();

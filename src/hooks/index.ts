@@ -1,3 +1,4 @@
+export * from './useDoubleTap';
 export * from './useInput';
 export * from './useKeyboard';
 export * from './useKeySequence';

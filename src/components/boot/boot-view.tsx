@@ -2,8 +2,8 @@ import { BackgroundView } from "@components/background/background-view";
 import { useBoot, useTheme } from "@context";
 import { Boot } from "./boot";
 import { useEffect } from "react";
-import useKeyboard from "@hooks/useKeyboard";
 import { KeyPressAction } from "types";
+import { useKeyboard, useDoubleTap } from "@hooks";
 
 export function BootView() {
   const { currentTheme, font, boot } = useTheme();
@@ -13,6 +13,11 @@ export function BootView() {
     ['escape', { repeat: false, onKeyPress: hideBootScreen }],
     ['enter', { repeat: false, onKeyPress: hideBootScreen }],
   ]);
+
+  useDoubleTap({
+    onDoubleTap: hideBootScreen,
+    delay: 500,
+  });
 
   useKeyboard({
     actions: actions,

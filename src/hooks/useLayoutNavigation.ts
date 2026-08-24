@@ -25,3 +25,5 @@ export const useLayoutNavigation = () => {
 
   return { isOpen, open, close, push, setIsOpen, shouldClose };
 };
+
+export { useLayoutNavigation as default };

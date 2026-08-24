@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export function useKeySequence(targetSequence: string[], callback: () => void, delay = 1000) {
+export const useKeySequence = (targetSequence: string[], callback: () => void, delay = 1000) => {
   // use refs to prevent unnecessary re-renders or effect re-runs
   const sequenceRef = useRef<string[]>([]);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -49,4 +49,6 @@ export function useKeySequence(targetSequence: string[], callback: () => void, d
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, [targetSequence, callback, delay]);
-}
+};
+
+export { useKeySequence as default };

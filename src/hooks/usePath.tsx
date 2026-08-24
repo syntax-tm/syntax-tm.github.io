@@ -14,7 +14,7 @@ export interface PathOutput {
   pathname: string;
 }
 
-const usePath = (): PathOutput => {
+export const usePath = (): PathOutput => {
 
   const pathname = usePathname();
 

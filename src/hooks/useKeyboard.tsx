@@ -26,7 +26,7 @@ export interface KeyboardOutput {
     onKeyDown: (e: KeyboardEvent) => void;
 }
 
-const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
+export const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
   const { modal } = usePath();
   const { isInput } = useActiveElement();

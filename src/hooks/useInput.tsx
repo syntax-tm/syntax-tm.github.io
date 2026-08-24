@@ -19,7 +19,7 @@ const resolveInputType = (userAgent: NavigatorID["userAgent"], isGamepadConnecte
   return InputType.DEFAULT;
 };
 
-const useInput = () => {
+export const useInput = () => {
   const [isGamepadConnected, setIsGamepadConnected] = useState(false);
   const [inputType, setInputType] = useState<InputType>(InputType.UNKNOWN);
 

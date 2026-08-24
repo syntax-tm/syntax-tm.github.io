@@ -7,7 +7,7 @@ import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import usePath from "@hooks/usePath";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
 import { useAudio } from '@context/AudioContext';
-import { IXmbMenu, Position, IXmbCategory, IXmbItem, XmbMenu } from "types";
+import { IXmbMenu, Position, IXmbCategory, IXmbItem } from "types";
 import build from "@services/menuBuilder";
 import { useGamepads } from "awesome-react-gamepads";
 import { useSnackbar } from "./SnackbarContext";
@@ -45,6 +45,8 @@ export const openInNewTab = (url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 
+const defaultMenu = build();
+
 const defPos: Position = { x: 0, y: 0 } as const;
 
 const XMB_AUDIO_SRC = "/audio/nav.mp3";
@@ -66,7 +68,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const [currentCategory, setCurrentCategory] = useState<IXmbCategory | null>(null);
   const [currentItem, setCurrentItem] = useState<IXmbItem | null>(null);
   const [currentItems, setCurrentItems] = useState<IXmbItem[] | null>(null);
-  const xmbMenuRef = useRef<IXmbMenu | null>(null);
+  const [menu, setMenu] = useState<IXmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
   const { modal } = usePath();
@@ -75,19 +77,19 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     xmbItemRef.current = new Map<string, IXmbItem>();
 
-    const menu = currentSecret?.menu ?? build();
+    const currentMenu = currentSecret?.menu ?? defaultMenu;
 
-    xmbMenuRef.current = menu;
-    setCategories(menu.items);
-    const cat = menu.items[0];
+    setMenu(currentMenu);
+    setCategories(currentMenu.items);
+    const cat = currentMenu.items[0];
     setCurrentCategory(cat);
     setCurrentItems(cat.items);
     if (cat.items[0])
       setCurrentItem(cat.items[0]);
 
     // save the item ref to find items by key directly
-    for (let i = 0; i < menu.items.length; i++) {
-      const cat = menu.items[i];
+    for (let i = 0; i < currentMenu.items.length; i++) {
+      const cat = currentMenu.items[i];
       for (let j = 0; j < cat.items.length; j++) {
         const item = cat.items[j];
         xmbItemRef.current.set(toXmbKey(i, j), item);
@@ -404,7 +406,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
       y,
       updateX,
       updateY,
-      menu: xmbMenuRef.current,
+      menu,
       currentCategory,
       currentItem,
       currentItems,
@@ -413,7 +415,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
       categories,
       toXmbKey,
     };
-  }, [x, y, xmbMenuRef, currentCategory, currentItem,
+  }, [x, y, menu, currentCategory, currentItem,
     currentItems, openInNewTab, openItem, categories, toXmbKey]);
 
   return (

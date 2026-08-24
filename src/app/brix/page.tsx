@@ -7,6 +7,7 @@ import { BackgroundView, BrixBackground } from "@components/background";
 import { Menu } from "@components/xmb-menu";
 // import { useRouter } from "next/navigation";
 import { useSettingStore } from "@stores";
+import BrixBootNew from "@components/boot/brix-boot";
 
 export function BrixPage() {
 
@@ -35,10 +36,10 @@ export function BrixPage() {
       {
         isBootVisible
           ?
-          <BootView />
+          <BrixBootNew />
           :
           <>
-            <BackgroundView />
+            <BrixBackground />
             {clock}
             <Menu />
           </>

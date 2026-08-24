@@ -27,7 +27,8 @@ const getMobileDetect = (userAgent: NavigatorID["userAgent"]) => {
     deviceType,
   };
 };
-const useMobileDetect = () => {
+
+export const useMobileDetect = () => {
   useEffect(() => { }, []);
   const userAgent =
     typeof navigator === "undefined" ? "SSR" : navigator.userAgent;

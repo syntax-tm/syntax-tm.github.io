@@ -1,7 +1,9 @@
+import { spotify } from "@components/icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faE, faHeart, faI, faL, faO, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
+import { faE, faEllipsis, faHeart, faI, faL, faO, faQuestion, faU, faV, faY } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import build from "@services/menuBuilder";
+import Image from "next/image";
 import { StatDefinition } from "types/secrets";
 import { IXmbCategory, XmbCategory, XmbItem, XmbMenu } from "types/xmb/index";
 
@@ -9,6 +11,10 @@ const defaultMenu = build();
 
 const createIcon = (icon: IconProp, cssClasses?: string) => {
   return <FontAwesomeIcon icon={icon} className={`xmb-icon ${cssClasses}`} />;
+};
+
+const createXmbIcon = (icon: string, alt: string = '', cssClasses: string = '') => {
+  return <Image src={icon} width={120} height={120} alt={alt} className={`xmb-icon ${cssClasses}`} />;
 };
 
 const buildBrixMenu = () => {
@@ -29,12 +35,32 @@ const buildBrixMenu = () => {
 
   const specialCategory: XmbCategory = new XmbCategory(0, 'Hello', brixIcon, items);
 
+  const spotifyCategory: XmbCategory = new XmbCategory(1, 'Playlists', spotify);
+
+  // to get the icon from the web UI:
+  // $('[data-testid="playlist-image"]').querySelector('img').getAttribute('src')
+  const brixBopsIcon = createXmbIcon('https://image-cdn-fa.spotifycdn.com/image/ab67706c0000d72c0fa9f41d3aabe7c2affb049d', "Brix's Bops");
+  spotifyCategory.addItem("brixs-bops", "Brix's Bops", brixBopsIcon, 'https://open.spotify.com/playlist/7AVn7cy7XopHvqB0FTaUDF?si=ec2e0faae895415e');
+
+  const brix3Icon = createXmbIcon('https://image-cdn-fa.spotifycdn.com/image/ab67706c0000d72c40ac8f5ce6e239b566b30f71', "\u2764\uFE0F");
+  spotifyCategory.addItem("brix-3", "\u2764\uFE0F", brix3Icon, 'https://open.spotify.com/playlist/6PfFV5lVba17fGbyoJ18iH?si=Ug8HtVGITpujfyaS_PWWxA');
+
+  const potpourbrixIcon = createXmbIcon('https://image-cdn-ak.spotifycdn.com/image/ab67706c0000d72cb41f10781b4198e250d50fa9', "Potpourbrix");
+  spotifyCategory.addItem("potpourbrix", "Potpourbrix", potpourbrixIcon, 'https://open.spotify.com/playlist/0wZygYXKFvIylXckDCFe9r?si=qY69zwR7QXyaNXKBmGAbAw');
+
+  spotifyCategory.addItem("more", "More", createIcon(faEllipsis), '/', 'Coming soon...', false, false);
+
+  const newCategories = [
+    specialCategory,
+    spotifyCategory,
+  ];
+
   const origItems: IXmbCategory[] = defaultMenu.items.map(i => {
-    i.index = i.index + 1;
+    i.index = i.index + newCategories.length;
     return i;
   });
 
-  const categories: IXmbCategory[] = [specialCategory, ...origItems];
+  const categories: IXmbCategory[] = [...newCategories, ...origItems];
 
   const brixMenu = new XmbMenu(categories);
 
@@ -281,9 +307,9 @@ export const stats: StatDefinition[] = [
       background: "brix-background",
       boot: {
         component: "brix-boot",
-        bootDuration: 8000,
+        bootDuration: 10000,
         bootFadeOutDuration: 250,
-        showBackground: true,
+        showBackground: false,
       },
       clock: "clock",
     },

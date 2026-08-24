@@ -1429,6 +1429,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fireworks-js/react@npm:^2.10.8":
+  version: 2.10.8
+  resolution: "@fireworks-js/react@npm:2.10.8"
+  dependencies:
+    fireworks-js: "npm:2.10.8"
+  peerDependencies:
+    "@types/react": ">=16.8.0"
+    react: ">=16.8.0"
+  checksum: 10c0/c97e806362a9d843c56861477ca6f9107ed6720ced27dcabc26c8e62c583f044bd1993e7c794fd37fd7e2136ede1e9524ae1a677b5f9e48eeeb00a884f3791fd
+  languageName: node
+  linkType: hard
+
 "@fortawesome/fontawesome-common-types@npm:7.3.1":
   version: 7.3.1
   resolution: "@fortawesome/fontawesome-common-types@npm:7.3.1"
@@ -7107,7 +7119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fireworks-js@npm:^2.10.8":
+"fireworks-js@npm:2.10.8, fireworks-js@npm:^2.10.8":
   version: 2.10.8
   resolution: "fireworks-js@npm:2.10.8"
   checksum: 10c0/58c2536fe89d448d809491fb1803fdcb9cb66e12c9e93dcdf8516ef2da04a663d6c1439a83cf65e4881da2fa12b28908432a83e30faf4f02724e1697a1317f0e
@@ -12669,6 +12681,7 @@ __metadata:
   resolution: "syntax-tm-github-io@workspace:."
   dependencies:
     "@eslint/js": "npm:^10.0.1"
+    "@fireworks-js/react": "npm:^2.10.8"
     "@fortawesome/fontawesome-svg-core": "npm:^7.3.1"
     "@fortawesome/free-brands-svg-icons": "npm:^7.3.1"
     "@fortawesome/free-regular-svg-icons": "npm:^7.3.1"
