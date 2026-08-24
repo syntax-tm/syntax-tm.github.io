@@ -70,25 +70,25 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setCurrentSecret(secret);
   }, [id, getSecret]);
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (!segments || segments.length === 0) return;
+  //   if (!segments || segments.length === 0) return;
 
-    const rootSegment = segments[0];
+  //   const rootSegment = segments[0];
 
-    // try to find the matching secret for this route
-    const rootSegmentSecret = secrets.find(s => s.id.toLowerCase() === rootSegment);
-    if (!rootSegmentSecret) return;
+  //   // try to find the matching secret for this route
+  //   const rootSegmentSecret = secrets.find(s => s.id.toLowerCase() === rootSegment);
+  //   if (!rootSegmentSecret) return;
 
-    if (!stores) return;
+  //   if (!stores) return;
 
-    const store = stores.get(rootSegmentSecret.id);
+  //   //const store = stores.get(rootSegmentSecret.id);
 
-    store?.getState().unlock();
+  //   //store.unlock();
 
-    update(rootSegmentSecret.id);
+  //   update(rootSegmentSecret.id);
 
-  }, [segments, stores, secrets, update]);
+  // }, [segments, stores, secrets, update]);
 
   useKeySequence(KONAMI_CODE, () => {
     konamiCodeStore.unlock();
