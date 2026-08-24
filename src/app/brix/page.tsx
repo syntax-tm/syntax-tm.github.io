@@ -10,21 +10,11 @@ import { useSettingStore } from "@stores";
 
 export function BrixPage() {
 
-  const { isUnlocked, unlock, enable } = useSettingStore("BRIX", (state) => state);
+  //const { isUnlocked, unlock, enable } = useSettingStore("BRIX", (state) => state);
   //const router = useRouter();
 
   const { isBootVisible } = useBoot();
   const { currentTheme, font } = useTheme();
-
-  useEffect(() => {
-
-    if (!isUnlocked) {
-      unlock();
-    }
-
-    enable();
-
-  }, [isUnlocked, unlock, enable]);
 
   const themeClassName = currentTheme ? currentTheme.className : 'default-theme';
   const fontClassName = font ? font.className : 'default-font';
