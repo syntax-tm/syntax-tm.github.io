@@ -323,7 +323,6 @@ export const stats: StatDefinition[] = [
     isLocked: true,
     isEnabled: false,
     trophy: 3, // platinum
-    menu: buildBrixMenu(),
     password: 'wii',
     theme: {
       background: "wii-background",
