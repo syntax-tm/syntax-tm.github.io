@@ -309,7 +309,7 @@ export const stats: StatDefinition[] = [
         component: "brix-boot",
         bootDuration: 10000,
         bootFadeOutDuration: 250,
-        showBackground: false,
+        showBackground: true,
       },
       clock: "clock",
     },

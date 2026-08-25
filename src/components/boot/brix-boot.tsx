@@ -24,7 +24,7 @@ export function BrixBoot() {
         className="brix-boot-fireworks"
         options={{
           autoresize: true,
-          opacity: 0.5,
+          opacity: 0.2,
           acceleration: 1.02,
           friction: 0.99,
           gravity: 5.0,
@@ -32,7 +32,7 @@ export function BrixBoot() {
           traceLength: 2,
           traceSpeed: 0.5,
           explosion: 8,
-          intensity: 5,
+          intensity: 40,
           flickering: 90, // 50
           lineStyle: 'round',
           hue: {
@@ -79,8 +79,8 @@ export function BrixBoot() {
           zIndex: 0,
         }}
       />
-      <div className="flex w-screen h-screen absolute z-100 place-content-end place-items-end">
-        <Image src={'svg/couple.svg'} alt="couple" fill className="brix-boot-fg not-portrait:max-h-1/2 place-self-end" />
+      <div className="grid w-screen h-screen absolute z-100 place-content-end place-items-end">
+        <Image src={'svg/brix.svg'} alt="couple" fill className="brix-boot-fg place-self-end" loading="eager" />
       </div>
     </div>
   );

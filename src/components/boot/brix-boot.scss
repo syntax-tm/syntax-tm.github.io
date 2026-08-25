@@ -3,7 +3,13 @@
 }
 
 .brix-boot-fg {
+  bottom: 0;
+  position: fixed;
   animation: keyframes-fg 10s ease-in-out 0s 1 normal both;
+}
+
+.brix-boot-fg-image {
+  fill: white;
 }
 
 .brix-boot-fireworks {
@@ -26,12 +32,25 @@
 @keyframes keyframes-fg {
   0% {
     opacity: 0;
+    height: 50%;
   }
-  5%, 95% {
+  10% {
     opacity: 1;
+    height: 50%;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+    height: 70%;
   }
   100% {
     opacity: 0;
+    height: 200%;
   }
 }
 

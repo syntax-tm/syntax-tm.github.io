@@ -12,22 +12,20 @@ import { SettingStoresProvider } from "@stores/setting-store";
 
 export default function Providers({ children }: ({ children: React.ReactNode })) {
   return (
-    <>
-      <AudioProvider>
-        <SnackbarProvider>
-          <SettingStoresProvider>
-            <SecretProvider>
-              <ThemeProvider>
-                <BootProvider>
-                  <XmbProvider>
-                    {children}
-                  </XmbProvider>
-                </BootProvider>
-              </ThemeProvider>
-            </SecretProvider>
-          </SettingStoresProvider>
-        </SnackbarProvider>
-      </AudioProvider>
-    </>
+    <AudioProvider>
+      <SnackbarProvider>
+        <SettingStoresProvider>
+          <SecretProvider>
+            <ThemeProvider>
+              <BootProvider>
+                <XmbProvider>
+                  {children}
+                </XmbProvider>
+              </BootProvider>
+            </ThemeProvider>
+          </SecretProvider>
+        </SettingStoresProvider>
+      </SnackbarProvider>
+    </AudioProvider>
   );
 }

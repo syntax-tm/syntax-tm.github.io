@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useBoot, useTheme } from "@context";
 import { BootView, BrixBoot } from "@components/boot";
 import { BackgroundView, BrixBackground } from "@components/background";
@@ -29,10 +29,10 @@ export function BrixPage() {
       {
         isBootVisible
           ?
-          <BrixBoot />
+          <BootView />
           :
           <>
-            <BrixBackground />
+            <BackgroundView />
             {clock}
             <Menu />
           </>
