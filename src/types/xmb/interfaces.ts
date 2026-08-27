@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import XmbCategory from "./xmb-category";
+import { Category } from "@enums";
 
 export interface IMenuItem {
   id: string;
@@ -23,6 +24,7 @@ export interface ICategory {
   icon: ReactElement;
   itemCount: number;
   items: IMenuItem[];
+  type: Category;
 }
 
 export interface IXmbCategory extends ICategory {

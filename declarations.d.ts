@@ -30,3 +30,14 @@ declare module '*.vert' {
   const content: string;
   export default content;
 }
+
+declare global {
+  interface string {
+    equalsIgnoreCase(other: string): boolean;
+  }
+}
+
+string.prototype.equalsIgnoreCase = function (this: string, other: string | undefined | null): boolean {
+  if (!other) return false;
+  return this.toLowerCase() === other.toLowerCase();
+};

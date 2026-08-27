@@ -80,7 +80,7 @@ export function BrixBoot() {
         }}
       />
       <div className="grid w-screen h-screen absolute z-100 place-content-end place-items-end">
-        <Image src={'svg/brix.svg'} alt="couple" fill className="brix-boot-fg place-self-end" loading="eager" />
+        <Image src={'svg/brix.svg'} alt="couple" fill className="brix-boot-fg place-self-end select-none pointer-events-none" loading="eager" />
       </div>
     </div>
   );

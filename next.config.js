@@ -61,6 +61,10 @@ const nextConfig = {
   /** @param {import('webpack').Configuration} config */
   webpack: (config, { dev, isServer, totalPages, dir, nextRuntime, buildId }) => {
 
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.('.svg'),
+    );
+
     if (dev) {
       config.devtool = 'inline-source-map';
       config.resolve.extensions = ['.ts', '.tsx', '.js', '.jsx', '.json'];
@@ -70,8 +74,8 @@ const nextConfig = {
     // allows importing svgs as data URLs
     config.module.rules.push(
       {
+        ...fileLoaderRule,
         test: /\.svg$/i,
-        type: 'asset',
         resourceQuery: /url/, // *.svg?url
       }
     );
@@ -79,11 +83,13 @@ const nextConfig = {
     config.module.rules.push(
       {
         test: /\.svg$/i,
-        issuer: /\.[jt]sx?$/,
-        resourceQuery: { not: [/url/] }, // exclude react component if *.svg?url
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
         use: ['@svgr/webpack'],
       },
     );
+
+    fileLoaderRule.exclude = /\.svg$/i;
 
     if (isServer && !dev) {
       return config;

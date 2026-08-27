@@ -191,7 +191,7 @@ export function BrixBackground() {
       id={canvasId}
       ref={canvasRef}
       className={`background secret-bg secret-background ${currentTheme?.className} fixed top-0 left-0 w-screen h-screen -z-100 pointer-events-none`}
-      style={{ imageRendering: 'pixelated', opacity: 0.7, backgroundColor: '#161616', zIndex: -100 }}
+      style={{ imageRendering: 'pixelated', opacity: 0.5, backgroundColor: '#161616', zIndex: -100 }}
     />
   );
 }

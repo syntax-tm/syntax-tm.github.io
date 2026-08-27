@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { IXmbCategory, IXmbItem } from "./interfaces";
 import { XmbItem } from "./xmb-item";
+import { Category } from "@enums";
 
 export class XmbCategory implements IXmbCategory {
   private _items: IXmbItem[];
@@ -8,8 +9,10 @@ export class XmbCategory implements IXmbCategory {
   title: string;
   icon: ReactElement;
   itemCount: number = 0;
+  type: Category;
 
-  constructor(index: number, title: string, icon: ReactElement, items: IXmbItem[] = []) {
+  constructor(type: Category, index: number, title: string, icon: ReactElement, items: IXmbItem[] = []) {
+    this.type = type;
     this.index = index;
     this.title = title;
     this.icon = icon;

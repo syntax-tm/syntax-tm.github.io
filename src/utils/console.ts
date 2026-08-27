@@ -1,3 +1,5 @@
+import { isDev } from "./env";
+
 export const reset = '\u001b[0m';
 export const e = '\u001b';
 export const fg = {
@@ -142,4 +144,55 @@ export const formatJson = (object: object | undefined | null) => {
   json = json.replace(propertyName, `$<spacing>${toAnsi('#7986CB')}"$<name>"${reset}`);
 
   return json;
+};
+
+export type Severity = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'FATAL';
+
+export const formatMessage = (severity: Severity, message: string, e?: Error, showSeverity?: boolean) => {
+  let color;
+
+  switch (severity) {
+    case 'DEBUG': color = fg.brightGreen; break;
+    case 'INFO': color = fg.brightBlue; break;
+    case 'WARN': color = fg.brightYellow; break;
+    case 'ERROR': color = fg.brightRed; break;
+    case 'FATAL': color = fg.brightRed; break;
+  }
+
+  let text = showSeverity
+    ? `${color}[${severity.padEnd(5)}]: ${reset}${message} `
+    : `${color}${message} `;
+
+  if (e) {
+    text += `${e.message}\n`;
+    text += isDev
+      ? `${e.stack}${reset}`
+      : `${reset}`;
+  }
+
+  return text;
+};
+
+export const debug = (message: string, e?: Error, showSeverity?: boolean) => {
+  const text = formatMessage('DEBUG', message, e, showSeverity);
+
+  console.log(text);
+};
+
+export const info = (message: string, e?: Error, showSeverity?: boolean) => {
+  const text = formatMessage('INFO', message, e, showSeverity);
+
+  console.log(text);
+};
+
+export const warn = (message: string, e?: Error, showSeverity?: boolean) => {
+  const text = formatMessage('WARN', message, e, showSeverity);
+
+  console.log(text);
+};
+
+export const error = (message: string, e?: Error, showSeverity?: boolean) => {
+  const text = formatMessage('ERROR', message, e, showSeverity);
+
+  console.log(text);
 };

@@ -29,7 +29,7 @@ export default defineConfig([
       "comma-dangle": ["warn", "always-multiline"],
       "@typescript-eslint/no-floating-promises": [
         "warn", { ignoreVoid: true }
-      ]
+      ],
     },
   },
   globalIgnores([
