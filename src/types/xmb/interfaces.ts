@@ -1,12 +1,10 @@
 import { ReactElement } from "react";
-import XmbCategory from "./xmb-category";
-import { Category } from "@enums";
+import { Category, MenuItemType } from "@enums";
 
 export interface IMenuItem {
-  id: string;
+  type: MenuItemType;
   title: string;
   link?: string | null;
-  type: string;
   icon: ReactElement | null;
   description?: string | null;
   isEnabled: boolean;

@@ -7,7 +7,7 @@ import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import usePath from "@hooks/usePath";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
 import { useAudio } from '@context/AudioContext';
-import { IXmbMenu, Position, IXmbCategory, IXmbItem } from "types";
+import { IXmbMenu, Position, IXmbCategory, IXmbItem, MenuItemType, XmbMenu } from "types";
 import build from "@services/menuBuilder";
 import { useGamepads } from "awesome-react-gamepads";
 import { useSnackbar } from "./SnackbarContext";
@@ -17,6 +17,7 @@ export interface XmbContextType {
   menu: IXmbMenu | null;
   currentCategory: IXmbCategory | null;
   currentItem: IXmbItem | null;
+  currentItemType: MenuItemType | null;
   currentItems: IXmbItem[] | null;
   x: number;
   y: number;
@@ -45,7 +46,7 @@ export const openInNewTab = (url: string) => {
   window.open(url, '_blank', 'noopener,noreferrer');
 };
 
-const defaultMenu = build();
+const defaultMenu: XmbMenu = build();
 
 const defPos: Position = { x: 0, y: 0 } as const;
 
@@ -85,8 +86,9 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     const cat = currentMenu.items[0];
     setCurrentCategory(cat);
     setCurrentItems(cat.items);
-    if (cat.items[0])
+    if (cat.items[0]) {
       setCurrentItem(cat.items[0]);
+    }
 
     // save the item ref to find items by key directly
     for (let i = 0; i < currentMenu.items.length; i++) {
@@ -411,6 +413,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
       menu,
       currentCategory,
       currentItem,
+      currentItemType: currentItem?.type ?? null,
       currentItems,
       openInNewTab,
       openItem,

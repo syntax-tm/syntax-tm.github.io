@@ -4,8 +4,8 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
 import { secrets, secretGroups, StatDefinition } from "types";
-import { SettingStore, useSettings, useSettingStore, useSettingStores } from "@stores/setting-store";
-import { useSelectedLayoutSegments } from "next/navigation";
+import { SettingStore, useSettings, useSettingStore } from "@stores/setting-store";
+// import { useSelectedLayoutSegments } from "next/navigation";
 
 const KONAMI_CODE = [
   "ArrowUp", "ArrowUp",
@@ -43,8 +43,8 @@ const SecretContext = createContext<SecretContextType | undefined>(undefined);
 
 export function SecretProvider({ children }: { children: React.ReactNode }) {
 
-  const segments = useSelectedLayoutSegments();
-  const { stores } = useSettingStores();
+  // const segments = useSelectedLayoutSegments();
+  // const { stores } = useSettingStores();
   const _404Store = useSettingStore("_404", (state) => state);
   const androidStore = useSettingStore("ANDROID", (state) => state);
   const dreamcastStore = useSettingStore("DREAMCAST", (state) => state);
@@ -57,7 +57,7 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
   const brixStore = useSettingStore("BRIX", (state) => state);
   const wiiStore = useSettingStore("WII", (state) => state);
   const [currentSecret, setCurrentSecret] = useState<StatDefinition | null>(null);
-  const { id, update } = useSettings((state) => state);
+  const { id } = useSettings((state) => state);
 
   const getSecret = useCallback((id: AchievementId | null) => {
     if (!id) return null;

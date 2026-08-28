@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2025",
     "lib": [
       "dom",
       "dom.iterable",
@@ -113,6 +113,7 @@
     }
   },
   "include": [
+    "declarations.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

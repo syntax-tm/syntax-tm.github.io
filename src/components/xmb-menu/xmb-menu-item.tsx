@@ -30,8 +30,8 @@ export const MenuItem = ({ catIndex, index, item }: MenuItemProps) => {
   return (
     <>
       <Link
-        id={item.id}
-        className={`relative xmb-item flex justify-self-center select-none ${item.isHidden ? 'opacity-0' : ''} ${isDisabled && 'disabled'} ${isActive ? 'active' : 'inactive'} ${!index && 'first'}`}
+        id={item.type}
+        className={`relative xmb-item flex justify-self-center select-none ${item.isHidden ? 'opacity-0' : ''} ${isDisabled && 'disabled'} ${isActive ? 'active' : ''} ${!index && 'first'}`}
         href={item.link || ""}
         data-index={index}
         data-active={isActive}

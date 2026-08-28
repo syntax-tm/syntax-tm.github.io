@@ -1,48 +1,40 @@
+'use client';
+
 import { getIcon } from "@components/icons/icon-loader";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faSpotify } from "@fortawesome/free-brands-svg-icons";
-import { faEllipsis, faHeart, faI, faU, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsis, faHeart, faI, faU, faStar, faKiss, faCat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import build from "@services/menuBuilder";
 import Image from "next/image";
 import { StatDefinition } from "types/secrets";
 import { IXmbCategory, XmbCategory, XmbItem, XmbMenu } from "types/xmb/index";
-import { equalsIgnoreCase } from "utils";
-
-const defaultMenu = build();
+import 'types/extensions/strings.extensions';
 
 const createIcon = (icon: IconProp, cssClasses: string | null = null) => {
-  return <FontAwesomeIcon icon={icon} className={`xmb-icon ${cssClasses}`} />;
+  return <FontAwesomeIcon icon={icon} className={`xmb-icon ${cssClasses} drop-shadow-sm drop-shadow-black/60dd`} />;
 };
 
 const createXmbIcon = (icon: string, alt: string = '', cssClasses: string = '') => {
   return (
-    <div className="border! border-white! rounded-xl flex relative overflow-clip place-content-center m-[5px]">
-      <Image src={icon} width={120} height={120} alt={alt} className={`xmb-icon object-cover m-0! ${cssClasses}`} />
+    <div className="border! border-white! rounded-xl flex relative overflow-clip place-content-center m-1.25">
+      <Image src={icon} width={120} height={120} alt={alt} className={`xmb-icon object-cover m-0! ${cssClasses} drop-shadow-sm drop-shadow-black/60`} />
     </div>
   );
 };
 
-const buildBrixMenu = () => {
-  const brixIcon = createIcon(faStar, 'text-yellow-400! stroke-white! stroke-10!');
+function buildBrixMenu() {
+  const brixIcon = createIcon(faCat, 'text-zinc-900! stroke-white/50! stroke-5!');
 
   const items: XmbItem[] = [
-    new XmbItem('i', '', createIcon(faI, 'text-blue-500! stroke-white! stroke-10!')),
-    // new XmbItem('blank-1', '', createIcon(faI), '/', '', false, true),
-    // new XmbItem('l', '', createIcon(faL, 'text-red-400')),
-    // new XmbItem('o', '', createIcon(faO, 'text-red-400')),
-    // new XmbItem('v', '', createIcon(faV, 'text-red-400')),
-    // new XmbItem('e', '', createIcon(faE, 'text-red-400')),
-    new XmbItem('heart', '', createIcon(faHeart, 'text-red-400! stroke-white! stroke-10!')),
-    // new XmbItem('blank-2', '', createIcon(faI), '/', '', false, true),
-    // new XmbItem('y', '', createIcon(faY)),
-    // new XmbItem('o2', '', createIcon(faO)),
-    new XmbItem('u', '', createIcon(faU, 'text-green-400! stroke-white! stroke-10!')),
+    new XmbItem('i', '', createIcon(faI, 'text-blue-500! stroke-white/50! stroke-8!')),
+    new XmbItem('heart', '', createIcon(faHeart, 'text-red-400! stroke-white/50! stroke-8!')),
+    new XmbItem('u', '', createIcon(faU, 'text-green-400! stroke-white/50! stroke-8!')),
   ];
 
   const specialCategory: XmbCategory = new XmbCategory('Secret1', 0, 'Hello', brixIcon, items);
 
-  const spotifyCategory: XmbCategory = new XmbCategory('Music', 1, 'Playlists', createIcon(faSpotify, 'text-green-400! stroke-white! stroke-10!'));
+  const spotifyCategory: XmbCategory = new XmbCategory('Music', 1, 'Playlists', createIcon(faSpotify, 'text-green-400! stroke-white/50! stroke-10!'));
 
   // to get the icon from the web UI:
   // $('[data-testid="playlist-image"]').querySelector('img').getAttribute('src')
@@ -69,74 +61,76 @@ const buildBrixMenu = () => {
 
   spotifyCategory.addItem("more", "More", createIcon(faEllipsis), '/', 'Coming soon...', false, false);
 
-  const newCategories = [
+  const newCategories: IXmbCategory[] = [
     specialCategory,
     spotifyCategory,
   ];
 
-  const origItems: IXmbCategory[] = defaultMenu.items.map(i => {
+  const defaultMenu = build();
+  const origItems = defaultMenu.items.map((i) => {
     i.index = i.index + newCategories.length;
-    if (equalsIgnoreCase(i.type, 'Home')) {
-      i.icon = getIcon('home', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
+    if (i.type.equalsIgnoreCase('Home')) {
+      i.icon = getIcon('home', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
 
       i.items.forEach(c => {
-        if (equalsIgnoreCase(c.id, 'about')) c.icon = getIcon('info', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'help')) c.icon = getIcon('questionCircle', { className: 'stroke-white/50 stroke-8 text-indigo-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'secrets')) c.icon = getIcon('egg', { className: 'stroke-white/50 stroke-8 text-rose-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'contact')) c.icon = getIcon('message', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
+        if (c.type.equalsIgnoreCase('about')) c.icon = getIcon('info', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
+        if (c.type.equalsIgnoreCase('help')) c.icon = getIcon('questionCircle', { className: 'stroke-white/50 stroke-8 text-indigo-500!' });
+        if (c.type.equalsIgnoreCase('secrets')) c.icon = getIcon('egg', { className: 'stroke-white/50 stroke-8 text-rose-500!' });
+        if (c.type.equalsIgnoreCase('contact')) c.icon = getIcon('message', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
       });
     }
-    else if (equalsIgnoreCase(i.type, 'Dev')) {
-      i.icon = getIcon('code', { className: 'stroke-white/50 stroke-8 text-indigo-600! drop-shadow-sm drop-shadow-black/60' });
+    else if (i.type.equalsIgnoreCase('Dev')) {
+      i.icon = getIcon('code', { className: 'stroke-white/50 stroke-8 text-indigo-600!' });
 
       i.items.forEach(c => {
-        if (equalsIgnoreCase(c.id, 'github')) c.icon = getIcon('github', { className: 'stroke-white/50 stroke-8 fill-green-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'gitlab')) c.icon = getIcon('gitlab', { className: 'stroke-white/50 stroke-8 text-orange-400! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'dockerhub')) c.icon = getIcon('docker', { className: 'stroke-white/50 stroke-8 text-sky-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'stackoverflow')) c.icon = getIcon('stackOverflow', { className: 'stroke-white/50 stroke-8 text-orange-500! drop-shadow-sm drop-shadow-black/60' });
+        if (c.type.equalsIgnoreCase('github')) c.icon = getIcon('github', { className: 'stroke-white/50 stroke-8 fill-green-500!' });
+        if (c.type.equalsIgnoreCase('gitlab')) c.icon = getIcon('gitlab', { className: 'stroke-white/50 stroke-8 text-orange-400!' });
+        if (c.type.equalsIgnoreCase('dockerhub')) c.icon = getIcon('docker', { className: 'stroke-white/50 stroke-8 text-sky-500!' });
+        if (c.type.equalsIgnoreCase('stack-overflow')) c.icon = getIcon('stackOverflow', { className: 'stroke-white/50 stroke-8 text-orange-500!' });
       });
     }
-    else if (equalsIgnoreCase(i.type, 'Settings')) {
-      i.icon = getIcon('settings', { className: 'stroke-white/50 stroke-8 text-red-500! drop-shadow-sm drop-shadow-black/60' });
+    else if (i.type.equalsIgnoreCase('Settings')) {
+      i.icon = getIcon('settings', { className: 'stroke-white/50 stroke-8 text-red-500!' });
 
       i.items.forEach(c => {
-        if (equalsIgnoreCase(c.id, 'githubactions')) c.icon = getIcon('githubActions', { className: 'stroke-white/50 stroke-[0.4px] fill-blue-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'fork')) c.icon = getIcon('codeFork', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'nextjs')) c.icon = getIcon('nextJs', { className: 'stroke-white/50 stroke-8 fill-gray-950! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'git')) c.icon = getIcon('git', { className: 'stroke-white/50 stroke-8 text-orange-600! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'fontawesome')) c.icon = getIcon('fontAwesome', { className: 'stroke-white/50 stroke-8 text-red-500! drop-shadow-sm drop-shadow-black/60' });
+        if (c.type.equalsIgnoreCase('github-actions')) c.icon = getIcon('githubActions', { className: 'stroke-white/50 stroke-[0.4px] fill-blue-500!' });
+        if (c.type.equalsIgnoreCase('fork')) c.icon = getIcon('codeFork', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
+        if (c.type.equalsIgnoreCase('next-js')) c.icon = getIcon('nextJs', { className: 'stroke-white/50 stroke-8 fill-gray-950!' });
+        if (c.type.equalsIgnoreCase('git')) c.icon = getIcon('git', { className: 'stroke-white/50 stroke-8 text-orange-600!' });
+        if (c.type.equalsIgnoreCase('font-awesome')) c.icon = getIcon('fontAwesome', { className: 'stroke-white/50 stroke-8 text-red-500!' });
       });
     }
-    else if (equalsIgnoreCase(i.type, 'Gaming')) {
-      i.icon = getIcon('controller', { className: 'fill-green-500! stroke-white/50! stroke-2! drop-shadow-sm drop-shadow-black/60' });
+    else if (i.type.equalsIgnoreCase('Gaming')) {
+      i.icon = getIcon('controller', { className: 'fill-green-500! stroke-white/50! stroke-2!' });
 
       i.items.forEach(c => {
-        if (equalsIgnoreCase(c.id, 'youtube')) c.icon = getIcon('youtube', { className: 'stroke-white/50 stroke-8 text-red-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'steam')) c.icon = getIcon('steam', { className: 'stroke-white/50! text-blue-950! stroke-[0.4px]! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'trueachievements')) c.icon = getIcon('trueachievements', { className: 'stroke-white/50 stroke-10 text-zinc-900! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'speedrun')) c.icon = getIcon('trophy', { className: 'stroke-white/50 stroke-8 text-yellow-500!' });
-        if (equalsIgnoreCase(c.id, 'xbox')) c.icon = getIcon('xbox', { className: 'stroke-white/50 stroke-8 text-green-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'battleNet')) c.icon = getIcon('battleNet', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'twitch')) c.icon = getIcon('twitch', { className: 'stroke-white/50 stroke-8 text-violet-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'exophase')) c.icon = getIcon('exophase', { className: 'stroke-white/50! fill-sky-500! stroke-1 drop-shadow-sm drop-shadow-black/60' });
+        if (c.type.equalsIgnoreCase('youtube')) c.icon = getIcon('youtube', { className: 'stroke-white/50 stroke-8 text-red-500!' });
+        if (c.type.equalsIgnoreCase('steam')) c.icon = getIcon('steam', { className: 'stroke-white/50! text-blue-950! stroke-[0.4px]!' });
+        if (c.type.equalsIgnoreCase('true-achievements')) c.icon = getIcon('trueachievements', { className: 'stroke-white/50 stroke-10 text-zinc-900!' });
+        if (c.type.equalsIgnoreCase('speedrun')) c.icon = getIcon('trophy', { className: 'stroke-white/50 stroke-8 text-yellow-500!' });
+        if (c.type.equalsIgnoreCase('xbox')) c.icon = getIcon('xbox', { className: 'stroke-white/50 stroke-8 text-green-500!' });
+        if (c.type.equalsIgnoreCase('battle-net')) c.icon = getIcon('battleNet', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
+        if (c.type.equalsIgnoreCase('twitch')) c.icon = getIcon('twitch', { className: 'stroke-white/50 stroke-8 text-violet-500!' });
+        if (c.type.equalsIgnoreCase('exophase')) c.icon = getIcon('exophase', { className: 'stroke-white/50! fill-sky-500!' });
       });
     }
-    else if (equalsIgnoreCase(i.type, 'Social')) {
-      i.icon = getIcon('message', { className: 'stroke-white/50 stroke-8 text-sky-500! drop-shadow-sm drop-shadow-black/60' });
+    else if (i.type.equalsIgnoreCase('Social')) {
+      i.icon = getIcon('message', { className: 'stroke-white/50 stroke-8 text-sky-500!' });
 
       i.items.forEach(c => {
-        if (equalsIgnoreCase(c.id, 'discord')) c.icon = getIcon('discord', { className: 'stroke-white/50 stroke-8 text-violet-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'youtube')) c.icon = getIcon('youtube', { className: 'stroke-white/50 stroke-8 text-red-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'facebook')) c.icon = getIcon('facebook', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'trueachievements')) c.icon = getIcon('trueachievements', { className: 'stroke-white/50 stroke-8 text-sky-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'spotify')) c.icon = getIcon('spotify', { className: 'stroke-white/50 stroke-8 text-green-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'instagram')) c.icon = getIcon('instagram', { className: 'stroke-white/50 stroke-5 text-[#5D4037]! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'x')) c.icon = getIcon('xTwitter', { className: 'stroke-white/50 stroke-8 text-blue-500! drop-shadow-sm drop-shadow-black/60' });
-        if (equalsIgnoreCase(c.id, 'statsfm')) c.icon = getIcon('statsFm', { className: 'stroke-white/50 stroke-10 text-sky-500! drop-shadow-sm drop-shadow-black/60' });
+        if (c.type.equalsIgnoreCase('discord')) c.icon = getIcon('discord', { className: 'stroke-white/50 stroke-8 text-violet-500!' });
+        if (c.type.equalsIgnoreCase('youtube')) c.icon = getIcon('youtube', { className: 'stroke-white/50 stroke-8 text-red-500!' });
+        if (c.type.equalsIgnoreCase('facebook')) c.icon = getIcon('facebook', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
+        if (c.type.equalsIgnoreCase('spotify')) c.icon = getIcon('spotify', { className: 'stroke-white/50 stroke-8 text-green-500!' });
+        if (c.type.equalsIgnoreCase('instagram')) c.icon = getIcon('instagram', { className: 'stroke-white/50 stroke-5 text-[#5D4037]!' });
+        if (c.type.equalsIgnoreCase('x')) c.icon = getIcon('xTwitter', { className: 'stroke-white/50 stroke-8 text-blue-500!' });
+        if (c.type.equalsIgnoreCase('stats-fm')) c.icon = getIcon('statsFm', { className: 'stroke-white/50 stroke-10 text-sky-500!' });
       });
     }
     return i;
   });
+
+  if (!origItems) throw new Error(`Failed to build XmbMenu.`);
 
   const categories: IXmbCategory[] = [...newCategories, ...origItems];
 
@@ -145,7 +139,8 @@ const buildBrixMenu = () => {
   return brixMenu;
 };
 
-export const stats: StatDefinition[] = [
+const brixMenu: XmbMenu = buildBrixMenu();
+const stats: StatDefinition[] = [
   // UNKNOWN
   {
     id: "UNKNOWN",
@@ -379,7 +374,7 @@ export const stats: StatDefinition[] = [
     isLocked: true,
     isEnabled: false,
     trophy: 3, // platinum
-    menu: buildBrixMenu(),
+    menu: brixMenu,
     password: '01-01-2025',
     theme: {
       background: "brix-background",
@@ -414,3 +409,4 @@ export const stats: StatDefinition[] = [
 ];
 
 export { stats as default };
+

@@ -16,6 +16,11 @@
     "serve": "webpack serve",
     "prebuild": "node ./scripts/prebuild.mjs"
   },
+  "browserslist": [
+    ">= 0.5%",
+    "not dead",
+    "not op_mini all"
+  ],
   "dependencies": {
     "@fireworks-js/react": "^2.10.8",
     "@fortawesome/fontawesome-svg-core": "^7.3.1",

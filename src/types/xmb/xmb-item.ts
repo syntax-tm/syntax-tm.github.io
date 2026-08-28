@@ -1,19 +1,19 @@
 import { ReactElement } from "react";
 import { IXmbItem, ICategory } from "./interfaces";
+import { MenuItemType } from "@enums";
 
 export class XmbItem implements IXmbItem {
   private _category: ICategory | null = null;
   private _description: string | null = '';
-  id: string;
+  type: MenuItemType;
   title: string;
   link?: string | null = '';
-  type: string = '';
   icon: ReactElement | null;
   isEnabled: boolean = true;
   isHidden: boolean = false;
 
-  constructor(id: string, title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null, isEnabled?: boolean, isHidden?: boolean, category: ICategory | null = null) {
-    this.id = id;
+  constructor(type: MenuItemType, title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null, isEnabled?: boolean, isHidden?: boolean, category: ICategory | null = null) {
+    this.type = type;
     this.title = title;
     this.icon = icon;
     this.link = link;

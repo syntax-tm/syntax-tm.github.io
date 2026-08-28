@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { IXmbCategory, IXmbItem } from "./interfaces";
 import { XmbItem } from "./xmb-item";
-import { Category } from "@enums";
+import { Category, MenuItemType } from "@enums";
 
 export class XmbCategory implements IXmbCategory {
   private _items: IXmbItem[];
@@ -29,8 +29,8 @@ export class XmbCategory implements IXmbCategory {
     this.itemCount = value.length;
   }
 
-  addItem(id: string, title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null, isEnabled?: boolean, isHidden?: boolean) {
-    const item = new XmbItem(id, title, icon, link, description, isEnabled, isHidden, this);
+  addItem(type: MenuItemType, title: string = '', icon: ReactElement | null = null, link?: string | null, description?: string | null, isEnabled?: boolean, isHidden?: boolean) {
+    const item = new XmbItem(type, title, icon, link, description, isEnabled, isHidden, this);
     if (!this._items) {
       this._items = [];
     }

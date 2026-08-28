@@ -1,0 +1,66 @@
+.rgb-cycle {
+  animation: rgb-cycle 1.2s linear infinite,
+    shake 2s cubic-bezier(.36,.07,.19,.97) 0.5s infinite alternate forwards;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 100px; // 1000px
+  transform-origin: bottom center;
+}
+
+.rgb-cycle:hover {
+  animation: rgb-cycle 1.2s linear infinite,
+    hover-shake 2s cubic-bezier(.36,.07,.19,.97) 0.5s infinite alternate forwards;
+  backface-visibility: hidden;
+  perspective: 100px; // 1000px
+  transform-origin: bottom center;
+  position: relative;
+}
+
+@keyframes rgb-cycle {
+  from {
+    filter: hue-rotate(0deg);
+  }
+
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+
+@keyframes shake {
+  10%, 90% {
+    transform: rotate(15deg);
+  }
+
+  30%, 50%, 70% {
+    transform: rotate(-15deg);
+  }
+}
+
+@keyframes hover-shake {
+  10%, 90% {
+    transform: translateY(10px) rotate(15deg);
+  }
+
+  30%, 50%, 70% {
+    transform: translateY(-100px) rotate(-15deg);
+  }
+}
+
+// @keyframes shake {
+//   10%, 90% {
+//     transform: translate3d(-1px, 0, 0) rotate(5deg);
+//   }
+
+//   20%, 80% {
+//     transform: translate3d(2px, 0, 0);
+//   }
+
+//   30%, 50%, 70% {
+//     transform: translate3d(-4px, 0, 0) rotate(-5deg);
+//   }
+
+//   40%, 60% {
+//     transform: translate3d(4px, 0, 0);
+//   }
+// }

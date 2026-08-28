@@ -27,7 +27,7 @@ export const MenuCategory = ({ index, category }: MenuCategoryProps) => {
   return (
     <>
       <div id={category.title}
-        className={`xmb-category ${ isActive ? 'active' : 'inactive' }`}
+        className={`xmb-category ${ isActive ? 'active' : '' }`}
         data-index={index}
         data-active={isActive}
         style={{ '--y': y } as React.CSSProperties}
@@ -48,7 +48,7 @@ export const MenuCategory = ({ index, category }: MenuCategoryProps) => {
                 <MenuItem
                   catIndex={index}
                   index={i}
-                  key={item.id}
+                  key={item.type}
                   item={item}
                 />
               ),

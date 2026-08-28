@@ -1,5 +1,4 @@
 import { IXmbCategory, IXmbMenu } from "./interfaces";
-import XmbCategory from "./xmb-category";
 
 export class XmbMenu implements IXmbMenu {
   [index: number]: IXmbCategory;

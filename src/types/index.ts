@@ -1,5 +1,8 @@
+'use client';
+
 export * from './enums/index';
 export * from './events';
+//export * from './extensions/';
 export type * from './key-press-action';
 export * from './position';
 export * from './secrets/index';

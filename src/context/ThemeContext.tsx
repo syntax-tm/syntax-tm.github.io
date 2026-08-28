@@ -98,7 +98,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
-  const [currentSetting, setCurrentSetting] = useState<AchievementId | null>(null);
   const { id, update } = useSettings((state) => state);
   const [themes] = useState<Map<AchievementId, ThemeConfig> | null>(() => {
     const t = new Map<AchievementId, ThemeConfig>();
@@ -126,7 +125,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const theme = getTheme(id || undefined);
     setCurrentTheme(theme);
-    setCurrentSetting(id);
   }, [id, themes]);
 
   useEffect(() => {
@@ -138,7 +136,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
       update(newId);
 
-      setCurrentSetting(newId);
       const theme = newId ? getTheme(newId) : undefined;
       setCurrentTheme(theme);
     };

@@ -1,36 +1,10 @@
+'use client';
+
 // TODO: clean this up and remove unused icons
 // TODO: add findIconDefinition to load fa icons by name once config is moved to json
 // https://docs.fontawesome.com/web/use-with/react/use-with#typescript
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCode,
-  faCog,
-  faTrophy,
-  faAward,
-  faC,
-  faMedal,
-  faInfoCircle,
-  faComputer,
-  faComputerMouse,
-  faKeyboard,
-  faHeadset,
-  faLaptop,
-  faDesktop,
-  faDisease,
-  faCopy,
-  faStar,
-  faMessage,
-  faChartLine,
-  faBoxesPacking,
-  faCodeFork,
-  faShare,
-  faQuestion,
-  faQuestionCircle,
-  faEgg,
-  faToolbox,
-  faHouse,
-} from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
   faGithubAlt,
@@ -54,7 +28,7 @@ import {
   faTelegram,
   faFontAwesome,
 } from "@fortawesome/free-brands-svg-icons";
-import React from "react";
+import React, { ReactNode } from "react";
 import Image from "next/image";
 import displayIcon from "public/image/xmb/display.png";
 import musicIcon from "public/image/xmb/music.png";
@@ -67,11 +41,14 @@ import videoIcon from "public/image/xmb/video.png";
 import chocoIcon from "public/image/xmb/choco.png";
 import halo3generalBwIcon from "public/image/halo_3_general_bw.png";
 import pspBatteryIcon from "public/image/psp_full_battery.png";
+import './icons.scss';
+import { IconName, IconPrefix, IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FaIconKind, faIconKinds } from "./fa-icons";
 
 const xmbIconClassName = "xmb-icon";
 
 export interface IconProps {
-  className: string;
+  className?: string;
   width?: number;
   height?: number;
   fill?: boolean;
@@ -80,8 +57,49 @@ export interface IconProps {
   objectFit?: string;
 }
 
-export const egg = (props?: IconProps) => {
-  return <FontAwesomeIcon icon={faEgg} className={`${xmbIconClassName} ${props?.className}`} />;
+// NOTE: faIconKinds and FaIconKind type are imported from fa-icons.ts
+
+const svgIconKinds = ['controller' , 'trueachievements' , 'exophase' ,'statsFm' , 'nextJs' , 'githubActions'] as const;
+export type SvgIconKind = typeof svgIconKinds[number];
+
+const bitmapIconKinds = ['home' ,'display' ,'music' ,'photo' ,'prime' ,'resume' ,'settings' ,'update' ,'user' ,'video' ,'h3general' , 'choco' , 'PspBattery'] as const;
+export type BitmapIconKind = typeof bitmapIconKinds[number];
+
+export type IconKind = FaIconKind | BitmapIconKind | SvgIconKind;
+
+function isSvgIcon(value: IconKind): value is SvgIconKind {
+  return svgIconKinds.includes(value as SvgIconKind);
+}
+
+function isBitmapIcon(value: IconKind): value is BitmapIconKind {
+  return bitmapIconKinds.includes(value as BitmapIconKind);
+}
+
+function isFaIcon(value: IconKind): value is FaIconKind {
+  return faIconKinds.includes(value as FaIconKind);
+}
+
+export const createFaIcon = (icon: IconProp | [IconPrefix, IconName], props?: IconProps): ReactNode => {
+  return <FontAwesomeIcon icon={icon} className={`${xmbIconClassName} ${props?.className}`} />;
+};
+
+export const createBitmapIcon = (icon: BitmapIconKind, props?: IconProps): ReactNode => {
+
+};
+
+export const createIcon = (kind: IconKind, props?: IconProps): ReactNode => {
+  if (isFaIcon(kind)) {
+    const icon = createFaIcon(['fas', kind], props);
+    return icon;
+  }
+  if (isBitmapIcon(kind)) {
+    const icon = createBitmapIcon(kind, props);
+    return icon;
+  }
+};
+
+export const cat = (props?: IconProps) => {
+  return <FontAwesomeIcon icon={faCat} className={`${xmbIconClassName} ${props?.className}`} />;
 };
 export const info = (props?: IconProps) => {
   return <FontAwesomeIcon icon={faInfoCircle} className={`${xmbIconClassName} ${props?.className}`} />;
