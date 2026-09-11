@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import ClockView from "@components/clock/clock-view";
 import Menu from "@components/xmb-menu/xmb-menu";
 import BackgroundView from "@components/background/background-view";
@@ -16,10 +16,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className={`root-container ${themeClassName} ${fontClassName}`}>
-      <BackgroundView />
-      <ClockView />
-      { !modal && <Menu /> }
-      {children}
+      <Suspense>
+        <BackgroundView />
+        <ClockView />
+        { !modal && <Menu /> }
+        {children}
+      </Suspense>
     </div>
   );
 }

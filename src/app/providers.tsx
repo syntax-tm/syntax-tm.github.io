@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, Suspense } from "react";
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from "@mui/material";
 import { ProviderComposer } from "@providers/ProviderComposer";
@@ -40,8 +40,10 @@ const providers = [
 
 export default function Providers({ children }: ({ children: ReactNode })) {
   return (
-    <ProviderComposer providers={providers}>
-      {children}
-    </ProviderComposer>
+    <Suspense>
+      <ProviderComposer providers={providers}>
+        {children}
+      </ProviderComposer>
+    </Suspense>
   );
 }

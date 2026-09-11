@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import { useBoot, useTheme } from "@context";
 import { BootView, BrixBoot } from "@components/boot";
 import { BackgroundView, BrixBackground } from "@components/background";
@@ -26,17 +26,19 @@ export function BrixPage() {
 
   return (
     <div className={`root-container ${themeClassName} ${fontClassName}`}>
-      {
-        isBootVisible
-          ?
-          <BootView />
-          :
-          <>
-            <BackgroundView />
-            {clock}
-            <Menu />
-          </>
-      }
+      <Suspense>
+        {
+          isBootVisible
+            ?
+            <BootView />
+            :
+            <>
+              <BackgroundView />
+              {clock}
+              <Menu />
+            </>
+        }
+      </Suspense>
     </div>
   );
 }

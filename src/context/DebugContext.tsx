@@ -1,12 +1,9 @@
 "use client";
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
-import { secrets, secretGroups, StatDefinition } from "types";
-import { SettingStore, SettingStoreType, useSettings, useSettingStore, useSettingStores } from "@stores/setting-store";
+import { SettingStoreType, useSettings, useSettingStore, useSettingStores } from "@stores/setting-store";
 import { getStat } from "@config/settings";
-import { ActionKeyMap, useKeyboard } from "@hooks";
 import { useSecret } from "@context";
 
 export interface DebugContextType {
@@ -58,14 +55,14 @@ export function DebugProvider({ children }: { children: React.ReactNode }) {
   const [disableSwipe, setDisableSwipe] = useState(true);
 
   const lockSecrets = () => {
-    for (const [key, value] of Object.entries(stores!)) {
+    for (const [_key, value] of Object.entries(stores!)) {
       const store = value as SettingStoreType;
       store.getState().lock();
     }
   };
 
   const unlockSecrets = () => {
-    for (const [key, value] of Object.entries(stores!)) {
+    for (const [_key, value] of Object.entries(stores!)) {
       const store = value as SettingStoreType;
       store.getState().unlock();
     }
@@ -115,6 +112,7 @@ export function DebugProvider({ children }: { children: React.ReactNode }) {
     disableSwipe,
     setDisableSwipe,
     showBoot,
+    setShowBoot,
   };
 
   return (

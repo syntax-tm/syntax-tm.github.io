@@ -1,10 +1,15 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
+import dynamic from 'next/dynamic';
 import { Modal, ModalMenuButton } from "@components/modal/modal";
-import SecretInput from "./secret-input";
 import { useRouter } from "next/navigation";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons";
+
+const SecretInput = dynamic(
+  () => import('./secret-input'),
+  { ssr: false },
+);
 
 export default function SecretsPage() {
 
@@ -24,7 +29,9 @@ export default function SecretsPage() {
     <>
       <Modal title="Enter Password" menuButton={modalButton}>
         <div className="secret-input-wrapper">
-          <SecretInput />
+          <Suspense>
+            <SecretInput />
+          </Suspense>
         </div>
       </Modal>
     </>
