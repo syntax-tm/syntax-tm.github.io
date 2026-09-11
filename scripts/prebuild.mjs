@@ -32,9 +32,7 @@ const { stdout = '' } = spawnSync('npx', ['next -v'], {
   encoding: 'utf8',
 });
 
-const versionRegex = /\s+(?<version>[v\d\.]+)/i;
-const match = versionRegex.exec(stdout);
-const nextJsVersion = match?.groups?.version ?? 'Unknown';
+const nextJsVersion = stdout.split(/\s/)[-1] ?? 'Unknown';
 
 const envContent = `
 NEXT_PUBLIC_BUILD_DATETIME="${buildDate} ${buildTime}"
