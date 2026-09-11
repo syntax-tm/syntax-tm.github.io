@@ -1,1 +1,1 @@
-export * from './menuBuilder';
+export * from './menu-builder';

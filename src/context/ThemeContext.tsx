@@ -6,6 +6,7 @@ import { useSettings } from "@stores";
 import { getSecretClass, SecretClass } from "@enums/secret-class";
 import componentMap from "@components/component-map/component-map";
 import { DEFAULT_FONT, FontConfig, fontMap } from "@components/font/font";
+import * as log from "utils/console";
 
 export interface ThemeConfig {
   id: AchievementId;
@@ -132,7 +133,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const handleThemeChanged = (e: CustomEvent<ThemeChangeEventDetail>) => {
       const newId = e.detail.id;
 
-      console.log(`Theme changed to '${newId}' from '${id}.`);
+      log.info(`Theme changed to '${newId}' from '${id}'.`);
 
       update(newId);
 

@@ -6,6 +6,8 @@ import SecretView from "./secret-view";
 import { AchievementId, achievements, secretGroups, secrets, StatGroupDefinition } from "types";
 import "./secrets.scss";
 import { SettingState } from "@stores";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 
 const SECRET_TAP_MIN = 5;
 
@@ -169,9 +171,9 @@ export default function SecretsView() {
                         </th>
                       </tr>
                       <tr className="content-center bg-stone-900/90 text-xs lg:text-lg">
-                        <th className="border border-gray-400/25">
-                          {/* <FontAwesomeIcon icon={faQuestionCircle} className="m-2 p-1 w-full h-full mx-auto my-auto" size="xl"
-                            aria-label="Status" /> */}
+                        <th className="border border-gray-400/25" title="Locked">
+                          <FontAwesomeIcon icon={faUnlockAlt} className="p-2 w-full h-full mx-auto my-0"
+                            aria-label="Status" />
                         </th>
                         <th className="p-2 border border-gray-400/25 font-semibold">
                           <span className="">Name</span>
@@ -180,7 +182,10 @@ export default function SecretsView() {
                           <span className="">Description</span>
                         </th>
                         <th className="p-2 border border-gray-400/25 font-semibold">
-                          <span className="">Enabled</span>
+                          <span className="" title="Enabled">
+                            <FontAwesomeIcon icon={faCheckCircle} className="p-2 w-full h-full mx-auto my-0"
+                              aria-label="Status" />
+                          </span>
                         </th>
                       </tr>
                       {

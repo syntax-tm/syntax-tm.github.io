@@ -4,20 +4,40 @@ export type Position = {
 }
 
 export class XmbPosition implements Position {
-  constructor(public x: number, public y: number) { }
+  constructor(private _x: number = 0, private _y: number = 0) { }
 
-  public update(x: number, y: number) {
+  get x() {
+    return this._x;
+  }
+
+  set x(value: number) {
+    this._x = value;
+  }
+
+  get y() {
+    return this._y;
+  }
+
+  set y(value: number) {
+    this._y = value;
+  }
+
+  update(x: number, y: number) {
     this.x = x;
     this.y = y;
   }
 
-  public equals(other: Position) {
+  equals(other: Position | XmbPosition) {
     if (this.x !== other.x) return false;
     return this.y !== other.y;
   }
 
   toString() {
-    [this.x, this.y].join(',');
+    return [this.x, this.y].join(',');
+  }
+
+  toLocaleString() {
+    return this.toString();
   }
 }
 

@@ -6,7 +6,7 @@ import Ps1LogoImage from "image/ps1.png";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
-import ControllerIcon from "@components/icons/controller-icon";
+import ControllerIcon from "@components/icon/controller-icon";
 import "./wii-boot.scss";
 import "./cursors.css";
 

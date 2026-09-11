@@ -1,11 +1,10 @@
 'use client';
 
 import React, { useCallback, useEffect, useId, useMemo, useRef } from 'react';
-import { useSecret } from '@context/SecretContext';
 import getShaderSource, { DEFAULT_SHADER_SORUCE } from './shaders';
-import "./secret-background.scss";
 import { useTheme } from '@context/ThemeContext';
 import { useSettings } from '@stores';
+import "./secret-background.scss";
 
 export function SecretBackground() {
   const canvasId = useId();

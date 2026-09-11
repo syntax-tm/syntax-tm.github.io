@@ -5,5 +5,6 @@ export * from './env';
 export * from './gamepad-helper';
 export * from './generic';
 export * from './json';
+export * from './os';
 export * from './strings';
 export * from './webgl';

@@ -10,6 +10,9 @@
     "editor.trimAutoWhitespace": true,
     "editor.indentSize": 2,
     "editor.tabSize": 2,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "tailwindCSS.experimental.classRegex": [
+      ["className?:\\s*['\"`]([^'\"`]*?)['\"`]", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+    ]
   }
 }

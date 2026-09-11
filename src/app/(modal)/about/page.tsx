@@ -1,9 +1,20 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useMobileDetect from "@hooks/useMobileDetect";
 import { Modal } from "@components/modal/modal";
 import { useSettingStore } from "@stores";
+import { useAudio, useSecret } from "@context";
+import { getMacAddresses } from "utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-regular-svg-icons";
+import Link from "next/link";
+import { useKeyboard } from "@hooks";
+import { useRouter } from "next/navigation";
+import { KeyPressAction } from "types";
+import { useGamepad, useGamepads } from "awesome-react-gamepads";
+
+const AUDIO_SRC = '/audio/nav.mp3';
 
 function isMultiLine(text: string | undefined) {
   if (text === undefined) return false;
@@ -108,7 +119,84 @@ function AboutView() {
   );
 };
 
+export function PspAboutPage() {
+  
+  // const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const [mac, setMac] = useState('00:AA:BB:00:00:99');
+  const { play } = useAudio();
+
+  const onEsc = useCallback(async () => {
+    await play(AUDIO_SRC);
+    router.push('/');
+  }, [play, router]);
+
+  const actions: Map<string, KeyPressAction> = useMemo(() => {
+    const newActions = new Map<string, KeyPressAction>();
+    newActions.set('escape', { repeat: false, onKeyPress: onEsc });
+    return newActions;
+  }, [onEsc]);
+
+  useKeyboard({ actions: actions, enabledOnModal: true });
+
+  useGamepads({
+    onA: () => { void onEsc(); },
+    onB: () => { void onEsc(); },
+    onStart: () => { void onEsc(); },
+    onSelect: () => { void onEsc(); },
+  });
+
+  // useEffect(() => {
+  //   async function fetchMac() {
+  //     try {
+  //       const response = await fetch('/api/mac'); // Calls app/api/mac/route.ts
+  //       if (!response.ok) throw new Error('Failed to fetch');
+
+  //       const data = await response.json() as Record<string, string>;
+  //       setMac(data.mac);
+  //     } catch (error) {
+  //       console.error('Error fetching MAC:', error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+
+  //   void fetchMac();
+  // }, []);
+
+  return (
+    <div className="absolute z-1 inset-0">
+      <div className="flex flex-col place-items-center place-content-center align-middle justify-items-center h-full select-none pointer-events-none">
+        <div className="grid grid-cols-2 grid-rows-3 grid-flow-row gap-4 lg:gap-10 text-[2.5vh] md:text-[3.5vh] lg:text-[5vh]">
+          <div className="text-right">System Software</div>
+          <div className="text-left">5.00 M33-6</div>
+          <div className="text-right">Nickname</div>
+          <div className="text-left">Dark_Alex</div>
+          <div className="text-right">MAC Address</div>
+          <div className="text-left">{mac}</div>
+        </div>
+      </div>
+      <div className="absolute bottom-5 left-[50%] place-items-start h-10 glow-dark">
+        <Link href="/">
+          <div className="relative flex flex-row gap-2 h-[3.5vh] md:h-[4vh] lg:h-[5vh] text-[2.5vh] md:text-[3.5vh] lg:text-[5vh] place-items-center content-center align-middle">
+            <FontAwesomeIcon icon={faCircle} className="" />
+            <span className="place-self-center my-auto">Back</span>
+          </div>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 export default function AboutPage() {
+
+  const { currentSetting } = useSecret();
+
+  // TODO: add all modals to the settings to be easily configured
+  const isPsp = currentSetting === 'PSP';
+  if (isPsp) {
+    return <PspAboutPage />;
+  }
 
   return (
     <>

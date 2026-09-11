@@ -1,3 +1,7 @@
+import * as THREE from 'three/webgpu'
+import * as TSL from 'three/tsl'
+import { extend } from '@react-three/fiber'
+
 declare module '*.css';
 
 declare module '*.svg' {

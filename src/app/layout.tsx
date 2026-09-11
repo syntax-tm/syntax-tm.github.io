@@ -2,10 +2,11 @@ import React from "react";
 import type { Metadata, Viewport } from 'next';
 import Link from "next/link";
 import { config } from '@fortawesome/fontawesome-svg-core';
+import Providers from "@app/providers";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+// import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-import Providers from "@app/providers";
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import "@styles/global.scss";
 

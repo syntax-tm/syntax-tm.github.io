@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import pspBatteryIcon from "public/image/psp_full_battery.png";
-import Image from "next/image";
 import { useTheme } from "@context";
+import { PspBattery } from "@components/icon/icons";
 import "./clock.scss";
 
 export function PspClock() {
@@ -70,22 +69,24 @@ export function PspClock() {
   return (
     <React.Fragment>
       <div className={`text-lg xl:text-2xl ${font?.className}`}>
-        <div className={`psp-clock boot-fade-in rounded-sm absolute p-2 select-none pointer-events-none tabular-nums z-5`}>
-          <div className={`clock-container ${loaded ? 'flex' : 'hidden'} tracking-normal align-middle flex flex-nowrap items-center -mt-1`}>
-            <div className="flex flex-nowrap gap-0 items-center mx-2">
-              <span>{month}</span>
-              <span className="font-light mx-1 text-[14px]">/</span>
-              <span>{day}</span>
+        <div className={`psp-clock boot-fade-in rounded-sm p-5 select-none pointer-events-none tabular-nums z-5 max-h-10 lg:max-h-14 relative`}>
+          <div className={`clock-container ${loaded ? 'grid grid-flow-col' : 'hidden'} lg:text-4xl xl:text-5xl`}>
+            <div className="gap-1 lg:gap-1.5 mx-5 place-content-center place-items-center justify-items-center grid grid-flow-col align-middle">
+              <span className="inline-block align-middle">{month}</span>
+              <span className="font-light mx-1 text-[14px] lg:text-2xl xl:text-4xl align-middle">/</span>
+              <span className="inline-block align-middle">{day}</span>
             </div>
-            <div className="flex flex-nowrap gap-0 items-center mx-2">
-              <span>{hour}</span>
-              <span className="w-3 text-center">{showColon ? ':' : ''}</span>
-              <span>{minute}</span>
+            <div className="gap-1 lg:gap-1.5 mx-2 place-content-center place-items-center justify-items-center grid grid-flow-col align-middle">
+              <span className="inline-block align-middle">{hour}</span>
+              <span className={`inline-block align-middle ${showColon ? 'opacity-100' : 'opacity-0'}`}>:</span>
+              <span className="inline-block align-middle">{minute}</span>
+              <span className="mx-5">{meridiem}</span>
+              
             </div>
-            <span>{meridiem}</span>
-            <div className="mx-3 object-scale-down h-8 my-auto">
-              <Image src={pspBatteryIcon} alt="psp battery" className="clock-icon" width={20} height={20} title="100%" />
+            <div className="grid max-h-6 lg:max-h-10 align-middle">
+              <PspBattery className="clock-icon align-middle" aria-label="100%" />
             </div>
+            
           </div>
         </div>
       </div>

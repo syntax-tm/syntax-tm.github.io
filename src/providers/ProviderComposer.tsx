@@ -1,18 +1,24 @@
-import React from "react";
+"use client";
 
-type ProviderEntry = React.ElementType;
+import type { ComponentType, ReactNode } from "react";
 
-export const ProviderComposer = ({
+type ProviderProps = {
+  children: ReactNode;
+};
+
+type Provider = ComponentType<ProviderProps>;
+
+type ProviderComposerProps = {
+  providers: Provider[];
+  children: ReactNode;
+};
+
+export function ProviderComposer({
   providers,
   children,
-}: {
-  providers: React.ReactNode[];
-  children: React.ReactNode;
-}) => {
-  return providers.reduceRight<React.ReactNode>((nestedChildren, ProviderItem) => {
-    // standard component fallback
-    return <>
-      {ProviderItem}
-    </>;
-  }, children);
-};
+}: ProviderComposerProps) {
+  return providers.reduceRight(
+    (acc, Provider) => <Provider>{acc}</Provider>,
+    children,
+  );
+}

@@ -6,10 +6,13 @@ import { useTheme } from "@context/ThemeContext";
 import { Menu } from "@components/xmb-menu/xmb-menu";
 import { BackgroundView } from "@components/background/background-view";
 import { BootView } from "@components/boot/";
+import DebugView from "@components/debug/debug-view";
+import { useSecret } from "@context";
 
 export default function Home() {
   const { isBootVisible } = useBoot();
   const { currentTheme, font } = useTheme();
+  const { isDebug } = useSecret();
 
   const themeClassName = currentTheme ? currentTheme.className : 'default-theme';
   const fontClassName = font ? font.className : 'default-font';
@@ -20,15 +23,14 @@ export default function Home() {
       {
         isBootVisible
           ?
-          <>
-            <BootView />
-          </>
+          <BootView />
           :
-          <>
+          <React.Fragment>
             <BackgroundView />
-            {clock}
+            { clock }
             <Menu />
-          </>
+            { isDebug && <DebugView /> }
+          </React.Fragment>
       }
     </div>
   );

@@ -1,10 +1,12 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useKeySequence } from "@hooks/useKeySequence";
 import { AchievementId } from "@enums";
 import { secrets, secretGroups, StatDefinition } from "types";
 import { SettingStore, useSettings, useSettingStore } from "@stores/setting-store";
+import { getStat } from "@config/settings";
+import { ActionKeyMap, useKeyboard } from "@hooks";
 // import { useSelectedLayoutSegments } from "next/navigation";
 
 const KONAMI_CODE = [
@@ -33,6 +35,8 @@ export interface SecretContextType {
   pspCodeStore: SettingStore;
   ps2Store: SettingStore;
   brixStore: SettingStore;
+  debugStore: SettingStore;
+  isDebug: boolean;
   wiiStore: SettingStore;
   getSecret: (id: AchievementId | null) => StatDefinition | null;
   currentSecret: StatDefinition | null;
@@ -45,24 +49,25 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
 
   // const segments = useSelectedLayoutSegments();
   // const { stores } = useSettingStores();
-  const _404Store = useSettingStore("_404", (state) => state);
-  const androidStore = useSettingStore("ANDROID", (state) => state);
-  const dreamcastStore = useSettingStore("DREAMCAST", (state) => state);
-  const iwhbydStore = useSettingStore("IWHBYD", (state) => state);
-  const konamiCodeStore = useSettingStore("KONAMI_CODE", (state) => state);
-  const missingNoStore = useSettingStore("MISSING_NO", (state) => state);
-  const oceangateStore = useSettingStore("OCEANGATE", (state) => state);
-  const pspCodeStore = useSettingStore("PSP", (state) => state);
-  const ps2Store = useSettingStore("PS2", (state) => state);
-  const brixStore = useSettingStore("BRIX", (state) => state);
-  const wiiStore = useSettingStore("WII", (state) => state);
+  const _404Store = useSettingStore("_404", (state) => state, getStat('_404'));
+  const androidStore = useSettingStore("ANDROID", (state) => state, getStat('ANDROID'));
+  const dreamcastStore = useSettingStore("DREAMCAST", (state) => state, getStat('DREAMCAST'));
+  const iwhbydStore = useSettingStore("IWHBYD", (state) => state, getStat('IWHBYD'));
+  const konamiCodeStore = useSettingStore("KONAMI_CODE", (state) => state, getStat('KONAMI_CODE'));
+  const missingNoStore = useSettingStore("MISSING_NO", (state) => state, getStat('MISSING_NO'));
+  const oceangateStore = useSettingStore("OCEANGATE", (state) => state, getStat('OCEANGATE'));
+  const pspCodeStore = useSettingStore("PSP", (state) => state, getStat('PSP'));
+  const ps2Store = useSettingStore("PS2", (state) => state, getStat('PS2'));
+  const brixStore = useSettingStore("BRIX", (state) => state, getStat('BRIX'));
+  const debugStore = useSettingStore("DEBUG", (state) => state, getStat('DEBUG'));
+  const wiiStore = useSettingStore("WII", (state) => state, getStat('WII'));
   const [currentSecret, setCurrentSecret] = useState<StatDefinition | null>(null);
   const { id } = useSettings((state) => state);
 
   const getSecret = useCallback((id: AchievementId | null) => {
     if (!id) return null;
-    const results = secrets.filter(s => s.id === id);
-    return results[0];
+    const result = secrets.find(s => s.id === id);
+    return result ?? null;
   }, [secrets]);
 
   useEffect(() => {
@@ -70,25 +75,19 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     setCurrentSecret(secret);
   }, [id, getSecret]);
 
-  // useEffect(() => {
+  const debugKeyMap: ActionKeyMap = useMemo(() => {
+    return {
+      'F3': (e: KeyboardEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        debugStore.toggle();
+      },
+    };}, [debugStore]);
 
-  //   if (!segments || segments.length === 0) return;
-
-  //   const rootSegment = segments[0];
-
-  //   // try to find the matching secret for this route
-  //   const rootSegmentSecret = secrets.find(s => s.id.toLowerCase() === rootSegment);
-  //   if (!rootSegmentSecret) return;
-
-  //   if (!stores) return;
-
-  //   //const store = stores.get(rootSegmentSecret.id);
-
-  //   //store.unlock();
-
-  //   update(rootSegmentSecret.id);
-
-  // }, [segments, stores, secrets, update]);
+  useKeyboard({
+    actions: debugKeyMap,
+    enabledOnModal: true,
+  });
 
   useKeySequence(KONAMI_CODE, () => {
     konamiCodeStore.unlock();
@@ -133,6 +132,8 @@ export function SecretProvider({ children }: { children: React.ReactNode }) {
     pspCodeStore,
     ps2Store,
     brixStore,
+    debugStore,
+    isDebug: id === 'DEBUG',
     wiiStore,
     currentSetting: id,
   };

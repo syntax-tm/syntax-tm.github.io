@@ -1,0 +1,348 @@
+{
+  "defaultTheme": {
+    "className": "xmb-icon fill-white text-white drop-shadow-sm drop-shadow-black/60"
+  },
+  "categories": [
+    {
+      "type": "Home",
+      "title": "Home",
+      "icon": {
+        "type": "fa",
+        "kind": "house"
+      },
+      "items": [
+        {
+          "type": "about",
+          "title": "About",
+          "description": "Display the about screen",
+          "icon": {
+            "type": "fa",
+            "kind": "info-circle"
+          }
+        },
+        {
+          "type": "help",
+          "title": "Help",
+          "description": "Display the help screen",
+          "icon": {
+            "type": "fa",
+            "kind": "question-circle"
+          }
+        },
+        {
+          "type": "contact",
+          "title": "Contact",
+          "description": "Send a message",
+          "icon": {
+            "type": "fa",
+            "kind": "message"
+          }
+        },
+        {
+          "type": "secrets",
+          "title": "Secrets",
+          "description": "View current secret progress",
+          "icon": {
+            "type": "component",
+            "kind": "egg"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Dev",
+      "title": "Dev",
+      "icon": {
+        "type": "fa",
+        "kind": "code"
+      },
+      "items": [
+        {
+          "type": "github",
+          "title": "GitHub",
+          "description": "View GitHub profile",
+          "icon": {
+            "type": "fa",
+            "kind": "github"
+          }
+        },
+        {
+          "type": "github-gists",
+          "title": "GitHub Gists",
+          "description": "View GitHub Gists",
+          "icon": {
+            "type": "fa",
+            "kind": "github-alt"
+          }
+        },
+        {
+          "type": "gitlab",
+          "title": "GitLab",
+          "description": "View GitLab profile",
+          "icon": {
+            "type": "fa",
+            "kind": "gitlab"
+          }
+        },
+        {
+          "type": "dockerhub",
+          "title": "DockerHub",
+          "description": "View DockerHub profile",
+          "icon": {
+            "type": "fa",
+            "kind": "docker"
+          }
+        },
+        {
+          "type": "stack-overflow",
+          "title": "StackOverflow",
+          "description": "View StackOverflow profile",
+          "icon": {
+            "type": "fa",
+            "kind": "stack-overflow"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Gaming",
+      "title": "Gaming",
+      "icon": {
+        "type": "svg",
+        "kind": "controller"
+      },
+      "items": [
+        {
+          "type": "speedrun",
+          "title": "Speedrun.com",
+          "description": "View Speedrun.com profile",
+          "link": "https://www.speedrun.com/user/Gundwn",
+          "icon": {
+            "type": "fa",
+            "kind": "trophy"
+          }
+        },
+        {
+          "type": "youtube",
+          "title": "YouTube",
+          "description": "View YouTube channel",
+          "link": "https://www.youtube.com/@Gundwn",
+          "icon": {
+            "type": "fa",
+            "kind": "youtube"
+          }
+        },
+        {
+          "type": "steam",
+          "title": "Steam",
+          "description": "View Steam profile",
+          "link": "https://s.team/p/dwq-wrkt",
+          "icon": {
+            "type": "fa",
+            "kind": "steam"
+          }
+        },
+        {
+          "type": "xbox",
+          "title": "Xbox",
+          "description": "View Xbox profile",
+          "link": "https://www.xbox.com/en-US/play/user/Gundwn",
+          "icon": {
+            "type": "fa",
+            "kind": "xbox"
+          }
+        },
+        {
+          "type": "battle-net",
+          "title": "Battle.Net",
+          "description": "View Battle.Net profile",
+          "link": "/copy?title=Battle.Net&name=BattleTag%3A&value=Gundwn%2311586",
+          "icon": {
+            "type": "fa",
+            "kind": "battle-net"
+          }
+        },
+        {
+          "type": "exophase",
+          "title": "Exophase",
+          "description": "View Exophase profile",
+          "link": "https://www.exophase.com/user/Gundwn/",
+          "icon": {
+            "type": "svg",
+            "kind": "exophase"
+          }
+        },
+        {
+          "type": "true-achievements",
+          "title": "TrueAchievements",
+          "description": "View TrueAchievements profile",
+          "link": "https://www.trueachievements.com/gamer/Gundwn",
+          "icon": {
+            "type": "svg",
+            "kind": "true-achievements"
+          }
+        },
+        {
+          "type": "twitch",
+          "title": "Twitch",
+          "description": "View Twitch.tv profile",
+          "link": "https://twitch.tv/Gundwn",
+          "icon": {
+            "type": "fa",
+            "kind": "twitch"
+          }
+        },
+      ]
+    },
+    {
+      "type": "Social",
+      "title": "Social",
+      "icon": {
+        "type": "svg",
+        "kind": "user"
+      },
+      "items": [
+        {
+          "type": "discord",
+          "title": "Discord",
+          "description": "View Discord profile",
+          "link": "https://discordapp.com/users/266438959230353409",
+          "icon": {
+            "type": "fa",
+            "kind": "discord"
+          }
+        },
+        {
+          "type": "youtube",
+          "title": "YouTube",
+          "description": "View YouTube channel",
+          "link": "https://www.youtube.com/@Gundwn",
+          "icon": {
+            "type": "fa",
+            "kind": "youtube"
+          }
+        },
+        {
+          "type": "facebook",
+          "title": "Facebook",
+          "description": "View Facebook profile",
+          "link": "https://www.facebook.com/gundwnsrc",
+          "icon": {
+            "type": "fa",
+            "kind": "facebook"
+          }
+        },
+        {
+          "type": "instagram",
+          "title": "Instagram",
+          "description": "View Instagram profile",
+          "link": "https://instagram.com/GundwnSRC",
+          "icon": {
+            "type": "fa",
+            "kind": "instagram"
+          }
+        },
+        {
+          "type": "x",
+          "title": "X",
+          "description": "View X (Twitter) profile",
+          "link": "https://x.com/gundwnsrc",
+          "icon": {
+            "type": "fa",
+            "kind": "x-twitter"
+          }
+        },
+        {
+          "type": "spotify",
+          "title": "Spotify",
+          "description": "View Spotify profile",
+          "link": "https://open.spotify.com/user/1280499465",
+          "icon": {
+            "type": "fa",
+            "kind": "spotify"
+          }
+        },
+        {
+          "type": "stats-fm",
+          "title": "Stats.fm",
+          "description": "View stats.fm profile",
+          "link": "https://stats.fm/gundwn",
+          "icon": {
+            "type": "svg",
+            "kind": "stats-fm"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Settings",
+      "title": "Settings",
+      "icon": {
+        "type": "fa",
+        "kind": "toolbox"
+      },
+      "items": [
+        {
+          "type": "git",
+          "title": "Source",
+          "description": "View this project on GitHub",
+          "link": "https://github.com/syntax-tm/syntax-tm.github.io",
+          "icon": {
+            "type": "fa",
+            "kind": "git"
+          }
+        },
+        {
+          "type": "github-actions",
+          "title": "Builds",
+          "description": "View latest builds on GitHub",
+          "link": "https://github.com/syntax-tm/syntax-tm.github.io/actions",
+          "icon": {
+            "type": "svg",
+            "kind": "github-actions"
+          }
+        },
+        {
+          "type": "fork",
+          "title": "Fork",
+          "description": "Fork this project on GitHub",
+          "link": "https://github.com/syntax-tm/syntax-tm.github.io/fork",
+          "icon": {
+            "type": "fa",
+            "kind": "code-fork"
+          }
+        },
+        {
+          "type": "next-js",
+          "title": "Next.js",
+          "description": "About Next.js",
+          "link": "https://nextjs.org/",
+          "icon": {
+            "type": "svg",
+            "kind": "next-js"
+          }
+        },
+        {
+          "type": "font-awesome",
+          "title": "FontAwesome",
+          "description": "About FontAwesome",
+          "link": "https://fontawesome.com/",
+          "icon": {
+            "type": "fa",
+            "kind": "font-awesome"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Gaming",
+      "title": "Gaming",
+      "icon": {
+        "type": "svg",
+        "kind": "controller"
+      },
+      "items": [
+      ]
+    }
+  ]
+}

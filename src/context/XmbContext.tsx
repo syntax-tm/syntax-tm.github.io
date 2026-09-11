@@ -1,40 +1,35 @@
 "use client";
 
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useWheel, { WheelInput } from "@hooks/useWheel";
 import useKeyboard, { KeyPressAction } from "@hooks/useKeyboard";
 import usePath from "@hooks/usePath";
 import useSwipe, { SwipeInput } from "@hooks/useSwipe";
 import { useAudio } from '@context/AudioContext';
-import { IXmbMenu, Position, IXmbCategory, IXmbItem, MenuItemType, XmbMenu } from "types";
-import build from "@services/menuBuilder";
+import { IXmbMenu, Position, IXmbCategory, IXmbItem, MenuItemType, XmbMenu, Category, XmbPosition } from "types";
+import build from "@services/menu-builder";
 import { useGamepads } from "awesome-react-gamepads";
 import { useSnackbar } from "./SnackbarContext";
 import { useSecret } from "@context";
+import { useXmbStore } from "@stores/xmb-store";
+import { useShallow } from "zustand/react/shallow";
+import { convertToRecord } from "utils";
+import { fg, reset, log } from "utils";
 
 export interface XmbContextType {
   menu: IXmbMenu | null;
-  currentCategory: IXmbCategory | null;
-  currentItem: IXmbItem | null;
-  currentItemType: MenuItemType | null;
+  category: Category | undefined;
+  currentItem: IXmbItem | undefined;
+  item: MenuItemType | undefined;
   currentItems: IXmbItem[] | null;
   x: number;
-  y: number;
   updateX: (newX: number) => void;
+  y: number;
   updateY: (newY: number) => void;
   openInNewTab: (url: string) => void;
   openItem: (item: IXmbItem) => void;
   toXmbKey: (x: number, y: number) => string;
-}
-
-export interface XmbState {
-  x: number;
-  y: number;
-  position: Position;
-  currentItem: IXmbItem | null;
-  currentItems: IXmbItem[] | null;
-  currentCategory: IXmbCategory | null;
 }
 
 export const toXmbKey = (x: number, y: number) => {
@@ -54,91 +49,135 @@ const XMB_AUDIO_SRC = "/audio/nav.mp3";
 const XMB_AUDIO_ENTER_SRC = "/audio/ps3/ok_enter.mp3";
 const XMB_AUDIO_CANCEL_SRC = "/audio/ps3/ok_cancel.mp3";
 
-// TODO: create a store for the menu position cache
-const cache: Record<string, number> = {};
-
 const XmbContext = createContext<XmbContextType | undefined>(undefined);
 
 export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const router = useRouter();
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const positionRef = useRef<Position>({} as Position);
+  const x = useXmbStore((state) => state.x);
+  const y = useXmbStore((state) => state.y);
+  const item = useXmbStore((state) => state.item);
+  const category = useXmbStore((state) => state.category);
+  const cache = useXmbStore((state) => state.cache);
+
+  const { setCategory, setItem, setX, setY, setCache } = useXmbStore(useShallow((state) =>
+    ({ setCategory: state.setCategory, setItem: state.setItem, setX: state.setX, setY: state.setY, setCache: state.setCache })));
+  const positionRef = useRef<XmbPosition>(new XmbPosition(0, 0));
   const xmbItemRef = useRef<Map<string, IXmbItem> | null>(null);
-  const [categories, setCategories] = useState<IXmbCategory[] | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<IXmbCategory | null>(null);
-  const [currentItem, setCurrentItem] = useState<IXmbItem | null>(null);
+  const [categories, setCategories] = useState<Record<Category, IXmbCategory> | null>(null);
   const [currentItems, setCurrentItems] = useState<IXmbItem[] | null>(null);
   const [menu, setMenu] = useState<IXmbMenu | null>(null);
   const { play } = useAudio();
   const { showSnackbar } = useSnackbar();
   const { modal } = usePath();
   const { currentSecret } = useSecret();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    xmbItemRef.current = new Map<string, IXmbItem>();
+  const getCategory = useCallback((index: number) => {
+    if (!categories) return undefined;
+    return Object.values(categories).find(c => c.index === index);
+  }, [categories]);
 
-    const currentMenu = currentSecret?.menu ?? defaultMenu;
+  const updateCache = () => {
+    if (!menu) return;
+    if (!positionRef.current) return;
+    const cat = getCategory(x);
+    if (!cat) return;
+    setCache(cat.type, y);
 
-    setMenu(currentMenu);
-    setCategories(currentMenu.items);
-    const cat = currentMenu.items[0];
-    setCurrentCategory(cat);
-    setCurrentItems(cat.items);
-    if (cat.items[0]) {
-      setCurrentItem(cat.items[0]);
-    }
+    log.info(`Current position: ${fg.brightCyan}${positionRef.current.toString()}${reset}`);
+  };
 
-    // save the item ref to find items by key directly
-    for (let i = 0; i < currentMenu.items.length; i++) {
-      const cat = currentMenu.items[i];
-      for (let j = 0; j < cat.items.length; j++) {
-        const item = cat.items[j];
-        xmbItemRef.current.set(toXmbKey(i, j), item);
-      }
-    }
-  }, [currentSecret]);
+  useLayoutEffect(() => {
+    updateCache();
+  }, [menu, x, y]);
 
   // udpates the selected item (y)
   const updateY = useCallback((newY: number) => {
     const delta = newY - y;
-    // TODO: this only supports skipping past 1 disabled or hidden item
-    const change = delta < 0
-      ? Math.max(delta, -1)
-      : Math.min(delta, 1);
-    if (!currentCategory) return;
-    // update cache
-    cache[currentCategory.title] = newY;
-    const item = currentCategory.items[newY];
-    // HACK: fix this, this should never return undefined but is when the category changes too quickly
-    if (!item) return;
-    if (item.isHidden) {
-      updateY(newY + change);
-      return;
+
+    // look for the next valid y position in that direction
+    const inc = delta < 0 ? -1 : 1;
+    let found = false;
+    // by default assume that this will be next item
+    let i = newY;
+    const items = currentItems!;
+    let nextItem = items[newY];
+    const isNextItemValid = nextItem && (nextItem.isEnabled && !nextItem.isHidden);
+
+    if (!isNextItemValid) {
+      do {
+        nextItem = items[i];
+
+        if (!nextItem) break;
+
+        const isValid = nextItem.isEnabled
+          && !nextItem.isHidden;
+
+        if (isValid) {
+          nextItem = nextItem;
+          found = true;
+        }
+
+        // moves to the next item in that direction
+        i = i + inc;
+
+        if (i < 0) {
+          log.warn(`No valid XMB items found while moving ${inc < 0 ? 'up' : 'down'}.`);
+          break;
+        }
+      } while (!found);
+
+      if (!found) {
+        // if we could not find a valid item in that direction, just cancel the update
+        return;
+      }
     }
-    positionRef.current = { ...positionRef.current, y: newY };
-    setCurrentItem(item);
-    setY(newY);
-  }, [currentCategory, y]);
+
+    if (!category) return;
+
+    positionRef.current.y = i;
+    setItem(nextItem.type);
+    setY(i);
+
+    // updateCache();
+  }, [categories, category, y]);
 
   // udpates both the category (x) and restores the previous selected item (y)
   const updateX = useCallback((newX: number, loadCache: boolean = true) => {
     if (!categories) return;
-    const prevY = loadCache ? (cache[categories[newX].title] ?? 0) : 0;
+    const nextCategory = getCategory(newX);
+    const nextType = nextCategory?.type;
+    let nextY = (loadCache && nextType)
+      ? cache[nextType] ?? 0
+      : 0;
+
+    if (nextCategory && nextY) {
+      if (nextY > nextCategory.items.length - 1) {
+        nextY = nextCategory.items.length - 1;
+      }
+      if (nextY < 0) {
+        nextY = 0;
+      }
+    }
+
     setX(newX);
-    positionRef.current = { x: newX, y: prevY };
-    if (!categories) return;
-    const cat = categories[newX];
-    setCurrentCategory(cat);
-    setCurrentItems(cat.items);
-    updateY(prevY);
-  }, [categories, updateY]);
+    positionRef.current.update(newX, nextY);
+    if (!nextCategory) return;
+    setCategory(nextCategory?.type);
+    setCurrentItems(nextCategory?.items);
+    const nextItem = nextCategory?.items[nextY];
+    setItem(nextItem?.type);
+    updateY(nextY);
+  }, [categories, category, updateY, cache, getCategory]);
 
   const openItem = useCallback((item: IXmbItem) => {
     if (!item.link) return;
     if (item.isHidden) return;
     if (!item.isEnabled) return;
+
+    // updateCache();
 
     void play(XMB_AUDIO_ENTER_SRC);
 
@@ -163,18 +202,92 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     openItem(item);
   }, [x, y]);
 
+  const processQueryParams = useCallback(() => {
+    const itemParam = searchParams.get('item');
+    if (!itemParam) return;
+
+    const xmbItems = xmbItemRef.current;
+    if (!xmbItems) return;
+
+    const filteredItem = Object.values(xmbItems)
+      .map(i => i as IXmbItem)
+      .find((i) => i.type.equalsIgnoreCase(itemParam));
+
+    if (!filteredItem) {
+      log.warn(`Unknown item value '${itemParam}'.`);
+      return;
+    }
+
+    log.info(`Requested item '${itemParam}' was found. Opening '${filteredItem?.link}'...`);
+
+    openItem(filteredItem);
+
+    router.replace(`${pathname}`, { scroll: false });
+  }, [openItem]);
+
+  useEffect(() => {
+    xmbItemRef.current = new Map<string, IXmbItem>();
+
+    const currentMenu = currentSecret?.menu ?? defaultMenu;
+    const prevCategory = category;
+
+    let catIndex = 0;
+
+    if (prevCategory) {
+      const match = currentMenu.items.find(c => c.type === prevCategory);
+      if (match) {
+        catIndex = match.index;
+        log.info(`Restoring previously selected category (${match.index}: ${prevCategory}) after menu change.`);
+      }
+      else {
+        // default to the first category if the one we had selected was removed
+        log.warn(`Previously selected category '${prevCategory}' not found. Defaulting to the first category.`);
+      }
+    }
+
+    setX(catIndex);
+    setMenu(currentMenu);
+
+    const cMap = new Map<Category, IXmbCategory>();
+
+    currentMenu.items.forEach(c => {
+      cMap.set(c.type, c);
+    });
+
+    const cats = convertToRecord(cMap);
+    setCategories(cats);
+    const cat = currentMenu.items[catIndex];
+    setCategory(cat.type);
+    setCurrentItems(cat.items);
+    if (cat.items[0]) {
+      setItem(cat.items[0].type);
+    }
+
+    // save the item ref to find items by key directly
+    for (let i = 0; i < currentMenu.items.length; i++) {
+      const cat = currentMenu.items[i];
+      for (let j = 0; j < cat.items.length; j++) {
+        const item = cat.items[j];
+        xmbItemRef.current.set(toXmbKey(i, j), item);
+      }
+    }
+
+    // after loading everything check and see if any query params were passed
+    processQueryParams();
+  }, [currentSecret]);
+
   const moveDefault = useCallback(() => {
     updateX(0, false);
     updateY(0);
 
     return defPos;
-  }, []);
+  }, [updateX, updateY]);
 
   const onEsc = useCallback(() => {
     if (!moveDefault()) return;
 
     void play(XMB_AUDIO_CANCEL_SRC);
-  }, [play]);
+  }, [play, moveDefault]);
 
   const onBack = useCallback(() => {
     if (!modal) return;
@@ -182,7 +295,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     void play(XMB_AUDIO_CANCEL_SRC);
 
     router.push('/');
-  }, [modal]);
+  }, [modal, play]);
 
   const openHelp = useCallback(() => {
     void play(XMB_AUDIO_ENTER_SRC);
@@ -227,11 +340,14 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
   const moveDown = useCallback(() => {
     if (modal) return;
-    if (!currentCategory) return null;
+    if (!category) return;
+    const cat = categories?.[category];
+
+    if (!cat) return null;
 
     void play(XMB_AUDIO_SRC);
 
-    const maxY = currentCategory.items.length - 1;
+    const maxY = cat.items.length - 1;
 
     const nextY = y + 1;
     if (nextY > maxY) return null;
@@ -239,22 +355,25 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
     updateY(nextY);
 
     return positionRef.current;
-  }, [currentCategory, y, updateY, modal]);
+  }, [category, categories, y, updateY, modal]);
 
   const moveBottom = useCallback(() => {
     if (modal) return;
-    if (!currentCategory) return null;
+    if (!category) return;
+    const cat = categories?.[category];
+
+    if (!cat) return null;
 
     void play(XMB_AUDIO_SRC);
 
-    const max = currentCategory.items.length - 1;
+    const max = cat.items.length - 1;
 
     if (y === max) return null;
 
     updateY(max);
 
     return positionRef.current;
-  }, [currentCategory, y, updateY, modal]);
+  }, [category, y, updateY, modal]);
 
   const moveLeft = useCallback(() => {
     if (modal) return;
@@ -294,7 +413,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
     void play(XMB_AUDIO_SRC);
 
-    const max = categories.length - 1;
+    const max = Object.values(categories).length - 1;
     const nextX = x + 1;
 
     // can't move right, ignore
@@ -311,7 +430,7 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
 
     void play(XMB_AUDIO_SRC);
 
-    const max = categories.length - 1;
+    const max = Object.values(categories).length - 1;
 
     // can't move right, ignore
     if (x >= max) return null;
@@ -407,20 +526,20 @@ export function XmbProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(() => {
     return {
       x,
-      y,
       updateX,
+      y,
       updateY,
       menu,
-      currentCategory,
-      currentItem,
-      currentItemType: currentItem?.type ?? null,
+      category,
+      currentItem: currentItems?.find(i => i.type === item),
+      item: item as MenuItemType,
       currentItems,
       openInNewTab,
       openItem,
       categories,
       toXmbKey,
     };
-  }, [x, y, menu, currentCategory, currentItem,
+  }, [x, y, menu, category, item, category,
     currentItems, openInNewTab, openItem, categories, toXmbKey]);
 
   return (

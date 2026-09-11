@@ -2,13 +2,14 @@
 
 import React, { useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useAudio } from "@context/AudioContext";
 import useInput from "@hooks/useInput";
 import useKeyboard from "@hooks/useKeyboard";
-import ControllerIcon, { ControllerButton } from "@components/icons/controller-icon";
+import ControllerIcon, { ControllerButton } from "@components/icon/controller-icon";
 import { KeyPressAction } from "types";
 import "./modal.css";
 
@@ -147,11 +148,11 @@ export function ModalClose({ menuButton }: { menuButton?: ModalMenuButton }) {
                       <Link href={menuButton.url ?? ''} onClick={menuButton.action}
                         className=""
                         ref={menuButtonRef}>
-                        <div className="text-lg items-center justify-items-center align-items-center inline-flex select-none my-auto">
-                          <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25">
-                            {menuButton.key.toUpperCase()}
+                        <div className="text-lg items-center justify-items-center align-items-center inline-flex select-none">
+                          <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25 grid place-items-center justify-center align-middle content-center place-content-center">
+                            <span className="inline-block align-middle text-center self-center">{menuButton.key.toUpperCase()}</span>
                           </kbd>
-                          <span className="mx-2 my-auto">{menuButton.title}</span>
+                          <span className="mx-2">{menuButton.title}</span>
                         </div>
                       </Link>
                     </div>
@@ -160,11 +161,11 @@ export function ModalClose({ menuButton }: { menuButton?: ModalMenuButton }) {
                 <div className="modal-action grid text-white text-center object-center my-auto">
                   {/* need to set the href so that the user can close modal by clicking on the buttton */}
                   <Link href="/" >
-                    <div className="text-lg items-center justify-items-center align-items-center inline-flex select-none my-auto">
-                      <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25 flex">
-                        <span className="my-auto inline-block align-middle">Esc</span>
+                    <div className="text-lg items-center justify-items-center align-items-center inline-flex select-none">
+                      <kbd className="h-9 w-13 px-2 py-1.5 text-gray-800 bg-gray-100 mx-0.75 border border-gray-200 rounded-lg dark:bg-gray-400/25 dark:text-white dark:border-gray-500/25 grid place-items-center justify-center align-middle content-center place-content-center">
+                        <span className="inline-block align-middle text-center self-center">Esc</span>
                       </kbd>
-                      <span className="mx-2 my-auto">close</span>
+                      <span className="mx-2">close</span>
                     </div>
                   </Link>
                 </div>
@@ -195,15 +196,22 @@ export function Modal({ title, menuButton, children }: { title: string, menuButt
   const modalClass = title.toLowerCase().replace(/\s+/g, '-');
 
   return (
-    <div className={`modal modal-${modalClass} fixed left-0 top-0 z-25 flex flex-col h-full w-full`}>
-      <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen z-25 overflow-none backdrop-blur-xl bg-stone-900/70">
-        <ModalHeader title={title} />
-        <div className="grid absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
-          {children}
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.1 }}
+        className={`modal modal-${modalClass} fixed left-0 top-0 z-25 flex flex-col h-full w-full`}>
+        <div className="grid grid-cols-1 absolute left-0 top-0 w-screen h-screen z-25 overflow-none backdrop-blur-xl bg-stone-900/70">
+          <ModalHeader title={title} />
+          <div className="grid absolute top-[15%] left-0 w-full h-[70%] overflow-y-auto overscroll-contain">
+            {children}
+          </div>
+          <ModalClose menuButton={menuButton} />
         </div>
-        <ModalClose menuButton={menuButton} />
-      </div>
-    </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 

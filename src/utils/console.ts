@@ -85,7 +85,7 @@ function hexToRgb(hex: string): RGB | null {
 
   // Validate and match the 6-digit hex format
   const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cleanHex);
-  
+
   if (!result) {
     return null;
   }
@@ -97,10 +97,11 @@ function hexToRgb(hex: string): RGB | null {
   };
 }
 
+export const json = (object: object | undefined | null) => {
+  return logJson(object);
+};
 export const logJson = (object: object | undefined | null) => {
-
   const json = formatJson(object);
-
   console.log(json);
 };
 export const getAnsiColor = (rgb: RGB, type: "FOREGROUND" | "BACKGROUND" = "FOREGROUND") => {
@@ -160,7 +161,7 @@ export const formatMessage = (severity: Severity, message: string, e?: Error, sh
   }
 
   let text = showSeverity
-    ? `${color}[${severity.padEnd(5)}]: ${reset}${message} `
+    ? `${color}[${severity.padEnd(5)}]${reset}: ${message} `
     : `${color}${message} `;
 
   if (e) {
@@ -173,26 +174,39 @@ export const formatMessage = (severity: Severity, message: string, e?: Error, sh
   return text;
 };
 
-export const debug = (message: string, e?: Error, showSeverity?: boolean) => {
+export const debug = (message: string, e?: Error, showSeverity: boolean = true) => {
   const text = formatMessage('DEBUG', message, e, showSeverity);
 
   console.log(text);
 };
 
-export const info = (message: string, e?: Error, showSeverity?: boolean) => {
+export const info = (message: string, e?: Error, showSeverity: boolean = true) => {
   const text = formatMessage('INFO', message, e, showSeverity);
 
   console.log(text);
 };
 
-export const warn = (message: string, e?: Error, showSeverity?: boolean) => {
+export const warn = (message: string, e?: Error, showSeverity: boolean = true) => {
   const text = formatMessage('WARN', message, e, showSeverity);
 
   console.log(text);
 };
 
-export const error = (message: string, e?: Error, showSeverity?: boolean) => {
+export const error = (message: string, e?: Error, showSeverity: boolean = true) => {
   const text = formatMessage('ERROR', message, e, showSeverity);
 
   console.log(text);
 };
+
+export const log = {
+  style,
+  debug,
+  info,
+  warn,
+  error,
+  formatJson,
+  json,
+  dump: json,
+  logJson,
+  formatMessage,
+} as const;

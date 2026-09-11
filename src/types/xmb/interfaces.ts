@@ -1,25 +1,44 @@
-import { ReactElement } from "react";
 import { Category, MenuItemType } from "@enums";
+import { IconKind, IconType } from "types/icons";
+import { IconBase } from "./xmb-icon";
+
+export interface IRefresh {
+  refresh: () => void;
+}
+
+export interface IXmbIconBase {
+  type: IconType;
+  kind: unknown;
+  props: unknown;
+
+  is: (iconKind: IconKind) => boolean;
+}
+
+export interface IXmbIcon<K, P> extends IXmbIconBase {
+  kind: K;
+  props: P;
+}
 
 export interface IMenuItem {
   type: MenuItemType;
   title: string;
   link?: string | null;
-  icon: ReactElement | null;
+  icon: IconBase;
   description?: string | null;
   isEnabled: boolean;
   isHidden: boolean;
   category: ICategory | null;
+  index: number;
 }
 
 export interface IXmbItem extends IMenuItem {
   category: IXmbCategory | null;
 }
 
-export interface ICategory {
+export interface ICategory extends IRefresh {
   index: number;
   title: string;
-  icon: ReactElement;
+  icon: IconBase;
   itemCount: number;
   items: IMenuItem[];
   type: Category;

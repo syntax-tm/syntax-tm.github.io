@@ -1,0 +1,43 @@
+.glow {
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 1px #33333338, 0 0 3px #7070703d;
+  }
+  to {
+    text-shadow: 0 0 4px #33333338, 0 0 7px #7070703d;
+  }
+}
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 1px #33333338, 0 0 3px #7070703d;
+  }
+  to {
+    text-shadow: 0 0 4px #33333338, 0 0 7px #7070703d;
+  }
+}
+
+.glow-dark {
+  -webkit-animation: glow-dark 1s ease-in-out infinite alternate;
+  animation: glow-dark 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow-dark {
+  from {
+    text-shadow: 0 0 1px #dddddd38, 0 0 3px #9999993d;
+  }
+  to {
+    text-shadow: 0 0 4px #dddddd38, 0 0 7px #9999993d;
+  }
+}
+@-webkit-keyframes glow-dark {
+  from {
+    text-shadow: 0 0 1px #dddddd38, 0 0 3px #9999993d;
+  }
+  to {
+    text-shadow: 0 0 4px #dddddd38, 0 0 7px #9999993d;
+  }
+}

@@ -22,13 +22,13 @@ type SettingActions = {
 
 export type SettingStore = SettingState & SettingActions;
 
-export const createSettingStore = (id: AchievementId) => {
+export const createSettingStore = (id: AchievementId, isLocked?: boolean, isEnabled?: boolean) => {
   return createStore<SettingStore>()(
     persist(
       (set) => ({
         id,
-        isEnabled: false,
-        isUnlocked: false,
+        isEnabled: isEnabled ?? false,
+        isUnlocked: !(isLocked ?? false),
         unlock: () => { set((state) => ({ ...state, isUnlocked: true, isEnabled: true })); },
         lock: () => { set((state) => ({ ...state, isUnlocked: false })); },
         enable: () => { set((state) => ({ ...state, isEnabled: true })); },
@@ -59,8 +59,8 @@ export const createCurrentSettingStore = () => {
     persist(
       (set) => ({
         id: null,
-        update: (id: AchievementId | null) => { set((state) => ({ id })); },
-        reset: () => { set((state) => ({ id: null })); },
+        update: (id: AchievementId | null) => { set(() => ({ id })); },
+        reset: () => { set(() => ({ id: null })); },
       }),
       {
         name: 'current',
@@ -72,11 +72,11 @@ export const createCurrentSettingStore = () => {
 export const createSettingStoreFactory = (
   context: settingStoresContextType,
 ) => {
-  return (settingStoreKey: AchievementId) => {
+  return (settingStoreKey: AchievementId, options?: { isLocked: boolean, isEnabled: boolean }) => {
     const settingStores = context.stores!;
     // create and add to the registry for synchronization between stores
     if (!settingStores.has(settingStoreKey)) {
-      const store = createSettingStore(settingStoreKey);
+      const store = createSettingStore(settingStoreKey, options?.isLocked, options?.isEnabled);
       settingStores.set(settingStoreKey, store);
       registerSettingStore(store, context.currentState);
       return store;
@@ -84,6 +84,8 @@ export const createSettingStoreFactory = (
     return settingStores.get(settingStoreKey)!;
   };
 };
+
+export type SettingStoreType = ReturnType<typeof createSettingStore>;
 
 interface settingStoresContextType {
   stores: CaseInsensitiveMap<ReturnType<typeof createSettingStore>> | undefined;
@@ -112,7 +114,6 @@ export function SettingStoresProvider({ children }: { children: React.ReactNode 
     };
   }, [stores, currentState, current]);
 
-
   useEffect(() => {
     currentState.subscribe((state) => {
       setCurrent(state.id ?? null);
@@ -125,7 +126,6 @@ export function SettingStoresProvider({ children }: { children: React.ReactNode 
     </SettingStoresContext.Provider>
   );
 };
-
 
 function registerSettingStore(store: ReturnType<typeof createSettingStore>, currentStore: ReturnType<typeof createCurrentSettingStore>) {
   settingStoreRegistry.add(store);
@@ -147,7 +147,7 @@ function registerSettingStore(store: ReturnType<typeof createSettingStore>, curr
     const disableOtherSettings = () => {
       settingStoreRegistry.forEach((otherStore) => {
         if (otherStore !== store) {
-          otherStore.getState().disable();
+          otherStore.setState(() => ({ isEnabled: false }));
         }
       });
     };
@@ -158,21 +158,31 @@ function registerSettingStore(store: ReturnType<typeof createSettingStore>, curr
     if (isUnlockedChanged) {
       // was unlocked
       if (state.isUnlocked) {
-        currentStore.getState().update(state.id);
+        currentStore.setState(() => ({ id: state.id }));
         fireChangeEvent(state.id);
       }
       else if (prevState.isEnabled) {
-        currentStore.getState().update(null);
+        currentStore.setState(() => ({ id: null }));
         fireChangeEvent(null);
       }
     }
     // only act if this store was just flipped from disabled to enabled
-    if (state.isEnabled && !prevState.isEnabled) {
-      disableOtherSettings();
-      fireChangeEvent(state.id);
+    else if (isEnabledChanged) {
+      if (state.isEnabled) {
+        disableOtherSettings();
+        currentStore.setState(() => ({ id: state.id }));
+        fireChangeEvent(state.id);
+      }
+      else {
+        // const enabledSecrets = Array.from(settingStoreRegistry).find(s => {
+        //   if (s.getState().id === state.id) return false;
+        //   return s.getState().isEnabled;
+        // });
+        // if (enabledSecrets) return;
+        currentStore.setState(() => ({ id: null }));
+      }
       //currentStore.getState().update(state);
       // loop through all other registered stores and disable them
-      
     }
   });
 }
@@ -204,6 +214,7 @@ export const useSettingStores = () => {
 export const useSettingStore = <U,>(
   key: AchievementId,
   selector: (state: SettingStore) => U,
+  options?: { isLocked: boolean, isEnabled: boolean },
 ) => {
   const context = useContext(SettingStoresContext);
 
@@ -212,9 +223,9 @@ export const useSettingStore = <U,>(
   }
 
   const getOrCreateSettingStoreByKey = useCallback(
-    (key: AchievementId) => createSettingStoreFactory(context)(key),
+    (key: AchievementId, options?: { isLocked: boolean, isEnabled: boolean }) => createSettingStoreFactory(context)(key, options),
     [context.stores],
   );
 
-  return useStore(getOrCreateSettingStoreByKey(key), selector);
+  return useStore(getOrCreateSettingStoreByKey(key, options), selector);
 };

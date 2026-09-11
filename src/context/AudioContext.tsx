@@ -113,17 +113,20 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     const end = performance.now();
     const elapsed = end - start;
     const offset = Math.floor(elapsed / 1000);
-
-    if (offset > 0) {
-      console.log(`Call to ${typeof audioContextRef.current} play('${src}') while not ready resulted in an offset of ${offset}s`);
-    }
+    const hasOffset = offset > 0;
 
     try {
       const buffer = await getBuffer(src);
+      const isAudioLongerThanOffset = buffer.duration > elapsed;
       const source = context.createBufferSource();
       const gainNode = context.createGain();
       gainNode.gain.value = 1;
       source.buffer = buffer;
+
+      if (hasOffset && isAudioLongerThanOffset) {
+        console.log(`Call to ${typeof audioContextRef.current} play('${src}') while not ready resulted in an offset of ${offset}s (total duration ${buffer.duration.toFixed(1)}s)`);
+      }
+
       source.connect(gainNode);
       gainNode.connect(context.destination);
       source.onended = () => {

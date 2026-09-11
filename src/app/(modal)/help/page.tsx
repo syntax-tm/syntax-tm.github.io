@@ -4,7 +4,7 @@ import React from "react";
 import { faA, faAngleDown, faAngleUp, faD, faH, faLeftRight, faS, faUpDown, faW } from "@fortawesome/free-solid-svg-icons";
 import { faHandPointer } from "@fortawesome/free-solid-svg-icons/faHandPointer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ControllerIcon from "@components/icons/controller-icon";
+import ControllerIcon from "@components/icon/controller-icon";
 import useInput from "@hooks/useInput";
 import { Modal } from "@components/modal/modal";
 import "./help.css";

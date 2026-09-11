@@ -7,7 +7,7 @@ export const shaderSources = new Map<AchievementId, string>([
   ["ANDROID", shaders.androidShaderSource],
   ["BRIX", shaders.brixShaderSource],
   ["IWHBYD", shaders.iwhbydShaderSource],
-  ["KONAMI_CODE", shaders.re5ShaderSource],
+  ["KONAMI_CODE", shaders.konamiCodeShaderSource],
   ["MISSING_NO", shaders.missingNoShaderSource],
   ["OCEANGATE", shaders.oceangateShaderSource],
   ["_404", shaders.silentHillShaderSource],

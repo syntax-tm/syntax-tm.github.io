@@ -7,8 +7,8 @@ export interface StatDefinition {
   title: string;
   description?: string;
   type: SecretGroupType;
-  isLocked?: boolean;
-  isEnabled?: boolean;
+  isLocked: boolean;
+  isEnabled: boolean;
   trophy: number;
   theme?: StatThemeConfig;
   menu?: IXmbMenu;

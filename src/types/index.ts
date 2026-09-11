@@ -1,7 +1,8 @@
-'use client';
-
+export * from './config';
+export * from './dom';
 export * from './enums/index';
 export * from './events';
+export * from './icons/index';
 //export * from './extensions/';
 export type * from './key-press-action';
 export * from './position';

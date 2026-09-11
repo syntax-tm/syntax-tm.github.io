@@ -1,4 +1,4 @@
-export type StatGroupType = "BG" | "BOOT" | "FILTER" | "FONT" | "ICONS" | "BRIX" | "THEME" | "META";
+export type StatGroupType = "BG" | "BOOT" | "FILTER" | "FONT" | "ICONS" | "BRIX" | "THEME" | "UTIL" | "META";
 export type SecretGroupType = StatGroupType;
 
 // export enum SecretGroupType

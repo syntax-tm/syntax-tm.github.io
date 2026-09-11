@@ -25,11 +25,13 @@ $margin-top-inactive: 15;
   $size: 90px,
   $margin: 5px,
 ) {
-    width: $size;
-    height: $size;
-    margin: $margin;
+    width: $size !important;
+    height: $size !important;
+    margin: $margin !important;
     z-index: 1;
     color: white;
+    justify-self: center;
+    position: relative;
 }
 
 #root {
@@ -65,6 +67,61 @@ $margin-top-inactive: 15;
 
 .active {
   --active: true;
+}
+
+.secret-psp {
+  .xmb-item {
+    transition: all 250ms cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    margin-bottom: 30px;
+
+    @media only screen and (max-width: 640px) {
+      max-width: 10vw;
+      max-height: 10vh;
+      &.first {
+        // margin-top: calc(-190px + (-120px * var(--n)));
+        // margin-top: calc((-20vh * var(--y)));
+        margin-bottom: 0;
+        margin-top: -20vh;
+        &.active {
+          position: absolute;
+          left: 0;
+          top: 15vh;
+        }
+      }
+      &:not(.first) {
+        margin-top: -20vh;
+        margin-bottom: 0;
+        &.active {
+          position: absolute;
+          left: 0;
+          top: 15vh;
+        }
+      }
+    }
+
+    @media only screen and (min-width: 641px) {
+      max-width: 120px;
+      max-height: 120px;
+      &.first {
+        //margin-top: calc(-190px + (-120px * var(--n)));
+        margin-top: calc(-190px + (-120px * var(--y)));
+        &.active {
+          margin-top: 25px;
+        }
+      }
+      &:not(.first) {
+        margin-top: 25px;
+        &.active {
+          margin-top: calc(250px - (5px * var(--y)));
+        }
+      }
+    }
+
+    > .xmb-icon {
+      scale: 1.05;
+    }
+  }
 }
 
 .xmb-item {
@@ -270,7 +327,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
   }
 
   .xmb-item-name {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     padding-left: 5px;
   }
 
@@ -323,7 +380,7 @@ $XMB_MAIN_DESKTOP_BASE_MARGIN_LEFT: 100;
 
 .xmb-category.active {
   .xmb-category-header {
-    scale: 1.05;
+    scale: 1.2;
   }
   .xmb-item.active {
     .xmb-icon {

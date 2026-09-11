@@ -1,89 +1,148 @@
 'use client';
 
-import { useCallback, useEffect, useState } from "react";
-import usePath from "./usePath";
-import { useActiveElement } from "./useActiveElement";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { KeyboardEventKey as Key } from 'keyboard-event-key-type';
+import { usePath, useActiveElement } from "@hooks";
+import { fg, reset, isMap, CaseInsensitiveMap } from "utils";
 
-export type StandardVoidFn = () => void;
-export type KeyboardEventFn = (e: KeyboardEvent) => void;
-export type KeyEventHandler = KeyboardEventFn | StandardVoidFn;
+type StandardVoidFn = () => void;
+type KeyboardEventFn = (e: KeyboardEvent) => void;
+type KeyEventHandler = KeyboardEventFn | StandardVoidFn;
 
-// The type guard
-export const isKeyboardHandler = (fn: KeyEventHandler): fn is KeyboardEventFn => fn.length >= 1;
+const isFunction = (fn: unknown): fn is StandardVoidFn => typeof fn === 'function' && fn.length >= 1;
+const isKeyEventHandler = (fn: unknown): fn is KeyboardEventFn => typeof fn === 'function' && fn.length >= 1;
 
 export interface KeyPressAction {
-    repeat: boolean;
-    onKeyPress: KeyEventHandler;
+  repeat: boolean;
+  onKeyPress: KeyEventHandler;
 }
+
+function isKeyPressAction(obj: unknown): obj is KeyPressAction {
+  return obj !== null
+    && typeof obj === 'object'
+    && "repeat" in obj
+    && typeof obj.repeat === 'boolean'
+    && "onKeyPress" in obj
+    && typeof obj.onKeyPress === 'function';
+}
+
+export type RecordKeyMap = Partial<Record<Key, KeyPressAction | KeyEventHandler>>;
+export type MapKeyMap<K extends string, V extends KeyEventHandler | KeyPressAction> = Map<K, V>;
+
+export type ActionKeyMap = RecordKeyMap | MapKeyMap<Key, KeyPressAction | KeyEventHandler>;
 
 export interface KeyboardInput {
-    actions: Map<string, KeyPressAction>;
-    enabledOnModal: boolean | undefined;
+  actions: ActionKeyMap;
+  enabledOnModal: boolean | undefined;
 }
 
-export interface KeyboardOutput {
-    onKeyUp: (e: KeyboardEvent) => void;
-    onKeyDown: (e: KeyboardEvent) => void;
-}
-
-export const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput): KeyboardOutput => {
+export const useKeyboard = (input: KeyboardInput) => {
   const [keysDown, setKeysDown] = useState<string[]>([]);
   const { modal } = usePath();
   const { isInput } = useActiveElement();
+  const actions = useMemo(() => {
+    const map = new CaseInsensitiveMap<KeyPressAction | KeyEventHandler>();
+    const a = input.actions;
 
-  const isMapped = useCallback((key: string): boolean => {
-    return actions.has(key.toLowerCase());
+    if (isMap<Key, KeyPressAction | KeyEventHandler>(a)) {
+      a.forEach((v, k) => {
+        map.set(k, v);
+      });
+    }
+    else {
+      Object.entries(a).forEach(([k, v]) => {
+        if (!v) return;
+        if (isKeyPressAction(v)) {
+          map.set(k, v);
+        }
+        else if (isFunction(v)) {
+          map.set(k, v);
+        }
+        else if (isKeyEventHandler(v)) {
+          map.set(k, v);
+        }
+      });
+    }
+
+    return map;
+  }, [input]);
+
+  const isMapped = useCallback((key: Key): boolean => {
+    return actions.has(key);
   }, [actions]);
+
+  const getAction = useCallback((key: Key): KeyPressAction | KeyEventHandler | undefined => {
+    return actions.get(key);
+  }, [actions]);
+
+  const getFunctionName = (name: string) => {
+    const pattern = /use[a-zA-Z]+\[(.+?)\]/gi;
+    const updated = name.replace(pattern, '$1');
+    return updated;
+  };
 
   const handleKeyUp = useCallback((e: KeyboardEvent): void => {
     // key is not mapped, ignore
     if (!isMapped(e.key)) return;
 
-    if (modal && !enabledOnModal) return;
+    if (modal && !input.enabledOnModal) return;
 
     //e.stopPropagation();
     //e.preventDefault();
     const updated = keysDown.filter((i) => i !== e.key);
     setKeysDown(updated);
 
-    console.log(`keyup: ${e.key}`);
+    console.log(`keyup: ${fg.brightYellow}${e.key}${reset}`);
   }, [keysDown]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    // key is not mapped, ignore
-    if (!isMapped(e.key)) return;
+    const key: Key = e.key;
 
-    if (modal && !enabledOnModal) return;
+    // key is not mapped, ignore
+    if (!isMapped(key)) return;
+
+    if (modal && !input.enabledOnModal) return;
 
     // key is mapped, so retrieve the KeyPressAction
-    const action = actions.get(e.key.toLowerCase());
+    const action = getAction(key);
 
     // TODO: this should throw an error
-    if (action === undefined) return;
+    if (!action) return;
 
     // if this is a repeat and we don't allow repeats
-    if (e.repeat && !action.repeat) return;
-
-    console.log(`keydown: ${e.key} => ${action.onKeyPress.name}()`);
+    if (e.repeat) {
+      const shouldIgnore = isKeyPressAction(action) && !action.repeat;
+      if (shouldIgnore) {
+        return;
+      }
+    }
 
     const executeHandler = (
       fn: KeyEventHandler,
       event: KeyboardEvent,
-    ) => {
-      if (isKeyboardHandler(fn)) {
-        fn(event); // TypeScript safely knows this needs the event
+    ) =>
+    {
+      if (isKeyEventHandler(fn)) {
+        fn(event);
       } else {
-        (fn as StandardVoidFn)();      // TypeScript safely knows this takes zero arguments
+        (fn as StandardVoidFn)();
       }
     };
 
-    executeHandler(action.onKeyPress, e);
+    if (isKeyPressAction(action)) {
+      console.log(`keydown: ${fg.brightYellow}${e.key}${reset} ${fg.brightBlack}=> ${fg.brightBlue}${getFunctionName(action.onKeyPress.name)}()${reset}`);
+      executeHandler(action.onKeyPress, e);
+    }
+    else {
+      console.log(`keydown: ${fg.brightYellow}${e.key}${reset} ${fg.brightBlack}=> ${fg.brightBlue}${getFunctionName(action.name)}()${reset}`);
+      executeHandler(action, e);
+    }
 
     setKeysDown((prevState) => [...prevState, e.key]);
   }, [actions, isMapped, modal, isInput]);
 
   useEffect(() => {
-    if (modal && !enabledOnModal) return;
+    if (modal && !input.enabledOnModal) return;
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
@@ -93,11 +152,6 @@ export const useKeyboard = ({ actions, enabledOnModal = false }: KeyboardInput):
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, [handleKeyUp, handleKeyDown, modal]);
-
-  return {
-    onKeyDown: handleKeyDown,
-    onKeyUp: handleKeyUp,
-  };
 };
 
 export { useKeyboard as default };

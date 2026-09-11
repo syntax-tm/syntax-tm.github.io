@@ -53,6 +53,6 @@ NEXT_PUBLIC_KEY="${process.env.NEXT_PUBLIC_KEY}"
 console.log('.env file contents:');
 console.log(envContent);
 
-writeFileSync('.env', envContent.trim());
+writeFileSync('.env.local', envContent.trim());
 
 console.log('Created .env file successfully');

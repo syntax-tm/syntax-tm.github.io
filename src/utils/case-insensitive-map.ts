@@ -1,5 +1,5 @@
-export default class CaseInsensitiveMap<V> extends Map<string, V> {
-  constructor(entries?: readonly (readonly [string, V])[] | null) {
+export class CaseInsensitiveMap<V, K extends string = string> extends Map<K, V> {
+  constructor(entries?: readonly (readonly [K, V])[] | null) {
     super();
     if (entries) {
       for (const [key, value] of entries) {
@@ -8,19 +8,25 @@ export default class CaseInsensitiveMap<V> extends Map<string, V> {
     }
   }
 
-  override has(key: string): boolean {
-    return super.has(key.toLowerCase());
+  normalizeKey(key: K) {
+    return String(key).toLowerCase() as K;
   }
 
-  override get(key: string): V | undefined {
-    return super.get(key.toLowerCase());
+  override has(key: K): boolean {
+    return super.has(this.normalizeKey(key));
   }
 
-  override set(key: string, value: V): this {
-    return super.set(key.toLowerCase(), value);
+  override get(key: K): V | undefined {
+    return super.get(this.normalizeKey(key));
   }
 
-  override delete(key: string): boolean {
-    return super.delete(key.toLowerCase());
+  override set(key: K, value: V): this {
+    return super.set(this.normalizeKey(key), value);
+  }
+
+  override delete(key: K): boolean {
+    return super.delete(this.normalizeKey(key));
   }
 }
+
+export { CaseInsensitiveMap as default };
